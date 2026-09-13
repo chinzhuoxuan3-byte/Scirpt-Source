@@ -1,0 +1,1765 @@
+--Hi
+
+local runService = game:GetService("RunService")
+local virtualUser = game:GetService("VirtualUser")
+local lighting = game:GetService("Lighting")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+
+local function f1(p1)
+  local v1 = "https://raw.githubusercontent.com/61646764343/Obsidian/refs/heads/main/" .. p1
+  local httpGet
+  local v2, v3 = pcall(function() httpGet = game:HttpGet(v1, true) end)
+
+  if not v2 then
+    error(string.format("[夜脚本] 请求失败: %s\n错误: %s", v1, v3))
+  end
+
+  if not httpGet or #httpGet == 0 then
+    error(string.format("[夜脚本] 空内容: %s", v1))
+  end
+
+  local v4, v5 = loadstring(httpGet, "@" .. p1)
+
+  if not v4 then
+    error(string.format("[夜脚本] 语法错误: %s\n错误: %s", v1, v5))
+  end
+
+  local v6, v7 = pcall(v4)
+
+  if not v6 then
+    error(string.format("[夜脚本] 运行时错误: %s\n错误: %s", v1, v7))
+  end
+
+  return v7
+end
+
+local libraryZhCNLua = f1("Library_zhCN.lua")
+local addonsThemeManagerLua = f1("addons/ThemeManager.lua")
+local addonsSaveManagerLua = f1("addons/SaveManager.lua")
+local options = libraryZhCNLua.Options
+local toggles = libraryZhCNLua.Toggles
+
+libraryZhCNLua.ForceCheckbox = false
+libraryZhCNLua.ShowToggleFrameInKeybinds = true
+
+local v10Window = libraryZhCNLua:CreateWindow({
+  Title = "夜脚本 v1.0",
+  Footer = "作者：夜晚",
+  Icon = 95816097006870,
+  NotifySide = "Right",
+  ShowCustomCursor = true,
+})
+
+local v8 = {
+  About = v10Window:AddTab("关于", "user"),
+  Player = v10Window:AddTab("玩家", "user"),
+  General = v10Window:AddTab("通用", "user"),
+  GeneralScripts = v10Window:AddTab("通用脚本", "user"),
+  FEScripts = v10Window:AddTab("FE脚本", "user"),
+  DOORS = v10Window:AddTab("DOORS游戏", "user"),
+  NinjaLegends = v10Window:AddTab("忍者传奇", "user"),
+  SpeedLegends = v10Window:AddTab("极速传奇", "user"),
+  SharkBite2 = v10Window:AddTab("鲨口求生2", "user"),
+  MuscleLegend = v10Window:AddTab("力量传奇", "user"),
+  RainbowFriends = v10Window:AddTab("彩虹朋友", "user"),
+  Arsenal = v10Window:AddTab("兵工厂", "user"),
+  PrisonLife = v10Window:AddTab("监狱人生", "user"),
+  WarTycoon = v10Window:AddTab("战争大亨", "user"),
+  NaturalDisaster = v10Window:AddTab("自然灾害模拟器", "user"),
+  LumberTycoon2 = v10Window:AddTab("代木大亨2", "user"),
+  FunkyFriday = v10Window:AddTab("动感星期五", "user"),
+  EnergyAssault = v10Window:AddTab("能量突击", "user"),
+  CarDealership = v10Window:AddTab("汽车经销大亨", "user"),
+  KingLegacy = v10Window:AddTab("国王遗产", "user"),
+  ScriptCollection = v10Window:AddTab("脚本大全", "user"),
+  MajorScripts = v10Window:AddTab("各大脚本", "user"),
+  ArmWrestling = v10Window:AddTab("掰手腕", "user"),
+  LumberScripts = v10Window:AddTab("伐木脚本", "user"),
+  Ohio = v10Window:AddTab("俄亥俄州", "user"),
+  BeeSwarm = v10Window:AddTab("蜂群模拟器", "user"),
+  LuckyBlock = v10Window:AddTab("幸运方块", "user"),
+  MM2 = v10Window:AddTab("MM2", "user"),
+  UISettings = v10Window:AddTab("UI设置", "settings"),
+}
+
+local v9 = false
+
+local addLeftGroupbox = v8.About:AddLeftGroupbox("关于脚本", "info")
+addLeftGroupbox:AddLabel("欢迎 " .. game.Players.LocalPlayer.Name .. " 使用夜脚本 v1.0")
+addLeftGroupbox:AddLabel("用户ID: " .. game.Players.LocalPlayer.UserId)
+
+addLeftGroupbox:AddLabel({
+  Text = "当前服务器ID: " .. tostring(game.GameId),
+  DoesWrap = true,
+})
+
+addLeftGroupbox:AddLabel({ Text = "作者：夜晚", DoesWrap = true })
+addLeftGroupbox:AddDivider()
+
+addLeftGroupbox:AddButton({
+  Text = "夜晚QQ：904185528（点击复制）",
+  Tooltip = "复制QQ号码",
+  Func = function()
+    if setclipboard then
+      setclipboard("904185528")
+
+      libraryZhCNLua:Notify({
+        Title = "复制成功",
+        Description = "已复制QQ号：904185528",
+        Time = 2,
+      })
+    else
+      libraryZhCNLua:Notify({ Title = "错误", Description = "复制功能不可用", Time = 2 })
+    end
+  end,
+})
+
+addLeftGroupbox:AddButton({
+  Text = "夜脚本主群聊：960841427（点击复制）",
+  Tooltip = "复制群聊号码",
+  Func = function()
+    if setclipboard then
+      setclipboard("960841427")
+
+      libraryZhCNLua:Notify({
+        Title = "复制成功",
+        Description = "已复制群号：960841427",
+        Time = 2,
+      })
+    else
+      libraryZhCNLua:Notify({ Title = "错误", Description = "复制功能不可用", Time = 2 })
+    end
+  end,
+})
+
+addLeftGroupbox:AddDivider()
+
+addLeftGroupbox:AddLabel({
+  Text = "脚本声明：脚本为免费脚本 请勿去圈钱",
+  DoesWrap = true,
+  Size = 14,
+})
+
+addLeftGroupbox:AddLabel({
+  Text = "禁止倒卖：禁止任何形式的倒卖行为",
+  DoesWrap = true,
+  Size = 14,
+})
+
+libraryZhCNLua:Notify({ Title = "夜脚本", Description = "欢迎使用夜脚本", Time = 2 })
+local addLeftGroupbox2 = v8.Player:AddLeftGroupbox("玩家属性设置", "user")
+local addRightGroupbox = v8.Player:AddRightGroupbox("玩家功能", "zap")
+
+addLeftGroupbox2:AddSlider("WalkSpeedSlider", {
+  Text = "移动速度",
+  Default = 16,
+  Min = 16,
+  Max = 200,
+  Rounding = 0,
+  Compact = false,
+  Tooltip = "设置角色移动速度",
+  Callback = function(value)
+    local character = game.Players.LocalPlayer.Character
+
+    if character and character:FindFirstChild("Humanoid") then
+      character.Humanoid.WalkSpeed = value
+    end
+  end,
+})
+
+addLeftGroupbox2:AddSlider("JumpPowerSlider", {
+  Text = "跳跃高度",
+  Default = 50,
+  Min = 50,
+  Max = 200,
+  Rounding = 0,
+  Compact = false,
+  Tooltip = "设置角色跳跃高度",
+  Callback = function(value2)
+    local character2 = game.Players.LocalPlayer.Character
+
+    if character2 and character2:FindFirstChild("Humanoid") then
+      character2.Humanoid.JumpPower = value2
+    end
+  end,
+})
+
+addLeftGroupbox2:AddDivider()
+
+addLeftGroupbox2:AddInput("WalkSpeedInput", {
+  Text = "移动速度设置",
+  Default = "",
+  Placeholder = "输入移动速度",
+  Numeric = true,
+  Finished = true,
+  ClearTextOnFocus = true,
+  Tooltip = "直接输入移动速度数值",
+  Callback = function(value3)
+    local v10 = tonumber(value3)
+
+    if v10 then
+      local character3 = game.Players.LocalPlayer.Character
+
+      if character3 and character3:FindFirstChild("Humanoid") then
+        character3.Humanoid.WalkSpeed = v10
+      end
+    end
+  end,
+})
+
+addLeftGroupbox2:AddInput("JumpPowerInput", {
+  Text = "跳跃高度设置",
+  Default = "",
+  Placeholder = "输入跳跃高度",
+  Numeric = true,
+  Finished = true,
+  ClearTextOnFocus = true,
+  Tooltip = "直接输入跳跃高度数值",
+  Callback = function(value4)
+    local v11 = tonumber(value4)
+
+    if v11 then
+      local character4 = game.Players.LocalPlayer.Character
+
+      if character4 and character4:FindFirstChild("Humanoid") then
+        character4.Humanoid.JumpPower = v11
+      end
+    end
+  end,
+})
+
+addLeftGroupbox2:AddInput("GravityInput", {
+  Text = "重力设置",
+  Default = "",
+  Placeholder = "输入重力值",
+  Numeric = true,
+  Finished = true,
+  ClearTextOnFocus = true,
+  Tooltip = "设置游戏世界重力",
+  Callback = function(value5)
+    local v12 = tonumber(value5)
+
+    if v12 then
+      game.Workspace.Gravity = v12
+    end
+  end,
+})
+
+addRightGroupbox:AddToggle("NightVisionToggle", {
+  Text = "夜视",
+  Default = false,
+  Tooltip = "启用夜视效果",
+  Callback = function(value6)
+    if value6 then
+      game.Lighting.Ambient = Color3.new(1, 1, 1)
+    else
+      game.Lighting.Ambient = Color3.new(0, 0, 0)
+    end
+  end,
+})
+
+local connect
+
+addRightGroupbox:AddToggle("NoClipToggle", {
+  Text = "穿墙",
+  Default = false,
+  Tooltip = "启用穿墙模式",
+  Callback = function(value7)
+    v9 = value7
+
+    if connect then
+      connect:Disconnect()
+      connect = nil
+    end
+
+    if value7 then
+      connect = runService.Stepped:Connect(function()
+        if not v9 then
+          return
+        else
+          local character5 = game.Players.LocalPlayer.Character
+
+          if character5 then
+            for key, value8 in pairs(character5:GetChildren()) do
+              if value8:IsA("BasePart") then
+                value8.CanCollide = false
+              end
+            end
+          end
+
+          return
+        end
+      end)
+    end
+  end,
+})
+
+addRightGroupbox:AddDivider()
+
+for index, value9 in ipairs({
+  {
+    Text = "飞行V3（可隐藏）",
+    URL = "https://raw.githubusercontent.com/61646764343/roblox-script/refs/heads/main/%E9%A3%9E%E8%A1%8CV3.txt",
+  },
+  {
+    Text = "替身",
+    URL = "https://raw.githubusercontent.com/SkrillexMe/SkrillexLoader/main/SkrillexLoadMain",
+  },
+  { Text = "爬墙", URL = "https://pastebin.com/raw/zXk4Rq2r" },
+  {
+    Text = "光影V4",
+    URL = "https://raw.githubusercontent.com/MZEEN2424/Graphics/main/Graphics.xml",
+  },
+  {
+    Text = "透视",
+    URL = "https://github.com/61646764343/roblox-/raw/refs/heads/main/%E9%80%8F%E8%A7%86.lua",
+  },
+  { Text = "隐身(E)", URL = "https://pastebin.com/raw/nwGEvkez" },
+  {
+    Text = "电脑键盘",
+    URL = "https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt",
+  },
+  { Text = "跟踪玩家", URL = "https://pastebin.com/raw/F9PNLcXk" },
+}) do
+  local v13 = value9
+
+  addRightGroupbox:AddButton({
+    Text = v13.Text,
+    Tooltip = "点击加载功能脚本",
+    Func = function() loadstring(game:HttpGet(v13.URL, true))() end,
+  })
+end
+
+addRightGroupbox:AddButton({
+  Text = "点击传送工具",
+  Tooltip = "创建点击传送工具",
+  Func = function()
+    local localPlayer = game.Players.LocalPlayer
+    local getMouse = localPlayer:GetMouse()
+
+    local fe = Instance.new("Tool")
+    fe.RequiresHandle = false
+    fe.Name = "[FE] 传送工具"
+
+    fe.Activated:Connect(function()
+      local character6 = localPlayer.Character
+
+      if character6 and character6:FindFirstChild("HumanoidRootPart") then
+        local v14 = getMouse.Hit + Vector3.new(0, 2.5, 0)
+        character6.HumanoidRootPart.CFrame = CFrame.new(v14.X, v14.Y, v14.Z)
+      end
+    end)
+
+    fe.Parent = localPlayer.Backpack or localPlayer.Character
+  end,
+})
+
+addRightGroupbox:AddButton({
+  Text = "无敌",
+  Tooltip = "启用无敌模式",
+  Func = function()
+    local localPlayer2 = game.Players.LocalPlayer
+    local character7 = localPlayer2.Character
+    local humanoid, clone
+
+    if character7 and character7:FindFirstChild("Head") then
+      character7.Archivable = true
+
+      local clone2 = character7:Clone()
+      clone2.Parent = workspace
+
+      localPlayer2.Character = clone2
+      task.wait(2)
+      humanoid = character7:FindFirstChildWhichIsA("Humanoid")
+
+      if humanoid then
+        clone = humanoid:Clone()
+        clone.Parent = character7
+        clone.RequiresNeck = false
+
+        humanoid.Parent = nil
+        task.wait(2)
+        localPlayer2.Character = character7
+        clone2:Destroy()
+        task.wait(1)
+
+        clone:GetPropertyChangedSignal("Health"):Connect(function()
+          if clone.Health <= 0 then
+            humanoid.Parent = localPlayer2.Character
+            task.wait(1)
+            humanoid:Destroy()
+          end
+        end)
+
+        workspace.CurrentCamera.CameraSubject = character7
+        local animate = character7:FindFirstChild("Animate")
+
+        if animate then
+          animate.Disabled = true
+          task.wait(0.1)
+          animate.Disabled = false
+        end
+
+        local head = character7:FindFirstChild("Head")
+
+        if head then
+          head:Destroy()
+        end
+      end
+    end
+  end,
+})
+
+local connect2
+
+addRightGroupbox:AddButton({
+  Text = "防止掉线（反挂机）",
+  Tooltip = "启用反挂机功能",
+  Func = function()
+    if connect2 then
+      connect2:Disconnect()
+      connect2 = nil
+    end
+
+    connect2 = game.Players.LocalPlayer.Idled:Connect(function()
+      virtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+      task.wait(1)
+      virtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end)
+
+    libraryZhCNLua:Notify({
+      Title = "反挂机",
+      Description = "防掉线功能已启用",
+      Time = 2,
+    })
+  end,
+})
+
+local addLeftGroupbox3 = v8.General:AddLeftGroupbox("通用功能", "box")
+local addRightGroupbox2 = v8.General:AddRightGroupbox("画质功能", "palette")
+
+for index2, value10 in ipairs({
+  { Text = "工具包", URL = "https://cdn.wearedevs.net/scripts/BTools.txt" },
+  { Text = "飞车", URL = "https://pastebin.com/raw/MHE1cbWF" },
+  {
+    Text = "甩飞别人",
+    URL = "https://raw.githubusercontent.com/61646764343/roblox-/refs/heads/main/%E7%94%A9%E9%A3%9E%E5%88%AB%E4%BA%BA.lua",
+  },
+  { Text = "无限跳", URL = "https://pastebin.com/raw/V5PQy3y0" },
+  {
+    Text = "阿尔宙斯V3.0 UI",
+    URL = "https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3",
+  },
+  { Text = "转起来", URL = "https://pastebin.com/raw/r97d7dS0" },
+}) do
+  local v15 = value10
+
+  addLeftGroupbox3:AddButton({
+    Text = v15.Text,
+    Tooltip = "点击加载通用脚本",
+    Func = function() loadstring(game:HttpGet(v15.URL, true))() end,
+  })
+end
+
+for index3, value11 in ipairs({
+  { Text = "HUA 光影", URL = "https://pastebin.com/raw/arzRCgwS" },
+  {
+    Text = "光影_2",
+    URL = "https://raw.githubusercontent.com/MZEEN2424/Graphics/main/Graphics.xml",
+  },
+  { Text = "超高画质", URL = "https://pastebin.com/raw/jHBfJYmS" },
+}) do
+  local v16 = value11
+
+  addRightGroupbox2:AddButton({
+    Text = v16.Text,
+    Tooltip = "点击加载画质脚本",
+    Func = function() loadstring(game:HttpGet(v16.URL, true))() end,
+  })
+end
+
+addRightGroupbox2:AddButton({
+  Text = "美丽天空",
+  Tooltip = "应用美丽天空效果",
+  Func = function()
+    for key2, value12 in pairs(lighting:GetChildren()) do
+      if value12:IsA("PostEffect") then
+        value12:Destroy()
+      end
+    end
+
+    Instance.new("ColorCorrectionEffect").Parent = lighting
+    Instance.new("BloomEffect").Parent = lighting
+    Instance.new("SunRaysEffect").Parent = lighting
+    Instance.new("BlurEffect").Parent = lighting
+
+    lighting.Sky.SkyboxBk = "http://www.roblox.com/asset/?id=159454299"
+    lighting.Sky.SkyboxDn = "http://www.roblox.com/asset/?id=159454296"
+    lighting.Sky.SkyboxFt = "http://www.roblox.com/asset/?id=159454293"
+    lighting.Sky.SkyboxLf = "http://www.roblox.com/asset/?id=159454286"
+    lighting.Sky.SkyboxRt = "http://www.roblox.com/asset/?id=159454300"
+    lighting.Sky.SkyboxUp = "http://www.roblox.com/asset/?id=159454288"
+
+    libraryZhCNLua:Notify({
+      Title = "美丽天空",
+      Description = "天空效果已应用",
+      Time = 2,
+    })
+  end,
+})
+
+local addLeftGroupbox4 = v8.GeneralScripts:AddLeftGroupbox("脚本功能", "code")
+local addRightGroupbox3 = v8.GeneralScripts:AddRightGroupbox("属性设置", "sliders")
+
+for index4, value13 in ipairs({
+  { Text = "飞行", URL = "https://rentry.co/shadiao_yazifly/raw" },
+  { Text = "修改玩家碰撞箱", URL = "https://rentry.co/aaaaaaaaaduckduck/raw" },
+  {
+    Text = "锁定fling",
+    URL = "https://scriptblox.com/raw/Universal-Script-Best-Target-Fling-10816",
+  },
+}) do
+  local v17 = value13
+
+  addLeftGroupbox4:AddButton({
+    Text = v17.Text,
+    Tooltip = "点击加载脚本",
+    Func = function() loadstring(game:HttpGet(v17.URL, true))() end,
+  })
+end
+
+addRightGroupbox3:AddInput("WalkSpeedInput2", {
+  Text = "移动速度",
+  Default = "",
+  Placeholder = "输入移动速度",
+  Numeric = true,
+  Finished = true,
+  ClearTextOnFocus = true,
+  Tooltip = "直接设置移动速度",
+  Callback = function(value14)
+    local v18 = tonumber(value14)
+
+    if v18 then
+      local character8 = game.Players.LocalPlayer.Character
+
+      if character8 and character8:FindFirstChild("Humanoid") then
+        character8.Humanoid.WalkSpeed = v18
+      end
+    end
+  end,
+})
+
+addRightGroupbox3:AddInput("JumpPowerInput2", {
+  Text = "跳跃高度",
+  Default = "",
+  Placeholder = "输入跳跃高度",
+  Numeric = true,
+  Finished = true,
+  ClearTextOnFocus = true,
+  Tooltip = "直接设置跳跃高度",
+  Callback = function(value15)
+    local v19 = tonumber(value15)
+
+    if v19 then
+      local character9 = game.Players.LocalPlayer.Character
+
+      if character9 and character9:FindFirstChild("Humanoid") then
+        character9.Humanoid.JumpPower = v19
+      end
+    end
+  end,
+})
+
+addRightGroupbox3:AddInput("MaxHealthInput", {
+  Text = "最大血量",
+  Default = "",
+  Placeholder = "输入最大血量",
+  Numeric = true,
+  Finished = true,
+  ClearTextOnFocus = true,
+  Tooltip = "设置最大生命值",
+  Callback = function(value16)
+    local v20 = tonumber(value16)
+
+    if v20 then
+      local character10 = game.Players.LocalPlayer.Character
+
+      if character10 and character10:FindFirstChild("Humanoid") then
+        character10.Humanoid.MaxHealth = v20
+      end
+    end
+  end,
+})
+
+addRightGroupbox3:AddInput("CurrentHealthInput", {
+  Text = "当前血量",
+  Default = "",
+  Placeholder = "输入当前血量",
+  Numeric = true,
+  Finished = true,
+  ClearTextOnFocus = true,
+  Tooltip = "设置当前生命值",
+  Callback = function(value17)
+    local v21 = tonumber(value17)
+
+    if v21 then
+      local character11 = game.Players.LocalPlayer.Character
+
+      if character11 and character11:FindFirstChild("Humanoid") then
+        character11.Humanoid.Health = v21
+      end
+    end
+  end,
+})
+
+addRightGroupbox3:AddInput("GravityInput2", {
+  Text = "重力设置",
+  Default = "",
+  Placeholder = "输入重力值",
+  Numeric = true,
+  Finished = true,
+  ClearTextOnFocus = true,
+  Tooltip = "设置游戏世界重力",
+  Callback = function(value18)
+    local v22 = tonumber(value18)
+
+    if v22 then
+      game.Workspace.Gravity = v22
+    end
+  end,
+})
+
+local addLeftGroupbox5 = v8.FEScripts:AddLeftGroupbox("FE脚本功能", "feather")
+
+for index5, value19 in ipairs({
+  {
+    Text = "C00lgui",
+    Func = function() loadstring(game:GetObjects("rbxassetid://8127297852")[1].Source)() end,
+  },
+  { Text = "1x1x1x1", URL = "https://pastebin.com/raw/JipYNCht" },
+  { Text = "变玩家（R6）", URL = "https://pastebin.com/raw/XR4sGcgJ" },
+  {
+    Text = "动画中心",
+    URL = "https://raw.githubusercontent.com/GamingScripter/Animation-Hub/main/Animation%20Gui",
+  },
+  {
+    Text = "幽灵中心",
+    URL = "https://raw.githubusercontent.com/GhostPlayer352/Test4/main/GhostHub",
+  },
+  {
+    Text = "铁拳打死你",
+    URL = "https://raw.githubusercontent.com/0Ben1/fe/main/obf_rf6iQURzu1fqrytcnLBAvW34C9N55kS9g9G3CKz086rC47M6632sEd4ZZYB0AYgV.lua.txt",
+  },
+  { Text = "声音播放器", URL = "https://pastebin.com/raw/GEianeKX" },
+  {
+    Text = "NA管理员",
+    URL = "https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source",
+  },
+  {
+    Text = "蜘蛛侠爬墙配合键盘脚本按c",
+    URL = "https://github.com/61646764343/roblox-/raw/refs/heads/main/%E7%88%AC%E5%A2%99%E8%84%9A%E6%9C%AC.lua",
+  },
+}) do
+  local v23 = value19
+
+  if v23.URL then
+    addLeftGroupbox5:AddButton({
+      Text = v23.Text,
+      Tooltip = "点击加载FE脚本",
+      Func = function() loadstring(game:HttpGet(v23.URL, true))() end,
+    })
+  else
+    addLeftGroupbox5:AddButton({
+      Text = v23.Text,
+      Tooltip = "点击加载FE脚本",
+      Func = v23.Func,
+    })
+  end
+end
+
+local addLeftGroupbox6 = v8.DOORS:AddLeftGroupbox("DOORS主要脚本", "door-open")
+local addRightGroupbox4 = v8.DOORS:AddRightGroupbox("DOORS工具", "tool")
+
+for index6, value20 in ipairs({
+  { Text = "微山DOORS", URL = "https://pastebin.com/raw/uHHp8fzS" },
+  {
+    Text = "kingHub(已更新)",
+    URL = "https://raw.githubusercontent.com/KINGHUB01/BlackKing/main/BlackKing%20Doors%20Mobile",
+  },
+  {
+    Text = "超级脚本",
+    URL = "https://raw.githubusercontent.com/Fazedrab/EntitySpawner/main/doors(orionlib).lua",
+  },
+  {
+    Text = "云doors",
+    URL = "https://raw.githubusercontent.com/XiaoYunCN/EntitySpawner/main/doors(orionlib).lua",
+  },
+}) do
+  local v24 = value20
+
+  addLeftGroupbox6:AddButton({
+    Text = v24.Text,
+    Tooltip = "点击加载DOORS脚本",
+    Func = function() loadstring(game:HttpGet(v24.URL, true))() end,
+  })
+end
+
+for index7, value21 in ipairs({
+  {
+    Text = "门绘图显示",
+    URL = "https://raw.githubusercontent.com/cbhlyy/lyycbh/main/doors1",
+  },
+  {
+    Text = "手电筒（没电会有bug）",
+    URL = "https://raw.githubusercontent.com/K0t1n/Public/main/Normal%20Flashlight",
+  },
+  { Text = "DOORS低回拉穿墙", URL = "https://github.com/DXuwu/OK/raw/main/clip" },
+  {
+    Text = "刷怪菜单",
+    URL = "https://raw.githubusercontent.com/cbhlyy/lyycbh/main/shuaguai",
+  },
+  {
+    Text = "DOORS变身脚本",
+    URL = "https://raw.githubusercontent.com/ChronoAccelerator/Public-Scripts/main/Morphing/MorphScript.lua",
+  },
+  {
+    Text = "不可能模式",
+    URL = "https://raw.githubusercontent.com/Ukazix/impossible-mode/main/Protected_79.lua.txt",
+  },
+  {
+    Text = "Endless模式",
+    URL = "https://raw.githubusercontent.com/check78/worldcuuuup/main/Script.lua",
+  },
+  {
+    Text = "物品复制枪",
+    URL = "https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/EverythingGunByNeRD.lua",
+  },
+  {
+    Text = "控制物品大小枪",
+    URL = "https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/SizeChangerByNerd.lua",
+  },
+  {
+    Text = "香蕉枪(可在困难模式发射香蕉)",
+    URL = "https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/BananaGunByNerd.lua",
+  },
+  {
+    Text = "手持臭猫",
+    URL = "https://raw.githubusercontent.com/K0t1n/Public/main/Maxwell%20Plushie",
+  },
+  {
+    Text = "磁铁",
+    URL = "https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/MagnetByNerd.lua",
+  },
+  {
+    Text = "剪刀",
+    URL = "https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/shears_done.lua",
+  },
+  {
+    Text = "激光枪",
+    URL = "https://raw.githubusercontent.com/K0t1n/Public/main/Laser%20Gun",
+  },
+  { Text = "十字架", URL = "https://pastebin.com/raw/ibbWwU6q" },
+  {
+    Text = "能量罐",
+    URL = "https://raw.githubusercontent.com/cbhlyy/lyycbh/main/nengliangtiao",
+  },
+  {
+    Text = "紫色手电筒（在电梯购买东西时使用）",
+    URL = "https://raw.githubusercontent.com/K0t1n/Public/main/Purple%20Flashlight",
+  },
+  {
+    Text = "夜视仪",
+    Func = function()
+      _G.OnShop = true
+
+      loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/DeividComSono/Scripts/main/Scanner.lua", true
+      ))()
+    end,
+  },
+}) do
+  local v25 = value21
+
+  if v25.URL then
+    addRightGroupbox4:AddButton({
+      Text = v25.Text,
+      Tooltip = "点击加载DOORS工具",
+      Func = function() loadstring(game:HttpGet(v25.URL, true))() end,
+    })
+  else
+    addRightGroupbox4:AddButton({
+      Text = v25.Text,
+      Tooltip = "点击加载DOORS工具",
+      Func = v25.Func,
+    })
+  end
+end
+
+local addLeftGroupbox7 = v8.NinjaLegends:AddLeftGroupbox("忍者传奇脚本", "swords")
+local addRightGroupbox5 = v8.NinjaLegends:AddRightGroupbox("自动化功能", "refresh-cw")
+
+addLeftGroupbox7:AddButton({
+  Text = "忍者传奇汉化脚本",
+  Tooltip = "点击加载汉化脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://github.com/61646764343/roblox-/raw/refs/heads/main/%E5%BF%8D%E8%80%85%E4%BC%A0%E5%A5%87%E6%B1%89%E5%8C%96%E8%84%9A%E6%9C%AC.lua",
+      true
+    ))()
+  end,
+})
+
+addRightGroupbox5:AddToggle("AutoSwingToggle", {
+  Text = "自动挥舞",
+  Default = false,
+  Tooltip = "自动挥舞武器",
+  Callback = function(value22)
+    if value22 then
+      spawn(function()
+        while toggles.AutoSwingToggle.Value do
+          function v316()
+            local character12 = game.Players.LocalPlayer.Character
+
+            if character12 then
+              local humanoid2 = character12:FindFirstChild("Humanoid")
+
+              if humanoid2 then
+                humanoid2:EquipTool()
+              end
+            end
+          end
+
+          task.wait()
+        end
+      end)
+    end
+  end,
+})
+
+addRightGroupbox5:AddToggle("AutoSellToggle", {
+  Text = "自动售卖",
+  Default = false,
+  Tooltip = "自动售卖物品",
+  Callback = function(value23)
+    if value23 then
+      spawn(function()
+        while toggles.AutoSellToggle.Value do
+          task.wait(1)
+
+          pcall(function()
+            local sellPart = workspace:FindFirstChild("SellPart")
+
+            if sellPart then
+              local character13 = game.Players.LocalPlayer.Character
+
+              if character13 then
+                local humanoidRootPart = character13:FindFirstChild("HumanoidRootPart")
+
+                if humanoidRootPart then
+                  humanoidRootPart.CFrame = sellPart.CFrame
+                end
+              end
+            end
+          end)
+        end
+      end)
+    end
+  end,
+})
+
+addRightGroupbox5:AddToggle("AutoSellMaxToggle", {
+  Text = "存满了自动售卖",
+  Default = false,
+  Tooltip = "库存满时自动售卖",
+  Callback = function(value24)
+    if value24 then
+      spawn(function()
+        while toggles.AutoSellMaxToggle.Value do
+          task.wait(5)
+        end
+      end)
+    end
+  end,
+})
+
+addRightGroupbox5:AddButton({
+  Text = "解锁所有岛",
+  Tooltip = "解锁所有岛屿",
+  Func = function()
+    local islandUnlockParts = workspace:FindFirstChild("islandUnlockParts")
+
+    if islandUnlockParts then
+      local character14 = game.Players.LocalPlayer.Character
+
+      if character14 then
+        local humanoidRootPart2 = character14:FindFirstChild("HumanoidRootPart")
+
+        if humanoidRootPart2 then
+          for key3, value25 in pairs(islandUnlockParts:GetChildren()) do
+            local islandSignPart = value25:FindFirstChild("islandSignPart")
+
+            if islandSignPart then
+              humanoidRootPart2.CFrame = islandSignPart.CFrame
+              task.wait(0.5)
+            end
+          end
+        end
+      end
+    end
+  end,
+})
+
+local addLeftGroupbox8 = v8.SpeedLegends:AddLeftGroupbox("极速传奇脚本", "zap")
+local addRightGroupbox6 = v8.SpeedLegends:AddRightGroupbox("辅助功能", "tool")
+
+for index8, value26 in ipairs({
+  { Text = "青脚本", URL = "https://raw.githubusercontent.com/kkaaccnnbb/money/main/fix" },
+  {
+    Text = "脚本二",
+    URL = "https://raw.githubusercontent.com/boyscp/beta/main/%E9%80%9F%E5%BA%A6%E7%82%B8%E8%B5%B7.lua",
+  },
+  {
+    Text = "剑客v4（需要加入群组）",
+    Func = function()
+      loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/JianKeCX/JianKeV4/main/ChuXia", true
+      ))()
+    end,
+  },
+}) do
+  local v26 = value26
+
+  if v26.URL then
+    addLeftGroupbox8:AddButton({
+      Text = v26.Text,
+      Tooltip = "点击加载极速传奇脚本",
+      Func = function() loadstring(game:HttpGet(v26.URL, true))() end,
+    })
+  else
+    addLeftGroupbox8:AddButton({
+      Text = v26.Text,
+      Tooltip = "点击加载极速传奇脚本",
+      Func = v26.Func,
+    })
+  end
+end
+
+addRightGroupbox6:AddButton({
+  Text = "开启卡宠",
+  Tooltip = "开启卡宠功能",
+  Func = function() loadstring(game:HttpGet("https://pastebin.com/raw/uR6azdQQ", true))() end,
+})
+
+addRightGroupbox6:AddButton({
+  Text = "自动重生和自动刷等级",
+  Tooltip = "自动重生和刷等级",
+  Func = function() loadstring(game:HttpGet("https://pastebin.com/raw/AyeCYbT6", true))() end,
+})
+
+addRightGroupbox6:AddLabel({ Text = "传送岛屿", DoesWrap = true, Size = 16 })
+addRightGroupbox6:AddDivider()
+
+for index9, value27 in ipairs({
+  {
+    Text = "返还出生岛",
+    Position = CFrame.new(-9682.98828125, 58.879177093506, 3099.0339355469),
+  },
+  {
+    Text = "白雪城",
+    Position = CFrame.new(-9676.138671875, 58.879177093506, 3782.6938476562),
+  },
+  { Text = "熔岩城", Position = CFrame.new(-11054.96875, 216.83917236328, 4898.6284179688) },
+  {
+    Text = "传奇公路",
+    Position = CFrame.new(-13098.87109375, 216.83917236328, 5907.6279296875),
+  },
+}) do
+  local v27 = value27
+
+  addRightGroupbox6:AddButton({
+    Text = v27.Text,
+    Tooltip = "传送到 " .. v27.Text,
+    Func = function()
+      local character15 = game.Players.LocalPlayer.Character
+
+      if character15 then
+        local humanoidRootPart3 = character15:FindFirstChild("HumanoidRootPart")
+
+        if humanoidRootPart3 then
+          humanoidRootPart3.CFrame = v27.Position
+        end
+      end
+    end,
+  })
+end
+
+local addLeftGroupbox9 = v8.SharkBite2:AddLeftGroupbox("鲨口求生2功能", "fish")
+
+local v28 = {
+  "DuckyBoatBeta", "DuckyBoat", "BlueCanopyMotorboat", "BlueWoodenMotorboat", "UnicornBoat",
+  "Jetski", "RedMarlin", "Sloop", "TugBoat", "SmallDinghyMotorboat", "JetskiDonut", "Marlin",
+  "TubeBoat", "FishingBoat", "VikingShip", "SmallWoodenSailboat", "RedCanopyMotorboat",
+  "Catamaran", "CombatBoat", "TourBoat", "Duckmarine", "PartyBoat", "MilitarySubmarine",
+  "GingerbreadSteamBoat", "Sleigh2022", "Snowmobile", "CruiseShip",
+}
+
+addLeftGroupbox9:AddDropdown({
+  Text = "免费船只",
+  Values = v28,
+  Default = "DuckyBoatBeta",
+  Tooltip = "选择免费船只",
+  Callback = function(value28)
+    local eventsFolder = replicatedStorage:FindFirstChild("EventsFolder")
+
+    if eventsFolder then
+      local boatSelection = eventsFolder:FindFirstChild("BoatSelection")
+
+      if boatSelection then
+        local updateHostBoat = boatSelection:FindFirstChild("UpdateHostBoat")
+
+        if updateHostBoat then
+          updateHostBoat:FireServer(value28)
+        end
+      end
+    end
+  end,
+})
+
+addLeftGroupbox9:AddButton({
+  Text = "自动杀鲨鱼🦈",
+  Tooltip = "自动杀鲨鱼功能",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/Sw1ndlerScripts/RobloxScripts/main/Misc%20Scripts/sharkbite2.lua",
+      true
+    ))()
+  end,
+})
+
+local addLeftGroupbox10 = v8.MuscleLegend:AddLeftGroupbox("力量传奇脚本", "dumbbell")
+
+for index10, value29 in ipairs({
+  {
+    Text = "力量传奇",
+    Func = function() loadstring(game:GetObjects("rbxassetid://10048914323")[1].Source)() end,
+  },
+  {
+    Text = "力量传奇Muscle Legend",
+    URL = "https://raw.githubusercontent.com/harisiskandar178/Roblox-Script/main/Muscle%20Legend",
+  },
+  {
+    Text = "剑客v4（需要加入群组）",
+    Func = function()
+      loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/JianKeCX/JianKeV4/main/ChuXia", true
+      ))()
+    end,
+  },
+}) do
+  local v29 = value29
+
+  if v29.URL then
+    addLeftGroupbox10:AddButton({
+      Text = v29.Text,
+      Tooltip = "点击加载力量传奇脚本",
+      Func = function() loadstring(game:HttpGet(v29.URL, true))() end,
+    })
+  else
+    addLeftGroupbox10:AddButton({
+      Text = v29.Text,
+      Tooltip = "点击加载力量传奇脚本",
+      Func = v29.Func,
+    })
+  end
+end
+
+local addLeftGroupbox11 = v8.RainbowFriends:AddLeftGroupbox("彩虹朋友脚本", "rainbow")
+
+for index11, value30 in ipairs({
+  {
+    Text = "彩虹朋友",
+    URL = "https://raw.githubusercontent.com/Sempiller/RainbowTool/main/Turkish.lua",
+  },
+  {
+    Text = "彩虹朋友2",
+    URL = "https://raw.githubusercontent.com/JNHHGaming/Rainbow-Friends/main/Rainbow%20Friends",
+  },
+}) do
+  local v30 = value30
+
+  addLeftGroupbox11:AddButton({
+    Text = v30.Text,
+    Tooltip = "点击加载彩虹朋友脚本",
+    Func = function() loadstring(game:HttpGet(v30.URL, true))() end,
+  })
+end
+
+local addLeftGroupbox12 = v8.Arsenal:AddLeftGroupbox("兵工厂脚本", "target")
+
+addLeftGroupbox12:AddButton({
+  Text = "兵工厂",
+  Tooltip = "加载兵工厂脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/RandomAdamYT/DarkHub/master/Init", true
+    ))()
+  end,
+})
+
+addLeftGroupbox12:AddButton({
+  Text = "剑客v4（需要加入群组）",
+  Tooltip = "加载剑客v4脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/JianKeCX/JianKeV4/main/ChuXia", true
+    ))()
+  end,
+})
+
+local addLeftGroupbox13 = v8.PrisonLife:AddLeftGroupbox("监狱人生脚本", "shield")
+local addRightGroupbox7 = v8.PrisonLife:AddRightGroupbox("传送位置", "map-pin")
+
+addLeftGroupbox13:AddButton({
+  Text = "PRISONWARE V1.3",
+  Tooltip = "加载PRISONWARE脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/Denverrz/scripts/master/PRISONWARE_v1.3.txt", true
+    ))()
+  end,
+})
+
+addLeftGroupbox13:AddButton({
+  Text = "管理员",
+  Tooltip = "加载管理员脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/H17S32/Tiger_Admin/main/Script", true
+    ))()
+  end,
+})
+
+for index12, value31 in ipairs({
+  {
+    Text = "警卫室",
+    Position = CFrame.new(847.72613525391, 98.959999084473, 2267.3874511719),
+  },
+  {
+    Text = "监狱室内",
+    Position = CFrame.new(919.25750732422, 98.959999084473, 2379.7416992188),
+  },
+  {
+    Text = "罪犯复活点",
+    Position = CFrame.new(-937.58917236328, 93.098762512207, 2063.0319824219),
+  },
+  {
+    Text = "监狱室外",
+    Position = CFrame.new(760.60333251953, 96.969924926758, 2475.4050292969),
+  },
+}) do
+  local v31 = value31
+
+  addRightGroupbox7:AddButton({
+    Text = v31.Text,
+    Tooltip = "传送到 " .. v31.Text,
+    Func = function()
+      local character16 = game.Players.LocalPlayer.Character
+
+      if character16 then
+        local humanoidRootPart4 = character16:FindFirstChild("HumanoidRootPart")
+
+        if humanoidRootPart4 then
+          humanoidRootPart4.CFrame = v31.Position
+        end
+      end
+    end,
+  })
+end
+
+local addLeftGroupbox14 = v8.WarTycoon:AddLeftGroupbox("战争大亨脚本", "tank")
+
+for index13, value32 in ipairs({
+  {
+    Text = "脚本1",
+    URL = "https://raw.githubusercontent.com/ufouzzed/WarTycoon/main/ByJMaxeyy",
+  },
+  {
+    Text = "脚本二",
+    URL = "https://raw.githubusercontent.com/ToraIsMe/ToraIsMe/main/0wartycoon",
+  },
+  {
+    Text = "剑客v4（需要加入群组）",
+    Func = function()
+      loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/JianKeCX/JianKeV4/main/ChuXia", true
+      ))()
+    end,
+  },
+}) do
+  local v32 = value32
+
+  if v32.URL then
+    addLeftGroupbox14:AddButton({
+      Text = v32.Text,
+      Tooltip = "点击加载战争大亨脚本",
+      Func = function() loadstring(game:HttpGet(v32.URL, true))() end,
+    })
+  else
+    addLeftGroupbox14:AddButton({
+      Text = v32.Text,
+      Tooltip = "点击加载战争大亨脚本",
+      Func = v32.Func,
+    })
+  end
+end
+
+v8.NaturalDisaster:AddLeftGroupbox("自然灾害模拟器脚本", "cloud-lightning"):AddButton({
+  Text = "自然灾害模拟器",
+  Tooltip = "加载自然灾害模拟器脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://gist.githubusercontent.com/TurkOyuncu99/7c75386107937fa006304efd24543ad4/raw/8d759dfcd95d39949c692735cfdf62baec0bf835/cafwetweg",
+      true
+    ))()
+  end,
+})
+
+local addLeftGroupbox15 = v8.LumberTycoon2:AddLeftGroupbox("代木大亨2脚本", "tree")
+
+addLeftGroupbox15:AddButton({
+  Text = "伐木大亨2",
+  Tooltip = "加载伐木大亨2脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://gist.githubusercontent.com/ItsEcstasy/327b705029ed89fd1be0f8382b3fb04f/raw/07c7beb24aebec0a26f4622c92b593428811db4d/Nightfall1.7-Temp",
+      true
+    ))()
+  end,
+})
+
+addLeftGroupbox15:AddButton({
+  Text = "青脚本",
+  Tooltip = "加载青脚本",
+  Func = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/kkaaccnnbb/money/main/fix", true))()
+  end,
+})
+
+v8.FunkyFriday:AddLeftGroupbox("动感星期五脚本", "music"):AddButton({
+  Text = "script一",
+  Tooltip = "加载动感星期五脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/ShowerHead-FluxTeam/scripts/main/funky-friday-autoplay",
+      true
+    ))()
+  end,
+})
+
+v8.EnergyAssault:AddLeftGroupbox("能量突击脚本", "battery"):AddButton({
+  Text = "能量突击",
+  Tooltip = "加载能量突击脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/Harley-HUB/Energy-Assault/main/Ene", true
+    ))()
+  end,
+})
+
+v8.CarDealership:AddLeftGroupbox("汽车经销大亨脚本", "car"):AddButton({
+  Text = "英文版",
+  Tooltip = "加载英文版脚本",
+  Func = function()
+    pcall(function()
+      game:IsLoaded()
+      local v33
+
+      repeat
+        task.wait()
+        v33 = game
+      until v33:IsLoaded()
+
+      loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/03sAlt/BlueLockSeason2/main/README.md", true
+      ))()
+    end)
+  end,
+})
+
+local addLeftGroupbox16 = v8.KingLegacy:AddLeftGroupbox("国王遗产脚本", "crown")
+
+for index14, value33 in ipairs({
+  {
+    Text = "trick",
+    URL = "https://raw.githubusercontent.com/Strikehubv2z/StormSKz/main/All_in_one",
+  },
+  {
+    Text = "ipper hub",
+    URL = "https://raw.githubusercontent.com/hajibeza/RIPPER-HUB/main/King%20Leagacy",
+  },
+  {
+    Text = "yper hub",
+    Func = function()
+      game:IsLoaded()
+      local v34
+
+      repeat
+        task.wait()
+        v34 = game
+      until v34:IsLoaded()
+
+      loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/DookDekDEE/Hyper/main/script.lua", true
+      ))()
+    end,
+  },
+}) do
+  local v35 = value33
+
+  if v35.URL then
+    addLeftGroupbox16:AddButton({
+      Text = v35.Text,
+      Tooltip = "点击加载国王遗产脚本",
+      Func = function() loadstring(game:HttpGet(v35.URL, true))() end,
+    })
+  else
+    addLeftGroupbox16:AddButton({
+      Text = v35.Text,
+      Tooltip = "点击加载国王遗产脚本",
+      Func = v35.Func,
+    })
+  end
+end
+
+local addLeftGroupbox17 = v8.ScriptCollection:AddLeftGroupbox("热门游戏脚本", "star")
+local addRightGroupbox8 = v8.ScriptCollection:AddRightGroupbox("鲨口求生2功能", "fish")
+
+for index15, value34 in ipairs({
+  { Text = "自动刷金条(造船寻宝)", URL = "https://pastebin.com/raw/Lyy77rnr" },
+  {
+    Text = "巴掌模拟器",
+    URL = "https://raw.githubusercontent.com/Unknownkellymc1/Unknownscripts/main/slap-battles",
+  },
+  {
+    Text = "Blox Fruit",
+    URL = "https://raw.githubusercontent.com/Frerfgzz/free-script/main/SMZHUBv2BETA",
+  },
+  {
+    Text = "宠物模拟器X",
+    URL = "https://raw.githubusercontent.com/RunDTM/ZeeroxHub/main/Loader.lua",
+  },
+  { Text = "蜂群模拟器", URL = "https://pastebin.com/raw/3A61hnGA" },
+  {
+    Text = "Evade",
+    URL = "https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Evade/script",
+  },
+  { Text = "后室", URL = "https://pastebin.com/raw/Gsqd40fL" },
+  { Text = "Synapse X", URL = "https://pastebin.com/raw/tWGxhNq0" },
+  {
+    Text = "HoHo blox fruit",
+    URL = "https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI",
+  },
+}) do
+  local v36 = value34
+
+  addLeftGroupbox17:AddButton({
+    Text = v36.Text,
+    Tooltip = "点击加载热门游戏脚本",
+    Func = function() loadstring(game:HttpGet(v36.URL, true))() end,
+  })
+end
+
+addLeftGroupbox17:AddButton({
+  Text = "tds查看兵",
+  Tooltip = "查看TDS兵种",
+  Func = function()
+    local playerGui = game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+
+    if playerGui then
+      local interface = playerGui:FindFirstChild("Interface")
+
+      if interface then
+        local root = interface:FindFirstChild("Root")
+
+        if root then
+          local inventory = root:FindFirstChild("Inventory")
+
+          if inventory then
+            local view = inventory:FindFirstChild("View")
+
+            if view then
+              local frame = view:FindFirstChild("Frame")
+
+              if frame then
+                local frame2 = frame:FindFirstChild("Frame")
+
+                if frame2 then
+                  for key4, value35 in pairs(frame2:GetDescendants()) do
+                    if value35:IsA("ImageButton") then
+                      value35.Visible = true
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end,
+})
+
+addRightGroupbox8:AddDropdown({
+  Text = "选择你的免费船(鲨鱼)",
+  Values = { "无", unpack(v28) },
+  Default = "DuckyBoatBeta",
+  Tooltip = "选择免费船只",
+  Callback = function(value36)
+    if value36 ~= "无" then
+      local eventsFolder2 = replicatedStorage:FindFirstChild("EventsFolder")
+
+      if eventsFolder2 then
+        local boatSelection2 = eventsFolder2:FindFirstChild("BoatSelection")
+
+        if boatSelection2 then
+          local updateHostBoat2 = boatSelection2:FindFirstChild("UpdateHostBoat")
+
+          if updateHostBoat2 then
+            updateHostBoat2:FireServer(value36)
+          end
+        end
+      end
+    end
+  end,
+})
+
+addRightGroupbox8:AddButton({
+  Text = "自动杀鲨鱼🦈(鲨鱼)",
+  Tooltip = "自动杀鲨鱼功能",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/Sw1ndlerScripts/RobloxScripts/main/Misc%20Scripts/sharkbite2.lua",
+      true
+    ))()
+  end,
+})
+
+local addLeftGroupbox18 = v8.MajorScripts:AddLeftGroupbox("脚本合集", "folder")
+local addRightGroupbox9 = v8.MajorScripts:AddRightGroupbox("脚本中心合集", "folder-open")
+
+for index16, value37 in ipairs({
+  {
+    Text = "☁脚本",
+    URL = "https://raw.githubusercontent.com/XiaoYunCN/LOL/main/%E4%BA%91%E8%84%9A%E6%9C%ACCloud%20script.lua",
+  },
+  {
+    Text = "USA",
+    Func = function()
+      getgenv().USA = "作者USA免费请勿倒卖"
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/boyscp/beta/main/USA.lua", true))()
+    end,
+  },
+  {
+    Text = "青脚本——支持很多游戏",
+    URL = "https://raw.githubusercontent.com/kkaaccnnbb/money/main/fix",
+  },
+  {
+    Text = "秋脚本",
+    Func = function()
+      loadstring(game:HttpGet(tostring(utf8.char(table.unpack({
+        104, 116, 116, 112, 115, 58, 47, 47, 114, 97, 119, 46, 103, 105, 116, 104, 117, 98, 117,
+        115, 101, 114, 99, 111, 110, 116, 101, 110, 116, 46, 99, 111, 109, 47, 87, 83, 56, 53,
+        55, 57, 54, 48, 47, 45, 47, 109, 97, 105, 110, 47, 37, 69, 55, 37, 65, 55, 37, 56, 66,
+        37, 67, 50, 37, 66, 55, 37, 69, 56, 37, 56, 55, 37, 65, 65, 37, 69, 53, 37, 56, 56, 37,
+        66, 54, 37, 69, 56, 37, 56, 52, 37, 57, 65, 37, 69, 54, 37, 57, 67, 37, 65, 67, 37, 69,
+        54, 37, 57, 54, 37, 66, 48, 37, 69, 54, 37, 66, 65, 37, 57, 48, 37, 69, 55, 37, 65, 48,
+        37, 56, 49, 46, 116, 120, 116,
+      }))), true))()
+    end,
+  },
+  { Text = "冰脚本", URL = "https://pastebin.com/raw/GR4ChWKv" },
+  {
+    Text = "鲨脚本",
+    URL = "https://raw.githubusercontent.com/sharksharksharkshark/shark-shark-shark-shark-shark/main/shark-scriptlollol.txt",
+  },
+  { Text = "怀脚本", URL = "https://raw.githubusercontent.com/zuohongjian/bjb/main/bjb" },
+}) do
+  local v37 = value37
+
+  if v37.URL then
+    addLeftGroupbox18:AddButton({
+      Text = v37.Text,
+      Tooltip = "点击加载脚本合集",
+      Func = function() loadstring(game:HttpGet(v37.URL, true))() end,
+    })
+  else
+    addLeftGroupbox18:AddButton({
+      Text = v37.Text,
+      Tooltip = "点击加载脚本合集",
+      Func = v37.Func,
+    })
+  end
+end
+
+for index17, value38 in ipairs({
+  {
+    Text = "EZ Hub 150+",
+    URL = "https://raw.githubusercontent.com/debug420/Ez-Industries-Launcher-Data/master/Launcher.lua",
+  },
+  {
+    Text = "客户端中心",
+    URL = "https://raw.githubusercontent.com/ObviouslyOrchi/Moonlight_Client.lua/main/Universal",
+  },
+  {
+    Text = "作弊中心",
+    URL = "https://raw.githubusercontent.com/mrgunz/UnnamedCheat/main/Loader",
+  },
+  { Text = "脚本中心", URL = "https://pastebin.com/raw/De4aYHDY" },
+  {
+    Text = "脚本中心外网",
+    URL = "https://raw.githubusercontent.com/TakeModzz/Games-Hub-Script/main/Games%20Hub%20(Always%20updated)",
+  },
+  {
+    Text = "Every day中心",
+    URL = "https://raw.githubusercontent.com/KATERGaming/Roblox/main/KaterHub.Lua",
+  },
+  { Text = "140+中心", URL = "https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub" },
+  {
+    Text = "脚本中心3卡密—released",
+    Func = function()
+      if setclipboard then
+        setclipboard("https://discord.gg/8YZMwfYaNq")
+
+        libraryZhCNLua:Notify({
+          Title = "Discord链接已复制",
+          Description = "请加入Discord获取密钥",
+          Time = 5,
+        })
+      end
+
+      getgenv().key = "JOIN DISCORD FOR KEY"
+
+      loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/Ner0ox/sexy-script-hub/main/Loader.lua", true
+      ))()
+    end,
+  },
+}) do
+  local v38 = value38
+
+  if v38.URL then
+    addRightGroupbox9:AddButton({
+      Text = v38.Text,
+      Tooltip = "点击加载脚本中心",
+      Func = function() loadstring(game:HttpGet(v38.URL, true))() end,
+    })
+  else
+    addRightGroupbox9:AddButton({
+      Text = v38.Text,
+      Tooltip = "点击加载脚本中心",
+      Func = v38.Func,
+    })
+  end
+end
+
+local addLeftGroupbox19 = v8.ArmWrestling:AddLeftGroupbox("掰手腕脚本", "arm")
+
+addLeftGroupbox19:AddButton({
+  Text = "掰手腕",
+  Tooltip = "加载掰手腕脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://api.luarmor.net/files/v3/loaders/99d16edc79729a038994f85ce7335971.lua", true
+    ))()
+  end,
+})
+
+addLeftGroupbox19:AddButton({
+  Text = "脚本2——Key:ScriptJezz",
+  Tooltip = "加载掰手腕脚本2",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/ZhenX201/FE-Infinite-Money-All-Stats/main/source", true
+    ))()
+  end,
+})
+
+local addLeftGroupbox20 = v8.LumberScripts:AddLeftGroupbox("伐木脚本功能", "axe")
+
+for index18, value39 in ipairs({
+  {
+    Text = "先点键盘，再点这个",
+    Func = function()
+      loadstring(game:HttpGet(
+        "https://raw.githubusercontent.com/Butterisgood/butter-hub/main/butters%20recode-obfuscated.lua",
+        true
+      ))("Apple is cute")
+    end,
+  },
+  {
+    Text = "免费白脚本",
+    URL = "https://raw.githubusercontent.com/CloudX-ScriptsWane/ScriptsDache/main/%E4%BC%90%E6%9C%A8%E5%A4%A7%E4%BA%A822.lua",
+  },
+  {
+    Text = "小云bark2.0",
+    URL = "https://raw.githubusercontent.com/XiaoYunCN/UWU/main/bark2.0.lua",
+  },
+}) do
+  local v39 = value39
+
+  if v39.URL then
+    addLeftGroupbox20:AddButton({
+      Text = v39.Text,
+      Tooltip = "点击加载伐木脚本",
+      Func = function() loadstring(game:HttpGet(v39.URL, true))() end,
+    })
+  else
+    addLeftGroupbox20:AddButton({
+      Text = v39.Text,
+      Tooltip = "点击加载伐木脚本",
+      Func = v39.Func,
+    })
+  end
+end
+
+v8.Ohio:AddLeftGroupbox("俄亥俄州脚本", "map"):AddButton({
+  Text = "俄亥俄州",
+  Tooltip = "加载俄亥俄州脚本",
+  Func = function() loadstring(game:HttpGet("https://pastebin.com/raw/hkvHeHed", true))() end,
+})
+
+v8.BeeSwarm:AddLeftGroupbox("蜂群模拟器脚本", "bee"):AddButton({
+  Text = "北约的蜂群",
+  Tooltip = "加载蜂群模拟器脚本",
+  Func = function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/USA868/USA--/main/.github/%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/1%E6%9D%96%E4%BA%BA%E4%BD%93%E4%BD%BF%E7%94%A8",
+      true
+    ))()
+  end,
+})
+
+v8.LuckyBlock:AddLeftGroupbox("幸运方块脚本", "box"):AddButton({
+  Text = "HUA 幸运方块",
+  Tooltip = "加载幸运方块脚本",
+  Func = function() loadstring(game:HttpGet("https://pastebin.com/raw/QS5CcYdU", true))() end,
+})
+
+v8.MM2:AddLeftGroupbox("MM2脚本", "knife"):AddButton({
+  Text = "HUA MM2",
+  Tooltip = "加载MM2脚本",
+  Func = function() loadstring(game:HttpGet("https://pastebin.com/raw/A6z5Ba66", true))() end,
+})
+
+local addLeftGroupbox21 = v8.UISettings:AddLeftGroupbox("UI设置", "wrench")
+
+addLeftGroupbox21:AddToggle("KeybindMenuOpenToggle", {
+  Text = "打开快捷键绑定菜单",
+  Default = libraryZhCNLua.KeybindFrame and libraryZhCNLua.KeybindFrame.Visible or false,
+  Tooltip = "显示/隐藏快捷键绑定菜单",
+  Callback = function(value40)
+    if libraryZhCNLua.KeybindFrame then
+      libraryZhCNLua.KeybindFrame.Visible = value40
+    end
+  end,
+})
+
+addLeftGroupbox21:AddToggle("ShowCustomCursorToggle", {
+  Text = "自定义光标",
+  Default = true,
+  Tooltip = "启用/禁用自定义光标",
+  Callback = function(value41) libraryZhCNLua.ShowCustomCursor = value41 end,
+})
+
+addLeftGroupbox21:AddDropdown("NotificationSideDropdown", {
+  Text = "通知显示位置",
+  Values = { "左边", "右边" },
+  Default = "右边",
+  Tooltip = "设置通知显示位置",
+  Callback = function(value42)
+    local v40
+
+    if libraryZhCNLua.SetNotifySide then
+      if value42 == "左边" then
+        v40 = "Left"
+      else
+        v40 = "Right"
+      end
+
+      libraryZhCNLua:SetNotifySide(v40)
+    end
+  end,
+})
+
+addLeftGroupbox21:AddDropdown("DPIDropdown", {
+  Text = "DPI缩放比例",
+  Values = { "50%", "75%", "100%", "125%", "150%", "175%", "200%" },
+  Default = "100%",
+  Tooltip = "设置UI缩放比例",
+  Callback = function(value43)
+    local v41 = tonumber((value43:gsub("%%", "")))
+
+    if v41 and libraryZhCNLua.SetDPIScale then
+      libraryZhCNLua:SetDPIScale(v41 / 100)
+    end
+  end,
+})
+
+addLeftGroupbox21:AddDivider()
+
+addLeftGroupbox21:AddLabel("菜单快捷键绑定"):AddKeyPicker("MenuKeybind", {
+  Default = "RightShift",
+  NoUI = true,
+  Text = "菜单快捷键绑定",
+  Mode = "Toggle",
+  SyncToggleState = false,
+  Callback = function(value44) print("[夜脚本] 菜单快捷键绑定被点击:", value44) end,
+  ChangedCallback = function(p2, p3) print("[夜脚本] 菜单快捷键已更改:", p2) end,
+})
+
+addLeftGroupbox21:AddButton({
+  Text = "显示当前快捷键",
+  Tooltip = "显示当前设置的快捷键",
+  Func = function()
+    libraryZhCNLua:Notify({
+      Title = "快捷键绑定",
+      Description = "当前菜单快捷键是: "
+        .. (options and options.MenuKeybind and options.MenuKeybind.Value or "RightShift"),
+      Time = 3,
+    })
+  end,
+})
+
+addLeftGroupbox21:AddButton({
+  Text = "卸载UI",
+  Tooltip = "卸载夜脚本",
+  Func = function()
+    if connect then
+      connect:Disconnect()
+      connect = nil
+    end
+
+    if connect2 then
+      connect2:Disconnect()
+      connect2 = nil
+    end
+
+    libraryZhCNLua:Unload()
+  end,
+})
+
+addonsThemeManagerLua:SetLibrary(libraryZhCNLua)
+
+addonsSaveManagerLua:SetLibrary(libraryZhCNLua)
+addonsSaveManagerLua:IgnoreThemeSettings()
+addonsSaveManagerLua:SetIgnoreIndexes({ "MenuKeybind" })
+
+addonsThemeManagerLua:SetFolder("夜脚本")
+
+addonsSaveManagerLua:SetFolder("夜脚本/配置")
+addonsSaveManagerLua:BuildConfigSection(v8.UISettings)
+
+addonsThemeManagerLua:ApplyToTab(v8.UISettings)
+addonsSaveManagerLua:LoadAutoloadConfig()
+libraryZhCNLua.ToggleKeybind = options and options.MenuKeybind or "RightShift"
+print("[夜脚本] v1.0 已完全加载")
