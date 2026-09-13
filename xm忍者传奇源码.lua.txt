@@ -1,0 +1,525 @@
+local WindUI = loadstring(game:HttpGet('https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua'))()
+
+WindUI.TransparencyValue = 0.2
+WindUI:SetTheme('Dark')
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Window = WindUI:CreateWindow({
+    User = {
+        Enabled = true,
+        Callback = function()
+            WindUI:Notify({
+                Duration = 2,
+                Title = "欢迎使用",
+                Content = "XM忍者传奇已启动",
+            })
+        end,
+    },
+    Author = "作者XM",
+    Folder = "NinjaLegends",
+    Title = "XM忍者传奇",
+    ScrollBarEnabled = true,
+    SideBarWidth = 220,
+    Theme = "Dark",
+    Icon = "sword",
+    Size = UDim2.fromOffset(650, 520),
+})
+
+local CoinTab = Window:Tab({
+    Locked = false,
+    Title = " 金币",
+    Icon = "circle-dollar-sign",
+})
+
+CoinTab:Section({
+    TextSize = 17,
+    Title = "全图自动传送",
+    TextXAlignment = "Left",
+})
+
+local autoCollectTask = nil
+local coinPositions = {}
+local currentCoinIndex = 0
+local stayTime = 3
+local switchDelay = 0.5
+
+local function scanCoins()
+    coinPositions = {}
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            local nameLower = string.lower(obj.Name)
+            if string.find(nameLower, "hoop") then
+                table.insert(coinPositions, obj.Position)
+            end
+        end
+    end
+    return coinPositions
+end
+
+CoinTab:Button({
+    Title = "▶ 自动收集金币",
+    Callback = function()
+        scanCoins()
+        if #coinPositions == 0 then
+            WindUI:Notify({
+                Duration = 2,
+                Title = "错误",
+                Content = "未找到金币圆环",
+            })
+            return
+        end
+
+        autoCollectTask = task.spawn(function()
+            while true do
+                for _, pos in ipairs(coinPositions) do
+                    local character = LocalPlayer.Character
+                    if character and character.Parent then
+                        local hrp = character:FindFirstChild("HumanoidRootPart")
+                        if hrp then
+                            hrp.CFrame = CFrame.new(pos + Vector3.new(0, 5, 0))
+                        end
+                    end
+                    task.wait(stayTime)
+                    task.wait(1)
+                    task.wait(switchDelay)
+                end
+            end
+        end)
+
+        WindUI:Notify({
+            Duration = 2,
+            Title = "启动",
+            Content = "开始全图循环传送",
+        })
+    end,
+})
+
+CoinTab:Button({
+    Title = " 停止循环传送",
+    Callback = function()
+        if autoCollectTask then
+            task.cancel(autoCollectTask)
+            autoCollectTask = nil
+        end
+        WindUI:Notify({
+            Duration = 2,
+            Title = "停止",
+            Content = "循环传送已停止",
+        })
+    end,
+})
+
+CoinTab:Slider({
+    Value = {
+        Min = 1,
+        Default = 3,
+        Max = 8,
+    },
+    Callback = function(value)
+        stayTime = value
+        WindUI:Notify({
+            Duration = 1,
+            Title = "设置",
+            Content = "停留时间改为 " .. value .. " 秒",
+        })
+    end,
+    Title = "每个圆环停留时间 (秒)",
+    Step = 0.5,
+})
+
+CoinTab:Slider({
+    Value = {
+        Min = 0.2,
+        Default = 0.5,
+        Max = 2,
+    },
+    Callback = function(value)
+        switchDelay = value
+        WindUI:Notify({
+            Duration = 1,
+            Title = "设置",
+            Content = "环间切换延迟改为 " .. value .. " 秒",
+        })
+    end,
+    Title = "环间切换延迟 (秒)",
+    Step = 0.1,
+})
+
+CoinTab:Button({
+    Title = " 扫描当前圆环数量",
+    Callback = function()
+        local count = #scanCoins()
+        WindUI:Notify({
+            Duration = 2,
+            Title = "扫描结果",
+            Content = "当前地图共有 " .. count .. " 个金币圆环",
+        })
+    end,
+})
+
+local ChiTab = Window:Tab({
+    Locked = false,
+    Title = " 自动集气",
+    Icon = "wind",
+})
+
+local autoChiTask = nil
+local chiPositions = {}
+local chiWaitTime = 0.3
+
+local function scanChi()
+    chiPositions = {}
+    for _, obj in ipairs(workspace:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            local nameLower = string.lower(obj.Name)
+            if string.find(nameLower, "chi") and obj:FindFirstChild("TouchInterest") then
+                table.insert(chiPositions, obj.Position)
+            end
+        end
+    end
+    return chiPositions
+end
+
+ChiTab:Button({
+    Title = "▶ 自动收集气",
+    Callback = function()
+        scanChi()
+        if #chiPositions == 0 then
+            WindUI:Notify({
+                Duration = 2,
+                Title = "错误",
+                Content = "未找到Chi",
+            })
+            return
+        end
+
+        autoChiTask = task.spawn(function()
+            while true do
+                for _, pos in ipairs(chiPositions) do
+                    local character = LocalPlayer.Character
+                    if character and character.Parent then
+                        local hrp = character:FindFirstChild("HumanoidRootPart")
+                        if hrp then
+                            hrp.CFrame = CFrame.new(pos)
+                        end
+                    end
+                    task.wait(chiWaitTime)
+                end
+            end
+        end)
+
+        WindUI:Notify({
+            Duration = 2,
+            Title = "启动",
+            Content = "开始自动收集Chi",
+        })
+    end,
+})
+
+ChiTab:Button({
+    Title = " 停止",
+    Callback = function()
+        if autoChiTask then
+            task.cancel(autoChiTask)
+            autoChiTask = nil
+        end
+        WindUI:Notify({
+            Duration = 2,
+            Title = "停止",
+            Content = "集气已停止",
+        })
+    end,
+})
+
+ChiTab:Slider({
+    Value = {
+        Min = 0.1,
+        Default = 0.3,
+        Max = 2,
+    },
+    Callback = function(value)
+        chiWaitTime = value
+        WindUI:Notify({
+            Duration = 1,
+            Title = "设置",
+            Content = "等待时间改为 " .. value .. " 秒",
+        })
+    end,
+    Title = "到达后等待时间 (秒)",
+    Step = 0.1,
+})
+
+ChiTab:Button({
+    Title = "🔍 扫描Chi数量",
+    Callback = function()
+        local count = #scanChi()
+        WindUI:Notify({
+            Duration = 2,
+            Title = "扫描结果",
+            Content = "当前地图共有 " .. count .. " 个Chi",
+        })
+    end,
+})
+
+local TrainTab = Window:Tab({
+    Locked = false,
+    Title = "⚔️ 自动锻炼",
+    Icon = "sword",
+})
+
+local autoSwingTask = nil
+local swingInterval = 0.01
+
+TrainTab:Button({
+    Title = "▶ 自动锻炼 (swingKatana)",
+    Callback = function()
+        local ninjaEvent = LocalPlayer:WaitForChild("ninjaEvent", 3)
+        if not ninjaEvent then
+            WindUI:Notify({
+                Duration = 2,
+                Title = "错误",
+                Content = "未找到ninjaEvent",
+            })
+            return
+        end
+
+        autoSwingTask = task.spawn(function()
+            while true do
+                ninjaEvent:FireServer("swingKatana")
+                task.wait(swingInterval)
+            end
+        end)
+
+        WindUI:Notify({
+            Duration = 2,
+            Title = "启动",
+            Content = "自动锻炼已开启",
+        })
+    end,
+})
+
+TrainTab:Button({
+    Title = "  停止锻炼",
+    Callback = function()
+        if autoSwingTask then
+            task.cancel(autoSwingTask)
+            autoSwingTask = nil
+        end
+    end,
+})
+
+TrainTab:Slider({
+    Value = {
+        Min = 0.005,
+        Default = 0.01,
+        Max = 0.1,
+    },
+    Callback = function(value)
+        swingInterval = value
+    end,
+    Title = "挥刀间隔 (秒)  — 数值越小越快，风险越高",
+    Step = 0.005,
+})
+
+local JumpTab = Window:Tab({
+    Locked = false,
+    Title = "🏃 立定跳远",
+    Icon = "move",
+})
+
+local jumpEnabled = false
+local jumpDistance = 20
+
+JumpTab:Button({
+    Title = "🔘 启用立定跳远",
+    Callback = function()
+        jumpEnabled = not jumpEnabled
+        WindUI:Notify({
+            Duration = 1,
+            Title = "设置",
+            Content = jumpEnabled and "立定跳远已启用" or "立定跳远已禁用",
+        })
+    end,
+})
+
+JumpTab:Slider({
+    Value = {
+        Min = 5,
+        Default = 20,
+        Max = 50,
+    },
+    Callback = function(value)
+        jumpDistance = value
+    end,
+    Title = "跳跃距离 (格)",
+    Step = 1,
+})
+
+JumpTab:Paragraph({
+    Image = "",
+    Title = "📐 当前设定",
+    Buttons = {},
+    Color = "Grey",
+    ImageSize = 20,
+})
+
+JumpTab:Button({
+    Title = "📋 显示当前配置",
+    Callback = function()
+        WindUI:Notify({
+            Duration = 2,
+            Title = "跳远配置",
+            Content = "状态: " .. (jumpEnabled and "启用" or "禁用") .. " | 距离: " .. jumpDistance .. "格",
+        })
+    end,
+})
+
+JumpTab:Paragraph({
+    Image = "",
+    Title = "💡 使用说明",
+    Buttons = {},
+    Color = "Grey",
+    ImageSize = 0,
+})
+
+JumpTab:Paragraph({
+    Image = "",
+    Title = "• 启用后，每次按下空格（跳跃）会自动向前冲刺设定的距离。\n• 冲刺期间有向上辅助力，跳跃更远更流畅。\n• 距离越大，前冲速度越快，请根据服务器容忍度调整。",
+    Buttons = {},
+    Color = "White",
+    ImageSize = 0,
+})
+
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if jumpEnabled then
+        local character = LocalPlayer.Character
+        if character and character.Parent then
+            local hrp = character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                local direction = hrp.CFrame.LookVector
+                local targetPos = hrp.Position + direction * jumpDistance
+                hrp.CFrame = CFrame.new(targetPos)
+            end
+        end
+    end
+end)
+
+local AboutTab = Window:Tab({
+    Locked = false,
+    Title = "ℹ️ 关于",
+    Icon = "info",
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "使用说明",
+    Buttons = {
+        [1] = {
+            Callback = function() end,
+            Icon = "copy",
+            Title = "复制版本号",
+            Variant = "Tertiary",
+        },
+    },
+    Color = "Grey",
+    ImageSize = 20,
+})
+
+AboutTab:Paragraph({
+    Title = "功能列表",
+    Buttons = {},
+})
+
+AboutTab:Section({
+    TextSize = 15,
+    Title = "目前有四个功能❤️",
+    TextXAlignment = "Left",
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "1. 金币圆环传送",
+    Buttons = {},
+    Color = "White",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "   自动扫描全图所有金币圆环，按顺序传送并收集金币，支持停留时间调节。",
+    Buttons = {},
+    Color = "Grey",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "2. 自动收集气 (Chi)",
+    Buttons = {},
+    Color = "White",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "   传送并触碰所有 Chi 球体，自动升级气属性。",
+    Buttons = {},
+    Color = "Grey",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "3. 自动锻炼 (swingKatana)",
+    Buttons = {},
+    Color = "White",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "   以极快速度调用 ninjaEvent 挥刀，提升锻炼数值，间隔可自定义。",
+    Buttons = {},
+    Color = "Grey",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "4. 立定跳远 (NEW)",
+    Buttons = {},
+    Color = "White",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "   跳跃时自动向前冲刺可调节距离，实现远距离移动。",
+    Buttons = {},
+    Color = "Grey",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "⚠️ 注意",
+    Buttons = {},
+    Color = "Red",
+    ImageSize = 0,
+})
+
+AboutTab:Paragraph({
+    Image = "",
+    Title = "   • 所有功能相互独立，可同时运行。\n   • 自动锻炼速度过快可能被服务器踢出，请适当调大间隔。\n   • 立定跳远距离过大可能引起反作弊检测，建议设置在 20-30 格之间。\n   • 如果圆环或Chi扫描数量为0，请确认已进入正确的地图区域。",
+    Buttons = {},
+    Color = "Grey",
+    ImageSize = 0,
+})
+
+WindUI:Notify({
+    Duration = 3,
+    Title = "加载完成",
+    Content = "感谢使用XM，点击侧边栏使用立定跳远",
+})

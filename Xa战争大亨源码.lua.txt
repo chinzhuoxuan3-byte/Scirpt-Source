@@ -1,0 +1,474 @@
+--Yeskid
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Library/Fluent.lua"))()
+local Options = Fluent.Options
+local Lighting = game:GetService("Lighting")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+local Humanoid = Character:WaitForChild("Humanoid", 5)
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart", 5)
+local CurrentCamera = workspace.CurrentCamera
+local ScreenCenter = CurrentCamera.ViewportSize / 2
+local Tycoons = workspace.Tycoon.Tycoons
+local RocketSystem = ReplicatedStorage.RocketSystem
+local FireRocket = RocketSystem.Events.FireRocket
+local RocketHit = RocketSystem.Events.RocketHit
+local FireRocketClient = RocketSystem.Events.FireRocketClient
+local WeldCrate = ReplicatedStorage.TankCrates.WeldCrate
+local GunSettings = {}
+local LastRocketTime = 0
+
+local function GetMyTycoon()
+    return Tycoons:FindFirstChild(LocalPlayer.Team.Name)
+end
+
+local function GetEnemyShield()
+    for _, tycoon in pairs(Tycoons:GetChildren()) do
+        local PurchasedObjects = tycoon.PurchasedObjects
+        local Shield = PurchasedObjects:FindFirstChild("Base Shield")
+        if Shield then
+            local ShieldPart = Shield:FindFirstChild("Shield1", true)
+            if ShieldPart and (HumanoidRootPart.Position - ShieldPart.Position).Magnitude <= 1000 then
+                return ShieldPart
+            end
+        end
+    end
+    return nil
+end
+
+local function FireRocketWithCooldown(targetPos, unit, rpg, target)
+    if tick() - LastRocketTime < 0.1 then
+        return
+    end
+    LastRocketTime = tick()
+    FireRocket:InvokeServer(unit, rpg, rpg, targetPos, nil)
+    RocketHit:FireServer(targetPos, unit, rpg, rpg, target, LocalPlayer.Name .. "Rocket1")
+end
+
+local OldNamecall
+OldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+    if not checkcaller() and getnamecallmethod() == "FireServer" then
+        if self.Name == "BulletHit" and Options.GunMod.Value then
+            local args = {...}
+            args[6] = GunSettings[self.Name]
+            return OldNamecall(self, unpack(args))
+        end
+        if self.Name == "FDMG" and Options.NoFDMG.Value then
+            return
+        end
+    end
+    return OldNamecall(self, ...)
+end)
+
+local Window = Fluent:CreateWindow({
+    Title = "XA Hub",
+    SubTitle = "战争大亨",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(550, 350),
+    Acrylic = false,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+local MainTab = Window:AddTab({
+    Title = "主要",
+    Icon = ""
+})
+
+local AutoTab = Window:AddTab({
+    Title = "自动",
+    Icon = ""
+})
+
+local TeleportTab = Window:AddTab({
+    Title = "传送",
+    Icon = ""
+})
+
+local MiscTab = Window:AddTab({
+    Title = "其他",
+    Icon = ""
+})
+
+local SettingsTab = Window:AddTab({
+    Title = "设置",
+    Icon = "settings"
+})
+
+MainTab:AddToggle("GunMod", {
+    Title = "枪械修改",
+    Default = false,
+    Callback = function(Value)
+        local ACS_Guns = ReplicatedStorage.Configurations.ACS_Guns
+        for _, gun in pairs(ACS_Guns:GetChildren()) do
+            local Settings = gun.Settings
+            local Clone = Settings:Clone()
+            Clone.Parent = gun
+            Clone.Name = "clone"
+            GunSettings[gun.Name] = require(Clone)
+            local GunConfig = require(gun.Settings)
+            GunConfig.Ammo = math.huge
+            GunConfig.FireRate = 2000
+            GunConfig.Distance = 9999
+            GunConfig.MaxSpread = 0
+            GunConfig.MinSpread = 0
+            GunConfig.HRecoil = {0, 0}
+            GunConfig.VRecoil = {0, 0}
+            if gun.Name ~= "RPG" then
+                GunConfig.Mode = "Auto"
+            end
+        end
+    end
+})
+
+MainTab:AddToggle("AntiOverheat", {
+    Title = "机枪防过热",
+    Default = false,
+    Callback = function(Value)
+        local CRAM = GetMyTycoon().PurchasedObjects.CRAM.CRAM
+        CRAM:GetAttributeChangedSignal("BulletCount"):Connect(function()
+            if Options.AntiOverheat.Value then
+                CRAM:SetAttribute("BulletCount", 0)
+            end
+        end)
+    end
+})
+
+MainTab:AddToggle("NoFDMG", {
+    Title = "无掉落伤害",
+    Default = false
+})
+
+MainTab:AddSection("RPG")
+
+MainTab:AddButton({
+    Title = "获取RPG",
+    Callback = function()
+        local OldCFrame = HumanoidRootPart.CFrame
+        for _, tycoon in pairs(Tycoons:GetChildren()) do
+            local PurchasedObjects = tycoon.PurchasedObjects
+            local RPGGiver = PurchasedObjects:FindFirstChild("RPG Giver")
+            if RPGGiver then
+                Character:PivotTo(RPGGiver.CFrame)
+                task.wait(0.5)
+                fireproximityprompt(RPGGiver["Weapon Giver"])
+                Character:PivotTo(OldCFrame)
+                break
+            end
+        end
+    end
+})
+
+MainTab:AddToggle("RocketSpam", {
+    Title = "RPG轰炸 (请先装备)",
+    Default = false,
+    Callback = function(Value)
+        while Options.RocketSpam.Value do
+            task.wait(0.1)
+            local RPG = Character:FindFirstChild("RPG")
+            if not RPG then continue end
+            for _, player in pairs(Players:GetPlayers()) do
+                if player == LocalPlayer then continue end
+                local TargetCharacter = player.Character
+                if not TargetCharacter then continue end
+                local TargetHRP = TargetCharacter:FindFirstChild("HumanoidRootPart")
+                if not TargetHRP then continue end
+                if not Options.RocketSpam.Value then break end
+                local Unit = (TargetHRP.Position - HumanoidRootPart.Position).Unit
+                FireRocket:InvokeServer(Unit, RPG, RPG, TargetHRP.Position, nil)
+                RocketHit:FireServer(TargetHRP.Position, Unit, RPG, RPG, TargetHRP, LocalPlayer.Name .. "Rocket1")
+                task.wait(0.3)
+            end
+        end
+    end
+})
+
+MainTab:AddToggle("ShieldSpam", {
+    Title = "攻击基地护盾",
+    Default = false,
+    Callback = function(Value)
+        while Options.ShieldSpam.Value do
+            task.wait()
+            local RPG = Character:FindFirstChild("RPG")
+            if not RPG then continue end
+            local Shield = GetEnemyShield()
+            if not Shield then continue end
+            local Unit = (Shield.Position - HumanoidRootPart.Position).Unit
+            FireRocketWithCooldown(Shield.Position, Unit, RPG, Shield)
+            task.wait(0.3)
+        end
+    end
+})
+
+MainTab:AddToggle("AutoFireRocket", {
+    Title = "自动发射rpg",
+    Default = false,
+    Callback = function(Value)
+        while Options.AutoFireRocket.Value do
+            task.wait(0.3)
+            local RPG = Character:FindFirstChild("RPG")
+            if not RPG then continue end
+            local LookVector = CurrentCamera.CFrame.LookVector
+            local Position = CurrentCamera.CFrame.Position
+            FireRocket:InvokeServer(LookVector, RPG, RPG, Position, nil)
+            FireRocketClient:Fire(Position, LookVector, require(RPG.RocketSettings), RocketSystem.Rockets["RPG Rocket"], RPG, RPG, LocalPlayer, nil, {CurrentCamera.RPG.RPG})
+        end
+    end
+})
+
+AutoTab:AddToggle("AutoBuy", {
+    Title = "自动购买",
+    Default = false,
+    Callback = function(Value)
+        while Options.AutoBuy.Value do
+            task.wait()
+            local UnpurchasedButtons = GetMyTycoon().UnpurchasedButtons
+            for _, button in pairs(UnpurchasedButtons:GetChildren()) do
+                if not Options.AutoBuy.Value then break end
+                if button:FindFirstChild("Mission") then continue end
+                local Neon = button:FindFirstChild("Neon")
+                local Price = button:FindFirstChild("Price")
+                if Neon and Price then
+                    HumanoidRootPart.CFrame = CFrame.new(Neon.Position)
+                    task.wait(0.5)
+                end
+            end
+        end
+    end
+})
+
+AutoTab:AddToggle("AutoCrate", {
+    Title = "自动偷箱子",
+    Default = false,
+    Callback = function(Value)
+        while Options.AutoCrate.Value do
+            task.wait()
+            local CrateWorkspace = workspace["Game Systems"]["Crate Workspace"]
+            local Crates = CrateWorkspace:GetChildren()
+            if #Crates == 0 then
+                local TycoonList = Tycoons:GetChildren()
+                Character:PivotTo(TycoonList[math.random(1, #TycoonList)].Floor.FloorOrigin.CFrame)
+                task.wait(1)
+                continue
+            end
+            for _, crate in pairs(Crates) do
+                if not Options.AutoCrate.Value then break end
+                while crate:GetAttribute("Owner") ~= LocalPlayer.Name do
+                    if not crate:FindFirstChild("StealPrompt") then break end
+                    Character:PivotTo(crate.CFrame)
+                    task.wait(0.5)
+                    WeldCrate:InvokeServer(crate)
+                    local OilCollector = GetMyTycoon().Essentials["Oil Collector"]
+                    if not OilCollector:FindFirstChild("CratePromptPart") then
+                        Character:PivotTo(GetMyTycoon().Floor.FloorOrigin.CFrame)
+                        task.wait(1)
+                        local CratePromptPart = OilCollector:WaitForChild("CratePromptPart")
+                        Character:PivotTo(CratePromptPart.CFrame)
+                        task.wait(0.5)
+                        fireproximityprompt(CratePromptPart.SellPrompt)
+                        task.wait(0.5)
+                        break
+                    end
+                end
+            end
+        end
+    end
+})
+
+AutoTab:AddToggle("AutoBarrel", {
+    Title = "自动偷油",
+    Default = false,
+    Callback = function(Value)
+        while Options.AutoBarrel.Value do
+            task.wait()
+            local Warehouses = workspace["Game Systems"].Warehouses
+            for _, warehouse in pairs(Warehouses:GetChildren()) do
+                if not Options.AutoBarrel.Value then break end
+                local OilCapture = warehouse:FindFirstChild("Oil Capture")
+                if not OilCapture then continue end
+                Character:PivotTo(OilCapture:GetPivot())
+                task.wait(1)
+                local BarrelPickup = warehouse:FindFirstChild("BarrelPickup", true)
+                if BarrelPickup then
+                    BarrelPickup.MaxActivationDistance = 10
+                    BarrelPickup:InputHoldBegin()
+                    task.wait(BarrelPickup.HoldDuration + 0.5)
+                    local OilCollector = GetMyTycoon().Essentials["Oil Collector"]
+                    Character:PivotTo(GetMyTycoon().Floor.FloorOrigin.CFrame)
+                    task.wait(1)
+                    local DropPrompt = OilCollector:FindFirstChild("dropPrompt")
+                    if DropPrompt then
+                        Character:PivotTo(OilCollector:GetPivot())
+                        task.wait(0.5)
+                        fireproximityprompt(DropPrompt)
+                        task.wait(0.5)
+                    end
+                end
+            end
+        end
+    end
+})
+
+AutoTab:AddToggle("AutoAirdrop", {
+    Title = "自动收集空投",
+    Default = false,
+    Callback = function(Value)
+        while Options.AutoAirdrop.Value do
+            task.wait()
+            for _, obj in pairs(workspace["Game Systems"]:GetChildren()) do
+                if not Options.AutoAirdrop.Value then break end
+                if obj.Name:match("Airdrop_") then
+                    local MainPart = obj:FindFirstChild("MainPart")
+                    local AirDropPrompt = obj:FindFirstChild("AirDropPrompt", true)
+                    if MainPart and AirDropPrompt then
+                        Character:PivotTo(MainPart.CFrame)
+                        task.wait(0.5)
+                        fireproximityprompt(AirDropPrompt)
+                        task.wait()
+                    end
+                end
+            end
+        end
+    end
+})
+
+workspace["Game Systems"].ChildAdded:Connect(function(child)
+    if not Options.AutoAirdrop.Value then return end
+    if child.Name:match("Airdrop_") then
+        local MainPart = child:FindFirstChild("MainPart")
+        local AirDropPrompt = child:FindFirstChild("AirDropPrompt", true)
+        if MainPart and AirDropPrompt then
+            Character:PivotTo(MainPart.CFrame)
+            task.wait(0.5)
+            fireproximityprompt(AirDropPrompt)
+        end
+    end
+end)
+
+LocalPlayer.CharacterAdded:Connect(function(newChar)
+    Character = newChar
+    Humanoid = newChar:WaitForChild("Humanoid")
+    HumanoidRootPart = newChar:WaitForChild("HumanoidRootPart")
+end)
+
+RunService.RenderStepped:Connect(function()
+    if Options.WalkSpeed.IsMoved and Humanoid then
+        Humanoid.WalkSpeed = Options.WalkSpeed.Value
+    end
+    if Options.JumpPower.IsMoved and Humanoid then
+        Humanoid.JumpPower = Options.JumpPower.Value
+    end
+    if Options.Noclip.Value and Character then
+        for _, part in pairs(Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
+            end
+        end
+    end
+    if Options.Fullbright.Value then
+        Lighting.Ambient = Color3.new(1, 1, 1)
+    end
+end)
+
+UserInputService.JumpRequest:Connect(function()
+    if Options.InfJump.Value and Humanoid then
+        Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end)
+
+TeleportTab:AddButton({
+    Title = "传送回你的基地",
+    Callback = function()
+        Character:PivotTo(GetMyTycoon().Floor.FloorOrigin.CFrame)
+    end
+})
+
+TeleportTab:AddDropdown("SelectedBase", {
+    Title = "选择基地",
+    Values = (function()
+        local BaseNames = {}
+        for _, tycoon in pairs(Tycoons:GetChildren()) do
+            table.insert(BaseNames, tycoon.Name)
+        end
+        return BaseNames
+    end)(),
+    Multi = false
+})
+
+TeleportTab:AddButton({
+    Title = "传送",
+    Callback = function()
+        Character:PivotTo(Tycoons[Options.SelectedBase.Value].Floor.FloorOrigin.CFrame)
+    end
+})
+
+TeleportTab:AddButton({
+    Title = "捕获点",
+    Callback = function()
+        Character:PivotTo(workspace.Beams.CapturePoint1.CFrame)
+    end
+})
+
+MiscTab:AddSlider("WalkSpeed", {
+    Title = "移动速度",
+    Default = 16,
+    Min = 0,
+    Max = 500,
+    Rounding = 1
+})
+
+MiscTab:AddSlider("JumpPower", {
+    Title = "跳跃高度",
+    Default = 50,
+    Min = 0,
+    Max = 500,
+    Rounding = 1
+})
+
+MiscTab:AddButton({
+    Title = "飞行",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/FlyGuiV3"))()
+    end
+})
+
+MiscTab:AddToggle("Noclip", {
+    Title = "穿墙",
+    Default = false,
+    Callback = function(Value)
+        if not Value then
+            Humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+        end
+    end
+})
+
+MiscTab:AddToggle("Fullbright", {
+    Title = "夜视",
+    Default = false,
+    Callback = function(Value)
+        if not Value then
+            Lighting.Ambient = Color3.new(0, 0, 0)
+        end
+    end
+})
+
+MiscTab:AddToggle("InfJump", {
+    Title = "无限跳",
+    Default = false
+})
+
+Fluent:SetLibrary(Fluent)
+Fluent:SetFolder("XA-Hub/Fluent")
+Fluent:BuildInterfaceSection(SettingsTab)
+
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+SaveManager:SetLibrary(Fluent)
+SaveManager:SetFolder("XA-Hub/Fluent/" .. game.PlaceId)
+SaveManager:IgnoreThemeSettings()
+SaveManager:BuildConfigSection(SettingsTab)
+SaveManager:LoadAutoloadConfig()
+
+Window:SelectTab(1)

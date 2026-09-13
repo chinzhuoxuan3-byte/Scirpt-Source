@@ -1,0 +1,1375 @@
+--YSKID
+
+local u1 = loadstring(game:HttpGet('https://raw.githubusercontent.com/ChinaQY/UI/Main/NotificationUI.lua'))()
+
+function Notify(p2)
+    u1:ForceNotify({
+        Name = '��云 & DX | Forsaken',
+        Text = p2,
+        Icon = 'rbxassetid://11401835376',
+        Duration = 5,
+    })
+end
+
+local u3 = 'https://raw.githubusercontent.com/ChinaQY/Scripts/Main/Authentication.json'
+local _, _ = pcall(function()
+    Data = game:HttpGet(u3)
+    Data = game:GetService('HttpService'):JSONDecode(Data)
+end)
+local v4, v5, v6 = pairs(Data.Data.Forsaken)
+local v7 = {
+    Version = '1.0',
+    Blacklist = true,
+}
+local v8 = true
+
+while true do
+    local v9
+
+    v6, v9 = v4(v5, v6)
+
+    if v6 == nil then
+        break
+    end
+    if v7[v6] then
+        if v9 ~= v7[v6] then
+            warn(v6 .. ' 不是预期值 ' .. v7[v6])
+            warn('��确值为' .. Data.Data.Forsaken[v6])
+
+            v8 = false
+        end
+    else
+        warn('Key ' .. v6 .. ' not found in Auth table')
+
+        v8 = false
+    end
+end
+
+local _Name = game.Players:GetPlayerByUserId(game.Players.LocalPlayer.UserId).Name
+local u11 = loadstring(game:HttpGet('https://raw.githubusercontent.com/ChinaQY/Scripts/Main/Blacklist.lua'))()
+local v17, v18 = (function(p12)
+    local v13, v14, v15 = pairs(u11)
+
+    while true do
+        local v16
+
+        v15, v16 = v13(v14, v15)
+
+        if v15 == nil then
+            break
+        end
+        if v16[1] == p12 then
+            return v16[2], v16[3]
+        end
+    end
+
+    return false
+end)(_Name)
+
+if v8 then
+    Notify('��证成功')
+
+    if game:GetService('UserInputService').KeyboardEnabled and game:GetService('UserInputService').MouseEnabled then
+        Notify('F5 Hide UI')
+    elseif game:GetService('UserInputService').TouchEnabled then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/ChinaQY/UI/Main/OpenUI.lua'))()
+    end
+
+    local u19 = loadstring(game:HttpGet('https://raw.githubusercontent.com/ChinaQY/UI/Main/VapeUI.lua'))()
+    local v20 = u19:Window('��云 & DX | Forsaken | 注入器 : ' .. identifyexecutor(), Color3.fromRGB(44, 120, 224))
+
+    if v17 == false then
+        local v21 = v20:Tab('��要')
+
+        local function u30(p22, p23, p24, p25, p26)
+            if p26 then
+                local _Highlight = Instance.new('Highlight')
+
+                _Highlight.Parent = p22
+                _Highlight.FillColor = p23
+                _Highlight.FillTransparency = 0.5
+                _Highlight.Name = 'QYHighlight'
+            end
+
+            local _BillboardGui = Instance.new('BillboardGui')
+
+            _BillboardGui.AlwaysOnTop = true
+            _BillboardGui.Parent = p22
+            _BillboardGui.Size = p24
+            _BillboardGui.StudsOffset = Vector3.new(0, 1, 0)
+            _BillboardGui.Name = 'QY'
+
+            local _TextLabel = Instance.new('TextLabel')
+
+            _TextLabel.Text = p25
+            _TextLabel.Font = Enum.Font.SourceSans
+            _TextLabel.FontSize = Enum.FontSize.Size24
+            _TextLabel.TextColor3 = p23
+            _TextLabel.BackgroundTransparency = 1
+            _TextLabel.Size = p24
+            _TextLabel.Parent = _BillboardGui
+            _TextLabel.Name = 'QY'
+            _TextLabel.TextStrokeTransparency = 0
+            _TextLabel.TextStrokeColor3 = Color3.new(1, 1, 1)
+
+            return p26, _BillboardGui
+        end
+
+        local u31 = {
+            ['!@Gubby'] = 'Gubby',
+            ['!Brimstone'] = 'Brimstone',
+            ['!DukeErisia'] = 'DukeErisia',
+            ['!Erlking'] = '!Erlking',
+            ['!Herobrine'] = 'Herobrine',
+            ['!Sancho'] = 'Sancho',
+            ['!SukunaKiller'] = 'SukunaKiller',
+            ['1x1x1x1'] = '1x1x1x1',
+            Jason = 'Jason',
+            JohnDoe = 'John Doe',
+            Noli = 'Noli',
+            Slasher = 'Slasher',
+            _1x1x1x1kaiserreworkcuzihatehim = '1x1x1x1kaiserreworkcuzihatehim',
+            _Slasher = 'Slasher',
+            c00lkidd = 'c00lkidd',
+        }
+        local u32 = {
+            ['#MArtist'] = 'MArtist',
+            ['#SWATOfficer'] = 'SWATOfficer',
+            ['007n7'] = '007n7',
+            Builderman = 'Builderman',
+            Chance = 'Chance',
+            Dusekkar = 'Dusekkar',
+            Elliot = 'Elliot',
+            Guest1337 = 'Guest 1337',
+            Noob = 'Noob',
+            Shedletsky = 'Shedletsky',
+            Taph = 'Taph',
+            TwoTime = 'Two Time',
+        }
+        local u33 = {
+            AssaultRifle = 'Assault Rifle',
+            BloxyCola = 'Bloxy Cola',
+            Broadsword = 'Broadsword',
+            Epicsauce = 'Epicsauce',
+            FakeBloxyCola = 'Fake Bloxy Cola',
+            FakeMedkit = 'Fake Medkit',
+            Flashlight = 'Flashlight',
+            Glock = 'Glock',
+            GravityGun = 'Gravity Gun',
+            Medkit = 'Medkit',
+        }
+
+        v21:Toggle('��手透视 | Killer ESP', false, function(p34)
+            if p34 then
+                KillerESP = workspace.Players.DescendantAdded:Connect(function(p35)
+                    if u31[p35.Name] and p35.Parent.Name == 'Killers' then
+                        local _, _ = u30(p35, Color3.new(1, 0, 0), UDim2.new(0, 100, 0, 50), u31[p35.Name], true)
+                    end
+                end)
+
+                local v36, v37, v38 = ipairs(workspace.Players:GetDescendants())
+
+                while true do
+                    local v39
+
+                    v38, v39 = v36(v37, v38)
+
+                    if v38 == nil then
+                        break
+                    end
+                    if u31[v39.Name] and v39.Parent.Name == 'Killers' then
+                        local _, _ = u30(v39, Color3.new(1, 0, 0), UDim2.new(0, 100, 0, 50), u31[v39.Name], true)
+                    end
+                end
+            else
+                if KillerESP then
+                    KillerESP:Disconnect()
+                end
+
+                local v40, v41, v42 = ipairs(workspace.Players:GetDescendants())
+
+                while true do
+                    local v43
+
+                    v42, v43 = v40(v41, v42)
+
+                    if v42 == nil then
+                        break
+                    end
+                    if u31[v43.Name] and v43.Parent.Name == 'Killers' then
+                        v43.QYHighlight:Destroy()
+                        v43.QY:Destroy()
+                    end
+                end
+            end
+        end)
+        v21:Toggle('��存者透视 | Survivor ESP', false, function(p44)
+            if p44 then
+                SurvivorESP = workspace.Players.Survivors.DescendantAdded:Connect(function(p45)
+                    if u32[p45.Name] then
+                        local _, _ = u30(p45, Color3.new(0, 1, 0), UDim2.new(0, 100, 0, 50), u32[p45.Name], true)
+                    end
+                end)
+
+                local v46, v47, v48 = ipairs(workspace.Players.Survivors:GetDescendants())
+
+                while true do
+                    local v49
+
+                    v48, v49 = v46(v47, v48)
+
+                    if v48 == nil then
+                        break
+                    end
+                    if u32[v49.Name] then
+                        local _, _ = u30(v49, Color3.new(0, 1, 0), UDim2.new(0, 100, 0, 50), u32[v49.Name], true)
+                    end
+                end
+            else
+                if SurvivorESP then
+                    SurvivorESP:Disconnect()
+                end
+
+                local v50, v51, v52 = ipairs(workspace.Players.Survivors:GetDescendants())
+
+                while true do
+                    local v53
+
+                    v52, v53 = v50(v51, v52)
+
+                    if v52 == nil then
+                        break
+                    end
+                    if u32[v53.Name] then
+                        v53.QYHighlight:Destroy()
+                        v53.QY:Destroy()
+                    end
+                end
+            end
+        end)
+        v21:Toggle('��品透视 | Item ESP', false, function(p54)
+            if p54 then
+                ItemESP = workspace.Map.Ingame.DescendantAdded:Connect(function(p55)
+                    if u33[p55.Name] and p55.Parent.Name ~= 'ItemLocations' then
+                        local _, _ = u30(p55, Color3.new(1, 1, 0), UDim2.new(0, 100, 0, 50), u33[p55.Name], true)
+                    end
+                end)
+
+                local v56, v57, v58 = ipairs(workspace.Map.Ingame:GetDescendants())
+
+                while true do
+                    local v59
+
+                    v58, v59 = v56(v57, v58)
+
+                    if v58 == nil then
+                        break
+                    end
+                    if u33[v59.Name] and v59.Parent.Name ~= 'ItemLocations' then
+                        local _, _ = u30(v59, Color3.new(1, 1, 0), UDim2.new(0, 100, 0, 50), u33[v59.Name], true)
+                    end
+                end
+            else
+                if ItemESP then
+                    ItemESP:Disconnect()
+                end
+
+                local v60, v61, v62 = ipairs(workspace.Map.Ingame:GetDescendants())
+
+                while true do
+                    local v63
+
+                    v62, v63 = v60(v61, v62)
+
+                    if v62 == nil then
+                        break
+                    end
+                    if u33[v63.Name] and v63.Parent.Name ~= 'ItemLocations' then
+                        v63.QYHighlight:Destroy()
+                        v63.QY:Destroy()
+                    end
+                end
+            end
+        end)
+        v21:Toggle('��电机透视 | Generator ESP', false, function(p64)
+            if p64 then
+                GeneratorESP = workspace.DescendantAdded:Connect(function(p65)
+                    if p65.Name == 'Generator' and p65.Parent.Name == 'Map' then
+                        local _Progress = p65:WaitForChild('Progress')
+                        local _Value = _Progress.Value
+                        local _, _ = u30(p65, Color3.new(1, 1, 0), UDim2.new(0, 100, 0, 50), 'Generator [ ' .. _Value .. ' % ]', true)
+
+                        _Progress.Changed:Connect(function()
+                            local _Value2 = _Progress.Value
+
+                            p65.QY.QY.Text = 'Generator [ ' .. _Value2 .. ' % ]'
+                        end)
+                    end
+                end)
+
+                local v69, v70, v71 = ipairs(workspace:GetDescendants())
+
+                while true do
+                    local u72
+
+                    v71, u72 = v69(v70, v71)
+
+                    if v71 == nil then
+                        break
+                    end
+                    if u72.Name == 'Generator' and u72.Parent.Name == 'Map' then
+                        local _Progress2 = u72:WaitForChild('Progress')
+                        local _Value3 = _Progress2.Value
+                        local _, _ = u30(u72, Color3.new(1, 1, 0), UDim2.new(0, 100, 0, 50), 'Generator [ ' .. _Value3 .. ' % ]', true)
+
+                        _Progress2.Changed:Connect(function()
+                            local _Value4 = _Progress2.Value
+
+                            u72.QY.QY.Text = 'Generator [ ' .. _Value4 .. ' % ]'
+                        end)
+                    end
+                end
+            else
+                if GeneratorESP then
+                    GeneratorESP:Disconnect()
+                end
+
+                local v76, v77, v78 = ipairs(workspace:GetDescendants())
+
+                while true do
+                    local v79
+
+                    v78, v79 = v76(v77, v78)
+
+                    if v78 == nil then
+                        break
+                    end
+                    if v79.Name == 'Generator' and v79.Parent.Name == 'Map' then
+                        v79.QYHighlight:Destroy()
+                        v79.QY:Destroy()
+                    end
+                end
+            end
+        end)
+        v21:Toggle('Taph炸弹透视 | Subspace Tripmine ESP', false, function(p80)
+            if p80 then
+                SubspaceTripmineESP = workspace.Map.Ingame.DescendantAdded:Connect(function(p81)
+                    if p81.Name == 'SubspaceTripmine' then
+                        local _, _ = u30(p81, Color3.new(1, 0, 0), UDim2.new(0, 100, 0, 50), 'Subspace Tripmine', true)
+                    end
+                end)
+
+                local v82, v83, v84 = ipairs(workspace.Map.Ingame:GetDescendants())
+
+                while true do
+                    local v85
+
+                    v84, v85 = v82(v83, v84)
+
+                    if v84 == nil then
+                        break
+                    end
+                    if v85.Name == 'SubspaceTripmine' then
+                        local _, _ = u30(v85, Color3.new(1, 0, 0), UDim2.new(0, 100, 0, 50), 'Subspace Tripmine', true)
+                    end
+                end
+            else
+                if SubspaceTripmineESP then
+                    SubspaceTripmineESP:Disconnect()
+                end
+
+                local v86, v87, v88 = ipairs(workspace.Map.Ingame:GetDescendants())
+
+                while true do
+                    local v89
+
+                    v88, v89 = v86(v87, v88)
+
+                    if v88 == nil then
+                        break
+                    end
+                    if v89.Name == 'SubspaceTripmine' then
+                        v89.QYHighlight:Destroy()
+                        v89.QY:Destroy()
+                    end
+                end
+            end
+        end)
+
+        local v90 = v20:Tab('��动')
+        local u91 = false
+
+        local function u100()
+            while true do
+                if u91 then
+                    local _LocalPlayer = game.Players.LocalPlayer
+                    local v93 = _LocalPlayer.PlayerGui.TemporaryUI:GetChildren()
+                    local v94, v95, v96 = ipairs(v93)
+
+                    while true do
+                        local v97
+
+                        v96, v97 = v94(v95, v96)
+
+                        if v96 == nil then
+                            break
+                        end
+                        if v97.Name == '1x1x1x1Popup' then
+                            local v98 = v97.AbsolutePosition.X + v97.AbsoluteSize.X / 2
+                            local v99 = v97.AbsolutePosition.Y + v97.AbsoluteSize.Y / 2
+
+                            game:GetService('VirtualInputManager'):SendMouseButtonEvent(v98, v99, Enum.UserInputType.MouseButton1.Value, true, _LocalPlayer.PlayerGui, 1)
+                            game:GetService('VirtualInputManager'):SendMouseButtonEvent(v98, v99, Enum.UserInputType.MouseButton1.Value, false, _LocalPlayer.PlayerGui, 1)
+                        end
+                    end
+                end
+
+                task.wait(0.1)
+            end
+        end
+
+        v90:Toggle('��动点击1x1x1x1弹出窗口 | Auto Click 1x1x1x1 Popups', false, function(p101)
+            u91 = p101
+
+            if p101 then
+                u100(true)
+            end
+        end)
+
+        local u102 = 1
+
+        local function u113(p103)
+            while p103 and Running do
+                task.wait(u102 + 0.5)
+
+                local v104 = workspace:FindFirstChild('Map') and workspace.Map:FindFirstChild('Ingame')
+
+                if v104 then
+                    v104 = workspace.Map.Ingame:FindFirstChild('Map')
+                end
+                if v104 then
+                    local _huge = math.huge
+                    local _Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                    local v107, v108, v109 = ipairs(v104:GetChildren())
+                    local v110 = false
+
+                    while true do
+                        local v111
+
+                        v109, v111 = v107(v108, v109)
+
+                        if v109 == nil or not Running then
+                            break
+                        end
+                        if v111.Name == 'Generator' and v111.Progress.Value < 100 then
+                            local _Magnitude = (v111.Main.Position - _Position).Magnitude
+
+                            if _Magnitude < _huge then
+                                _huge = _Magnitude
+                                v110 = v111
+                            end
+                        end
+                    end
+
+                    if v110 then
+                        v110.Remotes.RE:FireServer()
+                    end
+                end
+            end
+        end
+
+        v90:Toggle('��动修发电机 | Auto Generator', false, function(p114)
+            Running = p114
+
+            if p114 then
+                u113(true)
+            end
+        end)
+        v90:Slider('��动修发电机延迟 | Auto Generator Delay', 1, 10, 0, function(p115)
+            u102 = p115
+        end)
+
+        local v116 = v20:Tab('��家')
+
+        v116:Toggle('��限体力 | Infinite Stamina', false, function(p117)
+            if p117 then
+                InfiniteStamina = game:GetService('RunService').RenderStepped:Connect(function()
+                    require(game.ReplicatedStorage.Systems.Character.Game.Sprinting).Stamina = require(game.ReplicatedStorage.Systems.Character.Game.Sprinting).MaxStamina
+                end)
+            else
+                InfiniteStamina:Disconnect()
+            end
+        end)
+        v116:Toggle('��用速度 | Enable Speed', false, function(p118)
+            if p118 then
+                EnableSpeed = game:GetService('RunService').Heartbeat:Connect(function()
+                    game.Players.LocalPlayer.Character:TranslateBy(game.Players.LocalPlayer.Character.Humanoid.MoveDirection * Speed / 10)
+                end)
+            else
+                EnableSpeed:Disconnect()
+            end
+        end)
+        v116:Toggle('��用跳跃 | Enable Jump', false, function(p119)
+            if p119 then
+                EnableJump = game:GetService('RunService').RenderStepped:Connect(function()
+                    game.Players.LocalPlayer.Character.Humanoid.JumpPower = JumpPower or 50
+                end)
+            else
+                EnableJump:Disconnect()
+
+                game.Players.LocalPlayer.Character.Humanoid.JumpPower = 0
+            end
+        end)
+        v116:Slider('��度 | Speed', 0, 10, 0, function(p120)
+            Speed = p120
+        end)
+        v116:Slider('��跃高度 | Jump Power', 50, 100, 0, function(p121)
+            JumpPower = p121
+        end)
+
+        local v122 = v20:Tab('��他')
+
+        local function u147(p123)
+            local u124 = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+            local _Humanoid = u124:WaitForChild('Humanoid')
+            local _HumanoidRootPart = u124:WaitForChild('HumanoidRootPart')
+
+            SubterfugeActive = p123
+
+            if SubterfugeActive then
+                _Humanoid.PlatformStand = true
+
+                local _BodyVelocity = Instance.new('BodyVelocity')
+
+                _BodyVelocity.MaxForce = Vector3.new(100000, 100000, 100000)
+                _BodyVelocity.Velocity = Vector3.zero
+                _BodyVelocity.Parent = _HumanoidRootPart
+
+                require(game:GetService('ReplicatedStorage').Assets.Emotes._Subterfuge).Created({Character = u124})
+
+                local _Animation = Instance.new('Animation')
+
+                _Animation.AnimationId = 'rbxassetid://87482480949358'
+
+                local v129 = _Humanoid:LoadAnimation(_Animation)
+
+                v129:Play()
+
+                local _Sound = Instance.new('Sound')
+
+                _Sound.SoundId = 'rbxassetid://132297506693854'
+                _Sound.Parent = _HumanoidRootPart
+                _Sound.Volume = 10
+                _Sound.Looped = false
+
+                _Sound:Play()
+                game:GetService('ReplicatedStorage'):WaitForChild('Modules'):WaitForChild('Network'):WaitForChild('RemoteEvent'):FireServer(unpack({
+                    'PlayEmote',
+                    'Animations',
+                    'Subterfuge',
+                }))
+                v129.Stopped:Connect(function()
+                    _Humanoid.PlatformStand = false
+
+                    if _BodyVelocity and _BodyVelocity.Parent then
+                        _BodyVelocity:Destroy()
+                    end
+
+                    local v131, v132, v133 = ipairs({
+                        'EmoteHatAsset',
+                        'EmoteLighting',
+                        'PlayerEmoteHand',
+                    })
+
+                    while true do
+                        local v134
+
+                        v133, v134 = v131(v132, v133)
+
+                        if v133 == nil then
+                            break
+                        end
+
+                        local v135 = u124:FindFirstChild(v134)
+
+                        if v135 then
+                            v135:Destroy()
+                        end
+                    end
+                end)
+            else
+                _Humanoid.PlatformStand = false
+
+                local v136, v137, v138 = ipairs({
+                    'EmoteHatAsset',
+                    'EmoteLighting',
+                    'PlayerEmoteHand',
+                })
+
+                while true do
+                    local v139
+
+                    v138, v139 = v136(v137, v138)
+
+                    if v138 == nil then
+                        break
+                    end
+
+                    local v140 = u124:FindFirstChild(v139)
+
+                    if v140 then
+                        v140:Destroy()
+                    end
+                end
+
+                local _BodyVelocity2 = _HumanoidRootPart:FindFirstChildOfClass('BodyVelocity')
+
+                if _BodyVelocity2 then
+                    _BodyVelocity2:Destroy()
+                end
+
+                local _Sound2 = _HumanoidRootPart:FindFirstChildOfClass('Sound')
+
+                if _Sound2 then
+                    _Sound2:Stop()
+                    _Sound2:Destroy()
+                end
+
+                local v143, v144, v145 = ipairs(_Humanoid:GetPlayingAnimationTracks())
+
+                while true do
+                    local v146
+
+                    v145, v146 = v143(v144, v145)
+
+                    if v145 == nil then
+                        break
+                    end
+                    if v146.Animation.AnimationId == 'rbxassetid://87482480949358' then
+                        v146:Stop()
+                    end
+                end
+            end
+        end
+
+        v122:Toggle('Subterfuge动画', false, function(p148)
+            u147(p148)
+        end)
+
+        local function u165(p149)
+            local v150 = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+            local _Humanoid2 = v150:WaitForChild('Humanoid')
+            local _HumanoidRootPart2 = v150:WaitForChild('HumanoidRootPart')
+
+            HakariDanceActive = p149
+
+            if HakariDanceActive then
+                _Humanoid2.PlatformStand = true
+
+                local _BodyVelocity3 = Instance.new('BodyVelocity')
+
+                _BodyVelocity3.MaxForce = Vector3.new(100000, 100000, 100000)
+                _BodyVelocity3.Velocity = Vector3.zero
+                _BodyVelocity3.Parent = _HumanoidRootPart2
+
+                local _Animation2 = Instance.new('Animation')
+
+                _Animation2.AnimationId = 'rbxassetid://138019937280193'
+
+                local v155 = _Humanoid2:LoadAnimation(_Animation2)
+
+                v155:Play()
+
+                local _Sound3 = Instance.new('Sound')
+
+                _Sound3.SoundId = 'rbxassetid://109474987384441'
+                _Sound3.Parent = _HumanoidRootPart2
+                _Sound3.Volume = 1
+                _Sound3.Looped = true
+
+                _Sound3:Play()
+
+                local v157 = game.ReplicatedStorage.Assets.Emotes.HakariDance.HakariBeamEffect:Clone()
+
+                v157.Name = 'PlayerEmoteVFX'
+                v157.CFrame = v150.PrimaryPart.CFrame * CFrame.new(0, -1, -0.3)
+                v157.WeldConstraint.Part0 = v150.PrimaryPart
+                v157.WeldConstraint.Part1 = v157
+                v157.Parent = v150
+                v157.CanCollide = false
+
+                game:GetService('ReplicatedStorage'):WaitForChild('Modules'):WaitForChild('Network'):WaitForChild('RemoteEvent'):FireServer(unpack({
+                    'PlayEmote',
+                    'Animations',
+                    'HakariDance',
+                }))
+                v155.Stopped:Connect(function()
+                    _Humanoid2.PlatformStand = false
+
+                    if _BodyVelocity3 and _BodyVelocity3.Parent then
+                        _BodyVelocity3:Destroy()
+                    end
+                end)
+            else
+                _Humanoid2.PlatformStand = false
+
+                local _BodyVelocity4 = _HumanoidRootPart2:FindFirstChildOfClass('BodyVelocity')
+
+                if _BodyVelocity4 then
+                    _BodyVelocity4:Destroy()
+                end
+
+                local _Sound4 = _HumanoidRootPart2:FindFirstChildOfClass('Sound')
+
+                if _Sound4 then
+                    _Sound4:Stop()
+                    _Sound4:Destroy()
+                end
+
+                local _PlayerEmoteVFX = v150:FindFirstChild('PlayerEmoteVFX')
+
+                if _PlayerEmoteVFX then
+                    _PlayerEmoteVFX:Destroy()
+                end
+
+                local v161, v162, v163 = ipairs(_Humanoid2:GetPlayingAnimationTracks())
+
+                while true do
+                    local v164
+
+                    v163, v164 = v161(v162, v163)
+
+                    if v163 == nil then
+                        break
+                    end
+                    if v164.Animation.AnimationId == 'rbxassetid://138019937280193' then
+                        v164:Stop()
+                    end
+                end
+            end
+        end
+
+        v122:Toggle('Hakari Dance动画', false, function(p166)
+            u165(p166)
+        end)
+
+        local function u191(p167)
+            local u168 = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+            local _Humanoid3 = u168:WaitForChild('Humanoid')
+            local _HumanoidRootPart3 = u168:WaitForChild('HumanoidRootPart')
+
+            MissTheQuietActive = p167
+
+            if MissTheQuietActive then
+                _Humanoid3.PlatformStand = true
+
+                local _BodyVelocity5 = Instance.new('BodyVelocity')
+
+                _BodyVelocity5.MaxForce = Vector3.new(100000, 100000, 100000)
+                _BodyVelocity5.Velocity = Vector3.zero
+                _BodyVelocity5.Parent = _HumanoidRootPart3
+
+                require(game:GetService('ReplicatedStorage').Assets.Emotes._MissTheQuiet).Created({Character = u168})
+
+                local _Animation3 = Instance.new('Animation')
+
+                _Animation3.AnimationId = 'rbxassetid://100986631322204'
+
+                local v173 = _Humanoid3:LoadAnimation(_Animation3)
+
+                v173:Play()
+
+                local _Sound5 = Instance.new('Sound')
+
+                _Sound5.SoundId = 'rbxassetid://131936418953291'
+                _Sound5.Parent = _HumanoidRootPart3
+                _Sound5.Volume = 1
+                _Sound5.Looped = true
+
+                _Sound5:Play()
+                game:GetService('ReplicatedStorage'):WaitForChild('Modules'):WaitForChild('Network'):WaitForChild('RemoteEvent'):FireServer(unpack({
+                    'PlayEmote',
+                    'Animations',
+                    'MissTheQuiet',
+                }))
+                v173.Stopped:Connect(function()
+                    _Humanoid3.PlatformStand = false
+
+                    if _BodyVelocity5 and _BodyVelocity5.Parent then
+                        _BodyVelocity5:Destroy()
+                    end
+
+                    local v175, v176, v177 = ipairs({
+                        'EmoteHatAsset',
+                        'EmoteLighting',
+                        'PlayerEmoteHand',
+                    })
+
+                    while true do
+                        local v178
+
+                        v177, v178 = v175(v176, v177)
+
+                        if v177 == nil then
+                            break
+                        end
+
+                        local v179 = u168:FindFirstChild(v178)
+
+                        if v179 then
+                            v179:Destroy()
+                        end
+                    end
+                end)
+            else
+                _Humanoid3.PlatformStand = false
+
+                local v180, v181, v182 = ipairs({
+                    'EmoteHatAsset',
+                    'EmoteLighting',
+                    'PlayerEmoteHand',
+                })
+
+                while true do
+                    local v183
+
+                    v182, v183 = v180(v181, v182)
+
+                    if v182 == nil then
+                        break
+                    end
+
+                    local v184 = u168:FindFirstChild(v183)
+
+                    if v184 then
+                        v184:Destroy()
+                    end
+                end
+
+                local _BodyVelocity6 = _HumanoidRootPart3:FindFirstChildOfClass('BodyVelocity')
+
+                if _BodyVelocity6 then
+                    _BodyVelocity6:Destroy()
+                end
+
+                local _Sound6 = _HumanoidRootPart3:FindFirstChildOfClass('Sound')
+
+                if _Sound6 then
+                    _Sound6:Stop()
+                    _Sound6:Destroy()
+                end
+
+                local v187, v188, v189 = ipairs(_Humanoid3:GetPlayingAnimationTracks())
+
+                while true do
+                    local v190
+
+                    v189, v190 = v187(v188, v189)
+
+                    if v189 == nil then
+                        break
+                    end
+                    if v190.Animation.AnimationId == 'rbxassetid://100986631322204' then
+                        v190:Stop()
+                    end
+                end
+            end
+        end
+
+        v122:Toggle('Miss The Quiet动画', false, function(p192)
+            u191(p192)
+        end)
+
+        local function u217(p193)
+            local u194 = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+            local _Humanoid4 = u194:WaitForChild('Humanoid')
+            local _HumanoidRootPart4 = u194:WaitForChild('HumanoidRootPart')
+
+            SillyBillyActive = p193
+
+            if SillyBillyActive then
+                _Humanoid4.PlatformStand = true
+
+                local _BodyVelocity7 = Instance.new('BodyVelocity')
+
+                _BodyVelocity7.MaxForce = Vector3.new(100000, 100000, 100000)
+                _BodyVelocity7.Velocity = Vector3.zero
+                _BodyVelocity7.Parent = _HumanoidRootPart4
+
+                require(game:GetService('ReplicatedStorage').Assets.Emotes._SillyBilly).Created({Character = u194})
+
+                local _Animation4 = Instance.new('Animation')
+
+                _Animation4.AnimationId = 'rbxassetid://107464355830477'
+
+                local v199 = _Humanoid4:LoadAnimation(_Animation4)
+
+                v199:Play()
+
+                local _Sound7 = Instance.new('Sound')
+
+                _Sound7.SoundId = 'rbxassetid://77601084987544'
+                _Sound7.Parent = _HumanoidRootPart4
+                _Sound7.Volume = 1
+                _Sound7.Looped = false
+
+                _Sound7:Play()
+                game:GetService('ReplicatedStorage'):WaitForChild('Modules'):WaitForChild('Network'):WaitForChild('RemoteEvent'):FireServer(unpack({
+                    'PlayEmote',
+                    'Animations',
+                    'SillyBilly',
+                }))
+                v199.Stopped:Connect(function()
+                    _Humanoid4.PlatformStand = false
+
+                    if _BodyVelocity7 and _BodyVelocity7.Parent then
+                        _BodyVelocity7:Destroy()
+                    end
+
+                    local v201, v202, v203 = ipairs({
+                        'EmoteHatAsset',
+                        'EmoteLighting',
+                        'PlayerEmoteHand',
+                    })
+
+                    while true do
+                        local v204
+
+                        v203, v204 = v201(v202, v203)
+
+                        if v203 == nil then
+                            break
+                        end
+
+                        local v205 = u194:FindFirstChild(v204)
+
+                        if v205 then
+                            v205:Destroy()
+                        end
+                    end
+                end)
+            else
+                _Humanoid4.PlatformStand = false
+
+                local v206, v207, v208 = ipairs({
+                    'EmoteHatAsset',
+                    'EmoteLighting',
+                    'PlayerEmoteHand',
+                })
+
+                while true do
+                    local v209
+
+                    v208, v209 = v206(v207, v208)
+
+                    if v208 == nil then
+                        break
+                    end
+
+                    local v210 = u194:FindFirstChild(v209)
+
+                    if v210 then
+                        v210:Destroy()
+                    end
+                end
+
+                local _BodyVelocity8 = _HumanoidRootPart4:FindFirstChildOfClass('BodyVelocity')
+
+                if _BodyVelocity8 then
+                    _BodyVelocity8:Destroy()
+                end
+
+                local _Sound8 = _HumanoidRootPart4:FindFirstChildOfClass('Sound')
+
+                if _Sound8 then
+                    _Sound8:Stop()
+                    _Sound8:Destroy()
+                end
+
+                local v213, v214, v215 = ipairs(_Humanoid4:GetPlayingAnimationTracks())
+
+                while true do
+                    local v216
+
+                    v215, v216 = v213(v214, v215)
+
+                    if v215 == nil then
+                        break
+                    end
+                    if v216.Animation.AnimationId == 'rbxassetid://107464355830477' then
+                        v216:Stop()
+                    end
+                end
+            end
+        end
+
+        v122:Toggle('Silly Billy动画', false, function(p218)
+            u217(p218)
+        end)
+
+        local function u243(p219)
+            local u220 = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+            local _Humanoid5 = u220:WaitForChild('Humanoid')
+            local _HumanoidRootPart5 = u220:WaitForChild('HumanoidRootPart')
+
+            SillyBilly2Active = p219
+
+            if SillyBilly2Active then
+                _Humanoid5.PlatformStand = true
+
+                local _BodyVelocity9 = Instance.new('BodyVelocity')
+
+                _BodyVelocity9.MaxForce = Vector3.new(100000, 100000, 100000)
+                _BodyVelocity9.Velocity = Vector3.zero
+                _BodyVelocity9.Parent = _HumanoidRootPart5
+
+                require(game:GetService('ReplicatedStorage').Assets.Emotes._SillyBilly).Created({Character = u220})
+
+                local _Animation5 = Instance.new('Animation')
+
+                _Animation5.AnimationId = 'rbxassetid://107464355830477'
+
+                local v225 = _Humanoid5:LoadAnimation(_Animation5)
+
+                v225:Play()
+
+                local _Sound9 = Instance.new('Sound')
+
+                _Sound9.SoundId = 'rbxassetid://120176009143091'
+                _Sound9.Parent = _HumanoidRootPart5
+                _Sound9.Volume = 1
+                _Sound9.Looped = false
+
+                _Sound9:Play()
+                game:GetService('ReplicatedStorage'):WaitForChild('Modules'):WaitForChild('Network'):WaitForChild('RemoteEvent'):FireServer(unpack({
+                    'PlayEmote',
+                    'Animations',
+                    'SillyBilly',
+                }))
+                v225.Stopped:Connect(function()
+                    _Humanoid5.PlatformStand = false
+
+                    if _BodyVelocity9 and _BodyVelocity9.Parent then
+                        _BodyVelocity9:Destroy()
+                    end
+
+                    local v227, v228, v229 = ipairs({
+                        'EmoteHatAsset',
+                        'EmoteLighting',
+                        'PlayerEmoteHand',
+                    })
+
+                    while true do
+                        local v230
+
+                        v229, v230 = v227(v228, v229)
+
+                        if v229 == nil then
+                            break
+                        end
+
+                        local v231 = u220:FindFirstChild(v230)
+
+                        if v231 then
+                            v231:Destroy()
+                        end
+                    end
+                end)
+            else
+                _Humanoid5.PlatformStand = false
+
+                local v232, v233, v234 = ipairs({
+                    'EmoteHatAsset',
+                    'EmoteLighting',
+                    'PlayerEmoteHand',
+                })
+
+                while true do
+                    local v235
+
+                    v234, v235 = v232(v233, v234)
+
+                    if v234 == nil then
+                        break
+                    end
+
+                    local v236 = u220:FindFirstChild(v235)
+
+                    if v236 then
+                        v236:Destroy()
+                    end
+                end
+
+                local _BodyVelocity10 = _HumanoidRootPart5:FindFirstChildOfClass('BodyVelocity')
+
+                if _BodyVelocity10 then
+                    _BodyVelocity10:Destroy()
+                end
+
+                local _Sound10 = _HumanoidRootPart5:FindFirstChildOfClass('Sound')
+
+                if _Sound10 then
+                    _Sound10:Stop()
+                    _Sound10:Destroy()
+                end
+
+                local v239, v240, v241 = ipairs(_Humanoid5:GetPlayingAnimationTracks())
+
+                while true do
+                    local v242
+
+                    v241, v242 = v239(v240, v241)
+
+                    if v241 == nil then
+                        break
+                    end
+                    if v242.Animation.AnimationId == 'rbxassetid://107464355830477' then
+                        v242:Stop()
+                    end
+                end
+            end
+        end
+
+        v122:Toggle('Silly Billy2动画', false, function(p244)
+            u243(p244)
+        end)
+
+        local function u259(p245)
+            local v246 = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+            local _Humanoid6 = v246:WaitForChild('Humanoid')
+            local _HumanoidRootPart6 = v246:WaitForChild('HumanoidRootPart')
+
+            ShucksActive = p245
+
+            if ShucksActive then
+                _Humanoid6.PlatformStand = true
+
+                local _BodyVelocity11 = Instance.new('BodyVelocity')
+
+                _BodyVelocity11.MaxForce = Vector3.new(100000, 100000, 100000)
+                _BodyVelocity11.Velocity = Vector3.zero
+                _BodyVelocity11.Parent = _HumanoidRootPart6
+
+                local _Animation6 = Instance.new('Animation')
+
+                _Animation6.AnimationId = 'rbxassetid://74238051754912'
+
+                local v251 = _Humanoid6:LoadAnimation(_Animation6)
+
+                v251:Play()
+
+                local _Sound11 = Instance.new('Sound')
+
+                _Sound11.SoundId = 'rbxassetid://123236721947419'
+                _Sound11.Parent = _HumanoidRootPart6
+                _Sound11.Volume = 1
+                _Sound11.Looped = false
+
+                _Sound11:Play()
+                game:GetService('ReplicatedStorage'):WaitForChild('Modules'):WaitForChild('Network'):WaitForChild('RemoteEvent'):FireServer(unpack({
+                    'PlayEmote',
+                    'Animations',
+                    'Shucks',
+                }))
+                v251.Stopped:Connect(function()
+                    _Humanoid6.PlatformStand = false
+
+                    if _BodyVelocity11 and _BodyVelocity11.Parent then
+                        _BodyVelocity11:Destroy()
+                    end
+                end)
+            else
+                _Humanoid6.PlatformStand = false
+
+                local _BodyVelocity12 = _HumanoidRootPart6:FindFirstChildOfClass('BodyVelocity')
+
+                if _BodyVelocity12 then
+                    _BodyVelocity12:Destroy()
+                end
+
+                local _Sound12 = _HumanoidRootPart6:FindFirstChildOfClass('Sound')
+
+                if _Sound12 then
+                    _Sound12:Stop()
+                    _Sound12:Destroy()
+                end
+
+                local v255, v256, v257 = ipairs(_Humanoid6:GetPlayingAnimationTracks())
+
+                while true do
+                    local v258
+
+                    v257, v258 = v255(v256, v257)
+
+                    if v257 == nil then
+                        break
+                    end
+                    if v258.Animation.AnimationId == 'rbxassetid://74238051754912' then
+                        v258:Stop()
+                    end
+                end
+            end
+        end
+
+        v122:Toggle('Shucks动画', false, function(p260)
+            u259(p260)
+        end)
+        v122:Toggle('��格挡 | Fake Block', false, function(p261)
+            if p261 then
+                local _ScreenGui = Instance.new('ScreenGui')
+                local _ImageButton = Instance.new('ImageButton')
+                local _UICorner = Instance.new('UICorner')
+
+                _ScreenGui.Name = 'FakeBlock'
+                _ScreenGui.Parent = game.CoreGui
+                _ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                _ImageButton.Parent = _ScreenGui
+                _ImageButton.BorderSizePixel = 0
+                _ImageButton.LayoutOrder = 1
+                _ImageButton.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                _ImageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                _ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                _ImageButton.BackgroundTransparency = 1
+                _ImageButton.Position = UDim2.new(0.8, -105, 0, 275)
+                _ImageButton.Size = UDim2.new(0, 70, 0, 70)
+                _ImageButton.Image = 'rbxassetid://137576632569674'
+                _ImageButton.Draggable = true
+                _UICorner.Parent = _ImageButton
+                _UICorner.CornerRadius = UDim.new(0, 0)
+
+                _ImageButton.MouseButton1Click:Connect(function()
+                    local _Animation7 = Instance.new('Animation')
+
+                    _Animation7.AnimationId = 'rbxassetid://72722244508749'
+
+                    game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(_Animation7):Play()
+                end)
+            else
+                game.CoreGui.FakeBlock:Destroy()
+            end
+        end)
+        v122:Toggle('��程碑假格挡 | Milestone Fake Block', false, function(p266)
+            if p266 then
+                local _ScreenGui2 = Instance.new('ScreenGui')
+                local _ImageButton2 = Instance.new('ImageButton')
+                local _UICorner2 = Instance.new('UICorner')
+
+                _ScreenGui2.Name = 'MilestoneFakeBlock'
+                _ScreenGui2.Parent = game.CoreGui
+                _ScreenGui2.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                _ImageButton2.Parent = _ScreenGui2
+                _ImageButton2.BorderSizePixel = 0
+                _ImageButton2.LayoutOrder = 1
+                _ImageButton2.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                _ImageButton2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                _ImageButton2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                _ImageButton2.BackgroundTransparency = 1
+                _ImageButton2.Position = UDim2.new(0.8, -105, 0, 275)
+                _ImageButton2.Size = UDim2.new(0, 70, 0, 70)
+                _ImageButton2.Image = 'rbxassetid://137576632569674'
+                _ImageButton2.Draggable = true
+                _UICorner2.Parent = _ImageButton2
+                _UICorner2.CornerRadius = UDim.new(0, 0)
+
+                _ImageButton2.MouseButton1Click:Connect(function()
+                    local _Animation8 = Instance.new('Animation')
+
+                    _Animation8.AnimationId = 'rbxassetid://96959123077498'
+
+                    game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(_Animation8):Play()
+                end)
+            else
+                game.CoreGui.MilestoneFakeBlock:Destroy()
+            end
+        end)
+        v122:Toggle('��冲拳 | Fake Punch', false, function(p271)
+            if p271 then
+                local _ScreenGui3 = Instance.new('ScreenGui')
+                local _ImageButton3 = Instance.new('ImageButton')
+                local _UICorner3 = Instance.new('UICorner')
+
+                _ScreenGui3.Name = 'FakePunch'
+                _ScreenGui3.Parent = game.CoreGui
+                _ScreenGui3.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                _ImageButton3.Parent = _ScreenGui3
+                _ImageButton3.BorderSizePixel = 0
+                _ImageButton3.LayoutOrder = 1
+                _ImageButton3.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                _ImageButton3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                _ImageButton3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                _ImageButton3.BackgroundTransparency = 1
+                _ImageButton3.Position = UDim2.new(0.8, -105, 0, 275)
+                _ImageButton3.Size = UDim2.new(0, 70, 0, 70)
+                _ImageButton3.Image = 'rbxassetid://86535502112498'
+                _ImageButton3.Draggable = true
+                _UICorner3.Parent = _ImageButton3
+                _UICorner3.CornerRadius = UDim.new(0, 0)
+
+                _ImageButton3.MouseButton1Click:Connect(function()
+                    local _Animation9 = Instance.new('Animation')
+
+                    _Animation9.AnimationId = 'rbxassetid://87259391926321'
+
+                    game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(_Animation9):Play()
+                end)
+            else
+                game.CoreGui.FakePunch:Destroy()
+            end
+        end)
+        v122:Toggle('��程碑假冲拳 | Milestone Fake Punch', false, function(p276)
+            if p276 then
+                local _ScreenGui4 = Instance.new('ScreenGui')
+                local _ImageButton4 = Instance.new('ImageButton')
+                local _UICorner4 = Instance.new('UICorner')
+
+                _ScreenGui4.Name = 'MilestoneFakePunch'
+                _ScreenGui4.Parent = game.CoreGui
+                _ScreenGui4.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                _ImageButton4.Parent = _ScreenGui4
+                _ImageButton4.BorderSizePixel = 0
+                _ImageButton4.LayoutOrder = 1
+                _ImageButton4.ImageColor3 = Color3.fromRGB(255, 255, 255)
+                _ImageButton4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                _ImageButton4.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                _ImageButton4.BackgroundTransparency = 1
+                _ImageButton4.Position = UDim2.new(0.8, -105, 0, 275)
+                _ImageButton4.Size = UDim2.new(0, 70, 0, 70)
+                _ImageButton4.Image = 'rbxassetid://86535502112498'
+                _ImageButton4.Draggable = true
+                _UICorner4.Parent = _ImageButton4
+                _UICorner4.CornerRadius = UDim.new(0, 0)
+
+                _ImageButton4.MouseButton1Click:Connect(function()
+                    local _Animation10 = Instance.new('Animation')
+
+                    _Animation10.AnimationId = 'rbxassetid://86096387000557'
+
+                    game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(_Animation10):Play()
+                end)
+            else
+                game.CoreGui.MilestoneFakePunch:Destroy()
+            end
+        end)
+        v122:Button('��持作者', function()
+            setclipboard('https://img520.com/mRZCCB.png')
+            u19:Notification('��示', '��制成功 !', '��认')
+        end)
+        v122:Button('��闭界面', function()
+            game.CoreGui.VisionLibV2:Destroy()
+            game.CoreGui.VisionLibOverlay:Destroy()
+
+            if game:GetService('UserInputService').KeyboardEnabled and game:GetService('UserInputService').MouseEnabled then
+                game.CoreGui.VapeUI:Destroy()
+            elseif game:GetService('UserInputService').TouchEnabled then
+                game.CoreGui.OpenUI:Destroy()
+                game.CoreGui.VapeUI:Destroy()
+            end
+        end)
+    elseif v17 == true then
+        u19:Notification('��示', '��已被列入黑名单 原因为 [ ' .. tostring(v18) .. ' ]', '��认')
+    end
+elseif v8 == false then
+    Notify('��本不正确')
+else
+    Notify('��证失败')
+end

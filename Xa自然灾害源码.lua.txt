@@ -1,0 +1,506 @@
+--Yeskid
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Lighting = game:GetService("Lighting")
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid", 10)
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart", 10)
+
+local Options = Fluent.Options
+local trackedParts = {}
+local currentDisaster = "未知"
+local lastDisaster = ""
+local islandState = {}
+
+local function refreshCharacter(char)
+	Character = char
+	Humanoid = char:WaitForChild("Humanoid", 10)
+	HumanoidRootPart = char:WaitForChild("HumanoidRootPart", 10)
+end
+
+LocalPlayer.CharacterAdded:Connect(refreshCharacter)
+
+local function safeSetHiddenProperty()
+	pcall(function()
+		sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge)
+	end)
+end
+
+local function getNumber(value, defaultValue)
+	local n = tonumber(value)
+	if n == nil then
+		return defaultValue
+	end
+	return n
+end
+
+local function pivotCharacter(cf)
+	if Character and Character.Parent then
+		pcall(function()
+			Character:PivotTo(cf)
+		end)
+	end
+end
+
+local function sayChat(message)
+	local channels = TextChatService:FindFirstChild("TextChannels")
+	local general = channels and channels:FindFirstChild("RBXGeneral")
+	if general then
+		pcall(function()
+			general:SendAsync(message)
+		end)
+		return
+	end
+
+	local defaultChat = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+	local sayEvent = defaultChat and defaultChat:FindFirstChild("SayMessageRequest")
+	if sayEvent then
+		pcall(function()
+			sayEvent:FireServer(message, "All")
+		end)
+	end
+end
+
+local disasterKeywords = {
+	"tornado",
+	"flood",
+	"earthquake",
+	"meteor",
+	"volcano",
+	"blizzard",
+	"storm",
+	"sandstorm",
+	"thunder",
+	"acid",
+	"tsunami",
+	"fire",
+	"slide",
+	"rain"
+}
+
+local function scanForDisaster()
+	local names = {}
+
+	for _, obj in ipairs(workspace:GetChildren()) do
+		table.insert(names, string.lower(obj.Name))
+	end
+
+	for _, obj in ipairs(workspace:GetDescendants()) do
+		if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
+			local text = tostring(obj.Text or "")
+			if text ~= "" then
+				table.insert(names, string.lower(text))
+			end
+		end
+	end
+
+	for _, name in ipairs(names) do
+		for _, keyword in ipairs(disasterKeywords) do
+			if string.find(name, keyword, 1, true) then
+				return name
+			end
+		end
+	end
+
+	return "未知"
+end
+
+local function trackPart(obj)
+	if obj and obj:IsA("BasePart") then
+		local ok, receiveAge = pcall(function()
+			return obj.ReceiveAge
+		end)
+		if ok and not obj.Anchored and receiveAge == 0 then
+			trackedParts[obj] = true
+		end
+	end
+end
+
+local function untrackPart(obj)
+	trackedParts[obj] = nil
+end
+
+for _, obj in ipairs(workspace:GetDescendants()) do
+	trackPart(obj)
+end
+
+workspace.DescendantAdded:Connect(trackPart)
+workspace.DescendantRemoving:Connect(untrackPart)
+
+task.spawn(function()
+	while true do
+		local detected = scanForDisaster()
+		currentDisaster = detected
+		if detected ~= lastDisaster then
+			lastDisaster = detected
+			if Options.AutoDetectDisaster and Options.AutoDetectDisaster.Value then
+				Fluent:Notify({
+					Title = "检测到灾难",
+					Content = detected,
+					Duration = 4
+				})
+			end
+			if Options.AutoSayDisaster and Options.AutoSayDisaster.Value then
+				sayChat("灾难: " .. detected)
+			end
+		end
+		task.wait(1)
+	end
+end)
+
+RunService.Heartbeat:Connect(function()
+	safeSetHiddenProperty()
+
+	if Options.NoFallDamage and Options.NoFallDamage.Value and HumanoidRootPart and HumanoidRootPart.Parent then
+		local velocity = HumanoidRootPart.AssemblyLinearVelocity
+		if velocity.Y < -45 then
+			HumanoidRootPart.AssemblyLinearVelocity = Vector3.new(velocity.X, 0, velocity.Z)
+		end
+	end
+
+	if Options.RingPartsEnabled and Options.RingPartsEnabled.Value then
+		local center = HumanoidRootPart and HumanoidRootPart.Parent and HumanoidRootPart.Position or Vector3.new(-280.30718994141, 179.69993591309, 341.18765258789)
+		if Options.RotationCenter and Options.RotationCenter.Value == "地图中心" then
+			center = Vector3.new(-280.30718994141, 179.69993591309, 341.18765258789)
+		end
+
+		local radius = getNumber(Options.Radius and Options.Radius.Value, 50)
+		local height = math.max(1, getNumber(Options.Height and Options.Height.Value, 100))
+		local speed = getNumber(Options.RotationSpeed and Options.RotationSpeed.Value, 10)
+		local strength = getNumber(Options.AttractionStrength and Options.AttractionStrength.Value, 1000)
+
+		for part in pairs(trackedParts) do
+			if part and part.Parent and part:IsA("BasePart") and not part.Anchored then
+				local position = part.Position
+				local offset = position - center
+				local distance = offset.Magnitude
+				local planar = math.max(0.1, math.min(radius, distance))
+				local angle = math.atan2(position.Z - center.Z, position.X - center.X) + math.rad(speed)
+				local target = Vector3.new(
+					center.X + math.cos(angle) * planar,
+					center.Y + height * math.abs(math.sin((position.Y - center.Y) / height)),
+					center.Z + math.sin(angle) * planar
+				)
+				local direction = target - position
+				if direction.Magnitude > 0 then
+					local velocity = direction.Unit * strength
+					pcall(function()
+						part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
+						part.CanCollide = false
+						part.AssemblyLinearVelocity = velocity
+						part.Velocity = velocity
+					end)
+				end
+			else
+				trackedParts[part] = nil
+			end
+		end
+	end
+end)
+
+RunService.RenderStepped:Connect(function()
+	if Options.WalkSpeed and Options.WalkSpeed.IsMoved and Humanoid then
+		Humanoid.WalkSpeed = Options.WalkSpeed.Value
+	end
+
+	if Options.JumpPower and Options.JumpPower.IsMoved and Humanoid then
+		Humanoid.UseJumpPower = true
+		Humanoid.JumpPower = Options.JumpPower.Value
+	end
+
+	if Options.Noclip and Options.Noclip.Value and Character then
+		for _, obj in ipairs(Character:GetDescendants()) do
+			if obj:IsA("BasePart") then
+				obj.CanCollide = false
+			end
+		end
+	end
+
+	if Options.Fullbright and Options.Fullbright.Value then
+		Lighting.Ambient = Color3.new(1, 1, 1)
+		Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+	else
+		Lighting.Ambient = Color3.new(0, 0, 0)
+		Lighting.OutdoorAmbient = Color3.new(0, 0, 0)
+	end
+end)
+
+UserInputService.JumpRequest:Connect(function()
+	if Options.InfJump and Options.InfJump.Value and Humanoid then
+		Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+	end
+end)
+
+local Window = Fluent:CreateWindow({
+	Title = "XA Hub",
+	SubTitle = "自然灾害",
+	TabWidth = 160,
+	Size = UDim2.fromOffset(550, 350),
+	Acrylic = false,
+	Theme = "Dark",
+	MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+local Tabs = {
+	Main = Window:AddTab({ Title = "主要", Icon = "" }),
+	Remove = Window:AddTab({ Title = "移除", Icon = "" }),
+	Teleport = Window:AddTab({ Title = "传送", Icon = "" }),
+	Blackhole = Window:AddTab({ Title = "黑洞", Icon = "" }),
+	Other = Window:AddTab({ Title = "其他", Icon = "" }),
+	Settings = Window:AddTab({ Title = "设置", Icon = "settings" })
+}
+
+Tabs.Main:AddToggle("AutoFarm", {
+	Title = "自动赢",
+	Default = false,
+	Callback = function(value)
+		if value then
+			task.spawn(function()
+				while Options.AutoFarm and Options.AutoFarm.Value do
+					if Character and Character.Parent then
+						pivotCharacter(CFrame.new(-236, 180, 360))
+					end
+					task.wait()
+				end
+			end)
+		end
+	end
+})
+
+local WaterLevel = workspace:FindFirstChild("WaterLevel")
+local WaterMesh = WaterLevel and WaterLevel:FindFirstChild("Mesh")
+
+Tabs.Main:AddToggle("WalkingOnWater", {
+	Title = "在水上行走",
+	Default = false,
+	Callback = function(value)
+		if WaterLevel then
+			WaterLevel.CanCollide = value
+			WaterLevel.Size = value and Vector3.new(1000, 1, 1000) or Vector3.new(10, 1, 10)
+			if WaterMesh then
+				WaterMesh.Parent = value and nil or WaterLevel
+			end
+		end
+	end
+})
+
+Tabs.Main:AddToggle("IslandCollide", {
+	Title = "游戏岛悬崖可碰撞",
+	Default = false,
+	Callback = function(value)
+		local island = workspace:FindFirstChild("Island")
+		if island then
+			for _, obj in ipairs(island:GetDescendants()) do
+				if obj:IsA("BasePart") then
+					obj.CanCollide = value
+				end
+			end
+		end
+	end
+})
+
+Tabs.Main:AddToggle("AutoDetectDisaster", {
+	Title = "自动检测灾难",
+	Default = false
+})
+
+Tabs.Main:AddToggle("AutoSayDisaster", {
+	Title = "聊天通知灾难",
+	Default = false
+})
+
+Tabs.Main:AddToggle("NoFallDamage", {
+	Title = "无掉落伤害",
+	Default = false
+})
+
+Tabs.Main:AddButton({
+	Title = "获得物品 (需要别人有)",
+	Callback = function()
+		local backpack = LocalPlayer:FindFirstChildOfClass("Backpack")
+		if not backpack then
+			return
+		end
+
+		for _, player in ipairs(Players:GetPlayers()) do
+			if player ~= LocalPlayer then
+				local containers = {}
+				if player:FindFirstChildOfClass("Backpack") then
+					table.insert(containers, player:FindFirstChildOfClass("Backpack"))
+				end
+				if player.Character then
+					table.insert(containers, player.Character)
+				end
+
+				for _, container in ipairs(containers) do
+					for _, item in ipairs(container:GetChildren()) do
+						if item:IsA("Tool") and not backpack:FindFirstChild(item.Name) then
+							pcall(function()
+								item:Clone().Parent = backpack
+							end)
+						end
+					end
+				end
+			end
+		end
+	end
+})
+
+Tabs.Remove:AddButton({
+	Title = "移除沙尘暴UI",
+	Callback = function()
+		local gui = LocalPlayer:FindFirstChildOfClass("PlayerGui")
+		local target = gui and gui:FindFirstChild("SandStormGui")
+		if target then
+			target:Destroy()
+		end
+	end
+})
+
+Tabs.Remove:AddButton({
+	Title = "移除暴风雪UI",
+	Callback = function()
+		local gui = LocalPlayer:FindFirstChildOfClass("PlayerGui")
+		local target = gui and gui:FindFirstChild("BlizzardGui")
+		if target then
+			target:Destroy()
+		end
+	end
+})
+
+Tabs.Remove:AddButton({
+	Title = "移除广告",
+	Callback = function()
+		local portal = workspace:FindFirstChild("ForwardPortal")
+		if portal then
+			portal:Destroy()
+		end
+	end
+})
+
+Tabs.Teleport:AddButton({
+	Title = "大厅",
+	Callback = function()
+		pivotCharacter(CFrame.new(-255, 194, 299))
+	end
+})
+
+Tabs.Teleport:AddButton({
+	Title = "地图",
+	Callback = function()
+		pivotCharacter(CFrame.new(-117, 47, 5))
+	end
+})
+
+Tabs.Blackhole:AddParagraph({
+	Title = "提示",
+	Content = "请靠近未固定的物体"
+})
+
+Tabs.Blackhole:AddToggle("RingPartsEnabled", {
+	Title = "开关",
+	Default = false,
+	Callback = function(value)
+		LocalPlayer.ReplicationFocus = value and HumanoidRootPart or nil
+	end
+})
+
+Tabs.Blackhole:AddDropdown("RotationCenter", {
+	Title = "旋转中心",
+	Values = { "角色", "地图中心" },
+	Multi = false,
+	Default = 1
+})
+
+Tabs.Blackhole:AddSlider("Radius", {
+	Title = "半径",
+	Default = 50,
+	Min = 0,
+	Max = 100,
+	Rounding = 1
+})
+
+Tabs.Blackhole:AddInput("Height", {
+	Title = "高度",
+	Default = 100,
+	Numeric = true,
+	Finished = true
+})
+
+Tabs.Blackhole:AddInput("RotationSpeed", {
+	Title = "旋转速度",
+	Default = 10,
+	Numeric = true,
+	Finished = true
+})
+
+Tabs.Blackhole:AddInput("AttractionStrength", {
+	Title = "吸引力强度",
+	Default = 1000,
+	Numeric = true,
+	Finished = true
+})
+
+Tabs.Other:AddSlider("WalkSpeed", {
+	Title = "移动速度",
+	Default = 16,
+	Min = 0,
+	Max = 500,
+	Rounding = 1
+})
+
+Tabs.Other:AddSlider("JumpPower", {
+	Title = "跳跃高度",
+	Default = 50,
+	Min = 0,
+	Max = 500,
+	Rounding = 1
+})
+
+Tabs.Other:AddButton({
+	Title = "飞行",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/FlyGuiV3"))()
+	end
+})
+
+Tabs.Other:AddToggle("Noclip", {
+	Title = "穿墙",
+	Default = false
+})
+
+Tabs.Other:AddToggle("Fullbright", {
+	Title = "夜视",
+	Default = false,
+	Callback = function(value)
+		if not value then
+			Lighting.Ambient = Color3.new(0, 0, 0)
+			Lighting.OutdoorAmbient = Color3.new(0, 0, 0)
+		end
+	end
+})
+
+Tabs.Other:AddToggle("InfJump", {
+	Title = "无限跳",
+	Default = false
+})
+
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("XA-Hub/Fluent")
+SaveManager:SetFolder("XA-Hub/Fluent/" .. game.PlaceId)
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+SaveManager:LoadAutoloadConfig()
+Window:SelectTab(1)

