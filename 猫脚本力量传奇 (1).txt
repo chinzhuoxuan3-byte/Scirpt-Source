@@ -1,0 +1,4336 @@
+-- 你好我是Yes
+
+local t1 = {}
+local v2 = unpack or table.unpack
+local v3 = loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/cdnUI/refs/heads/main/Mao%20ui%E4%BF%AE%E5%A4%8Dbug.lua"))()
+if game:GetService("Players").LocalPlayer:IsInGroup(309474883) then
+    print("猫脚本验证通过，欢迎使用！")
+else
+    local uDim2 = UDim2.fromOffset(390, 460)
+    local new = ColorSequence.new
+    local new2 = ColorSequenceKeypoint.new
+    local CreateWindow = v3.CreateWindow
+    local v8 = new({
+		new2(0, Color3.fromRGB(255, 0, 0)),
+		ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 165, 0)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 192, 203))
+	})
+    local t2 = {
+		Enabled = true
+	}
+    local v10 = CreateWindow(v3, {
+		Title = "<font color='#FFC0CB'><b>猫脚本 - 验证失败</b></font>",
+		Author = "<font color='#FFC0CB'><b>请先加入群组</b></font>",
+		Folder = "猫脚本",
+		Size = uDim2,
+		Transparent = false,
+		Theme = "Dark",
+		SideBarWidth = 150,
+		ScrollBarEnabled = true,
+		Background = "",
+		BackgroundlmageTransparency = 0,
+		Color = v8,
+		User = t2
+	}):Tab({
+		Title = "<font color='#FFC0CB'>验证失败</font>",
+		Icon = "alert-triangle"
+	})
+
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 为什么我在这里？</b></font>",
+		Desc = "<font color='#FFC0CB'>答: 因为你没加入猫脚本群组</font>"
+	})
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 什么是猫脚本群组？</b></font>",
+		Desc = "<font color='#FFC0CB'>答: 是Roblox里的一个名为猫脚本的群组</font>"
+	})
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 手机怎么加入群组</b></font>",
+		Desc = "<font color='#FFC0CB'>答: Roblox主界面→更多→社区→更多群组→搜索猫脚本→加入</font>"
+	})
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 电脑怎么加入群组</b></font>",
+		Desc = "<font color='#FFC0CB'>答: Roblox主界面→更多→社区→更多群组→搜索猫脚本→加入</font>"
+	})
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 我电脑是网页版的怎么办</b></font>",
+		Desc = "<font color='#FFC0CB'>答: 在你Roblox大厅有个叫(群组)的 点进去然后点击(更多群组)然后搜索(猫脚本)加入就行了</font>"
+	})
+    setclipboard("猫脚本QQ群569036702")
+    wait(999999999)
+end
+t1.value1 = game:GetService("VirtualUser")
+t1.value2 = game:GetService("Players")
+t1.value3 = game:GetService("RunService")
+t1.value4 = game:GetService("ReplicatedStorage")
+t1.value2.LocalPlayer.Idled:Connect(function()
+    t1.value1:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    t1.value1:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+end)
+
+local uDim2 = UDim2.fromOffset(390, 460)
+local new = ColorSequence.new
+local colorSequenceKeypoint = ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0))
+local colorSequenceKeypoint2 = ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 165, 0))
+local new3 = ColorSequenceKeypoint.new
+local _Color3 = Color3
+local CreateWindow = v3.CreateWindow
+local v18 = new({
+	colorSequenceKeypoint,
+	colorSequenceKeypoint2,
+	new3(1, _Color3.fromRGB(255, 192, 203))
+})
+local t3 = {
+	Enabled = true,
+	Anonymous = false,
+	Callback = function()
+end
+}
+t1.value5 = CreateWindow(v3, {
+	Title = "<font color='#FFC0CB'><b>猫脚本</b></font>",
+	Author = "<font color='#FFC0CB'><b>猫天帝制作</b></font>",
+	Folder = "猫脚本",
+	Size = uDim2,
+	Transparent = false,
+	Theme = "Dark",
+	SideBarWidth = 150,
+	ScrollBarEnabled = true,
+	Background = "",
+	BackgroundImageTransparency = 0,
+	Color = v18,
+	User = t3
+})
+local value5 = t1.value5
+local uDim = UDim.new(0, 10)
+local colorSequence = ColorSequence.new(Color3.fromRGB(255, 100, 100))
+
+value5:EditOpenButton({
+	Title = "<font color='#FFC0CB'><b>猫脚本</b></font>",
+	CornerRadius = uDim,
+	StrokeThickness = 2.5,
+	Color = colorSequence,
+	Draggable = true
+})
+local value5_2 = t1.value5
+local color3 = Color3.fromRGB(255, 255, 0)
+
+value5_2:Tag({
+	Title = "力量传奇",
+	Color = color3,
+	Radius = 12
+})
+local value5_3 = t1.value5
+local v26 = os.date("%H:%M")
+local _Color3_2 = Color3
+local Tag = value5_3.Tag
+local v29 = _Color3_2.fromRGB(0, 255, 0)
+
+t1.value6 = Tag(value5_3, {
+	Title = v26,
+	Color = v29,
+	Radius = 12
+})
+local value5_4 = t1.value5
+local fromRGB = Color3.fromRGB
+local Tag2 = value5_4.Tag
+local v33 = fromRGB(178, 34, 34)
+
+t1.value7 = Tag2(value5_4, {
+	Title = "00:00:00",
+	Color = v33,
+	Radius = 12
+})
+local value5_5 = t1.value5
+local color3_2 = Color3.fromRGB(0, 100, 255)
+
+t1.value8 = value5_5:Tag({
+	Title = "00:00:00",
+	Color = color3_2,
+	Radius = 12
+})
+t1.value9 = "猫脚本"
+local value9 = t1.value9
+t1.value10 = nil
+t1.value10 = value9 .. "/total_time.json"
+function t1.value11(p1)
+    pcall(function()
+        if not isfolder(t1.value9) then
+            makefolder(t1.value9)
+        end
+
+        writefile(t1.value10, (tostring(p1)))
+    end)
+end
+local v37 = (function()
+    pcall(function()
+        if not isfolder(t1.value9) then
+            makefolder(t1.value9)
+        end
+    end)
+
+    local n1 = 0
+
+    pcall(function()
+        if isfile(t1.value10) then
+            n1 = tonumber((readfile(t1.value10))) or 0
+        end
+    end)
+
+    return n1
+end)()
+t1.value12 = tick()
+t1.value13 = tick()
+function t1.value14(p2)
+    local v141 = math.floor(p2 / 3600)
+    local v142 = math.floor(p2 % 3600 / 60)
+    local v143 = math.floor(p2 % 60)
+
+    return string.format("%02d:%02d:%02d", v141, v142, v143)
+end
+if t1.value7 and t1.value7.SetTitle then
+    t1.value7:SetTitle(t1.value14(v37))
+end
+task.spawn(function()
+    while t1.value7 do
+        task.wait(1)
+
+        if t1.value6 and t1.value6.SetTitle then
+            local value6 = t1.value6
+            local t4 = { os.date("%H:%M") }
+
+            value6:SetTitle(v2(t4))
+        end
+
+        if t1.value7 and t1.value7.SetTitle then
+            local v146 = tick() - t1.value12
+            local v147 = v37 + v146
+            local value7 = t1.value7
+            local t5 = { t1.value14(v147) }
+
+            value7:SetTitle(v2(t5))
+            t1.value11(v147)
+        end
+
+        if t1.value8 and t1.value8.SetTitle then
+            local v150 = tick() - t1.value13
+            local value8 = t1.value8
+            local t6 = { t1.value14(v150) }
+
+            value8:SetTitle(v2(t6))
+        end
+    end
+end)
+
+local t7 = {
+	Create = function(_, p4, p5)
+    return t1.value5:Tab({
+			Title = p4,
+			Icon = p5
+		})
+end
+}
+t7.Announce = t7:Create("<font color='#FFC0CB'>公告</font>", "megaphone")
+t7.Announce:Paragraph({
+	Title = "<font color='#FFC0CB'><b>猫脚本制作不易勿喷</b></font>",
+	Desc = "",
+	Image = "heart",
+	ImageSize = 26
+})
+t7.Announce:Paragraph({
+	Title = "<font color='#FFC0CB'><b>感谢支持</b></font>",
+	Desc = "",
+	Image = "heart",
+	ImageSize = 26
+})
+t7.Announce:Paragraph({
+	Title = "<font color='#FFC0CB'><b>猫脚本是免费的，可以倒卖，前提是要发脚本，拉他们进猫脚本的群\n猫脚本也支持为各大付费脚本服务，想要源码可以找我来领取源码</b></font>",
+	Desc = "",
+	Image = "heart",
+	ImageSize = 26
+})
+t1.value15 = t7.Announce:Paragraph({
+	Title = "<font color='#FFC0CB'><b>猫脚本：569036702\n猫脚本互赞群：1051220818</b></font>",
+	Desc = "",
+	Image = "heart",
+	ImageSize = 26
+})
+task.spawn(function()
+    task.wait(0.3)
+    pcall(function()
+        local Frame = t1.value15.Frame
+
+        if not Frame then
+            Frame = t1.value15.Instance or (t1.value15.Main or t1.value15.Container)
+        end
+
+        if not Frame then
+            for _, v in pairs(t1.value15) do
+                if typeof(v) == "Instance" and v:IsA("GuiObject") then
+                    Frame = v
+
+                    break
+                end
+            end
+        end
+
+        if Frame and Frame:IsA("GuiObject") then
+            Frame.Active = true
+            Frame.InputBegan:Connect(function(input, gameProcessed)
+                if gameProcessed then
+                    return
+                end
+
+                if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                    pcall(function()
+                        if setclipboard then
+                            setclipboard("猫脚本：569036702 | 猫脚本互赞群：1051220818")
+                        end
+
+                        game:GetService("StarterGui"):SetCore("SendNotification", {
+							Title = "猫脚本",
+							Text = "猫脚本QQ群号与互赞群号已复制到剪贴板！",
+							Duration = 3
+						})
+                    end)
+                end
+            end)
+        end
+    end)
+end)
+t7.General = t7:Create("<font color='#FFC0CB'>通用</font>", "zap")
+
+local General = t7.General
+General:Button({
+	Title = "<font color='#FFC0CB'><b>猫飞行</b></font>",
+	Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E9%A3%9E%E8%A1%8C.lua"))("猫脚本")
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>穿墙</b></font>",
+	Default = false,
+	Callback = function(p6)
+    _G.CatNoclip_Enabled = p6
+
+    if p6 then
+        p6 = not _G.CatNoclip_Running
+    end
+
+    if p6 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%A9%BF%E5%A2%99.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>隐身</b></font>",
+	Desc = "<font color='#FFC0CB'><i>本功能原作者为蛙QWQ</i></font>",
+	Default = false,
+	Callback = function(p7)
+    _G.CatInvis_Enabled = p7
+
+    if p7 then
+        p7 = not _G.CatInvis_Running
+    end
+
+    if p7 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%8C%AB%E5%A4%A9%E5%B8%9D%E4%BA%8C%E6%94%B9%E9%9A%90%E8%BA%AB.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>透视</b></font>",
+	Default = false,
+	Callback = function(p8)
+    _G.CatESP_Enabled = p8
+
+    if p8 then
+        p8 = not _G.CatESP_Running
+    end
+
+    if p8 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E9%80%8F%E8%A7%86.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>无限跳</b></font>",
+	Default = false,
+	Callback = function(p9)
+    _G.CatInfJump_Enabled = p9
+
+    if p9 then
+        p9 = not _G.CatInfJump_Running
+    end
+
+    if p9 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E6%97%A0%E9%99%90%E8%B7%B3.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>美化无头</b></font>",
+	Default = false,
+	Callback = function(p10)
+    _G.CatHeadless_Enabled = p10
+
+    if p10 then
+        p10 = not _G.CatHeadless_Running
+    end
+
+    if p10 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%BE%8E%E5%8C%96%E6%97%A0%E5%A4%B4.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>美化断腿</b></font>",
+	Default = false,
+	Callback = function(p11)
+    _G.CatBrokenLeg_Enabled = p11
+
+    if p11 then
+        p11 = not _G.CatBrokenLeg_Running
+    end
+
+    if p11 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%BE%8E%E5%8C%96%E6%96%AD%E8%85%BF.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>删除帽子</b></font>",
+	Default = false,
+	Callback = function(p12)
+    _G.CatNoHat_Enabled = p12
+
+    if p12 then
+        p12 = not _G.CatNoHat_Running
+    end
+
+    if p12 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E5%88%A0%E9%99%A4%E5%B8%BD%E5%AD%90.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>删除全部衣服</b></font>",
+	Default = false,
+	Callback = function(p13)
+    _G.CatNoClothes_Enabled = p13
+
+    if p13 then
+        p13 = not _G.CatNoClothes_Running
+    end
+
+    if p13 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E5%88%A0%E9%99%A4%E5%85%A8%E9%83%A8%E8%A1%A3%E6%9C%8D.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>防甩飞</b></font>",
+	Default = false,
+	Callback = function(p14)
+    _G.CatAntiFling_Enabled = p14
+
+    if p14 then
+        p14 = not _G.CatAntiFling_Running
+    end
+
+    if p14 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E9%98%B2%E7%94%A9%E9%A3%9E.lua"))("猫脚本")
+    end
+end
+})
+t1.value16 = false
+t1.value17 = 16
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>速度</b></font>",
+	Default = false,
+	Callback = function(p15)
+    t1.value16 = p15
+
+    if p15 then
+        task.spawn(function()
+            while t1.value16 do
+                pcall(function()
+                    local Character = t1.value2.LocalPlayer.Character
+
+                    if Character and Character:FindFirstChild("Humanoid") then
+                        Character.Humanoid.WalkSpeed = t1.value17
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+General:Input({
+	Title = "<font color='#FFC0CB'><b>速度值</b></font>",
+	Placeholder = "默认16",
+	Default = "",
+	Callback = function(p16)
+    if not tonumber(p16) then
+    end
+end
+})
+t1.value18 = false
+t1.value19 = 196.2
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>重力</b></font>",
+	Default = false,
+	Callback = function(p17)
+    t1.value18 = p17
+
+    if p17 then
+        task.spawn(function()
+            while t1.value18 do
+                pcall(function()
+                    workspace.Gravity = t1.value19
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+General:Input({
+	Title = "<font color='#FFC0CB'><b>重力值</b></font>",
+	Placeholder = "默认196.2",
+	Default = "",
+	Callback = function(p18)
+    if not tonumber(p18) then
+    end
+end
+})
+t1.value20 = false
+t1.value21 = 50
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>跳跃</b></font>",
+	Default = false,
+	Callback = function(p19)
+    t1.value20 = p19
+
+    if p19 then
+        task.spawn(function()
+            while t1.value20 do
+                pcall(function()
+                    local Character = t1.value2.LocalPlayer.Character
+
+                    if Character and Character:FindFirstChild("Humanoid") then
+                        Character.Humanoid.JumpPower = t1.value21
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+General:Input({
+	Title = "<font color='#FFC0CB'><b>跳跃值</b></font>",
+	Placeholder = "默认50",
+	Default = "",
+	Callback = function(p20)
+    if not tonumber(p20) then
+    end
+end
+})
+t1.value22 = ""
+_G.CatSelectedPlayer = ""
+local function v40()
+    local t8 = {}
+
+    for _, player in ipairs(t1.value2:GetPlayers()) do
+        if player ~= t1.value2.LocalPlayer then
+            table.insert(t8, player.Name)
+        end
+    end
+
+    if #t8 == 0 then
+        table.insert(t8, "无玩家")
+    end
+
+    return t8
+end
+local v41 = v40()
+t1.value23 = General:Dropdown({
+	Title = "<font color='#FFC0CB'><b>选择玩家</b></font>",
+	Values = v41,
+	Default = "",
+	Callback = function(p21)
+    t1.value22 = p21
+    _G.CatSelectedPlayer = p21
+end
+})
+function t1.value24()
+    local v175 = v40()
+
+    if t1.value23 then
+        if t1.value23.SetValues then
+            t1.value23:SetValues(v175)
+
+            return
+        end
+
+        if t1.value23.Refresh then
+            t1.value23:Refresh(v175)
+
+            return
+        end
+
+        if t1.value23.Update then
+            t1.value23:Update({
+				Values = v175
+			})
+        end
+    end
+end
+t1.value2.PlayerAdded:Connect(t1.value24)
+t1.value2.PlayerRemoving:Connect(function(player)
+    if t1.value22 == player.Name then
+        t1.value22 = ""
+        _G.CatSelectedPlayer = ""
+    end
+
+    t1.value24()
+end)
+General:Button({
+	Title = "<font color='#FFC0CB'><b>传送到玩家</b></font>",
+	Callback = function()
+    pcall(function()
+        local Character = t1.value2.LocalPlayer.Character
+        local v411 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+        if not v411 then
+            return
+        end
+
+        local t1value22 = t1.value2:FindFirstChild(t1.value22)
+
+        if t1value22 and (t1value22.Character and t1value22.Character:FindFirstChild("HumanoidRootPart")) then
+            v411.CFrame = t1value22.Character.HumanoidRootPart.CFrame * CFrame.new(0, 3, 0)
+        end
+    end)
+end
+})
+General:Button({
+	Title = "<font color='#FFC0CB'><b>把玩家传送过来</b></font>",
+	Callback = function()
+    pcall(function()
+        local Character = t1.value2.LocalPlayer.Character
+        local v414 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+        if not v414 then
+            return
+        end
+
+        local t1value22 = t1.value2:FindFirstChild(t1.value22)
+
+        if t1value22 and (t1value22.Character and t1value22.Character:FindFirstChild("HumanoidRootPart")) then
+            t1value22.Character.HumanoidRootPart.CFrame = v414.CFrame * CFrame.new(0, 3, 0)
+        end
+    end)
+end
+})
+t1.value25 = false
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>循环传送玩家</b></font>",
+	Default = false,
+	Callback = function(p22)
+    t1.value25 = p22
+
+    if p22 then
+        task.spawn(function()
+            while t1.value25 do
+                pcall(function()
+                    local Character = t1.value2.LocalPlayer.Character
+                    local v502 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+                    if not v502 then
+                        return
+                    end
+
+                    local t1value22 = t1.value2:FindFirstChild(t1.value22)
+
+                    if t1value22 and (t1value22.Character and t1value22.Character:FindFirstChild("HumanoidRootPart")) then
+                        v502.CFrame = t1value22.Character.HumanoidRootPart.CFrame * CFrame.new(0, 3, 0)
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+    end
+end
+})
+t1.value26 = false
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>循环传送过来</b></font>",
+	Default = false,
+	Callback = function(p23)
+    t1.value26 = p23
+
+    if p23 then
+        task.spawn(function()
+            while t1.value26 do
+                pcall(function()
+                    local Character = t1.value2.LocalPlayer.Character
+                    local v505 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+                    if not v505 then
+                        return
+                    end
+
+                    local t1value22 = t1.value2:FindFirstChild(t1.value22)
+
+                    if t1value22 and (t1value22.Character and t1value22.Character:FindFirstChild("HumanoidRootPart")) then
+                        t1value22.Character.HumanoidRootPart.CFrame = v505.CFrame * CFrame.new(0, 3, 0)
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>循环甩飞玩家</b></font>",
+	Default = false,
+	Callback = function(p24)
+    _G.CatFling_Enabled = p24
+
+    if p24 then
+        p24 = not _G.CatFling_Running
+    end
+
+    if p24 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%94%A9%E9%A3%9E.lua"))("猫脚本")
+    end
+end
+})
+t7.Player = t7:Create("<font color='#FFC0CB'>锻炼</font>", "dumbbell")
+
+local Player = t7.Player
+t1.value27 = nil
+t1.value28 = ""
+t1.value29 = nil
+t1.value30 = false
+t1.value31 = false
+t1.value32 = 0
+t1.value33 = nil
+t1.value27 = false
+t1.value29 = 1
+t1.value34 = false
+t1.value35 = nil
+function t1.value36(p25)
+    if not p25 or p25 == "" then
+        return nil
+    end
+    local num
+    local num2
+    local num3
+    local v184 = p25:match("CFrame%.new%((.-)%)")
+    if v184 then
+        local t9 = {}
+        for v188 in v184:gmatch("[^,]+") do
+
+            table.insert(t9, v188)
+        end
+        if #t9 >= 3 then
+            num3 = tonumber(t9[1])
+            num2 = tonumber(t9[2])
+            num = tonumber(t9[3])
+        end
+    else
+        local t10 = {}
+
+        for match in p25:gmatch("[^,]+") do
+            table.insert(t10, match)
+        end
+
+        if #t10 >= 3 then
+            num3 = tonumber(t10[1])
+            num2 = tonumber(t10[2])
+            num = tonumber(t10[3])
+        end
+    end
+    if num3 and (num2 and num) then
+        return Vector3.new(num3, num2, num)
+    end
+
+    return nil
+end
+function t1.value37()
+    if not t1.value27 then
+        return
+    end
+
+    pcall(function()
+        t1.value4.rEvents.changeSpeedSizeRemote:InvokeServer("changeSize", t1.value29)
+    end)
+end
+t1.value2.LocalPlayer.CharacterAdded:Connect(function(_)
+    task.wait(0.2)
+    t1.value37()
+end)
+task.spawn(function()
+    while true do
+        task.wait(0.5)
+
+        if t1.value34 then
+            pcall(function()
+                local Character = t1.value2.LocalPlayer.Character
+                local v417 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+                if not v417 then
+                    return
+                end
+
+                local value35 = t1.value35
+
+                if not value35 then
+                    return
+                end
+
+                if (v417.Position - value35).Magnitude > 1 then
+                    v417.CFrame = CFrame.new(value35)
+                end
+            end)
+        end
+    end
+end)
+Player:Dropdown({
+	Title = "<font color='#FFC0CB'><b>选择锻炼类型</b></font>",
+	Values = {
+		"哑铃",
+		"倒立",
+		"仰卧起坐",
+		"俯卧撑"
+	},
+	Default = "",
+	Callback = function(p27)
+    t1.value28 = p27
+end
+})
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动锻炼</b></font>",
+	Default = false,
+	Callback = function(p28)
+    t1.value30 = p28
+
+    if p28 then
+        task.spawn(function()
+            while t1.value30 do
+                pcall(function()
+                    local LocalPlayer = t1.value2.LocalPlayer
+                    local Character = LocalPlayer.Character
+                    local Backpack = LocalPlayer.Backpack
+
+                    if not Character then
+                        return
+                    end
+
+                    LocalPlayer.muscleEvent:FireServer("rep")
+
+                    local s1 = ""
+
+                    if t1.value28 == "哑铃" then
+                        s1 = "Weight"
+                    elseif t1.value28 == "倒立" then
+                        s1 = "Handstands"
+                    elseif t1.value28 == "仰卧起坐" then
+                        s1 = "Situps"
+                    elseif t1.value28 == "俯卧撑" then
+                        s1 = "Pushups"
+                    end
+
+                    if s1 ~= "" and Backpack:FindFirstChild(s1) then
+                        Character.Humanoid:EquipTool(Backpack[s1])
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Player:Input({
+	Title = "<font color='#FFC0CB'><b>自定义重生次数</b></font>",
+	Desc = "<font color='#FFC0CB'><i>输入大于当前重生次数的数值，开启自动重生后生效</i></font>",
+	Placeholder = "输入数值",
+	Default = "",
+	Callback = function(p29)
+    t1.value32 = tonumber(p29) or 0
+end
+})
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动重生</b></font>",
+	Default = false,
+	Callback = function(p30)
+    if t1.value33 then
+        task.cancel(t1.value33)
+    end
+
+    t1.value31 = p30
+
+    if p30 then
+        task.spawn(function()
+            local LocalPlayer = t1.value2.LocalPlayer
+
+            while t1.value31 do
+                pcall(function()
+                    local rebirthRemote = t1.value4.rEvents.rebirthRemote
+
+                    if rebirthRemote then
+                        rebirthRemote:InvokeServer("rebirthRequest")
+
+                        if LocalPlayer.Character then
+                            LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                        end
+
+                        repeat
+                            task.wait()
+                        until LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                    end
+                end)
+
+                if t1.value32 > 0 and LocalPlayer.leaderstats.Rebirths.Value >= t1.value32 then
+                    t1.value31 = false
+                end
+
+                task.wait(0.1)
+            end
+        end)
+    end
+end
+})
+Player:Input({
+	Title = "<font color='#FFC0CB'><b>自定义大小数值</b></font>",
+	Desc = "<font color='#FFC0CB'><i>输入大小值（如 10），配合下方开关使用</i></font>",
+	Placeholder = "1",
+	Value = "1",
+	Callback = function(p31)
+    if not tonumber(p31) then
+    end
+end
+})
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>锁定自定义大小</b></font>",
+	Default = false,
+	Callback = function(p32)
+    t1.value27 = p32
+
+    if p32 then
+        t1.value37()
+    end
+end
+})
+Player:Input({
+	Title = "<font color='#FFC0CB'><b>自定义传送坐标</b></font>",
+	Desc = "<font color='#FFC0CB'><i>格式：x,y,z 或 CFrame.new(x,y,z)。可使用下方按钮复制当前位置</i></font>",
+	Placeholder = "例如：10, 20, 30",
+	Value = "",
+	Callback = function(p33)
+    t1.value35 = t1.value36(p33)
+end
+})
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>锁定传送位置</b></font>",
+	Default = false,
+	Callback = function(p34)
+    t1.value34 = p34
+end
+})
+Player:Button({
+	Title = "<font color='#FFC0CB'><b>复制当前位置</b></font>",
+	Callback = function()
+    pcall(function()
+        local Character = t1.value2.LocalPlayer.Character
+        local v421 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+        if v421 then
+            setclipboard("game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(" .. tostring(v421.CFrame) .. ")")
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+					Title = "猫脚本",
+					Text = "当前位置已复制到剪贴板，请粘贴到上方输入框",
+					Duration = 3
+				})
+        end
+    end)
+end
+})
+Player:Section({
+	Title = "<font color='#FFC0CB'><b>其他器材</b></font>"
+})
+local cFrame = CFrame.new(238.671112, 5.40315914, 387.713165, -0.0160072874, -2.90710176E-08, -0.99987185, -3.3434191E-09, 1, -2.90212157E-08, 0.99987185, 2.87843993E-09, -0.0160072874)
+local t11 = {
+	name = "沙滩跑步机10",
+	cf = cFrame
+}
+local cFrame2 = CFrame.new(-3005.37866, 14.3221855, -464.697876, -0.015773816, -1.38508964E-08, 0.999875605, -5.13225586E-08, 1, 1.30429667E-08, -0.999875605, -5.11104332E-08, -0.015773816)
+local t12 = {
+	name = "冰霜健身房跑步机2000",
+	cf = cFrame2,
+	minAgility = 2000
+}
+local cFrame3 = CFrame.new(2571.23706, 15.6896839, 898.650391, 0.999968231, 2.23868635E-09, -0.00797206629, -1.73198844E-09, 1, 6.35660768E-08, 0.00797206629, -6.3550246E-08, 0.999968231)
+local t13 = {
+	name = "神话健身房跑步机2000",
+	cf = cFrame3,
+	minAgility = 2000
+}
+local cFrame4 = CFrame.new(-7077.79102, 29.6702118, -1457.59961, -0.0322036594, -3.31122768E-10, 0.99948132, -6.44344267E-09, 1, 1.23684493E-10, -0.99948132, -6.43611742E-09, -0.0322036594)
+local t14 = {
+	name = "永恒健身房跑步机3500",
+	cf = cFrame4,
+	minAgility = 3500
+}
+local cFrame5 = CFrame.new(4370.82812, 999.358704, -3621.42773, -0.960604727, -8.41949266E-09, -0.27791819, -6.12478646E-09, 1, -9.12496567E-09, 0.27791819, -7.06329528E-09, -0.960604727)
+local t15 = {
+	name = "传奇健身房跑步机3000",
+	cf = cFrame5,
+	minAgility = 3000
+}
+local cFrame6 = CFrame.new(-8138.6791992188, 28.270538330078, 2833.5114746094, -0.960604727, -8.41949266E-09, -0.27791819, -6.12478646E-09, 1, -9.12496567E-09, 0.27791819, -7.06329528E-09, -0.960604727)
+local t16 = {
+	name = "丛林健身房跑步机20000",
+	cf = cFrame6,
+	minAgility = 20000
+}
+for i, v in ipairs({
+	t11,
+	t12,
+	t13,
+	t14,
+	t15,
+	t16
+}) do
+    local v57 = v
+    local u58 = false
+    local v59 = "Treadmill_" .. i
+
+    Player:Toggle({
+		Title = "<font color='#FFC0CB'><b>" .. v57.name .. "</b></font>",
+		Default = false,
+		Callback = function(p35)
+        u58 = p35
+
+        if p35 then
+            task.spawn(function()
+                local Character = t1.value2.LocalPlayer.Character
+                local n2 = 16
+
+                if Character and Character:FindFirstChild("Humanoid") then
+                    n2 = Character.Humanoid.WalkSpeed
+                end
+
+                while u58 do
+                    pcall(function()
+                        Character = t1.value2.LocalPlayer.Character
+
+                        if Character and Character:FindFirstChild("HumanoidRootPart") then
+                            Character.Humanoid.WalkSpeed = 10
+                            Character.HumanoidRootPart.CFrame = v57.cf
+                            t1.value3:BindToRenderStep(v59, Enum.RenderPriority.Character.Value + 1, function()
+                                if Character and Character:FindFirstChild("Humanoid") then
+                                    Character.Humanoid:Move(Vector3.new(10000, 0, -1), true)
+                                end
+                            end)
+                        end
+                    end)
+                    task.wait()
+                end
+
+                t1.value3:UnbindFromRenderStep(v59)
+                pcall(function()
+                    Character = t1.value2.LocalPlayer.Character
+
+                    if Character and Character:FindFirstChild("Humanoid") then
+                        Character.Humanoid.WalkSpeed = n2
+                    end
+                end)
+            end)
+
+            return
+        end
+
+        t1.value3:UnbindFromRenderStep(v59)
+        pcall(function()
+            local Character = t1.value2.LocalPlayer.Character
+
+            if Character and Character:FindFirstChild("Humanoid") then
+                Character.Humanoid.WalkSpeed = 16
+            end
+        end)
+    end
+	})
+end
+local cFrame7 = CFrame.new(232.627625, 3.67689133, 96.3039856, -0.963445187, -7.78685845E-08, -0.267905563, -7.92865222E-08, 1, -5.52570167E-09, 0.267905563, 1.5917589E-08, -0.963445187)
+local t17 = {
+	name = "沙滩深蹲架",
+	cf = cFrame7
+}
+local cFrame8 = CFrame.new(-2629.13818, 3.36860609, -609.827454, -0.995664716, -2.67296816E-08, -0.0930150598, -1.90042453E-08, 1, -8.39415222E-08, 0.0930150598, -8.18099295E-08, -0.995664716)
+local t18 = {
+	name = "霜冻健身房深蹲架",
+	cf = cFrame8
+}
+local cFrame9 = CFrame.new(4443.04443, 987.521484, -4061.12988, 0.83309716, 3.33018835E-09, 0.553126693, -2.87759438E-09, 1, -1.68654424E-09, -0.553126693, -1.86619012E-10, 0.83309716)
+local t19 = {
+	name = "传奇健身房深蹲架",
+	cf = cFrame9
+}
+local cFrame10 = CFrame.new(-8757.37012, 13.2186356, -6051.24365, -0.902269304, 1.63610299E-08, -0.431172907, 1.71076486E-08, 1, 2.14606288E-09, 0.431172907, -5.44002754E-09, -0.902269304)
+local t20 = {
+	name = "肌肉之王健身房深蹲架",
+	cf = cFrame10
+}
+local cFrame11 = CFrame.new(-8383.45, 83.43, 2854.54, -0.902269304, 1.63610299E-08, -0.431172907, 1.71076486E-08, 1, 2.14606288E-09, 0.431172907, -5.44002754E-09, -0.902269304)
+local t21 = {
+	name = "丛林健身房深蹲架",
+	cf = cFrame11
+}
+for _, v in ipairs({
+	t17,
+	t18,
+	t19,
+	t20,
+	t21
+}) do
+    local v72 = v
+    local u73 = false
+
+    Player:Toggle({
+		Title = "<font color='#FFC0CB'><b>" .. v72.name .. "</b></font>",
+		Default = false,
+		Callback = function(p36)
+        u73 = p36
+
+        if p36 then
+            task.spawn(function()
+                while u73 do
+                    pcall(function()
+                        if t1.value2.LocalPlayer.machineInUse.Value == nil then
+                            t1.value2.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = v72.cf
+                            task.wait(1E-05)
+
+                            local VirtualInputManager = game:GetService("VirtualInputManager")
+
+                            VirtualInputManager:SendKeyEvent(true, "E", false, game)
+                            task.wait(1E-05)
+                            VirtualInputManager:SendKeyEvent(false, "E", false, game)
+
+                            return
+                        end
+
+                        local interactSeat = workspace.machinesFolder["Squat Rack"].interactSeat
+
+                        t1.value2.LocalPlayer.muscleEvent:FireServer("rep", interactSeat)
+                    end)
+                    task.wait()
+                end
+            end)
+
+            return
+        end
+
+        pcall(function()
+            local Character = t1.value2.LocalPlayer.Character
+
+            if Character then
+                Character:WaitForChild("Humanoid").Jump = true
+            end
+        end)
+    end
+	})
+end
+local cFrame12 = CFrame.new(-185.157745, 5.81071186, 104.747154, 0.227061391, -8.2363325E-09, 0.97388047, 5.58502826E-08, 1, -4.56432803E-09, -0.97388047, 5.54278827E-08, 0.227061391)
+local t22 = {
+	name = "沙滩引体向上",
+	cf = cFrame12
+}
+local cFrame13 = CFrame.new(2315.82104, 5.81071281, 847.153076, 0.993555248, 6.99809632E-08, 0.113349125, -7.05298859E-08, 1, 8.32554692E-10, -0.113349125, -8.82168916E-09, 0.993555248)
+local t23 = {
+	t22,
+	{
+		name = "神话健身房引体向上",
+		cf = cFrame13
+	}
+}
+for _, v in ipairs(t23) do
+    local v80 = v
+    local u81 = false
+
+    Player:Toggle({
+		Title = "<font color='#FFC0CB'><b>" .. v80.name .. "</b></font>",
+		Default = false,
+		Callback = function(p37)
+        u81 = p37
+
+        if p37 then
+            task.spawn(function()
+                while u81 do
+                    pcall(function()
+                        if t1.value2.LocalPlayer.machineInUse.Value == nil then
+                            t1.value2.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = v80.cf
+                            task.wait(1E-05)
+
+                            local VirtualInputManager = game:GetService("VirtualInputManager")
+
+                            VirtualInputManager:SendKeyEvent(true, "E", false, game)
+                            task.wait(1E-05)
+                            VirtualInputManager:SendKeyEvent(false, "E", false, game)
+
+                            return
+                        end
+
+                        local interactSeat = workspace.machinesFolder["Legends Pullup"].interactSeat
+
+                        t1.value2.LocalPlayer.muscleEvent:FireServer("rep", interactSeat)
+                    end)
+                    task.wait(1E-05)
+                end
+            end)
+
+            return
+        end
+
+        pcall(function()
+            local Character = t1.value2.LocalPlayer.Character
+
+            if Character then
+                Character:WaitForChild("Humanoid").Jump = true
+            end
+        end)
+    end
+	})
+end
+local cFrame14 = CFrame.new(-91.6730804, 3.67689133, -292.42868, -0.221022144, -2.21041621E-08, -0.975268781, 1.21414407E-08, 1, -2.54162646E-08, 0.975268781, -1.7458726E-08, -0.221022144)
+local t24 = {
+	name = "沙滩投掷石",
+	cf = cFrame14
+}
+local cFrame15 = CFrame.new(2486.01733, 3.67689276, 1237.89331, 0.883595645, -2.06135038E-08, -0.468250751, -3.3286871E-09, 1, -5.03036404E-08, 0.468250751, 4.60067362E-08, 0.883595645)
+local t25 = {
+	name = "神话健身房投掷石",
+	cf = cFrame15
+}
+local cFrame16 = CFrame.new(4189.96143, 987.829773, -3903.0166, 0.422592968, 0, 0.906319559, 0, 1, 0, -0.906319559, 0, 0.422592968)
+local t26 = {
+	name = "传奇健身房投掷石",
+	cf = cFrame16
+}
+local cFrame17 = CFrame.new(-8935.4384765625, 13.855730056763, -5693.6674804688)
+local t27 = {
+	name = "肌肉之王投掷石",
+	cf = cFrame17
+}
+local cFrame18 = CFrame.new(-8620.99, 89.81, 2673.54, -0.902269304, 1.63610299E-08, -0.431172907, 1.71076486E-08, 1, 2.14606288E-09, 0.431172907, -5.44002754E-09, -0.902269304)
+local t28 = {
+	name = "丛林健身房投掷石",
+	cf = cFrame18
+}
+for _, v in ipairs({
+	t24,
+	t25,
+	t26,
+	t27,
+	t28
+}) do
+    local v94 = v
+    local u95 = false
+
+    Player:Toggle({
+		Title = "<font color='#FFC0CB'><b>" .. v94.name .. "</b></font>",
+		Default = false,
+		Callback = function(p38)
+        u95 = p38
+
+        if p38 then
+            task.spawn(function()
+                while u95 do
+                    pcall(function()
+                        if t1.value2.LocalPlayer.machineInUse.Value == nil then
+                            t1.value2.LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = v94.cf
+                            task.wait(0.0001)
+
+                            local VirtualInputManager = game:GetService("VirtualInputManager")
+
+                            VirtualInputManager:SendKeyEvent(true, "E", false, game)
+                            task.wait(0.0001)
+                            VirtualInputManager:SendKeyEvent(false, "E", false, game)
+
+                            return
+                        end
+
+                        local interactSeat = workspace.machinesFolder.Deadlift.interactSeat
+
+                        t1.value2.LocalPlayer.muscleEvent:FireServer("rep", interactSeat)
+                    end)
+                    task.wait()
+                end
+            end)
+
+            return
+        end
+
+        pcall(function()
+            local Character = t1.value2.LocalPlayer.Character
+
+            if Character then
+                Character:WaitForChild("Humanoid").Jump = true
+            end
+        end)
+    end
+	})
+end
+Player:Section({
+	Title = "<font color='#FFC0CB'><b>七包以上专属功能</b></font>"
+})
+t1.value38 = "Tribal Overlord"
+t1.value39 = "Swift Samurai"
+function t1.value40()
+    local LocalPlayer = t1.value2.LocalPlayer
+    local u216 = LocalPlayer
+    local ok, result = pcall(function()
+        local ultimatesFolder = u216:FindFirstChild("ultimatesFolder")
+
+        if not ultimatesFolder then
+            return nil
+        end
+
+        local v429 = ultimatesFolder:FindFirstChild("Golden Rebirth")
+
+        if not v429 then
+            return nil
+        end
+
+        if v429:IsA("ValueBase") then
+            return math.clamp(tonumber(v429.Value) or 0, 0, 5)
+        end
+
+        local v430 = v429:FindFirstChild("Value") or (v429:FindFirstChild("level") or v429:FindFirstChild("Level"))
+
+        if v430 and v430:IsA("ValueBase") then
+            return math.clamp(tonumber(v430.Value) or 0, 0, 5)
+        end
+
+        return nil
+    end)
+    if ok then
+        ok = result ~= nil
+    end
+    if ok then
+        return result
+    end
+    for _, v in ipairs({
+		"rebirthUpgradesFolder",
+		"ultimateUpgradesFolder",
+		"rebirthFolder",
+		"upgradesFolder"
+	}) do
+        local v4 = u216:FindFirstChild(v)
+
+        if not v4 then
+            continue
+        end
+
+        local v222 = v4:FindFirstChild("Golden Rebirth") or v4:FindFirstChild("黄金重生") or v4:FindFirstChild("goldRebirth")
+
+        if v222 then
+            local Value = v222:FindFirstChild("Value")
+
+            if not Value then
+                Value = v222:FindFirstChild("level")
+
+                if not Value then
+                    Value = v222:FindFirstChild("Level")
+                end
+            end
+
+            local v224 = Value
+
+            if Value then
+                v224 = Value:IsA("ValueBase")
+            end
+
+            if v224 then
+                return math.clamp(tonumber(Value.Value) or 0, 0, 5)
+            end
+
+            local v225 = v222:IsA("IntValue")
+
+            if not v225 then
+                v225 = v222:IsA("NumberValue")
+            end
+
+            if v225 then
+                return math.clamp(tonumber(v222.Value) or 0, 0, 5)
+            end
+        end
+
+        for _, child in ipairs(v4:GetChildren()) do
+            local v228 = child.Name:lower()
+
+            if not (v228:find("golden") and v228:find("rebirth")) then
+                continue
+            end
+
+            local v229 = child:FindFirstChild("Value") or (child:FindFirstChild("level") or child:FindFirstChild("Level"))
+
+            if v229 and v229:IsA("ValueBase") then
+                return math.clamp(tonumber(v229.Value) or 0, 0, 5)
+            end
+
+            if child:IsA("IntValue") or child:IsA("NumberValue") then
+                return math.clamp(tonumber(child.Value) or 0, 0, 5)
+            end
+        end
+    end
+    pcall(function()
+        local PlayerGui = u216:WaitForChild("PlayerGui")
+
+        for _, child in ipairs(PlayerGui:GetChildren()) do
+            if child:IsA("ScreenGui") then
+                for _, descendant in ipairs(child:GetDescendants()) do
+                    if descendant:IsA("TextLabel") or descendant:IsA("TextButton") then
+                        local descendantText = descendant.Text
+
+                        if descendantText:find("黄金重生") or descendantText:find("Golden Rebirth") then
+                            local descendantParent = descendant.Parent
+
+                            if descendantParent then
+                                for _, child2 in ipairs(descendantParent:GetChildren()) do
+                                    if not (child2:IsA("TextLabel") or child2:IsA("TextButton")) then
+                                        continue
+                                    end
+
+                                    local child2Text = child2.Text
+                                    local v441 = child2Text:match("(%d+)/5")
+
+                                    if v441 then
+                                        return math.clamp(tonumber(v441) or 0, 0, 5)
+                                    end
+
+                                    if child2Text:find("最大升级") or child2Text:find("Max") then
+                                        return 5
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end)
+
+    return 0
+end
+function t1.value41()
+    local RebirthsValue = t1.value2.LocalPlayer.leaderstats.Rebirths.Value
+    local v231 = t1.value40()
+
+    return (10000 + 5000 * RebirthsValue) * (1 - 0.1 * v231)
+end
+function t1.value42(p39)
+    local equippedPets = t1.value2.LocalPlayer:FindFirstChild("equippedPets")
+
+    if not equippedPets then
+        return ""
+    end
+
+    local v234 = equippedPets:FindFirstChild("pet" .. p39)
+
+    if v234 and v234:IsA("ValueBase") then
+        local Value = v234.Value
+
+        if Value == nil then
+            return ""
+        end
+
+        return tostring(Value)
+    end
+
+    return ""
+end
+function t1.value43()
+    local equippedPets = t1.value2.LocalPlayer:FindFirstChild("equippedPets")
+
+    if not equippedPets then
+        return 0
+    end
+
+    local n3 = 0
+
+    for _, child in ipairs(equippedPets:GetChildren()) do
+        if child:IsA("ValueBase") and child.Name:match("^pet%d+$") then
+            n3 += 1
+        end
+    end
+
+    return n3
+end
+function t1.value44(p40)
+    local petsFolder = t1.value2.LocalPlayer:FindFirstChild("petsFolder")
+
+    if not petsFolder then
+        return 0
+    end
+
+    local Unique = petsFolder:FindFirstChild("Unique")
+
+    if not Unique then
+        return 0
+    end
+
+    local GetChildren = Unique.GetChildren
+    local n4 = 0
+
+    for _, v in ipairs(GetChildren(Unique)) do
+        if p40 == v.Name then
+            n4 += 1
+        end
+    end
+
+    return n4
+end
+t1.value45 = {
+	requiredStrength = 0,
+	maxSlots = 0,
+	tribalCount = 0,
+	swiftCount = 0,
+	currentStrength = 0,
+	equipList = {}
+}
+Player:Section({
+	Title = "<font color='#FFC0CB'><b>状态</b></font>"
+})
+t1.value46 = Player:Paragraph({
+	Title = "<font color='#FFC0CB'><b>力量 & 重生</b></font>",
+	Desc = "计算中..."
+})
+t1.value47 = Player:Paragraph({
+	Title = "<font color='#FFC0CB'><b>宠物槽位</b></font>",
+	Desc = "计算中..."
+})
+t1.value48 = Player:Paragraph({
+	Title = "<font color='#FFC0CB'><b>装备详情</b></font>",
+	Desc = "检测中..."
+})
+task.spawn(function()
+    while true do
+        task.wait(0.5)
+        pcall(function()
+            local LocalPlayer = t1.value2.LocalPlayer
+
+            t1.value45.requiredStrength = t1.value41()
+            t1.value45.maxSlots = t1.value43()
+            t1.value45.tribalCount = t1.value44(t1.value38)
+            t1.value45.swiftCount = t1.value44(t1.value39)
+            t1.value45.currentStrength = LocalPlayer.leaderstats.Strength.Value
+
+            local t29 = {}
+
+            for i = 1, t1.value45.maxSlots do
+                local v445 = i
+                local v446 = t1.value42(v445)
+
+                t29[v445] = v446 ~= "" and (v446 ~= "nil" and v446) or "空"
+            end
+
+            t1.value45.equipList = t29
+            t1.value46:SetDesc("当前力量: " .. math.floor(t1.value45.currentStrength) .. " | 重生需要: " .. math.floor(t1.value45.requiredStrength))
+            t1.value47:SetDesc("槽位数量: " .. t1.value45.maxSlots .. " | Unique中 Tribal: " .. t1.value45.tribalCount .. " | Swift: " .. t1.value45.swiftCount)
+
+            local s2 = ""
+
+            for i = 1, t1.value45.maxSlots do
+                s2 ..= "pet" .. i .. "=" .. t29[i]
+
+                if i < t1.value45.maxSlots then
+                    s2 ..= " | "
+                end
+            end
+
+            t1.value48:SetDesc(s2)
+        end)
+    end
+end)
+Player:Section({
+	Title = "<font color='#FFC0CB'><b>自动切换宠物</b></font>"
+})
+t1.value49 = false
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动切换宠物1（力量足时换部落霸主）</b></font>",
+	Default = false,
+	Callback = function(p41)
+    t1.value49 = p41
+
+    if p41 then
+        task.spawn(function()
+            while t1.value49 do
+                task.wait(0.3)
+                pcall(function()
+                    if t1.value45.requiredStrength <= 0 then
+                        return
+                    end
+
+                    if t1.value45.currentStrength < t1.value45.requiredStrength then
+                        return
+                    end
+
+                    local Unique = t1.value2.LocalPlayer:FindFirstChild("petsFolder"):FindFirstChild("Unique")
+
+                    if not Unique then
+                        return
+                    end
+
+                    for _, child in pairs(Unique:GetChildren()) do
+                        if not t1.value49 then
+                            return
+                        end
+
+                        for _, child3 in pairs(Unique:GetChildren()) do
+                            if not t1.value49 then
+                                break
+                            end
+
+                            if child.Name == t1.value38 and child3.Name == t1.value39 then
+                                t1.value4.rEvents.equipPetEvent:FireServer("unequipPet", child3)
+                                t1.value4.rEvents.equipPetEvent:FireServer("equipPet", child)
+                            end
+                        end
+                    end
+                end)
+            end
+        end)
+    end
+end
+})
+t1.value50 = false
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动切换宠物2（力量不足时换迅捷武士）</b></font>",
+	Default = false,
+	Callback = function(p42)
+    t1.value50 = p42
+
+    if p42 then
+        task.spawn(function()
+            while t1.value50 do
+                task.wait(0.3)
+                pcall(function()
+                    if t1.value45.requiredStrength <= 0 then
+                        return
+                    end
+
+                    if t1.value45.currentStrength >= t1.value45.requiredStrength then
+                        return
+                    end
+
+                    local Unique = t1.value2.LocalPlayer:FindFirstChild("petsFolder"):FindFirstChild("Unique")
+
+                    if not Unique then
+                        return
+                    end
+
+                    local GetChildren = Unique.GetChildren
+
+                    for _, v in pairs(GetChildren(Unique)) do
+                        if not t1.value50 then
+                            return
+                        end
+
+                        for _, child in pairs(Unique:GetChildren()) do
+                            if not t1.value50 then
+                                break
+                            end
+
+                            if v.Name == t1.value38 and child.Name == t1.value39 then
+                                t1.value4.rEvents.equipPetEvent:FireServer("unequipPet", v)
+                                t1.value4.rEvents.equipPetEvent:FireServer("equipPet", child)
+                            end
+                        end
+                    end
+                end)
+            end
+        end)
+    end
+end
+})
+t1.value51 = false
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>智能重生（全部部落霸主时）</b></font>",
+	Default = false,
+	Callback = function(p43)
+    t1.value51 = p43
+
+    if p43 then
+        task.spawn(function()
+            while t1.value51 do
+                task.wait()
+                pcall(function()
+                    local maxSlots = t1.value45.maxSlots
+                    if maxSlots <= 0 then
+                        return
+                    end
+                    local v530 = true
+                    local v531 = false
+                    local v532 = math.min(maxSlots, t1.value45.tribalCount, t1.value45.swiftCount)
+                    local n5 = 0
+                    local g534
+                    repeat
+                        n5 += 1
+
+                        if not (v531 and v532 <= n5 or not v531 and n5 <= v532) then
+                            g534 = true
+                        end
+
+                        if g534 then
+                            break
+                        end
+                    until t1.value42(n5) ~= t1.value38
+                    if not g534 then
+                        v530 = false
+                    end
+                    g534 = false
+                    if not v530 then
+                        return
+                    end
+                    t1.value4.rEvents.rebirthRemote:InvokeServer("rebirthRequest")
+                end)
+            end
+        end)
+    end
+end
+})
+t1.value52 = false
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>快速锻炼（练重生专用）</b></font>",
+	Default = false,
+	Callback = function(p44)
+    t1.value52 = p44
+
+    if p44 then
+        task.spawn(function()
+            while t1.value52 do
+                task.wait()
+                pcall(function()
+                    for _ = 1, 15 do
+                        t1.value2.LocalPlayer.muscleEvent:FireServer("rep")
+                    end
+                end)
+            end
+        end)
+    end
+end
+})
+t1.value53 = false
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>快速锻炼（练力量专用）</b></font>",
+	Default = false,
+	Callback = function(p45)
+    t1.value53 = p45
+
+    if p45 then
+        task.spawn(function()
+            while t1.value53 do
+                task.wait()
+                pcall(function()
+                    for _ = 1, 120 do
+                        t1.value2.LocalPlayer.muscleEvent:FireServer("rep")
+                    end
+                end)
+            end
+        end)
+    end
+end
+})
+t1.value54 = nil
+t1.value55 = nil
+t1.value56 = false
+t1.value57 = nil
+t1.value58 = nil
+t1.value58 = nil
+function t1.value59(p46, p47)
+    if t1.value58 then
+        t1.value58:Destroy()
+    end
+
+    t1.value58 = Instance.new("ScreenGui")
+    t1.value58.Name = "CatRedDot"
+    t1.value58.ResetOnSpawn = false
+    t1.value58.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    t1.value58.Parent = t1.value2.LocalPlayer:WaitForChild("PlayerGui")
+
+    local Frame = Instance.new("Frame")
+
+    Frame.Size = UDim2.new(0, 6, 0, 6)
+    Frame.Position = UDim2.new(0, p46 - 3, 0, p47 - 3)
+    Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    Frame.BorderSizePixel = 0
+    Frame.ZIndex = 9999
+    Frame.Parent = t1.value58
+    Instance.new("UICorner", Frame).CornerRadius = UDim.new(1, 0)
+
+    local Frame2 = Instance.new("Frame")
+
+    Frame2.Size = UDim2.new(0, 14, 0, 14)
+    Frame2.Position = UDim2.new(0, p46 - 7, 0, p47 - 7)
+    Frame2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    Frame2.BackgroundTransparency = 0.6
+    Frame2.BorderSizePixel = 0
+    Frame2.ZIndex = 9998
+    Frame2.Parent = t1.value58
+    Instance.new("UICorner", Frame2).CornerRadius = UDim.new(1, 0)
+end
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>自定义点击位置</b></font>",
+	Default = false,
+	Callback = function(p48)
+    t1.value56 = p48
+
+    if p48 then
+        if t1.value57 then
+            t1.value57:Disconnect()
+        end
+
+        t1.value57 = game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+            if gameProcessed then
+                return
+            end
+
+            if not t1.value56 then
+                return
+            end
+
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                t1.value54 = input.Position.X
+                t1.value55 = input.Position.Y
+                t1.value59(t1.value54, t1.value55)
+            end
+        end)
+
+        return
+    end
+
+    if t1.value57 then
+        t1.value57:Disconnect()
+        t1.value57 = nil
+    end
+end
+})
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>确定改位置</b></font>",
+	Default = false,
+	Callback = function(p49)
+    if p49 then
+        p49 = t1.value54 and t1.value55
+    end
+
+    if p49 and t1.value57 then
+        t1.value57:Disconnect()
+    end
+end
+})
+t1.value60 = false
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动吃蛋</b></font>",
+	Default = false,
+	Callback = function(p50)
+    t1.value60 = p50
+
+    if p50 then
+        task.spawn(function()
+            while t1.value60 do
+                pcall(function()
+                    local LocalPlayer = t1.value2.LocalPlayer
+                    local v538 = false
+
+                    if LocalPlayer:FindFirstChild("boostTimersFolder") and LocalPlayer.boostTimersFolder:FindFirstChild("Protein Egg") then
+                        v538 = true
+                    end
+
+                    if not v538 then
+                        local Character = LocalPlayer.Character
+                        local v540 = Character and Character:FindFirstChildOfClass("Humanoid")
+
+                        if not v540 then
+                            return
+                        end
+
+                        local v541 = LocalPlayer.Backpack:FindFirstChild("Protein Egg")
+
+                        if v541 and v541:IsA("Tool") then
+                            v540:EquipTool(v541)
+                            task.wait(0.15)
+
+                            local VirtualInputManager = game:GetService("VirtualInputManager")
+                            local CurrentCamera = workspace.CurrentCamera
+                            local v544 = t1.value54 or CurrentCamera.ViewportSize.X / 2
+                            local v545 = t1.value55 or CurrentCamera.ViewportSize.Y / 2
+
+                            VirtualInputManager:SendMouseButtonEvent(v544, v545, 0, true, game, 0)
+                            task.wait(0.05)
+                            VirtualInputManager:SendMouseButtonEvent(v544, v545, 0, false, game, 0)
+                        end
+                    end
+                end)
+                task.wait(0.8)
+            end
+        end)
+    end
+end
+})
+t1.value61 = false
+Player:Toggle({
+	Title = "<font color='#FFC0CB'><b>清除特效(不推荐开启)</b></font>",
+	Default = false,
+	Callback = function(p51)
+    t1.value61 = p51
+
+    if p51 then
+        task.spawn(function()
+            while t1.value61 do
+                task.wait()
+                pcall(function()
+                    local value4 = t1.value4
+
+                    if value4:FindFirstChild("strengthFrame") then
+                        value4.strengthFrame:Destroy()
+                    end
+
+                    if value4:FindFirstChild("durabilityFrame") then
+                        value4.durabilityFrame:Destroy()
+                    end
+
+                    if value4:FindFirstChild("agilityFrame") then
+                        value4.agilityFrame:Destroy()
+                    end
+
+                    local Character = t1.value2.LocalPlayer.Character
+
+                    if Character then
+                        if Character:FindFirstChild("sweatPart") then
+                            Character.sweatPart:Destroy()
+                        end
+
+                        if Character:FindFirstChild("airPart") then
+                            Character.airPart:Destroy()
+                        end
+                    end
+                end)
+            end
+        end)
+    end
+end
+})
+t7.Kill = t7:Create("<font color='#FFC0CB'>击杀</font>", "skull")
+
+local Kill = t7.Kill
+t1.value62 = false
+t1.value63 = false
+t1.value64 = false
+t1.value65 = {}
+t1.value66 = {}
+function t1.value67(p52)
+    local v259 = tostring(p52):lower():gsub("^%s+", ""):gsub("%s+$", "")
+
+    if v259 == "" then
+        return nil
+    end
+
+    local v260, v261, v262 = ipairs(t1.value2:GetPlayers())
+    local v263
+
+    repeat
+        v262, v263 = v260(v261, v262)
+
+        if not v262 then
+            for _, player in ipairs(t1.value2:GetPlayers()) do
+                if player ~= t1.value2.LocalPlayer and player.Name:lower():find(v259, 1, true) then
+                    return player.Name
+                end
+            end
+
+            return nil
+        end
+    until v263 ~= t1.value2.LocalPlayer and v259 == v263.Name:lower()
+
+    return v263.Name
+end
+function t1.value68(p53)
+    local t30 = {}
+
+    for match in tostring(p53):gmatch("([^,]+)") do
+        local v257 = match:gsub("^%s+", ""):gsub("%s+$", "")
+
+        if v257 ~= "" then
+            table.insert(t30, v257)
+        end
+    end
+
+    return t30
+end
+Kill:Input({
+	Title = "<font color='#FFC0CB'><b>白名单 - 添加/移除玩家</b></font>",
+	Desc = "<font color='#FFC0CB'><i>输入玩家名字，已存在则移除，不存在则添加，多个用逗号分隔</i></font>",
+	Placeholder = "输入名字，多个用逗号分隔",
+	Default = "",
+	Callback = function(p54)
+    local v267 = t1.value68(p54)
+    local t31 = {}
+    local t32 = {}
+    local t33 = {}
+
+    for _, v in ipairs(v267) do
+        local v273 = t1.value67(v)
+
+        if v273 then
+            if t1.value65[v273] then
+                t1.value65[v273] = nil
+                table.insert(t32, v273)
+            else
+                t1.value65[v273] = true
+                table.insert(t31, v273)
+            end
+        else
+            table.insert(t33, v)
+        end
+    end
+
+    local s3 = ""
+
+    if #t31 > 0 then
+        s3 ..= "已添加 " .. #t31 .. " 名: " .. table.concat(t31, ", ")
+    end
+
+    if #t32 > 0 then
+        if s3 ~= "" then
+            s3 ..= " | "
+        end
+
+        s3 ..= "已移除 " .. #t32 .. " 名: " .. table.concat(t32, ", ")
+    end
+
+    if #t33 > 0 then
+        if s3 ~= "" then
+            s3 ..= " | "
+        end
+
+        s3 ..= "未找到 " .. #t33 .. " 名: " .. table.concat(t33, ", ")
+    end
+
+    if s3 == "" then
+        s3 = "请输入玩家名字"
+    end
+
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+			Title = "猫脚本 - 白名单",
+			Text = s3,
+			Duration = 4
+		})
+end
+})
+Kill:Input({
+	Title = "<font color='#FFC0CB'><b>黑名单 - 添加/移除玩家</b></font>",
+	Desc = "<font color='#FFC0CB'><i>输入玩家名字，已存在则移除，不存在则添加，多个用逗号分隔</i></font>",
+	Placeholder = "输入名字，多个用逗号分隔",
+	Default = "",
+	Callback = function(p55)
+    local v276 = t1.value68(p55)
+    local t34 = {}
+    local t35 = {}
+    local t36 = {}
+
+    for _, v in ipairs(v276) do
+        local v282 = t1.value67(v)
+
+        if v282 then
+            if t1.value66[v282] then
+                t1.value66[v282] = nil
+                table.insert(t35, v282)
+            else
+                t1.value66[v282] = true
+                table.insert(t34, v282)
+            end
+        else
+            table.insert(t36, v)
+        end
+    end
+
+    local s4 = ""
+
+    if #t34 > 0 then
+        s4 ..= "已添加 " .. #t34 .. " 名: " .. table.concat(t34, ", ")
+    end
+
+    if #t35 > 0 then
+        if s4 ~= "" then
+            s4 ..= " | "
+        end
+
+        s4 ..= "已移除 " .. #t35 .. " 名: " .. table.concat(t35, ", ")
+    end
+
+    if #t36 > 0 then
+        if s4 ~= "" then
+            s4 ..= " | "
+        end
+
+        s4 ..= "未找到 " .. #t36 .. " 名: " .. table.concat(t36, ", ")
+    end
+
+    if s4 == "" then
+        s4 = "请输入玩家名字"
+    end
+
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+			Title = "猫脚本 - 黑名单",
+			Text = s4,
+			Duration = 4
+		})
+end
+})
+Kill:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动击杀全部</b></font>",
+	Default = false,
+	Callback = function(p56)
+    t1.value62 = p56
+
+    if p56 then
+        task.spawn(function()
+            while t1.value62 do
+                for _, player in ipairs(t1.value2:GetPlayers()) do
+                    local v453 = player
+
+                    if v453 ~= t1.value2.LocalPlayer and not t1.value65[v453.Name] then
+                        pcall(function()
+                            local Character = v453.Character
+                            local Character2 = t1.value2.LocalPlayer.Character
+
+                            if Character and Character2 then
+                                local Punch = t1.value2.LocalPlayer.Backpack:FindFirstChild("Punch")
+
+                                if Punch and Character2:FindFirstChild("Humanoid") then
+                                    Character2.Humanoid:EquipTool(Punch)
+                                    Punch:Activate()
+                                end
+
+                                local Head = Character:FindFirstChild("Head")
+                                local LeftHand = Character2:FindFirstChild("LeftHand")
+
+                                if Head and LeftHand then
+                                    firetouchinterest(Head, LeftHand, 0)
+                                    task.wait(0.01)
+                                    firetouchinterest(Head, LeftHand, 1)
+                                end
+                            end
+                        end)
+                    end
+                end
+
+                task.wait(0.1)
+            end
+        end)
+    end
+end
+})
+Kill:Toggle({
+	Title = "<font color='#FFC0CB'><b>锁定击杀黑名单</b></font>",
+	Default = false,
+	Callback = function(p57)
+    t1.value63 = p57
+
+    if p57 then
+        task.spawn(function()
+            while t1.value63 do
+                for k in pairs(t1.value66) do
+                    local k2 = t1.value2:FindFirstChild(k)
+
+                    if k2 and (k2.Character and k2.Character:FindFirstChild("Head")) then
+                        pcall(function()
+                            local Character = t1.value2.LocalPlayer.Character
+
+                            if Character then
+                                k2.Character.Head.Anchored = true
+                                k2.Character.Head.CanCollide = false
+
+                                if k2.Character.Head:FindFirstChild("Neck") then
+                                    k2.Character.Head.Neck:Destroy()
+                                end
+
+                                t1.value2.LocalPlayer.muscleEvent:FireServer("punch", "leftHand")
+                                t1.value2.LocalPlayer.muscleEvent:FireServer("punch", "rightHand")
+                                k2.Character.Head.Position = Character.LeftHand.Position
+                            end
+                        end)
+                    end
+                end
+
+                task.wait(1)
+            end
+        end)
+    end
+end
+})
+Kill:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动挥拳</b></font>",
+	Default = false,
+	Callback = function(p58)
+    t1.value64 = p58
+
+    if p58 then
+        task.spawn(function()
+            while t1.value64 do
+                pcall(function()
+                    t1.value2.LocalPlayer.muscleEvent:FireServer("punch", "leftHand")
+
+                    local Punch = t1.value2.LocalPlayer.Backpack:FindFirstChild("Punch")
+
+                    if Punch then
+                        t1.value2.LocalPlayer.Character.Humanoid:EquipTool(Punch)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+t7.Rock = t7:Create("<font color='#FFC0CB'>石头</font>", "mountain")
+
+local Rock = t7.Rock
+t1.value69 = false
+t1.value70 = false
+t1.value71 = false
+t1.value72 = false
+t1.value73 = nil
+t1.value74 = "Frozen Rock"
+local cFrame19 = CFrame.new(18.3364983, 8.35296726, 2094.66919, -0.99168855, -4.91053509E-09, 0.128661588, 7.92791877E-09, 1, 9.92725262E-08, -0.128661588, 9.94674494E-08, -0.99168855)
+local cFrame20 = CFrame.new(-143.737717, 9.90110397, 411.335052, -0.853666067, -5.99174088E-09, 0.520820737, -2.59418065E-09, 1, 7.25235516E-09, -0.520820737, 4.83998663E-09, -0.853666067)
+local cFrame21 = CFrame.new(154.747818, 7.88098717, -142.160736, 0.481531382, -2.43787195E-08, -0.876428843, 5.29307131E-09, 1, -2.49078287E-08, 0.876428843, 7.35490069E-09, 0.481531382)
+local cFrame22 = CFrame.new(282.408081, 7.87989855, -584.291626, 0.224781081, -2.54717989E-08, -0.974409282, -1.42170977E-08, 1, -2.94204217E-08, 0.974409282, 2.04664268E-08, 0.224781081)
+local cFrame23 = CFrame.new(-2577.71313, 7.88099527, -275.236755, -0.886139214, 4.64060044E-08, -0.463419169, 4.32736194E-08, 1, 1.73915016E-08, 0.463419169, -4.64253302E-09, -0.886139214)
+local cFrame24 = CFrame.new(2218.36011, 7.88099527, 1221.01685, -0.432565987, 4.75892392E-08, 0.901602268, 3.94557897E-09, 1, -5.08899731E-08, -0.901602268, -1.84559283E-08, -0.432565987)
+local cFrame25 = CFrame.new(-7234.49854, 9.87342453, -1231.04211, 0.927281976, -6.72599256E-08, 0.374363571, 8.28478477E-08, 1, -2.55457167E-08, -0.374363571, 5.47032997E-08, 0.927281976)
+local cFrame26 = CFrame.new(4190.45361, 992.089294, -4067.81006, 0.515822232, -2.23924328E-08, 0.856695652, 2.45682301E-08, 1, 1.13454446E-08, -0.856695652, 1.51952637E-08, 0.515822232)
+local cFrame27 = CFrame.new(-9033.59277, 9.75098991, -6032.83203, 0.344087869, -4.16915036E-08, -0.938937426, -1.90252329E-08, 1, -5.13749434E-08, 0.938937426, 3.55409995E-08, 0.344087869)
+local cFrame28 = CFrame.new(-7690.3667, 7.35999966, 2861.073, -0.425252706, 7.86523628E-08, -0.905074656, -7.56427898E-09, 1, 9.04556217E-08, 0.905074656, 4.53127349E-08, -0.425252706)
+
+t1.value75 = {
+	["Tiny Rock"] = cFrame19,
+	["Punching Rock"] = cFrame20,
+	["Large Rock"] = cFrame21,
+	["Golden Rock"] = cFrame22,
+	["Frozen Rock"] = cFrame23,
+	["Mystic Rock"] = cFrame24,
+	["Inferno Rock"] = cFrame25,
+	["Rock Of Legends"] = cFrame26,
+	["Muscle King Mountain"] = cFrame27,
+	["Ancient Jungle Rock"] = cFrame28
+}
+Rock:Dropdown({
+	Title = "<font color='#FFC0CB'><b>选择石头</b></font>",
+	Values = {
+		"小号岩石",
+		"拳击岩石",
+		"大号岩石",
+		"金色岩石",
+		"冰晶石头",
+		"神话岩石",
+		"炼狱石头",
+		"传奇之岩",
+		"肌肉之王山",
+		"古代丛林岩石"
+	},
+	Default = "冰晶石头",
+	Callback = function(p59)
+    t1.value74 = ({
+			["小号岩石"] = "Tiny Rock",
+			["拳击岩石"] = "Punching Rock",
+			["大号岩石"] = "Large Rock",
+			["金色岩石"] = "Golden Rock",
+			["冰晶石头"] = "Frozen Rock",
+			["神话岩石"] = "Mystic Rock",
+			["炼狱石头"] = "Inferno Rock",
+			["传奇之岩"] = "Rock Of Legends",
+			["肌肉之王山"] = "Muscle King Mountain",
+			["古代丛林岩石"] = "Ancient Jungle Rock"
+		})[p59]
+end
+})
+Rock:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动打石头</b></font>",
+	Default = false,
+	Callback = function(p60)
+    t1.value69 = p60
+
+    if p60 then
+        task.spawn(function()
+            while t1.value69 do
+                pcall(function()
+                    if t1.value70 then
+                        local Character = t1.value2.LocalPlayer.Character
+
+                        if Character and Character:FindFirstChild("HumanoidRootPart") then
+                            local v556 = t1.value75[t1.value74]
+
+                            if v556 then
+                                Character.HumanoidRootPart.CFrame = v556
+                                task.wait(0.3)
+                            end
+                        end
+                    end
+
+                    local machinesFolder = workspace:FindFirstChild("machinesFolder")
+
+                    if machinesFolder then
+                        local t1value74 = machinesFolder:FindFirstChild(t1.value74)
+
+                        if t1value74 and t1value74:FindFirstChild("Rock") then
+                            local Rock2 = t1value74.Rock
+                            local v560 = t1.value2.LocalPlayer.Character and t1.value2.LocalPlayer.Character:FindFirstChild("LeftHand")
+
+                            if v560 then
+                                firetouchinterest(Rock2, v560, 0)
+                                task.wait(0.01)
+                                firetouchinterest(Rock2, v560, 1)
+                            end
+                        end
+                    end
+                end)
+                task.wait()
+            end
+        end)
+
+        return
+    end
+
+    pcall(function()
+        local Character = t1.value2.LocalPlayer.Character
+
+        if Character and Character:FindFirstChild("Humanoid") then
+            Character.Humanoid.AutoRotate = true
+        end
+    end)
+end
+})
+Rock:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动传送打石头</b></font>",
+	Desc = "<font color='#FFC0CB'><i>开启后自动传送到石头预设坐标</i></font>",
+	Default = false,
+	Callback = function(p61)
+    t1.value70 = p61
+end
+})
+Rock:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动挥拳</b></font>",
+	Default = false,
+	Callback = function(p62)
+    t1.value71 = p62
+
+    if p62 then
+        task.spawn(function()
+            while t1.value71 do
+                pcall(function()
+                    t1.value2.LocalPlayer.muscleEvent:FireServer("punch", "leftHand")
+
+                    local Punch = t1.value2.LocalPlayer.Backpack:FindFirstChild("Punch")
+
+                    if Punch then
+                        t1.value2.LocalPlayer.Character.Humanoid:EquipTool(Punch)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Rock:Toggle({
+	Title = "<font color='#FFC0CB'><b>固定位置</b></font>",
+	Default = false,
+	Callback = function(p63)
+    t1.value72 = p63
+
+    local LocalPlayer = t1.value2.LocalPlayer
+    local HumanoidRootPart = (LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart")
+
+    if p63 then
+        t1.value73 = HumanoidRootPart.CFrame
+        task.spawn(function()
+            while t1.value72 do
+                HumanoidRootPart.CFrame = t1.value73
+                task.wait()
+            end
+        end)
+    end
+end
+})
+t7.Pet = t7:Create("<font color='#FFC0CB'>宠物</font>", "cat")
+
+local Pet = t7.Pet
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>丛林水晶</b></font>"
+})
+t1.value76 = "Neon Guardian"
+t1.value77 = false
+t1.value78 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"霓虹守护者",
+		"爆破",
+		"肌肉老师",
+		"永恒超级打击光环",
+		"超新星光环",
+		"金色维京人"
+	},
+	Default = "霓虹守护者",
+	Callback = function(p64)
+    if p64 == "霓虹守护者" then
+        t1.value76 = "Neon Guardian"
+
+        return
+    end
+
+    if p64 == "爆破" then
+        t1.value76 = "Entropic Blast"
+
+        return
+    end
+
+    if p64 == "肌肉老师" then
+        t1.value76 = "Muscle Sensei"
+
+        return
+    end
+
+    if p64 == "永恒超级打击光环" then
+        t1.value76 = "Eternal Megastrike"
+
+        return
+    end
+
+    if p64 == "超新星光环" then
+        t1.value76 = "Grand Supernova"
+
+        return
+    end
+
+    if p64 == "金色维京人" then
+        t1.value76 = "Golden Viking"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p65)
+    t1.value77 = p65
+
+    if p65 then
+        task.spawn(function()
+            while t1.value77 do
+                pcall(function()
+                    local t1value76 = t1.value4.cPetShopFolder:FindFirstChild(t1.value76)
+
+                    if t1value76 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value76)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动进化当前选中宠物</b></font>",
+	Default = false,
+	Callback = function(p66)
+    t1.value78 = p66
+
+    if p66 then
+        task.spawn(function()
+            while t1.value78 do
+                task.wait()
+                pcall(function()
+                    local LocalPlayer = t1.value2.LocalPlayer
+                    local powerUpsFolder = LocalPlayer:FindFirstChild("powerUpsFolder")
+
+                    if powerUpsFolder then
+                        powerUpsFolder = LocalPlayer.powerUpsFolder:FindFirstChild("Unique")
+
+                        if powerUpsFolder then
+                            powerUpsFolder = LocalPlayer.powerUpsFolder.Unique:FindFirstChild(t1.value76)
+                        end
+                    end
+
+                    if powerUpsFolder then
+                        if t1.value4.rEvents:FindFirstChild("evolvePowerUpEvent") then
+                            t1.value4.rEvents.evolvePowerUpEvent:FireServer("evolvePowerUp", powerUpsFolder)
+
+                            return
+                        end
+                    elseif t1.value4.rEvents:FindFirstChild("petEvolveEvent") then
+                        t1.value4.rEvents.petEvolveEvent:FireServer("evolvePet", t1.value76)
+                    end
+                end)
+            end
+        end)
+    end
+end
+})
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>银河甲骨文水晶</b></font>"
+})
+t1.value79 = "Muscle King"
+t1.value80 = false
+t1.value81 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"肌肉之王",
+		"暗星",
+		"闪电幻影",
+		"永恒打击利维坦",
+		"蓝苔原光环",
+		"超能炼狱光环"
+	},
+	Default = "肌肉之王",
+	Callback = function(p67)
+    if p67 == "肌肉之王" then
+        t1.value79 = "Muscle King"
+
+        return
+    end
+
+    if p67 == "暗星" then
+        t1.value79 = "Darkstar Hunter"
+
+        return
+    end
+
+    if p67 == "闪电幻影" then
+        t1.value79 = "Lightning Strike Phantom"
+
+        return
+    end
+
+    if p67 == "永恒打击利维坦" then
+        t1.value79 = "Eternal Strike Leviathan"
+
+        return
+    end
+
+    if p67 == "蓝苔原光环" then
+        t1.value79 = "Azure Tundra"
+
+        return
+    end
+
+    if p67 == "超能炼狱光环" then
+        t1.value79 = "Ultra Inferno"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p68)
+    t1.value80 = p68
+
+    if p68 then
+        task.spawn(function()
+            while t1.value80 do
+                pcall(function()
+                    local t1value79 = t1.value4.cPetShopFolder:FindFirstChild(t1.value79)
+
+                    if t1value79 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value79)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动进化当前选中宠物</b></font>",
+	Default = false,
+	Callback = function(p69)
+    t1.value81 = p69
+
+    if p69 then
+        task.spawn(function()
+            while t1.value81 do
+                task.wait()
+                pcall(function()
+                    local LocalPlayer = t1.value2.LocalPlayer
+                    local powerUpsFolder = LocalPlayer:FindFirstChild("powerUpsFolder")
+
+                    if powerUpsFolder then
+                        powerUpsFolder = LocalPlayer.powerUpsFolder:FindFirstChild("Unique")
+
+                        if powerUpsFolder then
+                            powerUpsFolder = LocalPlayer.powerUpsFolder.Unique:FindFirstChild(t1.value79)
+                        end
+                    end
+
+                    if powerUpsFolder then
+                        if t1.value4.rEvents:FindFirstChild("evolvePowerUpEvent") then
+                            t1.value4.rEvents.evolvePowerUpEvent:FireServer("evolvePowerUp", powerUpsFolder)
+
+                            return
+                        end
+                    elseif t1.value4.rEvents:FindFirstChild("petEvolveEvent") then
+                        t1.value4.rEvents.petEvolveEvent:FireServer("evolvePet", t1.value79)
+                    end
+                end)
+            end
+        end)
+    end
+end
+})
+local function v109(p70, p71, p72)
+    p70:Toggle({
+		Title = "<font color='#FFC0CB'><b>自动进化当前选中宠物</b></font>",
+		Default = false,
+		Callback = function(p73)
+        p72 = p73
+
+        if p73 then
+            task.spawn(function()
+                while p72 do
+                    task.wait()
+                    pcall(function()
+                        local LocalPlayer = t1.value2.LocalPlayer
+                        local powerUpsFolder = LocalPlayer:FindFirstChild("powerUpsFolder")
+
+                        if powerUpsFolder then
+                            powerUpsFolder = LocalPlayer.powerUpsFolder:FindFirstChild("Unique")
+
+                            if powerUpsFolder then
+                                powerUpsFolder = LocalPlayer.powerUpsFolder.Unique:FindFirstChild(p71)
+                            end
+                        end
+
+                        if powerUpsFolder then
+                            if t1.value4.rEvents:FindFirstChild("evolvePowerUpEvent") then
+                                t1.value4.rEvents.evolvePowerUpEvent:FireServer("evolvePowerUp", powerUpsFolder)
+
+                                return
+                            end
+                        elseif t1.value4.rEvents:FindFirstChild("petEvolveEvent") then
+                            t1.value4.rEvents.petEvolveEvent:FireServer("evolvePet", p71)
+                        end
+                    end)
+                end
+            end)
+        end
+    end
+	})
+end
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>能量精英水晶</b></font>"
+})
+t1.value82 = "Cybernetic Showdown Dragon"
+t1.value83 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"赛博龙",
+		"以太仙灵小兔",
+		"极新星飞马",
+		"暗蝎尾怪传奇",
+		"影创世龙",
+		"霜波传奇企鹅"
+	},
+	Default = "赛博龙",
+	Callback = function(p74)
+    if p74 == "赛博龙" then
+        t1.value82 = "Cybernetic Showdown Dragon"
+
+        return
+    end
+
+    if p74 == "以太仙灵小兔" then
+        t1.value82 = "Aether Spirit Bunny"
+
+        return
+    end
+
+    if p74 == "极新星飞马" then
+        t1.value82 = "Ultimate Supernova Pegasus"
+
+        return
+    end
+
+    if p74 == "暗蝎尾怪传奇" then
+        t1.value82 = "Dark Legends Manticore"
+
+        return
+    end
+
+    if p74 == "影创世龙" then
+        t1.value82 = "Phantom Genesis Dragon"
+
+        return
+    end
+
+    if p74 == "霜波传奇企鹅" then
+        t1.value82 = "Frostwave Legends Penguin"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p75)
+    t1.value83 = p75
+
+    if p75 then
+        task.spawn(function()
+            while t1.value83 do
+                pcall(function()
+                    local t1value82 = t1.value4.cPetShopFolder:FindFirstChild(t1.value82)
+
+                    if t1value82 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value82)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+v109(Pet, t1.value82, false)
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>传奇水晶</b></font>"
+})
+t1.value84 = "Ultra Birdie"
+t1.value85 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"超级小鸟",
+		"魔法蝴蝶",
+		"白色凤凰",
+		"绿色释火者"
+	},
+	Default = "超级小鸟",
+	Callback = function(p76)
+    if p76 == "超级小鸟" then
+        t1.value84 = "Ultra Birdie"
+
+        return
+    end
+
+    if p76 == "魔法蝴蝶" then
+        t1.value84 = "Magic Butterfly"
+
+        return
+    end
+
+    if p76 == "白色凤凰" then
+        t1.value84 = "White Pheonix"
+
+        return
+    end
+
+    if p76 == "绿色释火者" then
+        t1.value84 = "Green Firecaster"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p77)
+    t1.value85 = p77
+
+    if p77 then
+        task.spawn(function()
+            while t1.value85 do
+                pcall(function()
+                    local t1value84 = t1.value4.cPetShopFolder:FindFirstChild(t1.value84)
+
+                    if t1value84 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value84)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+v109(Pet, t1.value84, false)
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>狱火水晶</b></font>"
+})
+t1.value86 = "Infernal Dragon"
+t1.value87 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"狱火龙",
+		"金色凤凰",
+		"白色飞马",
+		"红色释火者"
+	},
+	Default = "狱火龙",
+	Callback = function(p78)
+    if p78 == "狱火龙" then
+        t1.value86 = "Infernal Dragon"
+
+        return
+    end
+
+    if p78 == "金色凤凰" then
+        t1.value86 = "Golden Pheonix"
+
+        return
+    end
+
+    if p78 == "白色飞马" then
+        t1.value86 = "White Pegasus"
+
+        return
+    end
+
+    if p78 == "红色释火者" then
+        t1.value86 = "Red Firecaster"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p79)
+    t1.value87 = p79
+
+    if p79 then
+        task.spawn(function()
+            while t1.value87 do
+                pcall(function()
+                    local t1value86 = t1.value4.cPetShopFolder:FindFirstChild(t1.value86)
+
+                    if t1value86 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value86)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+v109(Pet, t1.value86, false)
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>神话水晶</b></font>"
+})
+t1.value88 = "Golden Pheonix"
+t1.value89 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"金色凤凰",
+		"蓝色释火者",
+		"紫色猎鹰",
+		"红色龙"
+	},
+	Default = "金色凤凰",
+	Callback = function(p80)
+    if p80 == "金色凤凰" then
+        t1.value88 = "Golden Pheonix"
+
+        return
+    end
+
+    if p80 == "蓝色释火者" then
+        t1.value88 = "Blue Firecaster"
+
+        return
+    end
+
+    if p80 == "紫色猎鹰" then
+        t1.value88 = "Purple Falcon"
+
+        return
+    end
+
+    if p80 == "红色龙" then
+        t1.value88 = "Red Dragon"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p81)
+    t1.value89 = p81
+
+    if p81 then
+        task.spawn(function()
+            while t1.value89 do
+                pcall(function()
+                    local t1value88 = t1.value4.cPetShopFolder:FindFirstChild(t1.value88)
+
+                    if t1value88 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value88)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+v109(Pet, t1.value88, false)
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>霜水晶</b></font>"
+})
+t1.value90 = "Blue Pheonix"
+t1.value91 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"蓝色凤凰",
+		"橙色飞马",
+		"紫色龙",
+		"黄色蝴蝶"
+	},
+	Default = "蓝色凤凰",
+	Callback = function(p82)
+    if p82 == "蓝色凤凰" then
+        t1.value90 = "Blue Pheonix"
+
+        return
+    end
+
+    if p82 == "橙色飞马" then
+        t1.value90 = "Orange Pegasus"
+
+        return
+    end
+
+    if p82 == "紫色龙" then
+        t1.value90 = "Purple Dragon"
+
+        return
+    end
+
+    if p82 == "黄色蝴蝶" then
+        t1.value90 = "Yellow Butterfly"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p83)
+    t1.value91 = p83
+
+    if p83 then
+        task.spawn(function()
+            while t1.value91 do
+                pcall(function()
+                    local t1value90 = t1.value4.cPetShopFolder:FindFirstChild(t1.value90)
+
+                    if t1value90 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value90)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+v109(Pet, t1.value90, false)
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>绿色水晶</b></font>"
+})
+t1.value92 = "Crimson Falcon"
+t1.value93 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"红色猎鹰",
+		"绿色蝴蝶",
+		"暗魔像",
+		"银色小狗"
+	},
+	Default = "红色猎鹰",
+	Callback = function(p84)
+    if p84 == "红色猎鹰" then
+        t1.value92 = "Crimson Falcon"
+
+        return
+    end
+
+    if p84 == "绿色蝴蝶" then
+        t1.value92 = "Green Butterfly"
+
+        return
+    end
+
+    if p84 == "暗魔像" then
+        t1.value92 = "Dark Golem"
+
+        return
+    end
+
+    if p84 == "银色小狗" then
+        t1.value92 = "Silver Dog"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p85)
+    t1.value93 = p85
+
+    if p85 then
+        task.spawn(function()
+            while t1.value93 do
+                pcall(function()
+                    local t1value92 = t1.value4.cPetShopFolder:FindFirstChild(t1.value92)
+
+                    if t1value92 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value92)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+v109(Pet, t1.value92, false)
+Pet:Section({
+	Title = "<font color='#FFC0CB'><b>蓝色水晶</b></font>"
+})
+t1.value94 = "Dark Vampy"
+t1.value95 = false
+Pet:Dropdown({
+	Title = "<font color='#FFC0CB'><b>宠物</b></font>",
+	Values = {
+		"暗德古拉",
+		"蓝色小兔",
+		"红色小猫",
+		"蓝色小鸟",
+		"橙色刺猬"
+	},
+	Default = "暗德古拉",
+	Callback = function(p86)
+    if p86 == "暗德古拉" then
+        t1.value94 = "Dark Vampy"
+
+        return
+    end
+
+    if p86 == "蓝色小兔" then
+        t1.value94 = "Blue Bunny"
+
+        return
+    end
+
+    if p86 == "红色小猫" then
+        t1.value94 = "Red Kitty"
+
+        return
+    end
+
+    if p86 == "蓝色小鸟" then
+        t1.value94 = "Blue Birdie"
+
+        return
+    end
+
+    if p86 == "橙色刺猬" then
+        t1.value94 = "Orange Hedgehog"
+    end
+end
+})
+Pet:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动购买</b></font>",
+	Default = false,
+	Callback = function(p87)
+    t1.value95 = p87
+
+    if p87 then
+        task.spawn(function()
+            while t1.value95 do
+                pcall(function()
+                    local t1value94 = t1.value4.cPetShopFolder:FindFirstChild(t1.value94)
+
+                    if t1value94 then
+                        t1.value4.cPetShopRemote:InvokeServer(t1value94)
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+v109(Pet, t1.value94, false)
+Pet:Paragraph({
+	Title = "<font color='#FFC0CB'><b>注意</b></font>",
+	Desc = "<font color='#FFC0CB'><b>背包满了或钻石不够则不能购买宠物</b></font>"
+})
+t7.TP = t7:Create("<font color='#FFC0CB'>传送</font>", "map-pin")
+
+local TP = t7.TP
+local t37 = {
+	"<font color='#FFC0CB'><b>大厅</b></font>",
+	CFrame.new(2.93, 88.93, 243.94)
+}
+local t38 = {
+	"<font color='#FFC0CB'><b>小岛</b></font>",
+	CFrame.new(-38.86, 7.53, 1894.03)
+}
+local t39 = {
+	"<font color='#FFC0CB'><b>冰霜健身房</b></font>",
+	CFrame.new(-2623.02, 7.38, -409.07)
+}
+local t40 = {
+	"<font color='#FFC0CB'><b>神话健身房</b></font>",
+	CFrame.new(2250.77, 7.38, 1073.22)
+}
+local t41 = {
+	"<font color='#FFC0CB'><b>永恒健身房</b></font>",
+	CFrame.new(-6758.96, 7.38, -1284.91)
+}
+local t42 = {
+	"<font color='#FFC0CB'><b>传奇健身房</b></font>",
+	CFrame.new(4603.28, 991.53, -3897.86)
+}
+local t43 = {
+	"<font color='#FFC0CB'><b>肌肉之王</b></font>",
+	CFrame.new(-8749.94, 124.45, -5861.06)
+}
+local t44 = {
+	"<font color='#FFC0CB'><b>丛林健身房</b></font>",
+	CFrame.new(-8685.62, 6.81, 2392.32)
+}
+local t45 = {
+	"<font color='#FFC0CB'><b>转盘岛</b></font>",
+	CFrame.new(1952.09, 1.86, 6180.28)
+}
+local t46 = {
+	"<font color='#FFC0CB'><b>熔岩争斗</b></font>",
+	CFrame.new(4472.61, 119.96, -8849.9)
+}
+local t47 = {
+	"<font color='#FFC0CB'><b>沙漠争斗</b></font>",
+	CFrame.new(987.7, 17.23, -7440.26)
+}
+local t48 = {
+	"<font color='#FFC0CB'><b>海滩争斗</b></font>",
+	CFrame.new(-1863.18, 17.23, -6292.78)
+}
+
+for _, v in ipairs({
+	t37,
+	t38,
+	t39,
+	t40,
+	t41,
+	t42,
+	t43,
+	t44,
+	t45,
+	t46,
+	t47,
+	t48
+}) do
+    local v125 = v
+
+    TP:Button({
+		Title = v125[1],
+		Callback = function()
+        local Character = t1.value2.LocalPlayer.Character
+
+        if Character and Character:FindFirstChild("HumanoidRootPart") then
+            Character.HumanoidRootPart.CFrame = v125[2]
+        end
+    end
+	})
+end
+TP:Button({
+	Title = "<font color='#FFC0CB'><b>安全平台</b></font>",
+	Callback = function()
+    local Character = t1.value2.LocalPlayer.Character
+
+    if Character then
+        Character.HumanoidRootPart.CFrame = CFrame.new(-300, 100100, -450)
+
+        local Part = Instance.new("Part", workspace)
+
+        Part.CFrame = CFrame.new(-300, 100000, -450)
+        Part.Size = Vector3.new(1000000, 0, 10000000)
+        Part.Anchored = true
+    end
+end
+})
+t7.Other = t7:Create("<font color='#FFC0CB'>其他</font>", "settings")
+
+local Other = t7.Other
+t1.value96 = false
+t1.value97 = false
+t1.value98 = false
+Other:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动转盘抽奖</b></font>",
+	Default = false,
+	Callback = function(p88)
+    t1.value96 = p88
+
+    if p88 then
+        task.spawn(function()
+            while t1.value96 do
+                pcall(function()
+                    t1.value4.rEvents.openFortuneWheelRemote:InvokeServer("openFortuneWheel", t1.value4.fortuneWheelChances:FindFirstChild("Fortune Wheel"))
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Other:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动争斗</b></font>",
+	Default = false,
+	Callback = function(p89)
+    t1.value97 = p89
+
+    if p89 then
+        task.spawn(function()
+            while t1.value97 do
+                pcall(function()
+                    t1.value4.rEvents.brawlEvent:FireServer("joinBrawl")
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Other:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动收集宝箱</b></font>",
+	Default = false,
+	Callback = function(p90)
+    t1.value98 = p90
+
+    if p90 then
+        task.spawn(function()
+            while t1.value98 do
+                pcall(function()
+                    t1.value4.rEvents.checkChestRemote:InvokeServer("Jungle Chest")
+                    t1.value4.rEvents.checkChestRemote:InvokeServer("Legends Chest")
+                    t1.value4.rEvents.checkChestRemote:InvokeServer("Mythical Chest")
+                    t1.value4.rEvents.checkChestRemote:InvokeServer("Enchanted Chest")
+                    t1.value4.rEvents.checkChestRemote:InvokeServer("Golden Chest")
+                    t1.value4.rEvents.groupRemote:InvokeServer("groupRewards")
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Other:Button({
+	Title = "<font color='#FFC0CB'><b>属性显示</b></font>",
+	Callback = function()
+    local LocalPlayer = t1.value2.LocalPlayer
+    local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+    local UserInputService = game:GetService("UserInputService")
+    local CatStatsPanel = PlayerGui:FindFirstChild("CatStatsPanel")
+
+    if CatStatsPanel then
+        CatStatsPanel:Destroy()
+    end
+
+    local ScreenGui = Instance.new("ScreenGui")
+
+    ScreenGui.Name = "CatStatsPanel"
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    ScreenGui.Parent = PlayerGui
+
+    local Frame = Instance.new("Frame")
+
+    Frame.Size = UDim2.new(0, 240, 0, 175)
+    Frame.Position = UDim2.new(0.12, 0, 0.35, 0)
+    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame.BackgroundTransparency = 0.4
+    Frame.BorderSizePixel = 2
+    Frame.BorderColor3 = Color3.fromRGB(255, 165, 0)
+    Frame.ClipsDescendants = true
+    Frame.Active = true
+    Frame.Parent = ScreenGui
+    Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 10)
+
+    local TextLabel = Instance.new("TextLabel")
+
+    TextLabel.Size = UDim2.new(1, -10, 0, 30)
+    TextLabel.Position = UDim2.new(0, 5, 0, 4)
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.Text = "属性"
+    TextLabel.TextColor3 = Color3.fromRGB(255, 200, 100)
+    TextLabel.TextSize = 14
+    TextLabel.Font = Enum.Font.GothamBold
+    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel.Parent = Frame
+
+    local TextButton = Instance.new("TextButton")
+
+    TextButton.Size = UDim2.new(0, 28, 0, 28)
+    TextButton.Position = UDim2.new(1, -32, 0, 4)
+    TextButton.BackgroundTransparency = 1
+    TextButton.Text = "╳"
+    TextButton.TextColor3 = Color3.fromRGB(255, 70, 70)
+    TextButton.TextSize = 18
+    TextButton.Font = Enum.Font.GothamBold
+    TextButton.Parent = Frame
+    TextButton.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
+
+    local color3_3 = Color3.fromRGB(255, 50, 50)
+    local t49 = {
+			key = "Strength",
+			label = "力量",
+			color = color3_3
+		}
+    local color3_4 = Color3.fromRGB(50, 150, 255)
+    local t50 = {
+			key = "Durability",
+			label = "耐力",
+			color = color3_4
+		}
+    local color3_5 = Color3.fromRGB(50, 225, 50)
+    local t51 = {
+			key = "Agility",
+			label = "敏捷",
+			color = color3_5
+		}
+    local color3_6 = Color3.fromRGB(255, 200, 100)
+    local t52 = {
+			t49,
+			t50,
+			t51,
+			{
+				key = "Rebirths",
+				label = "重生",
+				color = color3_6
+			}
+		}
+    local t53 = {}
+
+    for i, v in ipairs(t52) do
+        local Frame3 = Instance.new("Frame")
+
+        Frame3.Size = UDim2.new(1, -10, 0, 32)
+        Frame3.Position = UDim2.new(0, 5, 0, 38 + (i - 1) * 34)
+        Frame3.BackgroundColor3 = Color3.fromRGB(255, 192, 203)
+        Frame3.BackgroundTransparency = 0.85
+        Frame3.BorderSizePixel = 0
+        Frame3.Parent = Frame
+        Instance.new("UICorner", Frame3).CornerRadius = UDim.new(0, 4)
+
+        local Frame4 = Instance.new("Frame")
+
+        Frame4.Size = UDim2.new(0, 3, 0.5, 0)
+        Frame4.Position = UDim2.new(0, 6, 0.25, 0)
+        Frame4.BackgroundColor3 = v.color
+        Frame4.BorderSizePixel = 0
+        Frame4.Parent = Frame3
+        Instance.new("UICorner", Frame4).CornerRadius = UDim.new(0, 2)
+
+        local TextLabel2 = Instance.new("TextLabel")
+
+        TextLabel2.Size = UDim2.new(0.4, -10, 1, 0)
+        TextLabel2.Position = UDim2.new(0, 14, 0, 0)
+        TextLabel2.BackgroundTransparency = 1
+        TextLabel2.Text = v.label
+        TextLabel2.TextColor3 = Color3.fromRGB(230, 230, 230)
+        TextLabel2.TextSize = 13
+        TextLabel2.Font = Enum.Font.GothamSemibold
+        TextLabel2.TextXAlignment = Enum.TextXAlignment.Left
+        TextLabel2.Parent = Frame3
+
+        local TextLabel3 = Instance.new("TextLabel")
+
+        TextLabel3.Size = UDim2.new(0.6, -10, 1, 0)
+        TextLabel3.Position = UDim2.new(0.4, 0, 0, 0)
+        TextLabel3.BackgroundTransparency = 1
+        TextLabel3.Text = "…"
+        TextLabel3.TextColor3 = v.color
+        TextLabel3.TextSize = 16
+        TextLabel3.Font = Enum.Font.GothamBold
+        TextLabel3.TextXAlignment = Enum.TextXAlignment.Right
+        TextLabel3.TextScaled = true
+        TextLabel3.Parent = Frame3
+        t53[v.key] = TextLabel3
+    end
+
+    local u347 = false
+    local vector2 = Vector2.new()
+    local FramePosition = Frame.Position
+
+    Frame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            local AbsolutePosition = TextButton.AbsolutePosition
+            local AbsoluteSize = TextButton.AbsoluteSize
+            local v461 = input.Position.X >= AbsolutePosition.X
+
+            if v461 then
+                v461 = input.Position.X <= AbsolutePosition.X + AbsoluteSize.X and (input.Position.Y >= AbsolutePosition.Y and input.Position.Y <= AbsolutePosition.Y + AbsoluteSize.Y)
+            end
+
+            if v461 then
+                return
+            end
+
+            u347 = true
+            vector2 = input.Position
+            FramePosition = Frame.Position
+        end
+    end)
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            u347 = false
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if u347 and input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            local v464 = input.Position - vector2
+
+            Frame.Position = UDim2.new(FramePosition.X.Scale, FramePosition.X.Offset + v464.X, FramePosition.Y.Scale, FramePosition.Y.Offset + v464.Y)
+        end
+    end)
+
+    local function v350(p91)
+        local leaderstats = LocalPlayer:FindFirstChild("leaderstats")
+
+        if leaderstats then
+            local p91_2 = leaderstats:FindFirstChild(p91)
+
+            if p91_2 and p91_2:IsA("ValueBase") then
+                return p91_2
+            end
+
+            for _, child in ipairs(leaderstats:GetChildren()) do
+                if child.Name:lower() == p91:lower() and child:IsA("ValueBase") then
+                    return child
+                end
+            end
+        end
+
+        local p91_3 = LocalPlayer:FindFirstChild(p91)
+
+        if p91_3 and p91_3:IsA("ValueBase") then
+            return p91_3
+        end
+
+        for _, child in ipairs(LocalPlayer:GetChildren()) do
+            if child.Name:lower() == p91:lower() and child:IsA("ValueBase") then
+                return child
+            end
+        end
+
+        return nil
+    end
+    local function v351(p92)
+        local v474 = v350(p92.key)
+
+        if not v474 then
+            return
+        end
+
+        local v475 = t53[p92.key]
+
+        v475.Text = tostring(v474.Value)
+        v474:GetPropertyChangedSignal("Value"):Connect(function()
+            v475.Text = tostring(v474.Value)
+        end)
+    end
+
+    for _, v in ipairs(t52) do
+        v351(v)
+    end
+
+    if not LocalPlayer:FindFirstChild("leaderstats") then
+        local connection
+        connection = LocalPlayer.ChildAdded:Connect(function(child)
+            if child.Name == "leaderstats" or (child.Name:lower() == "agility" or child.Name:lower() == "durability") then
+                connection:Disconnect()
+
+                for _, v in ipairs(t52) do
+                    v351(v)
+                end
+            end
+        end)
+    end
+end
+})
+Other:Paragraph({
+	Title = "<font color='#FFC0CB'><b>本地属性修改</b></font>",
+	Desc = "<font color='#FFC0CB'><b>输入数值后回车生效</b></font>"
+})
+local function v127(p93, p94)
+    if p94 == nil or p94 == "" then
+        return
+    end
+
+    local num = tonumber(p94)
+
+    if not num then
+        return
+    end
+
+    local LocalPlayer = t1.value2.LocalPlayer
+
+    pcall(function()
+        if LocalPlayer[p93] ~= nil then
+            LocalPlayer[p93] = num
+        end
+    end)
+    pcall(function()
+        local p93_2 = LocalPlayer:FindFirstChild(p93)
+        local v480 = p93_2
+
+        if p93_2 then
+            v480 = p93_2:IsA("NumberValue") or (p93_2:IsA("IntValue") or p93_2:IsA("FloatValue"))
+        end
+
+        if v480 then
+            p93_2.Value = num
+        end
+    end)
+    pcall(function()
+        local leaderstats = LocalPlayer:FindFirstChild("leaderstats")
+
+        if leaderstats then
+            local p93_3 = leaderstats:FindFirstChild(p93)
+
+            if p93_3 and p93_3:IsA("NumberValue") or (p93_3:IsA("IntValue") or p93_3:IsA("FloatValue")) then
+                p93_3.Value = num
+            end
+        end
+    end)
+end
+Other:Input({
+	Title = "<font color='#FFC0CB'><b>善良业报</b></font>",
+	Placeholder = "输入数值",
+	Default = "",
+	Callback = function(p95)
+    v127("goodKarma", p95)
+end
+})
+Other:Input({
+	Title = "<font color='#FFC0CB'><b>邪恶业报</b></font>",
+	Placeholder = "输入数值",
+	Default = "",
+	Callback = function(p96)
+    v127("evilKarma", p96)
+end
+})
+Other:Input({
+	Title = "<font color='#FFC0CB'><b>免费转盘次数</b></font>",
+	Placeholder = "输入数值",
+	Default = "",
+	Callback = function(p97)
+    v127("freeWheelSpins", p97)
+end
+})
+Other:Input({
+	Title = "<font color='#FFC0CB'><b>宝石</b></font>",
+	Placeholder = "输入数值",
+	Default = "",
+	Callback = function(p98)
+    v127("Gems", p98)
+end
+})
+Other:Input({
+	Title = "<font color='#FFC0CB'><b>耐久</b></font>",
+	Placeholder = "输入数值",
+	Default = "",
+	Callback = function(p99)
+    v127("Durability", p99)
+end
+})
+Other:Input({
+	Title = "<font color='#FFC0CB'><b>敏捷</b></font>",
+	Placeholder = "输入数值",
+	Default = "",
+	Callback = function(p100)
+    v127("Agility", p100)
+end
+})
+Other:Input({
+	Title = "<font color='#FFC0CB'><b>力量</b></font>",
+	Placeholder = "输入数值",
+	Default = "",
+	Callback = function(p101)
+    v127("Strength", p101)
+    v127("Power", p101)
+end
+})
+t7.Beautify = t7:Create("<font color='#FFC0CB'>美化</font>", "palette")
+
+local Beautify = t7.Beautify
+Beautify:Section({
+	Title = "<font color='#FFC0CB'><b>自动升降</b></font>"
+})
+t1.value99 = false
+Beautify:Toggle({
+	Title = "<font color='#FFC0CB'><b>破解自动升降（持续保持）</b></font>",
+	Default = false,
+	Callback = function(p102)
+    t1.value99 = p102
+
+    if p102 then
+        task.spawn(function()
+            while t1.value99 do
+                pcall(function()
+                    local autoLiftEnabled = t1.value2.LocalPlayer:FindFirstChild("autoLiftEnabled")
+
+                    if autoLiftEnabled and autoLiftEnabled:IsA("BoolValue") then
+                        autoLiftEnabled.Value = true
+                    end
+                end)
+                task.wait(0.2)
+            end
+        end)
+
+        return
+    end
+
+    pcall(function()
+        local autoLiftEnabled = t1.value2.LocalPlayer:FindFirstChild("autoLiftEnabled")
+
+        if autoLiftEnabled and autoLiftEnabled:IsA("BoolValue") then
+            autoLiftEnabled.Value = false
+        end
+    end)
+end
+})
+Beautify:Section({
+	Title = "<font color='#FFC0CB'><b>宠物刷包</b></font>"
+})
+t1.value100 = nil
+function t1.value100()
+    local LocalPlayer = t1.value2.LocalPlayer
+    local petsFolder = LocalPlayer:FindFirstChild("petsFolder")
+
+    if not petsFolder then
+        petsFolder = Instance.new("Folder")
+        petsFolder.Name = "petsFolder"
+        petsFolder.Parent = LocalPlayer
+    end
+
+    local Unique = petsFolder:FindFirstChild("Unique")
+
+    if not Unique then
+        Unique = Instance.new("Folder")
+        Unique.Name = "Unique"
+        Unique.Parent = petsFolder
+    end
+
+    return Unique
+end
+function t1.value101()
+    local v373 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "Mighty Monster"
+    StringValue.Value = "rbxassetid://17601660151"
+    StringValue.Parent = v373
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "agility"
+    Folder.agility.Value = 1000
+    Instance.new("IntValue", Folder).Name = "strength"
+    Folder.strength.Value = 2250
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 5000
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "强大的怪物"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value102()
+    local v388 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "Swift Samurai"
+    StringValue.Value = "rbxassetid://17601657920"
+    StringValue.Parent = v388
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "agility"
+    Folder.agility.Value = 2500
+    Instance.new("IntValue", Folder).Name = "strength"
+    Folder.strength.Value = 1750
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 3250
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "快速武士"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+local function v129()
+    local v391 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "Tribal Overlord"
+    StringValue.Value = "rbxassetid://17601550091"
+    StringValue.Parent = v391
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "strength"
+    Folder.strength.Value = 3750
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 2500
+    Instance.new("IntValue", Folder).Name = "damage"
+    Folder.damage.Value = 50000
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "部落霸主"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value103()
+    local v385 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "Wild Wizard"
+    StringValue.Value = "rbxassetid://17601661532"
+    StringValue.Parent = v385
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "agility"
+    Folder.agility.Value = 750
+    Instance.new("IntValue", Folder).Name = "damage"
+    Folder.damage.Value = 75000
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 4000
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "狂野巫师"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value104()
+    local v379 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "Giant"
+    StringValue.Value = "rbxassetid://6784459289"
+    StringValue.Parent = v379
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "strength"
+    Folder.strength.Value = 2500
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 1250
+    Instance.new("IntValue", Folder).Name = "damage"
+    Folder.damage.Value = 17500
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "巨人"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value105()
+    local v382 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "快速萨利"
+    StringValue.Value = "rbxassetid://6784459084"
+    StringValue.Parent = v382
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 3000
+    Instance.new("IntValue", Folder).Name = "agility"
+    Folder.agility.Value = 400
+    Instance.new("IntValue", Folder).Name = "damage"
+    Folder.damage.Value = 40000
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "快速萨利"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value106()
+    local v376 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "Little Guy"
+    StringValue.Value = "rbxassetid://6784459208"
+    StringValue.Parent = v376
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 2500
+    Instance.new("IntValue", Folder).Name = "agility"
+    Folder.agility.Value = 1500
+    Instance.new("IntValue", Folder).Name = "strength"
+    Folder.strength.Value = 1000
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "小家伙"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value107()
+    local v370 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "混沌术士"
+    StringValue.Value = "rbxassetid://6121834276"
+    StringValue.Parent = v370
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 3000
+    Instance.new("IntValue", Folder).Name = "agility"
+    Folder.agility.Value = 400
+    Instance.new("IntValue", Folder).Name = "damage"
+    Folder.damage.Value = 17500
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "混沌术士"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value108()
+    local v394 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "Jungle Captain"
+    StringValue.Value = "rbxassetid://103085771364662"
+    StringValue.Parent = v394
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "strength"
+    Folder.strength.Value = 4000
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 3450
+    Instance.new("IntValue", Folder).Name = "agility"
+    Folder.agility.Value = 2120
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "丛林队长"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value109()
+    local v397 = t1.value100()
+    local StringValue = Instance.new("StringValue")
+
+    StringValue.Name = "Flame Lord"
+    StringValue.Value = "rbxassetid://126902329064049"
+    StringValue.Parent = v397
+
+    local Folder = Instance.new("Folder")
+
+    Folder.Name = "perksFolder"
+    Folder.Parent = StringValue
+    Instance.new("IntValue", Folder).Name = "strength"
+    Folder.strength.Value = 300
+    Instance.new("IntValue", Folder).Name = "durability"
+    Folder.durability.Value = 250
+    Instance.new("IntValue", Folder).Name = "damage"
+    Folder.damage.Value = 5000
+    Instance.new("StringValue", StringValue).Name = "chosenName"
+    StringValue.chosenName.Value = "火焰领主"
+    Instance.new("BoolValue", StringValue).Name = "evolved"
+    StringValue.evolved.Value = true
+    Instance.new("IntValue", StringValue).Name = "exp"
+    StringValue.exp.Value = 0
+    Instance.new("IntValue", StringValue).Name = "level"
+    StringValue.level.Value = 1
+    Instance.new("IntValue", StringValue).Name = "requiredRebirths"
+    StringValue.requiredRebirths.Value = 0
+    Instance.new("BoolValue", StringValue).Name = "unsellable"
+    StringValue.unsellable.Value = false
+    Instance.new("BoolValue", StringValue).Name = "untradeable"
+    StringValue.untradeable.Value = false
+end
+function t1.value110()
+    t1.value101()
+    t1.value102()
+    v129()
+    t1.value103()
+    t1.value104()
+    t1.value105()
+    t1.value106()
+    t1.value107()
+    t1.value108()
+    t1.value109()
+end
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>一键获得所有宠物</b></font>",
+	Callback = function()
+    t1.value110()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>强大的怪物</b></font>",
+	Callback = function()
+    t1.value101()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>快速武士</b></font>",
+	Callback = function()
+    t1.value102()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>部落霸主</b></font>",
+	Callback = function()
+    v129()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>狂野巫师</b></font>",
+	Callback = function()
+    t1.value103()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>巨人</b></font>",
+	Callback = function()
+    t1.value104()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>快速萨利</b></font>",
+	Callback = function()
+    t1.value105()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>小家伙</b></font>",
+	Callback = function()
+    t1.value106()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>混沌术士</b></font>",
+	Callback = function()
+    t1.value107()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>丛林队长</b></font>",
+	Callback = function()
+    t1.value108()
+end
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>火焰领主</b></font>",
+	Callback = function()
+    t1.value109()
+end
+})
+Beautify:Section({
+	Title = "<font color='#FFC0CB'><b>通行证</b></font>"
+})
+Beautify:Button({
+	Title = "<font color='#FFC0CB'><b>解锁全部通行证</b></font>",
+	Callback = function()
+    for _, child in ipairs(t1.value4.gamepassIds:GetChildren()) do
+        child.Parent = t1.value2.LocalPlayer.ownedGamepasses
+    end
+end
+})
+t7.Egg = t7:Create("<font color='#FFC0CB'>食物</font>", "utensils")
+
+local Egg = t7.Egg
+Egg:Section({
+	Title = "<font color='#FFC0CB'><b>自动吃食</b></font>"
+})
+local t54 = {
+	itemName = "Protein Bar",
+	key = "proteinBar"
+}
+local t55 = {
+	itemName = "Energy Bar",
+	key = "energyBar"
+}
+local t56 = {
+	itemName = "ULTRA Shake",
+	key = "ultraShake"
+}
+local t57 = {
+	itemName = "Tropical Shake",
+	key = "tropicalShake"
+}
+local t58 = {
+	itemName = "Protein Shake",
+	key = "proteinShake"
+}
+local t59 = {
+	itemName = "TOUGH Bar",
+	key = "toughBar"
+}
+local t60 = {
+	itemName = "Energy Shake",
+	key = "energyShake"
+}
+t1.value111 = {
+	["蛋白棒"] = t54,
+	["能量棒"] = t55,
+	["超级奶昔"] = t56,
+	["热带奶昔"] = t57,
+	["蛋白质奶昔"] = t58,
+	["健壮条"] = t59,
+	["能量奶昔"] = t60,
+	["蛋"] = {
+		itemName = "Protein Egg",
+		key = "proteinEgg"
+	}
+}
+t1.value112 = t1.value111["蛋白棒"]
+t1.value113 = false
+Egg:Dropdown({
+	Title = "<font color='#FFC0CB'><b>选择食物</b></font>",
+	Values = {
+		"蛋白棒",
+		"能量棒",
+		"超级奶昔",
+		"热带奶昔",
+		"蛋白质奶昔",
+		"健壮条",
+		"能量奶昔",
+		"蛋"
+	},
+	Default = "蛋白棒",
+	Callback = function(p103)
+    t1.value112 = t1.value111[p103]
+end
+})
+t1.value114 = Egg:Paragraph({
+	Title = "<font color='#FFC0CB'><b>剩余数量</b></font>",
+	Desc = "<font color='#FFC0CB'>检测中...</font>"
+})
+task.spawn(function()
+    while true do
+        local n6 = 0
+
+        pcall(function()
+            local Backpack = t1.value2.LocalPlayer:FindFirstChild("Backpack")
+
+            if Backpack then
+                for _, child in ipairs(Backpack:GetChildren()) do
+                    if child:IsA("Tool") and child.Name == t1.value112.itemName then
+                        n6 += 1
+                    end
+                end
+            end
+        end)
+        t1.value114:SetDesc("<font color='#FFC0CB'>" .. n6 .. " 个</font>")
+        task.wait(0.5)
+    end
+end)
+Egg:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动吃食</b></font>",
+	Default = false,
+	Callback = function(p104)
+    t1.value113 = p104
+
+    if p104 then
+        task.spawn(function()
+            while t1.value113 do
+                pcall(function()
+                    local Character = t1.value2.LocalPlayer.Character
+
+                    if not Character or not Character:FindFirstChild("Humanoid") then
+                        return
+                    end
+
+                    local Backpack = t1.value2.LocalPlayer:FindFirstChild("Backpack")
+
+                    if not Backpack then
+                        return
+                    end
+
+                    local t1value112itemName = Backpack:FindFirstChild(t1.value112.itemName)
+
+                    if t1value112itemName and t1value112itemName:IsA("Tool") then
+                        Character.Humanoid:EquipTool(t1value112itemName)
+
+                        for _ = 1, 10 do
+                            t1.value2.LocalPlayer.muscleEvent:FireServer(t1.value112.key, t1value112itemName)
+                        end
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+    end
+end
+})
+Egg:Section({
+	Title = "<font color='#FFC0CB'><b>送蛋</b></font>"
+})
+t1.value115 = Egg:Paragraph({
+	Title = "<font color='#FFC0CB'>剩余蛋数量:</font>",
+	Desc = "<font color='#FFC0CB'>检测中...</font>"
+})
+task.spawn(function()
+    while true do
+        pcall(function()
+            local n7 = 0
+            local Backpack = t1.value2.LocalPlayer:FindFirstChild("Backpack")
+
+            if Backpack then
+                local GetChildren = Backpack.GetChildren
+
+                for _, v in ipairs(GetChildren(Backpack)) do
+                    if v:IsA("Tool") and v.Name == "Protein Egg" then
+                        n7 += 1
+                    end
+                end
+            end
+
+            t1.value115:SetDesc("<font color='#FFC0CB'>" .. n7 .. " 个</font>")
+        end)
+        task.wait(0.5)
+    end
+end)
+t1.value116 = 0
+t1.value117 = ""
+t1.value118 = false
+Egg:Input({
+	Title = "<font color='#FFC0CB'>送蛋数量</font>",
+	Value = "",
+	PlaceholderText = "输入数量",
+	ClearTextOnFocus = false,
+	Callback = function(p105)
+    t1.value116 = tonumber(p105) or 0
+end
+})
+Egg:Input({
+	Title = "<font color='#FFC0CB'>目标用户名</font>",
+	Value = "",
+	PlaceholderText = "输入玩家名",
+	ClearTextOnFocus = false,
+	Callback = function(p106)
+    t1.value117 = p106
+end
+})
+Egg:Button({
+	Title = "<font color='#FFC0CB'> 开始送蛋</font>",
+	Callback = function()
+    if t1.value118 then
+        return
+    end
+
+    if t1.value116 <= 0 or t1.value117 == "" then
+        return
+    end
+
+    t1.value118 = true
+    task.spawn(function()
+        local n8 = 0
+
+        while n8 < t1.value116 and t1.value118 do
+            local t1value117 = t1.value2:FindFirstChild(t1.value117)
+
+            if t1value117 then
+                local Backpack = t1.value2.LocalPlayer:FindFirstChild("Backpack")
+                local v495 = Backpack and Backpack:FindFirstChild("Protein Egg")
+                if not v495 or not v495:IsA("Tool") then
+                    return
+                end
+                local u496 = false
+                pcall(function()
+                    local consumablesFolder = t1.value2.LocalPlayer:FindFirstChild("consumablesFolder")
+
+                    if not consumablesFolder then
+                        consumablesFolder = Instance.new("Folder")
+                        consumablesFolder.Name = "consumablesFolder"
+                        consumablesFolder.Parent = t1.value2.LocalPlayer
+                    end
+
+                    local v581 = consumablesFolder:FindFirstChild("Protein Egg")
+
+                    if not v581 then
+                        v581 = Instance.new("StringValue")
+                        v581.Name = "Protein Egg"
+                        v581.Parent = consumablesFolder
+                    end
+
+                    local canGift = v581:FindFirstChild("canGift")
+
+                    if not canGift then
+                        canGift = Instance.new("BoolValue")
+                        canGift.Name = "canGift"
+                        canGift.Parent = v581
+                    end
+
+                    canGift.Value = true
+                    t1.value4.rEvents.giftRemote:InvokeServer("giftRequest", t1value117, v581)
+                    u496 = true
+                end)
+                if not u496 then
+                    pcall(function()
+                        local consumablesFolder = t1.value2.LocalPlayer:FindFirstChild("consumablesFolder")
+
+                        if not consumablesFolder then
+                            consumablesFolder = Instance.new("Folder")
+                            consumablesFolder.Name = "consumablesFolder"
+                            consumablesFolder.Parent = t1.value2.LocalPlayer
+                        end
+
+                        local v584 = consumablesFolder:FindFirstChild("Protein Egg")
+
+                        if not v584 then
+                            v584 = Instance.new("StringValue")
+                            v584.Name = "Protein Egg"
+                            v584.Parent = consumablesFolder
+                        end
+
+                        t1.value4.rEvents.giftRemote:InvokeServer("giftRequest", t1value117, v584)
+                        u496 = true
+                    end)
+                end
+                if u496 then
+                    n8 += 1
+                end
+                task.wait(0.09)
+
+                continue
+            end
+
+            task.wait(1)
+        end
+    end)
+end
+})
+t1.value5:SelectTab(1)
