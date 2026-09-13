@@ -1,0 +1,2418 @@
+--Yeskid
+local starterGui = game:GetService("StarterGui")
+local players = game:GetService("Players")
+local userInputService = game:GetService("UserInputService")
+local runService = game:GetService("RunService")
+local teleportService = game:GetService("TeleportService")
+local virtualInputManager = game:GetService("VirtualInputManager")
+local httpService = game:GetService("HttpService")
+local coreGui = game:GetService("CoreGui")
+
+starterGui:SetCore("SendNotification", {
+  Title = "窗脚本",
+  Text = "欢迎使用窗脚本",
+  Duration = 5,
+  Button1 = "确定",
+})
+
+local library, themeManager, saveManager, localPlayer, character, humanoidRootPart, humanoid,
+  currentCamera, v1, v2, v3, v4, v5, v6, v7, v8, v9, connect, v10, gravity, v11, connect2, v12,
+  v13, v14, v15, f1, addDropdown, addDropdown2, v16
+
+if not identifyexecutor then
+  starterGui:SetCore("SendNotification", {
+    Title = "错误",
+    Text = "不支持的注入器",
+    Duration = 5,
+  })
+
+  return
+else
+  library = nil
+  themeManager = nil
+  saveManager = nil
+
+  local v17, v18 = pcall(function()
+    library = loadstring(game:HttpGet("https://raw.githubusercontent.com/KingScriptAE/No-sirve-nada./refs/heads/main/Library.lua"))()
+    themeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/KingScriptAE/No-sirve-nada./refs/heads/main/addons/ThemeManager.lua"))()
+    saveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/KingScriptAE/No-sirve-nada./refs/heads/main/addons/SaveManager.lua"))()
+  end)
+
+  if not library then
+    starterGui:SetCore("SendNotification", {
+      Title = "错误",
+      Text = "UI库加载失败: " .. tostring(v18),
+      Duration = 5,
+    })
+
+    return
+  else
+    localPlayer = players.LocalPlayer
+    character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    humanoid = character:WaitForChild("Humanoid")
+    currentCamera = workspace.CurrentCamera
+
+    localPlayer.CharacterAdded:Connect(function(character2)
+      character = character2
+      humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+      humanoid = character:WaitForChild("Humanoid")
+    end)
+
+    v1 = false
+    v2 = false
+    v3 = false
+    v4 = false
+    v5 = {}
+    v6 = false
+    v7 = 500
+    v8 = false
+    v9 = 10
+    connect = nil
+    v10 = false
+    gravity = workspace.Gravity
+    v11 = nil
+    connect2 = nil
+    v12 = nil
+    v13 = false
+    v14 = false
+    v15 = false
+
+    function getPlayerList()
+      local v19 = {}
+
+      for index, value in ipairs(players:GetPlayers()) do
+        if value ~= localPlayer then
+          table.insert(v19, value.Name)
+        end
+      end
+
+      return #v19 > 0 and v19 or { "无其他玩家" }
+    end
+
+    function openFlyGUI()
+      if v12 then
+        v12:Destroy()
+      end
+
+      local function f2()
+        v13 = false
+        v14 = false
+        local localPlayer2 = game.Players.LocalPlayer
+
+        if localPlayer2.Character then
+          for index2, value2 in ipairs(localPlayer2.Character:GetDescendants()) do
+            if value2:IsA("BodyGyro") or value2:IsA("BodyVelocity")
+              or value2:IsA("BodyPosition") then
+              value2:Destroy()
+            end
+          end
+
+          local humanoid2 = localPlayer2.Character:FindFirstChildOfClass("Humanoid")
+
+          if humanoid2 then
+            humanoid2.PlatformStand = false
+
+            for index3, value3 in ipairs(Enum.HumanoidStateType:GetEnumItems()) do
+              humanoid2:SetStateEnabled(value3, true)
+            end
+
+            humanoid2:ChangeState(Enum.HumanoidStateType.RunningNoPhysics)
+          end
+
+          if localPlayer2.Character:FindFirstChild("Animate") then
+            localPlayer2.Character.Animate.Disabled = false
+          end
+        end
+      end
+
+      local main = Instance.new("ScreenGui")
+      local frame = Instance.new("Frame")
+      local up = Instance.new("TextButton")
+      local down = Instance.new("TextButton")
+      local onof = Instance.new("TextButton")
+      local textLabel = Instance.new("TextLabel")
+      local plus = Instance.new("TextButton")
+      local speed = Instance.new("TextLabel")
+      local mine = Instance.new("TextButton")
+      local close = Instance.new("TextButton")
+      local minimize = Instance.new("TextButton")
+      local minimize2 = Instance.new("TextButton")
+      main.Name = "main"
+
+      if not pcall(function() main.Parent = coreGui end) then
+        main.Parent = localPlayer:WaitForChild("PlayerGui")
+      end
+
+      main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+      main.ResetOnSpawn = false
+
+      frame.Parent = main
+      frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      frame.BorderColor3 = Color3.fromRGB(103, 221, 213)
+      frame.Position = UDim2.new(0.1, 0, 0.38, 0)
+      frame.Size = UDim2.new(0, 190, 0, 57)
+
+      up.Name = "up"
+      up.Parent = frame
+      up.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      up.Size = UDim2.new(0, 44, 0, 28)
+      up.Font = Enum.Font.SourceSans
+      up.Text = "上升"
+      up.TextColor3 = Color3.fromRGB(0, 0, 0)
+      up.TextSize = 14
+
+      down.Name = "down"
+      down.Parent = frame
+      down.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      down.Position = UDim2.new(0, 0, 0.49, 0)
+      down.Size = UDim2.new(0, 44, 0, 28)
+      down.Font = Enum.Font.SourceSans
+      down.Text = "下降"
+      down.TextColor3 = Color3.fromRGB(0, 0, 0)
+      down.TextSize = 14
+
+      onof.Name = "onof"
+      onof.Parent = frame
+      onof.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      onof.Position = UDim2.new(0.7, 0, 0.49, 0)
+      onof.Size = UDim2.new(0, 56, 0, 28)
+      onof.Font = Enum.Font.SourceSans
+      onof.Text = "窗飞行"
+      onof.TextColor3 = Color3.fromRGB(0, 0, 0)
+      onof.TextSize = 14
+
+      textLabel.Parent = frame
+      textLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      textLabel.Position = UDim2.new(0.47, 0, 0, 0)
+      textLabel.Size = UDim2.new(0, 100, 0, 28)
+      textLabel.Font = Enum.Font.SourceSans
+      textLabel.Text = "窗飞行"
+      textLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+      textLabel.TextScaled = true
+      textLabel.TextSize = 14
+      textLabel.TextWrapped = true
+
+      plus.Name = "plus"
+      plus.Parent = frame
+      plus.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      plus.Position = UDim2.new(0.23, 0, 0, 0)
+      plus.Size = UDim2.new(0, 45, 0, 28)
+      plus.Font = Enum.Font.SourceSans
+      plus.Text = "+"
+      plus.TextColor3 = Color3.fromRGB(0, 0, 0)
+      plus.TextScaled = true
+      plus.TextSize = 14
+      plus.TextWrapped = true
+
+      speed.Name = "speed"
+      speed.Parent = frame
+      speed.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      speed.Position = UDim2.new(0.47, 0, 0.49, 0)
+      speed.Size = UDim2.new(0, 44, 0, 28)
+      speed.Font = Enum.Font.SourceSans
+      speed.Text = "1"
+      speed.TextColor3 = Color3.fromRGB(0, 0, 0)
+      speed.TextScaled = true
+      speed.TextSize = 14
+      speed.TextWrapped = true
+
+      mine.Name = "mine"
+      mine.Parent = frame
+      mine.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      mine.Position = UDim2.new(0.23, 0, 0.49, 0)
+      mine.Size = UDim2.new(0, 45, 0, 29)
+      mine.Font = Enum.Font.SourceSans
+      mine.Text = "-"
+      mine.TextColor3 = Color3.fromRGB(0, 0, 0)
+      mine.TextScaled = true
+      mine.TextSize = 14
+      mine.TextWrapped = true
+
+      close.Name = "Close"
+      close.Parent = frame
+      close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      close.Font = "SourceSans"
+      close.Size = UDim2.new(0, 45, 0, 28)
+      close.Text = "x"
+      close.TextSize = 30
+      close.Position = UDim2.new(0, 0, -1, 27)
+
+      minimize.Name = "minimize"
+      minimize.Parent = frame
+      minimize.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      minimize.Font = "SourceSans"
+      minimize.Size = UDim2.new(0, 45, 0, 28)
+      minimize.Text = "-"
+      minimize.TextSize = 40
+      minimize.Position = UDim2.new(0, 44, -1, 27)
+
+      minimize2.Name = "minimize2"
+      minimize2.Parent = frame
+      minimize2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+      minimize2.Font = "SourceSans"
+      minimize2.Size = UDim2.new(0, 45, 0, 28)
+      minimize2.Text = "+"
+      minimize2.TextSize = 40
+      minimize2.Position = UDim2.new(0, 44, -1, 57)
+      minimize2.Visible = false
+
+      local v20 = 1
+
+      frame.Active = true
+      frame.Draggable = true
+
+      onof.MouseButton1Down:Connect(function()
+        if v13 then
+          f2()
+          return
+        end
+
+        if not localPlayer.Character then
+          return
+        end
+
+        v13 = true
+        v14 = true
+
+        for i = 1, v20 do
+          spawn(function()
+            local heartbeat = runService.Heartbeat
+
+            while v14 and heartbeat:Wait() and localPlayer.Character do
+              local character3 = localPlayer.Character
+              local humanoid3 = character3 and character3:FindFirstChildWhichIsA("Humanoid")
+
+              if humanoid3 and humanoid3.MoveDirection.Magnitude > 0 then
+                character3:TranslateBy(humanoid3.MoveDirection)
+              end
+            end
+          end)
+        end
+
+        if localPlayer.Character then
+          if localPlayer.Character:FindFirstChild("Animate") then
+            localPlayer.Character.Animate.Disabled = true
+          end
+
+          local humanoid4 = localPlayer.Character:FindFirstChildOfClass("Humanoid")
+
+          if humanoid4 then
+            for index4, value4 in ipairs(Enum.HumanoidStateType:GetEnumItems()) do
+              humanoid4:SetStateEnabled(value4, false)
+            end
+
+            humanoid4:ChangeState(Enum.HumanoidStateType.Swimming)
+          end
+        end
+
+        if localPlayer.Character then
+          local humanoid5 = localPlayer.Character:FindFirstChildOfClass("Humanoid")
+
+          local torso = humanoid5 and humanoid5.RigType == Enum.HumanoidRigType.R6
+              and localPlayer.Character:FindFirstChild("Torso")
+            or humanoid5 and localPlayer.Character:FindFirstChild("UpperTorso")
+
+          if humanoid5 and torso then
+            local v21 = {
+              f = 0,
+              b = 0,
+              l = 0,
+              r = 0,
+            }
+
+            local v22 = {
+              f = 0,
+              b = 0,
+              l = 0,
+              r = 0,
+            }
+
+            local v23 = 0
+
+            local instance = Instance.new("BodyGyro", torso)
+            instance.P = 90000
+            instance.maxTorque = Vector3.new(9000000000, 9000000000, 9000000000)
+            instance.cframe = torso.CFrame
+
+            local instance2 = Instance.new("BodyVelocity", torso)
+            instance2.velocity = Vector3.new(0, 0.1, 0)
+            instance2.maxForce = Vector3.new(9000000000, 9000000000, 9000000000)
+
+            if v13 then
+              humanoid5.PlatformStand = true
+            end
+
+            while v13 and localPlayer.Character and humanoid5 and humanoid5.Health > 0 do
+              wait()
+
+              if v21.l + v21.r ~= 0 or v21.f + v21.b ~= 0 then
+                v23 = v23 + 0.5 + v23 / 50
+
+                if v23 > 50 then
+                  v23 = 50
+                end
+              elseif v23 ~= 0 then
+                v23 = v23 - 1
+
+                if v23 < 0 then
+                  v23 = 0
+                end
+              end
+
+              if v21.l + v21.r ~= 0 or v21.f + v21.b ~= 0 then
+                instance2.velocity = (currentCamera.CFrame.LookVector * (v21.f + v21.b)
+                    + (currentCamera.CFrame
+                        * CFrame.new(v21.l + v21.r, (v21.f + v21.b) * 0.2, 0).p
+                      - currentCamera.CFrame.p))
+                  * v23
+
+                v22 = {
+                  f = v21.f,
+                  b = v21.b,
+                  l = v21.l,
+                  r = v21.r,
+                }
+              elseif v23 ~= 0 then
+                instance2.velocity = (currentCamera.CFrame.LookVector * (v22.f + v22.b)
+                    + (currentCamera.CFrame
+                        * CFrame.new(v22.l + v22.r, (v22.f + v22.b) * 0.2, 0).p
+                      - currentCamera.CFrame.p))
+                  * v23
+              else
+                instance2.velocity = Vector3.new(0, 0, 0)
+              end
+
+              instance.cframe = currentCamera.CFrame
+                * CFrame.Angles(-math.rad((v21.f + v21.b) * 50 * v23 / 50), 0, 0)
+            end
+
+            instance:Destroy()
+            instance2:Destroy()
+          end
+        end
+      end)
+
+      local connect3
+
+      up.MouseButton1Down:Connect(function()
+        connect3 = runService.Heartbeat:Connect(function()
+          local humanoidRootPart2 = localPlayer.Character
+            and localPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+          if humanoidRootPart2 then
+            humanoidRootPart2.CFrame = humanoidRootPart2.CFrame * CFrame.new(0, 1, 0)
+          end
+        end)
+      end)
+
+      up.MouseLeave:Connect(function()
+        if connect3 then
+          connect3:Disconnect()
+          connect3 = nil
+        end
+      end)
+
+      up.MouseButton1Up:Connect(function()
+        if connect3 then
+          connect3:Disconnect()
+          connect3 = nil
+        end
+      end)
+
+      local connect4
+
+      down.MouseButton1Down:Connect(function()
+        connect4 = runService.Heartbeat:Connect(function()
+          local humanoidRootPart3 = localPlayer.Character
+            and localPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+          if humanoidRootPart3 then
+            humanoidRootPart3.CFrame = humanoidRootPart3.CFrame * CFrame.new(0, -1, 0)
+          end
+        end)
+      end)
+
+      down.MouseLeave:Connect(function()
+        if connect4 then
+          connect4:Disconnect()
+          connect4 = nil
+        end
+      end)
+
+      down.MouseButton1Up:Connect(function()
+        if connect4 then
+          connect4:Disconnect()
+          connect4 = nil
+        end
+      end)
+
+      plus.MouseButton1Down:Connect(function()
+        v20 = v20 + 1
+        speed.Text = v20
+
+        if v13 then
+          v14 = false
+
+          for j = 1, v20 do
+            spawn(function()
+              local heartbeat2 = runService.Heartbeat
+              v14 = true
+
+              while v14 and heartbeat2:Wait() and localPlayer.Character do
+                local character4 = localPlayer.Character
+                local humanoid6 = character4 and character4:FindFirstChildWhichIsA("Humanoid")
+
+                if humanoid6 and humanoid6.MoveDirection.Magnitude > 0 then
+                  character4:TranslateBy(humanoid6.MoveDirection)
+                end
+              end
+            end)
+          end
+        end
+      end)
+
+      mine.MouseButton1Down:Connect(function()
+        if v20 == 1 then
+          speed.Text = "不能小于1"
+          wait(1)
+          speed.Text = v20
+        else
+          v20 = v20 - 1
+          speed.Text = v20
+
+          if v13 then
+            v14 = false
+
+            for k = 1, v20 do
+              spawn(function()
+                local heartbeat3 = runService.Heartbeat
+                v14 = true
+
+                while v14 and heartbeat3:Wait() and localPlayer.Character do
+                  local character5 = localPlayer.Character
+                  local humanoid7 = character5 and character5:FindFirstChildWhichIsA("Humanoid")
+
+                  if humanoid7 and humanoid7.MoveDirection.Magnitude > 0 then
+                    character5:TranslateBy(humanoid7.MoveDirection)
+                  end
+                end
+              end)
+            end
+          end
+        end
+      end)
+
+      close.MouseButton1Click:Connect(function()
+        f2()
+        main:Destroy()
+      end)
+
+      minimize.MouseButton1Click:Connect(function()
+        up.Visible = false
+        down.Visible = false
+        onof.Visible = false
+        plus.Visible = false
+        speed.Visible = false
+        mine.Visible = false
+        minimize.Visible = false
+        minimize2.Visible = true
+        frame.BackgroundTransparency = 1
+        close.Position = UDim2.new(0, 0, -1, 57)
+      end)
+
+      minimize2.MouseButton1Click:Connect(function()
+        up.Visible = true
+        down.Visible = true
+        onof.Visible = true
+        plus.Visible = true
+        speed.Visible = true
+        mine.Visible = true
+        minimize.Visible = true
+        minimize2.Visible = false
+        frame.BackgroundTransparency = 0
+        close.Position = UDim2.new(0, 0, -1, 27)
+      end)
+
+      v12 = main
+    end
+
+    function enNoclip()
+      v1 = true
+
+      spawn(function()
+        while v1 do
+          runService.Stepped:Wait()
+
+          if character then
+            for index5, value5 in ipairs(character:GetDescendants()) do
+              if value5:IsA("BasePart") then
+                value5.CanCollide = false
+              end
+            end
+          end
+        end
+      end)
+    end
+
+    function disNoclip()
+      v1 = false
+    end
+
+    function enGod()
+      v3 = true
+
+      spawn(function()
+        while v3 do
+          wait()
+
+          if humanoid and humanoid.Health > 0 then
+            humanoid.Health = humanoid.MaxHealth
+          end
+        end
+      end)
+    end
+
+    function disGod()
+      v3 = false
+    end
+
+    function enIJ()
+      v2 = true
+
+      userInputService.JumpRequest:Connect(function()
+        if v2 and humanoid then
+          humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+      end)
+    end
+
+    function disIJ()
+      v2 = false
+    end
+
+    function enFrozen()
+      if humanoidRootPart then
+        humanoidRootPart.Anchored = true
+      end
+    end
+
+    function disFrozen()
+      if humanoidRootPart then
+        humanoidRootPart.Anchored = false
+      end
+    end
+
+    function setWS(walkSpeed)
+      if humanoid then
+        humanoid.WalkSpeed = walkSpeed
+      end
+    end
+
+    function enESP()
+      for index6, value6 in ipairs(players:GetPlayers()) do
+        if value6 ~= localPlayer and value6.Character then
+          local highlight = Instance.new("Highlight")
+          highlight.FillColor = Color3.fromRGB(255, 0, 0)
+          highlight.FillTransparency = 0.5
+          highlight.Parent = value6.Character
+
+          v5[value6] = highlight
+        end
+      end
+    end
+
+    function disESP()
+      for key, value7 in pairs(v5) do
+        if value7 then
+          value7:Destroy()
+        end
+      end
+
+      v5 = {}
+    end
+
+    function enAFK()
+      v4 = true
+
+      spawn(function()
+        while v4 do
+          virtualInputManager:SendMouseMoveEvent(1, 0, true, game, false)
+          wait(0.1)
+          virtualInputManager:SendMouseMoveEvent(-1, 0, true, game, false)
+        end
+      end)
+    end
+
+    function disAFK()
+      v4 = false
+    end
+
+    function enInvisible()
+      if character then
+        for index7, value8 in ipairs(character:GetDescendants()) do
+          if value8:IsA("BasePart") then
+            value8.Transparency = 1
+          end
+        end
+      end
+    end
+
+    function disInvisible()
+      if character then
+        for index8, value9 in ipairs(character:GetDescendants()) do
+          if value9:IsA("BasePart") then
+            value9.Transparency = 0
+          end
+        end
+      end
+    end
+
+    function suicide()
+      if character and humanoid then
+        humanoid.Health = 0
+      end
+    end
+
+    function killAll()
+      for index9, value10 in ipairs(players:GetPlayers()) do
+        if value10 ~= localPlayer and value10.Character then
+          local humanoid8 = value10.Character:FindFirstChild("Humanoid")
+
+          if humanoid8 and humanoid8.Health > 0 then
+            humanoid8:TakeDamage(humanoid8.MaxHealth)
+          end
+        end
+      end
+    end
+
+    function rejoin()
+      teleportService:Teleport(game.PlaceId, localPlayer)
+    end
+
+    function leave()
+      game:Shutdown()
+    end
+
+    function closeScript()
+      if v12 then
+        v13 = false
+        v14 = false
+        v12:Destroy()
+      end
+
+      disNoclip()
+      disIJ()
+      disGod()
+      disFrozen()
+      disESP()
+      disAFK()
+      disSpin()
+      disNV()
+      disPJN()
+      stopTrack()
+      v15 = false
+
+      if Window then
+        Window:Unload()
+      end
+    end
+
+    function enAimbot()
+      v6 = true
+
+      spawn(function()
+        while v6 do
+          wait()
+          local v24 = nil
+          local v25 = v7
+
+          for index10, value11 in ipairs(players:GetPlayers()) do
+            if value11 ~= localPlayer and value11.Character then
+              local head = value11.Character:FindFirstChild("Head")
+              local humanoid9 = value11.Character:FindFirstChild("Humanoid")
+
+              if head and humanoid9 and humanoid9.Health > 0 then
+                local v26, v27 = currentCamera:WorldToViewportPoint(head.Position)
+
+                if v27 then
+                  local getMouseLocation = userInputService:GetMouseLocation()
+                  local magnitude = (Vector2.new(v26.X, v26.Y) - getMouseLocation).Magnitude
+
+                  if magnitude < v25 then
+                    v24 = head
+                    v25 = magnitude
+                  end
+                end
+              end
+            end
+          end
+
+          if v24 then
+            currentCamera.CFrame = CFrame.new(currentCamera.CFrame.Position, v24.Position)
+          end
+        end
+      end)
+    end
+
+    function disAimbot()
+      v6 = false
+    end
+
+    function enSpin()
+      v8 = true
+
+      connect = runService.Heartbeat:Connect(function()
+        if humanoidRootPart then
+          humanoidRootPart.CFrame = humanoidRootPart.CFrame * CFrame.Angles(0, math.rad(v9), 0)
+        end
+      end)
+    end
+
+    function disSpin()
+      v8 = false
+
+      if connect then
+        connect:Disconnect()
+        connect = nil
+      end
+    end
+
+    function setSpinSpeed(p1)
+      v9 = p1
+
+      if v8 then
+        disSpin()
+        enSpin()
+      end
+    end
+
+    function enNV()
+      local v28 = game
+      v28:GetService("Lighting").Brightness = 2
+
+      local v29 = game
+      v29:GetService("Lighting").ClockTime = 14
+    end
+
+    function disNV()
+      local v30 = game
+      v30:GetService("Lighting").Brightness = 1
+    end
+
+    function enPJN()
+      v10 = true
+
+      players.PlayerAdded:Connect(function(player)
+        if v10 then
+          library:Notify(player.Name .. " 加入了服务器", 3)
+        end
+      end)
+    end
+
+    function disPJN()
+      v10 = false
+    end
+
+    function setGravity(p2)
+      workspace.Gravity = p2
+      gravity = p2
+    end
+
+    function stealItems()
+      for key2, value12 in pairs(game.Players:GetChildren()) do
+        wait()
+
+        for key3, value13 in pairs(value12.Backpack:GetChildren()) do
+          value13.Parent = game.Players.LocalPlayer.Backpack
+        end
+      end
+    end
+
+    function startTrack(p3)
+      stopTrack()
+
+      for index11, value14 in ipairs(players:GetPlayers()) do
+        if value14.Name == p3 and value14 ~= localPlayer and value14.Character then
+          v11 = value14
+          break
+        end
+      end
+
+      if not v11 then
+        return
+      end
+
+      connect2 = runService.Heartbeat:Connect(function()
+        if not v11 or not v11.Character then
+          stopTrack()
+          return
+        else
+          local humanoidRootPart4 = v11.Character:FindFirstChild("HumanoidRootPart")
+
+          local humanoidRootPart5 = localPlayer.Character
+            and localPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+          if humanoidRootPart4 and humanoidRootPart5 then
+            humanoidRootPart5.CFrame = humanoidRootPart4.CFrame * CFrame.new(0, 0, 5)
+          end
+
+          return
+        end
+      end)
+    end
+
+    function stopTrack()
+      v11 = nil
+
+      if connect2 then
+        connect2:Disconnect()
+        connect2 = nil
+      end
+    end
+
+    function f1(p4)
+      local v31 = not p4 or p4 == "" or p4 == "无其他玩家"
+      local localPlayer3, v32
+
+      if v31 then
+        return
+      else
+        local v33 = { p4 }
+        localPlayer3 = players.LocalPlayer
+        v32 = false
+
+        local function f3(p5)
+          local lower = p5:lower()
+
+          if lower == "all" or lower == "others" then
+            v32 = true
+            return
+          elseif lower == "random" then
+            local getPlayers = players:GetPlayers()
+
+            if table.find(getPlayers, localPlayer3) then
+              table.remove(getPlayers, table.find(getPlayers, localPlayer3))
+            end
+
+            return getPlayers[math.random(#getPlayers)]
+          else
+            if lower ~= "random" and lower ~= "all" and lower ~= "others" then
+              local v34 = next
+              local v35, v36 = players:GetPlayers()
+
+              for v37, v38 in v34, v35, v36 do
+                if v38 ~= localPlayer3 then
+                  if v38.Name:lower():match("^" .. lower) then
+                    return v38
+                  end
+
+                  if v38.DisplayName:lower():match("^" .. lower) then
+                    return v38
+                  end
+                end
+              end
+
+              return
+            end
+
+            return
+          end
+        end
+
+        local function f4(p6)
+          local character6 = localPlayer3.Character
+          local humanoid10 = character6 and character6:FindFirstChildOfClass("Humanoid")
+          local rootPart = humanoid10 and humanoid10.RootPart
+          local character7 = p6.Character
+          local humanoid11
+
+          if character7:FindFirstChildOfClass("Humanoid") then
+            humanoid11 = character7:FindFirstChildOfClass("Humanoid")
+          end
+
+          local rootPart2
+
+          if humanoid11 and humanoid11.RootPart then
+            rootPart2 = humanoid11.RootPart
+          end
+
+          local head2
+
+          if character7:FindFirstChild("Head") then
+            head2 = character7.Head
+          end
+
+          local accessory
+
+          if character7:FindFirstChildOfClass("Accessory") then
+            accessory = character7:FindFirstChildOfClass("Accessory")
+          end
+
+          local handle
+
+          if accessory and accessory:FindFirstChild("Handle") then
+            handle = accessory.Handle
+          end
+
+          local v39 = character6 and humanoid10 and rootPart
+          local magnitude2, f5
+
+          if v39 then
+            if rootPart.Velocity.Magnitude < 50 then
+              getgenv().OldPos = rootPart.CFrame
+            end
+
+            if humanoid11 and humanoid11.Sit and not v32 then
+              library:Notify("玩家消失,已停止", 5)
+              return
+            end
+
+            if head2 then
+              workspace.CurrentCamera.CameraSubject = head2
+            elseif not head2 and handle then
+              workspace.CurrentCamera.CameraSubject = handle
+            elseif humanoid11 and rootPart2 then
+              workspace.CurrentCamera.CameraSubject = humanoid11
+            end
+
+            if not character7:FindFirstChildWhichIsA("BasePart") then
+              return
+            else
+              function f5(p7, p8, p9)
+                rootPart.CFrame = CFrame.new(p7.Position) * p8 * p9
+                character6:SetPrimaryPartCFrame(CFrame.new(p7.Position) * p8 * p9)
+
+                rootPart.Velocity = Vector3.new(90000000, 900000000, 90000000)
+                rootPart.RotVelocity = Vector3.new(900000000, 900000000, 900000000)
+              end
+
+              local function f6(p10)
+                local v40 = tick()
+                local total = 0
+
+                while rootPart do
+                  if p10.Velocity.Magnitude < 50 then
+                    total = total + 100
+
+                    f5(p10, CFrame.new(0, 1.5, 0)
+                      + humanoid11.MoveDirection * p10.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(total), 0, 0))
+
+                    task.wait()
+
+                    f5(p10, CFrame.new(0, -1.5, 0)
+                      + humanoid11.MoveDirection * p10.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(total), 0, 0))
+
+                    task.wait()
+
+                    f5(p10, CFrame.new(2.25, 1.5, -2.25)
+                      + humanoid11.MoveDirection * p10.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(total), 0, 0))
+
+                    task.wait()
+
+                    f5(p10, CFrame.new(-2.25, -1.5, 2.25)
+                      + humanoid11.MoveDirection * p10.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(total), 0, 0))
+
+                    task.wait()
+
+                    f5(
+                      p10, CFrame.new(0, 1.5, 0) + humanoid11.MoveDirection,
+                      CFrame.Angles(math.rad(total), 0, 0)
+                    )
+
+                    task.wait()
+
+                    f5(
+                      p10, CFrame.new(0, -1.5, 0) + humanoid11.MoveDirection,
+                      CFrame.Angles(math.rad(total), 0, 0)
+                    )
+
+                    task.wait()
+                  else
+                    f5(
+                      p10, CFrame.new(0, 1.5, humanoid11.WalkSpeed),
+                      CFrame.Angles(math.rad(90), 0, 0)
+                    )
+
+                    task.wait()
+                    f5(p10, CFrame.new(0, -1.5, -humanoid11.WalkSpeed), CFrame.Angles(0, 0, 0))
+                    task.wait()
+
+                    f5(
+                      p10, CFrame.new(0, 1.5, humanoid11.WalkSpeed),
+                      CFrame.Angles(math.rad(90), 0, 0)
+                    )
+
+                    task.wait()
+
+                    f5(
+                      p10, CFrame.new(0, 1.5, rootPart2.Velocity.Magnitude / 1.25),
+                      CFrame.Angles(math.rad(90), 0, 0)
+                    )
+
+                    task.wait()
+
+                    f5(
+                      p10, CFrame.new(0, -1.5, -rootPart2.Velocity.Magnitude / 1.25),
+                      CFrame.Angles(0, 0, 0)
+                    )
+
+                    task.wait()
+
+                    f5(
+                      p10, CFrame.new(0, 1.5, rootPart2.Velocity.Magnitude / 1.25),
+                      CFrame.Angles(math.rad(90), 0, 0)
+                    )
+
+                    task.wait()
+                    f5(p10, CFrame.new(0, -1.5, 0), CFrame.Angles(math.rad(90), 0, 0))
+                    task.wait()
+                    f5(p10, CFrame.new(0, -1.5, 0), CFrame.Angles(0, 0, 0))
+                    task.wait()
+                    f5(p10, CFrame.new(0, -1.5, 0), CFrame.Angles(math.rad(-90), 0, 0))
+                    task.wait()
+                    f5(p10, CFrame.new(0, -1.5, 0), CFrame.Angles(0, 0, 0))
+                    task.wait()
+                  end
+
+                  if p10.Velocity.Magnitude <= 500 then
+                    if p10.Parent == p6.Character then
+                      if p6.Parent == players then
+                        if not p6.Character ~= character7 then
+                          if not humanoid11.Sit then
+                            if humanoid10.Health > 0 then
+                              if v40 + 2 < tick() then
+                                break
+                              end
+                            else
+                              break
+                            end
+                          else
+                            break
+                          end
+                        else
+                          break
+                        end
+                      else
+                        break
+                      end
+                    else
+                      break
+                    end
+                  else
+                    break
+                  end
+                end
+              end
+
+              workspace.FallenPartsDestroyHeight = (0 / 0)
+
+              local epixVel = Instance.new("BodyVelocity")
+              epixVel.Name = "EpixVel"
+              epixVel.Parent = rootPart
+              epixVel.Velocity = Vector3.new(900000000, 900000000, 900000000)
+              epixVel.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+
+              humanoid10:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+
+              if rootPart2 and head2 then
+                if (rootPart2.CFrame.p - head2.CFrame.p).Magnitude > 5 then
+                  f6(head2)
+                else
+                  f6(rootPart2)
+                end
+
+                epixVel:Destroy()
+                humanoid10:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+                workspace.CurrentCamera.CameraSubject = humanoid10
+                magnitude2 = (rootPart.Position - getgenv().OldPos.p).Magnitude
+
+                repeat
+                  rootPart.CFrame = getgenv().OldPos * CFrame.new(0, 0.5, 0)
+                  character6:SetPrimaryPartCFrame(getgenv().OldPos * CFrame.new(0, 0.5, 0))
+                  humanoid10:ChangeState("GettingUp")
+
+                  table.foreach(character6:GetChildren(), function(p11, p12)
+                    if p12:IsA("BasePart") then
+                      local vector = Vector3.new()
+                      p12.RotVelocity = Vector3.new()
+                      p12.Velocity = vector
+                    end
+                  end)
+
+                  task.wait()
+                until (rootPart.Position - getgenv().OldPos.p).Magnitude < 25
+
+                workspace.FallenPartsDestroyHeight = getgenv().FPDH
+                return
+              end
+
+              if rootPart2 and not head2 then
+                f6(rootPart2)
+                epixVel:Destroy()
+                humanoid10:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+                workspace.CurrentCamera.CameraSubject = humanoid10
+                magnitude2 = (rootPart.Position - getgenv().OldPos.p).Magnitude
+
+                repeat
+                  rootPart.CFrame = getgenv().OldPos * CFrame.new(0, 0.5, 0)
+                  character6:SetPrimaryPartCFrame(getgenv().OldPos * CFrame.new(0, 0.5, 0))
+                  humanoid10:ChangeState("GettingUp")
+
+                  table.foreach(character6:GetChildren(), function(p13, p14)
+                    if p14:IsA("BasePart") then
+                      local vector2 = Vector3.new()
+                      p14.RotVelocity = Vector3.new()
+                      p14.Velocity = vector2
+                    end
+                  end)
+
+                  task.wait()
+                until (rootPart.Position - getgenv().OldPos.p).Magnitude < 25
+
+                workspace.FallenPartsDestroyHeight = getgenv().FPDH
+                return
+              elseif not rootPart2 and head2 then
+                f6(head2)
+                epixVel:Destroy()
+                humanoid10:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+                workspace.CurrentCamera.CameraSubject = humanoid10
+                magnitude2 = (rootPart.Position - getgenv().OldPos.p).Magnitude
+
+                repeat
+                  rootPart.CFrame = getgenv().OldPos * CFrame.new(0, 0.5, 0)
+                  character6:SetPrimaryPartCFrame(getgenv().OldPos * CFrame.new(0, 0.5, 0))
+                  humanoid10:ChangeState("GettingUp")
+
+                  table.foreach(character6:GetChildren(), function(p15, p16)
+                    if p16:IsA("BasePart") then
+                      local vector3 = Vector3.new()
+                      p16.RotVelocity = Vector3.new()
+                      p16.Velocity = vector3
+                    end
+                  end)
+
+                  task.wait()
+                until (rootPart.Position - getgenv().OldPos.p).Magnitude < 25
+
+                workspace.FallenPartsDestroyHeight = getgenv().FPDH
+                return
+              else
+                if not rootPart2 and not head2 and accessory and handle then
+                  f6(handle)
+                  epixVel:Destroy()
+                  humanoid10:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+                  workspace.CurrentCamera.CameraSubject = humanoid10
+                  magnitude2 = (rootPart.Position - getgenv().OldPos.p).Magnitude
+
+                  repeat
+                    rootPart.CFrame = getgenv().OldPos * CFrame.new(0, 0.5, 0)
+                    character6:SetPrimaryPartCFrame(getgenv().OldPos * CFrame.new(0, 0.5, 0))
+                    humanoid10:ChangeState("GettingUp")
+
+                    table.foreach(character6:GetChildren(), function(p17, p18)
+                      if p18:IsA("BasePart") then
+                        local vector4 = Vector3.new()
+                        p18.RotVelocity = Vector3.new()
+                        p18.Velocity = vector4
+                      end
+                    end)
+
+                    task.wait()
+                  until (rootPart.Position - getgenv().OldPos.p).Magnitude < 25
+
+                  workspace.FallenPartsDestroyHeight = getgenv().FPDH
+                  return
+                end
+
+                library:Notify("无法甩飞该玩家", 5)
+                return
+              end
+            end
+          else
+            library:Notify("玩家消失,已停止", 5)
+            return
+          end
+        end
+
+        if v33[1] then
+          for key4, value15 in next, v33, nil do
+            local v41 = f3(value15)
+
+            if v41 then
+              f4(v41)
+            end
+          end
+
+          if v32 then
+            local v42 = next
+            local v43, v44 = players:GetPlayers()
+
+            for v45, v46 in v42, v43, v44 do
+              if v46 ~= localPlayer3 then
+                f4(v46)
+              end
+            end
+          end
+
+          for key5, value16 in next, v33, nil do
+            local v47 = f3(value16)
+
+            if v47 and v47 ~= localPlayer3 then
+              if v47.UserId ~= 1414978355 then
+                f4(v47)
+              else
+                library:Notify("检测到玩家消失,已停止", 5)
+              end
+            elseif not f3(value16) and not v32 then
+              library:Notify("未获取到玩家或工具,已停止", 5)
+            end
+          end
+
+          return
+        end
+
+        return
+      end
+    end
+
+    local options = library.Options
+
+    local window = library:CreateWindow({
+      Title = "窗脚本",
+      Footer = "By 窗",
+      NotifySide = "Right",
+      ShowCustomCursor = true,
+    })
+
+    local v48 = {
+      Notice = window:AddTab("公告", "megaphone"),
+      General = window:AddTab("通用", "user"),
+      Fling = window:AddTab("甩飞", "zap"),
+      Tracking = window:AddTab("追踪类", "crosshair"),
+      Injector = window:AddTab("注入器", "download"),
+      OtherScript = window:AddTab("其他脚本", "code"),
+      Server = window:AddTab("脚本服务器", "server"),
+      FE = window:AddTab("FE脚本", "flame"),
+      Music = window:AddTab("音乐", "music"),
+      AIServer = window:AddTab("AI脚本", "bot"),
+      Settings = window:AddTab("设置", "settings"),
+    }
+
+    local addLeftGroupbox = v48.Notice:AddLeftGroupbox("脚本信息")
+    addLeftGroupbox:AddButton({ Text = "脚本功能少", Func = function() end })
+    addLeftGroupbox:AddButton({ Text = "脚本是让AI写的", Func = function() end })
+    addLeftGroupbox:AddButton({ Text = "脚本完全免费", Func = function() end })
+
+    addLeftGroupbox:AddLabel("注入器: "
+      .. (identifyexecutor and identifyexecutor() or "未知"))
+
+    addLeftGroupbox:AddLabel("用户名: " .. localPlayer.Name)
+
+    local addLeftGroupbox2 = v48.General:AddLeftGroupbox("移动功能")
+
+    addLeftGroupbox2:AddButton({
+      Text = "窗飞行",
+      Func = function()
+        openFlyGUI()
+        library:Notify("窗飞行已打开!", 3)
+      end,
+    })
+
+    addLeftGroupbox2:AddToggle("NoclipToggle", {
+      Text = "穿墙",
+      Default = false,
+      Callback = function(value17)
+        if value17 then
+          enNoclip()
+          library:Notify("穿墙已开启!", 3)
+        else
+          disNoclip()
+          library:Notify("穿墙已关闭!", 3)
+        end
+      end,
+    })
+
+    addLeftGroupbox2:AddSlider("WalkSpeedSlider", {
+      Text = "走路速度",
+      Default = 16,
+      Min = 16,
+      Max = 500,
+      Rounding = 0,
+      Suffix = " sps",
+      Callback = function(value18) setWS(value18) end,
+    })
+
+    addLeftGroupbox2:AddToggle("InfiniteJumpToggle", {
+      Text = "无限跳",
+      Default = false,
+      Callback = function(value19)
+        if value19 then
+          enIJ()
+          library:Notify("无限跳已开启!", 3)
+        else
+          disIJ()
+          library:Notify("无限跳已关闭!", 3)
+        end
+      end,
+    })
+
+    addLeftGroupbox2:AddToggle("FrozenToggle", {
+      Text = "无法移动",
+      Default = false,
+      Callback = function(value20)
+        if value20 then
+          enFrozen()
+          library:Notify("无法移动已开启!", 3)
+        else
+          disFrozen()
+          library:Notify("无法移动已关闭!", 3)
+        end
+      end,
+    })
+
+    local addRightGroupbox = v48.General:AddRightGroupbox("角色功能")
+
+    addRightGroupbox:AddToggle("GodToggle", {
+      Text = "无敌",
+      Default = false,
+      Callback = function(value21)
+        if value21 then
+          enGod()
+          library:Notify("无敌已开启!", 3)
+        else
+          disGod()
+          library:Notify("无敌已关闭!", 3)
+        end
+      end,
+    })
+
+    addRightGroupbox:AddToggle("InvisibleToggle", {
+      Text = "隐身",
+      Default = false,
+      Callback = function(value22)
+        if value22 then
+          enInvisible()
+          library:Notify("隐身已开启!", 3)
+        else
+          disInvisible()
+          library:Notify("隐身已关闭!", 3)
+        end
+      end,
+    })
+
+    addRightGroupbox:AddToggle("ESPToggle", {
+      Text = "ESP透视",
+      Default = false,
+      Callback = function(value23)
+        if value23 then
+          enESP()
+          library:Notify("ESP透视已开启!", 3)
+        else
+          disESP()
+          library:Notify("ESP透视已关闭!", 3)
+        end
+      end,
+    })
+
+    addRightGroupbox:AddButton({
+      Text = "击杀所有人",
+      Func = function()
+        killAll()
+        library:Notify("已击杀所有人!", 3)
+      end,
+    })
+
+    addRightGroupbox:AddButton({
+      Text = "自杀",
+      Func = function()
+        suicide()
+        library:Notify("已自杀!", 3)
+      end,
+    })
+
+    local addLeftGroupbox3 = v48.General:AddLeftGroupbox("脚本功能")
+
+    addLeftGroupbox3:AddButton({
+      Text = "控制玩家",
+      Func = function()
+        library:Notify("正在加载控制玩家...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/wzhxll/Willow-the-Invincible/refs/heads/main/(%C3%A9%C3%A5%C2%B2%C3%A7)%204-obfuscated%20(4).lua"))()
+        end)
+
+        library:Notify("控制玩家已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "偷走玩家物品道具",
+      Func = function()
+        stealItems()
+        library:Notify("已偷取所有玩家物品!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "静默甩飞所有人",
+      Func = function()
+        library:Notify("正在加载静默甩飞...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastebin.com/raw/zqyDSUWX"))() end)
+        library:Notify("静默甩飞已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "雷欧飞踢",
+      Func = function()
+        library:Notify("正在加载雷欧飞踢...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-THE-REAL-dropkick-177199"))()
+        end)
+
+        library:Notify("雷欧飞踢已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "铁拳甩飞",
+      Func = function()
+        library:Notify("正在加载铁拳甩飞...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/0Ben1/fe/main/obf_rf6iQURzu1fqrytcnLBAvW34C9N55kS9g9G3CKz086rC47M6632sEd4ZZYB0AYgV.lua.txt"))()
+        end)
+
+        library:Notify("铁拳甩飞已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "FPS(变流畅)",
+      Func = function()
+        library:Notify("正在优化FPS...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/gclich/FPS-X-GUI/main/FPS_X.lua"))()
+        end)
+
+        library:Notify("FPS优化已开启!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "获取管理员",
+      Func = function()
+        library:Notify("正在加载获取管理员...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastebin.com/raw/sZpgTVas"))() end)
+        library:Notify("获取管理员已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "死亡笔记",
+      Func = function()
+        library:Notify("正在加载死亡笔记...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/dingding123hhh/tt/main/%E6%AD%BB%E4%BA%A1%E7%AC%94%E8%AE%B0%20(1).txt"))()
+        end)
+
+        library:Notify("死亡笔记已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "飞车",
+      Func = function()
+        library:Notify("正在加载飞车...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/dingding123hhh/vb/main/%E9%A3%9E%E8%BD%A6.lua"))()
+        end)
+
+        library:Notify("飞车已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "假延迟脚本",
+      Func = function()
+        library:Notify("正在加载假延迟脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Egor-simple-ui-91106"))()
+        end)
+
+        library:Notify("假延迟脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "操人脚本",
+      Func = function()
+        library:Notify("正在加载操人脚本...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastefy.app/BkeffrT5/raw"))() end)
+        library:Notify("操人脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox3:AddButton({
+      Text = "防甩飞",
+      Func = function()
+        library:Notify("正在加载防甩飞...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
+        end)
+
+        library:Notify("防甩飞已加载!", 3)
+      end,
+    })
+
+    local addRightGroupbox2 = v48.General:AddRightGroupbox("飞行脚本")
+
+    addRightGroupbox2:AddButton({
+      Text = "r15无敌少侠飞行脚本",
+      Func = function()
+        library:Notify("正在加载r15飞行脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/396abc/Script/refs/heads/main/MobileFly.lua"))()
+        end)
+
+        library:Notify("r15飞行脚本已加载!", 3)
+      end,
+    })
+
+    addRightGroupbox2:AddButton({
+      Text = "r6无敌少侠飞行脚本",
+      Func = function()
+        library:Notify("正在加载r6飞行脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invincible-Mark-42041"))()
+        end)
+
+        library:Notify("r6飞行脚本已加载!", 3)
+      end,
+    })
+
+    local addLeftGroupbox4 = v48.General:AddLeftGroupbox("其他脚本")
+
+    addLeftGroupbox4:AddButton({
+      Text = "r6鹿管脚本",
+      Func = function()
+        library:Notify("正在加载r6鹿管脚本...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))() end)
+        library:Notify("r6鹿管脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox4:AddButton({
+      Text = "r15鹿管脚本",
+      Func = function()
+        library:Notify("正在加载r15鹿管脚本...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastefy.app/YZoglOyJ/raw"))() end)
+        library:Notify("r15鹿管脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox4:AddToggle("HeadlessToggle", {
+      Text = "无头脚本开关",
+      Default = false,
+      Callback = function(value24)
+        if value24 then
+          library:Notify("正在加载无头脚本...", 2)
+
+          pcall(function()
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Headless-anh-idk-238257"))()
+          end)
+
+          library:Notify("无头脚本已加载!", 3)
+        else
+          library:Notify("无头脚本已关闭!", 3)
+        end
+      end,
+    })
+
+    addLeftGroupbox4:AddToggle("KorbloxToggle", {
+      Text = "Korblox开关",
+      Default = false,
+      Callback = function(value25)
+        if value25 then
+          library:Notify("正在加载Korblox...", 2)
+
+          pcall(function()
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Korblox-238258"))()
+          end)
+
+          library:Notify("Korblox已加载!", 3)
+        else
+          library:Notify("Korblox已关闭!", 3)
+        end
+      end,
+    })
+
+    local addRightGroupbox3 = v48.General:AddRightGroupbox("视觉效果")
+
+    addRightGroupbox3:AddToggle("SpinToggle", {
+      Text = "旋转",
+      Default = false,
+      Callback = function(value26)
+        if value26 then
+          enSpin()
+          library:Notify("旋转已开启!", 3)
+        else
+          disSpin()
+          library:Notify("旋转已关闭!", 3)
+        end
+      end,
+    })
+
+    addRightGroupbox3:AddSlider("SpinSpeedSlider", {
+      Text = "旋转速度",
+      Default = 10,
+      Min = 1,
+      Max = 50,
+      Rounding = 0,
+      Callback = function(value27) setSpinSpeed(value27) end,
+    })
+
+    addRightGroupbox3:AddToggle("NightVisionToggle", {
+      Text = "夜视",
+      Default = false,
+      Callback = function(value28)
+        if value28 then
+          enNV()
+          library:Notify("夜视已开启!", 3)
+        else
+          disNV()
+          library:Notify("夜视已关闭!", 3)
+        end
+      end,
+    })
+
+    addRightGroupbox3:AddToggle("PlayerJoinToggle", {
+      Text = "玩家进入通知",
+      Default = false,
+      Callback = function(value29)
+        if value29 then
+          enPJN()
+          library:Notify("玩家进入通知已开启!", 3)
+        else
+          disPJN()
+          library:Notify("玩家进入通知已关闭!", 3)
+        end
+      end,
+    })
+
+    addRightGroupbox3:AddSlider("GravitySlider", {
+      Text = "重力设置",
+      Default = gravity,
+      Min = 0,
+      Max = 500,
+      Rounding = 0,
+      Callback = function(value30) setGravity(value30) end,
+    })
+
+    addRightGroupbox3:AddButton({
+      Text = "让其他玩家变成noob",
+      Func = function()
+        library:Notify("正在加载变noob脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://rawscripts.net/raw/Natural-Disaster-Survival-noob-all-110242"))()
+        end)
+
+        library:Notify("变noob脚本已加载!", 3)
+      end,
+    })
+
+    local addLeftGroupbox5 = v48.General:AddLeftGroupbox("自瞄功能")
+
+    addLeftGroupbox5:AddSlider("AimRangeSlider", {
+      Text = "自瞄范围",
+      Default = 500,
+      Min = 100,
+      Max = 1000,
+      Rounding = 0,
+      Callback = function(value31) v7 = value31 end,
+    })
+
+    addLeftGroupbox5:AddToggle("AimbotToggle", {
+      Text = "自瞄",
+      Default = false,
+      Callback = function(value32)
+        if value32 then
+          enAimbot()
+          library:Notify("自瞄已开启!", 3)
+        else
+          disAimbot()
+          library:Notify("自瞄已关闭!", 3)
+        end
+      end,
+    })
+
+    local addRightGroupbox4 = v48.General:AddRightGroupbox("系统功能")
+
+    addRightGroupbox4:AddToggle("AntiAFKToggle", {
+      Text = "反挂机",
+      Default = false,
+      Callback = function(value33)
+        if value33 then
+          enAFK()
+          library:Notify("反挂机已开启!", 3)
+        else
+          disAFK()
+          library:Notify("反挂机已关闭!", 3)
+        end
+      end,
+    })
+
+    addRightGroupbox4:AddButton({
+      Text = "重新加入",
+      Func = function()
+        library:Notify("正在重新加入...", 2)
+        rejoin()
+      end,
+    })
+
+    addRightGroupbox4:AddButton({
+      Text = "离开游戏",
+      Func = function()
+        library:Notify("正在离开游戏...", 2)
+        leave()
+      end,
+    })
+
+    addRightGroupbox4:AddButton({
+      Text = "关闭脚本",
+      Func = function()
+        library:Notify("脚本已关闭!", 2)
+        closeScript()
+      end,
+    })
+
+    local addLeftGroupbox6 = v48.Fling:AddLeftGroupbox("玩家甩飞")
+
+    addDropdown = addLeftGroupbox6:AddDropdown("FlingPlayerDropdown", {
+      Values = getPlayerList(),
+      Default = 1,
+      Multi = false,
+      Text = "选择玩家",
+      Callback = function(value34) end,
+    })
+
+    addLeftGroupbox6:AddButton({
+      Text = "甩飞一次",
+      Func = function()
+        f1(addDropdown.Value)
+        library:Notify("甩飞完成!", 3)
+      end,
+    })
+
+    addLeftGroupbox6:AddToggle("AutoFlingToggle", {
+      Text = "循环甩飞",
+      Default = false,
+      Callback = function(value35)
+        v15 = value35
+
+        if value35 then
+          library:Notify("循环甩飞已开启!", 3)
+
+          spawn(function()
+            while v15 do
+              local value36 = addDropdown.Value
+
+              if value36 and value36 ~= "" and value36 ~= "无其他玩家" then
+                pcall(function() f1(value36) end)
+              end
+
+              task.wait(0.1)
+            end
+          end)
+        else
+          library:Notify("循环甩飞已关闭!", 3)
+        end
+      end,
+    })
+
+    addLeftGroupbox6:AddButton({
+      Text = "刷新列表",
+      Func = function()
+        addDropdown:Refresh(getPlayerList())
+        library:Notify("列表已刷新!", 2)
+      end,
+    })
+
+    local addLeftGroupbox7 = v48.Tracking:AddLeftGroupbox("玩家追踪")
+
+    addDropdown2 = addLeftGroupbox7:AddDropdown("TrackPlayerDropdown", {
+      Values = getPlayerList(),
+      Default = 1,
+      Multi = false,
+      Text = "追踪玩家",
+      Callback = function(value37)
+        if value37 ~= "" then
+          startTrack(value37)
+          library:Notify("正在追踪 " .. value37, 3)
+        end
+      end,
+    })
+
+    addLeftGroupbox7:AddButton({
+      Text = "停止追踪",
+      Func = function()
+        stopTrack()
+        library:Notify("追踪已停止!", 3)
+      end,
+    })
+
+    addLeftGroupbox7:AddButton({
+      Text = "刷新列表",
+      Func = function()
+        addDropdown2:Refresh(getPlayerList())
+        library:Notify("列表已刷新!", 2)
+      end,
+    })
+
+    v16 = false
+
+    addLeftGroupbox7:AddToggle("CircleToggle", {
+      Text = "转圈",
+      Default = false,
+      Callback = function(value38)
+        v16 = value38
+
+        if value38 then
+          library:Notify("转圈已开启!", 3)
+
+          spawn(function()
+            local total2 = 0
+
+            while v16 and localPlayer.Character
+              and localPlayer.Character:FindFirstChild("HumanoidRootPart") do
+              total2 = total2 + 0.1
+
+              localPlayer.Character.HumanoidRootPart.CFrame = localPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0.1, 0) + Vector3.new(
+                math.cos(total2) * 0.5, 0, math.sin(total2) * 0.5
+              )
+
+              wait()
+            end
+          end)
+        else
+          library:Notify("转圈已关闭!", 3)
+        end
+      end,
+    })
+
+    v48.Injector:AddLeftGroupbox("注入器下载"):AddButton({
+      Text = "阿尔宙斯注入器3.0",
+      Func = function()
+        library:Notify("正在加载阿尔宙斯注入器...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()
+        end)
+
+        library:Notify("阿尔宙斯注入器已加载!", 3)
+      end,
+    })
+
+    local addLeftGroupbox8 = v48.OtherScript:AddLeftGroupbox("通用脚本")
+
+    addLeftGroupbox8:AddButton({
+      Text = "皮脚本",
+      Func = function()
+        library:Notify("正在加载皮脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaopi77/xiaopi77/main/QQ1002100032-Roblox-Pi-script.lua"))()
+        end)
+
+        library:Notify("皮脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox8:AddButton({
+      Text = "tsb脚本",
+      Func = function()
+        library:Notify("正在加载tsb脚本...", 2)
+
+        pcall(function() setclipboard("YPVdAosoAvaXrtZAdEYxCQRBEwbphCXq") end)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/DiosDi/VexonHub/refs/heads/main/VexonHub"))()
+        end)
+
+        library:Notify("tsb脚本已加载!密钥已复制", 3)
+      end,
+    })
+
+    addLeftGroupbox8:AddButton({
+      Text = "叶脚本",
+      Func = function()
+        library:Notify("正在加载叶脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/roblox-ye/QQ515966991/refs/heads/main/ROBLOX-CNVIP-XIAOYE.lua"))()
+        end)
+
+        library:Notify("叶脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox8:AddButton({
+      Text = "动作脚本",
+      Func = function()
+        library:Notify("正在加载动作脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/7yd7/Hub/refs/heads/Branch/GUIS/Emotes.lua"))()
+        end)
+
+        library:Notify("动作脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox8:AddButton({
+      Text = "ROB",
+      Func = function()
+        library:Notify("正在加载ROB...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/Zyb150933/ROB/refs/heads/main/ROB.V2"))()
+        end)
+
+        library:Notify("ROB已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox8:AddButton({
+      Text = "XK",
+      Func = function()
+        library:Notify("正在加载XK...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://github.com/devslopo/DVES/raw/main/XK%20Hub"))()
+        end)
+
+        library:Notify("XK已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox8:AddButton({
+      Text = "情云脚本中心",
+      Func = function()
+        library:Notify("正在加载情云脚本中心...", 2)
+        library:Notify("情云脚本中心已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox8:AddButton({
+      Text = "祖国人",
+      Func = function()
+        library:Notify("正在加载祖国人...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/kongbaNB/-/refs/heads/main/%E7%A5%96%E5%9B%BD%E4%BA%BA%E6%B1%89%E5%8C%96"))()
+        end)
+
+        library:Notify("祖国人已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox8:AddButton({
+      Text = "天下布武",
+      Func = function()
+        library:Notify("正在加载天下布武...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/cytj777i/Deliver-through-the-wall-perspective/main/%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6"))()
+        end)
+
+        library:Notify("天下布武已加载!", 3)
+      end,
+    })
+
+    local addRightGroupbox5 = v48.OtherScript:AddRightGroupbox("最强战场脚本")
+
+    addRightGroupbox5:AddButton({
+      Text = "最强战场远程打人",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/SIONELTNAMATLASIA.lua"))()
+        end)
+
+        library:Notify("最强战场远程打人已加载!", 3)
+      end,
+    })
+
+    addRightGroupbox5:AddButton({
+      Text = "最强战场垃圾桶脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet(
+            "https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man", true
+          ))()
+        end)
+
+        library:Notify("垃圾桶脚本已加载!", 3)
+      end,
+    })
+
+    local addLeftGroupbox9 = v48.OtherScript:AddLeftGroupbox("其他")
+
+    addLeftGroupbox9:AddButton({
+      Text = "黑白脚本",
+      Func = function()
+        library:Notify("正在加载黑白脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/tfcygvunbind/Apple/main/%E9%BB%91%E7%99%BD%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD%E5%99%A8"))()
+        end)
+
+        library:Notify("黑白脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox9:AddButton({
+      Text = "BS脚本",
+      Func = function()
+        library:Notify("正在加载BS脚本...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://gitee.com/BS_script/script/raw/master/BS_Script.Luau"))()
+        end)
+
+        library:Notify("BS脚本已加载!", 3)
+      end,
+    })
+
+    local addLeftGroupbox10 = v48.Server:AddLeftGroupbox("服务器脚本")
+
+    addLeftGroupbox10:AddButton({
+      Text = "内脏与黑火药",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/wzhxll/2/refs/heads/main/%E9%98%89%E5%89%B2%E7%89%88.lua"))()
+        end)
+
+        library:Notify("内脏与黑火药已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "TSB脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/ke9460394-dot/ugik/refs/heads/main/phantasm.lua"))()
+        end)
+
+        library:Notify("TSB脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "监狱人生脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://rawscripts.net/raw/Prison-Life-Zolt-Invisible-Fly-Auto-Arrest-And-More-OP-Script-228808"))()
+        end)
+
+        library:Notify("监狱人生脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "破坏者谜团2脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet(
+            "https://raw.githubusercontent.com/Ethanoj1/EclipseMM2/master/Script", true
+          ))()
+        end)
+
+        library:Notify("破坏者谜团2脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "99夜脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/atnew2025/Chinese-scripts/refs/heads/main/voidware-cn.txt"))()
+        end)
+
+        library:Notify("99夜脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "doors",
+      Func = function()
+        library:Notify("正在加载...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastebin.com/raw/65TwT8ja"))() end)
+        library:Notify("doors脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "自然灾害",
+      Func = function()
+        library:Notify("正在加载...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastebin.com/raw/5fKvum70"))() end)
+        library:Notify("自然灾害脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "LC",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://rawscripts.net/raw/Lexington-and-Concord-LC-75016"))()
+        end)
+
+        library:Notify("LC脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "墨水游戏",
+      Func = function()
+        library:Notify("正在加载...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastebin.com/raw/sR98CDWm"))() end)
+        library:Notify("墨水游戏脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "俄亥俄州",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/XingFork/Scripts/refs/heads/main/Ohio"))()
+        end)
+
+        library:Notify("俄亥俄州脚本已加载!", 3)
+      end,
+    })
+
+    addLeftGroupbox10:AddButton({
+      Text = "被遗弃",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/FengYu-X/Max/refs/heads/X/fsk.lua"))()
+        end)
+
+        library:Notify("被遗弃脚本已加载!", 3)
+      end,
+    })
+
+    local fe = v48.FE:AddLeftGroupbox("FE功能脚本")
+
+    fe:AddButton({
+      Text = "coolgui",
+      Func = function()
+        library:Notify("正在加载...", 2)
+        pcall(function() loadstring(game:GetObjects("rbxassetid://8127297852")[1].Source)() end)
+        library:Notify("coolgui已加载!", 3)
+      end,
+    })
+
+    fe:AddButton({
+      Text = "1x1x1x1",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://pastebin.com/raw/JipYNCht", true))()
+        end)
+
+        library:Notify("1x1x1x1已加载!", 3)
+      end,
+    })
+
+    fe:AddButton({
+      Text = "变玩家(R6)",
+      Func = function()
+        library:Notify("正在加载...", 2)
+        pcall(function() loadstring(game:HttpGet("https://pastebin.com/raw/XR4sGcgJ"))() end)
+        library:Notify("变玩家脚本已加载!", 3)
+      end,
+    })
+
+    fe:AddButton({
+      Text = "动画中心",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet(
+            "https://raw.githubusercontent.com/GamingScripter/Animation-Hub/main/Animation%20Gui",
+            true
+          ))()
+        end)
+
+        library:Notify("动画中心已加载!", 3)
+      end,
+    })
+
+    v48.Music:AddLeftGroupbox("音乐播放"):AddInput("MusicInput", {
+      Default = "",
+      Numeric = true,
+      Finished = true,
+      Text = "音乐代码",
+      Placeholder = "输入音乐ID",
+      Callback = function(value39) end,
+    })
+
+    local ai = v48.AIServer:AddLeftGroupbox("AI脚本合集")
+
+    ai:AddButton({
+      Text = "击打战斗脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/-6/refs/heads/main/%E5%87%BB%E6%89%93%E6%88%98%E6%96%97%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD%E5%99%A8"))()
+        end)
+
+        library:Notify("击打战斗脚本已加载!", 3)
+      end,
+    })
+
+    ai:AddButton({
+      Text = "最强战场脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/-1-/refs/heads/main/%E6%9C%80%E5%BC%BA%E6%88%98%E5%9C%BA%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD%E5%99%A8"))()
+        end)
+
+        library:Notify("最强战场脚本已加载!", 3)
+      end,
+    })
+
+    ai:AddButton({
+      Text = "击退战斗",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/-5/refs/heads/main/%E5%87%BB%E9%80%80%E6%88%98%E6%96%97.lua"))()
+        end)
+
+        library:Notify("击退战斗已加载!", 3)
+      end,
+    })
+
+    ai:AddButton({
+      Text = "自然灾害模拟器",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/ZiranZaihaiMoniliqi2/refs/heads/main/%E8%87%AA%E7%84%B6%E7%81%BE%E5%AE%B3%E6%A8%A1%E6%8B%9F%E5%99%A8.lua"))()
+        end)
+
+        library:Notify("自然灾害模拟器已加载!", 3)
+      end,
+    })
+
+    local ai2 = v48.AIServer:AddRightGroupbox("其他AI脚本")
+
+    ai2:AddButton({
+      Text = "HFH916汉化",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/Cyborg883/HitboxExpander/refs/heads/main/Release"))()
+        end)
+
+        library:Notify("HFH916汉化已加载!", 3)
+      end,
+    })
+
+    ai2:AddButton({
+      Text = "TSB加密脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/MIAN57/-/refs/heads/main/TSB%E5%8A%A0%E5%AF%86.lua"))()
+        end)
+
+        library:Notify("TSB加密脚本已加载!", 3)
+      end,
+    })
+
+    ai2:AddButton({
+      Text = "监狱人生脚本",
+      Func = function()
+        library:Notify("正在加载...", 2)
+
+        pcall(function()
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/jianyurensheng/refs/heads/main/Script.lua"))()
+        end)
+
+        library:Notify("监狱人生脚本已加载!", 3)
+      end,
+    })
+
+    local addLeftGroupbox11 = v48.Settings:AddLeftGroupbox("菜单")
+
+    addLeftGroupbox11:AddButton({
+      Text = "卸载脚本",
+      Func = function()
+        library:Notify("脚本已卸载!", 2)
+        library:Unload()
+      end,
+    })
+
+    addLeftGroupbox11:AddLabel("菜单快捷键"):AddKeyPicker("MenuKeybind", {
+      Default = "RightShift",
+      NoUI = true,
+      Text = "Menu keybind",
+    })
+
+    library.ToggleKeybind = options.MenuKeybind
+    themeManager:SetLibrary(library)
+
+    saveManager:SetLibrary(library)
+    saveManager:IgnoreThemeSettings()
+
+    themeManager:SetFolder("MyScriptTheme")
+
+    saveManager:SetFolder("MyScriptConfig")
+    saveManager:BuildConfigSection(v48.Settings)
+
+    themeManager:ApplyToTab(v48.Settings)
+    return
+  end
+end
