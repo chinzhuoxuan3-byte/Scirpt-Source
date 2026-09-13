@@ -1,0 +1,2105 @@
+--开源来自Yeskid
+local tbl2 = {
+    Chinese = {
+        Notification = "通知",
+        Error = "错误",
+        Success = "成功",
+        Enabled = "已启用",
+        Disabled = "已关闭",
+        Settings = "设置",
+        Close = "关闭",
+        Save = "保存",
+        Load = "加载",
+        Confirm = "确认",
+        Cancel = "取消",
+        MainMenu = "Main",
+        Combat = "Combat",
+        Auto = "Auto",
+        Other = "Other",
+        SettingsMenu = "设置菜单",
+        AimBot = "自瞄",
+        InfiniteAmmo = "无限子弹",
+        AutoRepair = "自动修复建筑",
+        SelfRevive = "全职业自救",
+        FogRemoval = "除雾",
+        HideUI = "隐藏/显示UI",
+        CloseUI = "关闭UI",
+        TeamCheck = "队伍检测",
+        VisibilityCheck = "可见性检查",
+        AimOnlyWhenAiming = "仅举枪时自瞄",
+        AimPart = "瞄准部位",
+        MaxDistance = "最大距离",
+        Smoothness = "平滑度",
+        HitChance = "命中率",
+        VisualSettings = "视觉设置",
+        ScriptLoaded = "脚本加载成功",
+        ConfigSaved = "配置已保存",
+        ConfigLoaded = "配置已加载",
+        ConfigNotFound = "未找到配置文件",
+        AimingSlowly = "自瞄平滑模式已启用",
+        LanguageSelected = "语言已设置为中文",
+        AimPartDisplay = "部位",
+        ChangeAimPart = "更改瞄准部位",
+        SelfReviveSettings = "自救设置",
+        ReviveTeammates = "自动救队友",
+        ReviveEnemies = "叛变(救敌人)",
+        ForceHit = "精准模式",
+        HooksEnable = "启用Hook",
+        AutoBlock = "自动格挡",
+        KillAura = "杀戮光环",
+        AutoBreakBuildings = "自动破坏建筑",
+        ["AutoBreakBuildings"] = "Auto Break Buildings",
+        ["AutoIgnite"] = "Auto Ignite",
+        ["AutoMark"] = "Auto Mark",
+        ["BreakOwn"] = "Break Own",
+        ["BreakTeammate"] = "Break Teammate",
+        ["BreakEnemy"] = "Break Enemy",
+        ["IgniteOwn"] = "Ignite Own",
+        ["IgniteTeammate"] = "Ignite Teammate",
+        ["IgniteEnemy"] = "Ignite Enemy",
+        ["RepairOwn"] = "Repair Own",
+        ["RepairTeammate"] = "Repair Teammate",
+        ["RepairEnemy"] = "Repair Enemy",
+        ["AttackRange"] = "Attack Range",
+        ["AttackCooldown"] = "Attack Cooldown",
+        ["RageBot"] = "RageBot",
+        ["RageInterval"] = "Interval (sec)",
+        ["NoFallDamage"] = "No Fall Damage",
+        ["ExtraDamage"] = "Extra Damage",
+        ["ExtraDamageRepeat"] = "Extra Hits",
+        ["ExtraDamageCooldown"] = "Cooldown (sec)",
+        ["AutoBlockAction"] = "Play Block Anim",
+        ["ResetUIPosition"] = "Reset UI Position",
+        ["ShrinkToGUI"] = "Shrink to GUI",
+        ["PlayerESP"] = "Player ESP",
+        ["ESPShowName"] = "Show Name",
+        ["ESPTeamCheck"] = "Show Enemies Only",
+        ["ESPSettings"] = "ESP Settings"
+    },
+    English = {
+        Notification = "Notification",
+        Error = "Error",
+        Success = "Success",
+        Enabled = "Enabled",
+        Disabled = "Disabled",
+        Settings = "Settings",
+        Close = "Close",
+        Save = "Save",
+        Load = "Load",
+        Confirm = "Confirm",
+        Cancel = "Cancel",
+        MainMenu = "Main",
+        Combat = "fight",
+        Auto = "auto",
+        Other = "self",
+        SettingsMenu = "Settings",
+        AimBot = "Aimbot",
+        InfiniteAmmo = "Infinite Ammo",
+        AutoRepair = "Auto Repair",
+        SelfRevive = "Self Revive",
+        FogRemoval = "nofog",
+        HideUI = "Hide/Show",
+        CloseUI = "Close UI",
+        TeamCheck = "Team Check",
+        VisibilityCheck = "Visibility Check",
+        AimOnlyWhenAiming = "isAiming",
+        AimPart = "Aim Part",
+        MaxDistance = "Max Distance",
+        Smoothness = "Smoothness",
+        HitChance = "Hit Chance",
+        VisualSettings = "Visual Settings",
+        ScriptLoaded = "Script loaded successfully",
+        ConfigSaved = "Configuration saved",
+        ConfigLoaded = "Configuration loaded",
+        ConfigNotFound = "Config file not found",
+        AimingSlowly = "Slow aiming mode enabled",
+        LanguageSelected = "Language set to English",
+        AimPartDisplay = "Part",
+        ChangeAimPart = "Change Aim Part",
+        SelfReviveSettings = "Self Revive Settings",
+        ReviveTeammates = "Save Teammates",
+        ReviveEnemies = "Save Enemies",
+        ForceHit = "Force Hit",
+        HooksEnable = "Enable Hooks (Required)",
+        AutoBlock = "Auto Block",
+        KillAura = "Kill Aura",
+        ["AutoBreakBuildings"] = "Auto Break Buildings",
+        ["AutoIgnite"] = "Auto Ignite",
+        ["AutoMark"] = "Auto Mark",
+        ["BreakOwn"] = "Break Own",
+        ["BreakTeammate"] = "Break Teammate",
+        ["BreakEnemy"] = "Break Enemy",
+        ["IgniteOwn"] = "Ignite Own",
+        ["IgniteTeammate"] = "Ignite Teammate",
+        ["IgniteEnemy"] = "Ignite Enemy",
+        ["RepairOwn"] = "Repair Own",
+        ["RepairTeammate"] = "Repair Teammate",
+        ["RepairEnemy"] = "Repair Enemy",
+        ["AttackRange"] = "Attack Range",
+        ["AttackCooldown"] = "Attack Cooldown",
+        ["RageBot"] = "RageBot",
+        ["RageInterval"] = "Interval (sec)",
+        ["NoFallDamage"] = "No Fall Damage",
+        ["ExtraDamage"] = "Extra Damage",
+        ["ExtraDamageRepeat"] = "Extra Hits",
+        ["ExtraDamageCooldown"] = "Cooldown (sec)",
+        ["AutoBlockAction"] = "Play Block Anim",
+        ["ResetUIPosition"] = "Reset UI Position",
+        ["ShrinkToGUI"] = "Shrink to GUI",
+        ["PlayerESP"] = "Player ESP",
+        ["ESPShowName"] = "Show Name",
+        ["ESPTeamCheck"] = "Show Enemies Only",
+        ["ESPSettings"] = "ESP Settings",
+        ["KeepHotbar"] = "KeepHotbar"
+    }
+}
+local Chinese = tbl2.Chinese
+local flag = false
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local CurrentCamera = game:GetService("Workspace").CurrentCamera
+local GetMouse = LocalPlayer:GetMouse()
+local ReplicatedStorage = require(LocalPlayer:GetService("ReplicatedStorage").REFERENCES.PacketReference)
+local tbl3 = {}
+Players.PlayerRemoving:Connect(function(gal_p1_114)
+    gal_l974 = {
+        pairs(tbl3)
+    }
+    while pairs(tbl3)(gal_l974[2], gal_l974[3]) do
+        repeat
+            gal_l974 = Frame2(gal_l976, gal_l974[3])
+        until gal_l974:match("^" .. gal_p1_114.UserId .. "_")
+    end
+end)
+do
+    MouseButton1Click = game
+    local CoreGui = Instance.new("ScreenGui", MouseButton1Click:GetService("CoreGui"))
+    CoreGui.Name = "LanguageSelector"
+    CoreGui.ResetOnSpawn = false
+    CoreGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    local Frame = Instance.new("Frame", CoreGui)
+    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame.BackgroundTransparency = .5
+    Frame.Size = UDim2.new(1, 0, 1, 0)
+    local Frame2 = Instance.new("Frame", Frame)
+    Frame2.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+    Frame2.Size = UDim2.new(.3, 0, .2, 0)
+    Frame2.Position = UDim2.new(.5, 0, .5, 0)
+    Frame2.AnchorPoint = Vector2.new(.5, .5)
+    gal_l974 = Instance.new("TextLabel", Frame2)
+    gal_l974.Text = "请选择语言 / Select Language"
+    gal_l974.TextColor3 = Color3.fromRGB(255, 255, 255)
+    gal_l974.BackgroundTransparency = 1
+    gal_l974.Size = UDim2.new(1, 0, .3, 0)
+    gal_l974.Font = Enum.Font.SourceSansBold
+    gal_l974.TextSize = 20
+    gal_l974.Position = UDim2.new(0, 0, .05, 0)
+    local TextButton = Instance.new("TextButton", Frame2)
+    TextButton.Text = "中文 (Chinese)"
+    TextButton.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+    TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.Size = UDim2.new(.8, 0, .25, 0)
+    TextButton.Position = UDim2.new(.1, 0, .35, 0)
+    TextButton.Font = Enum.Font.SourceSans
+    TextButton.TextSize = 16
+    frame = Instance.new("TextButton", Frame2)
+    frame.Text = "English (英语)"
+    frame.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+    frame.TextColor3 = Color3.fromRGB(255, 255, 255)
+    frame.Size = UDim2.new(.8, 0, .25, 0)
+    frame.Position = UDim2.new(.1, 0, .65, 0)
+    frame.Font = Enum.Font.SourceSans
+    frame.TextSize = 16
+    Instance.new("UICorner", Frame2).CornerRadius = UDim.new(0, 8)
+    Instance.new("UICorner", TextButton).CornerRadius = UDim.new(0, 5)
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 5)
+    local function UIListLayout(gal_p1_113)
+        gal_p1_113.MouseEnter:Connect(function()
+            gal_p1_113.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+        end)
+        MouseButton1Click = gal_p1_113.MouseLeave
+        MouseButton1Click:Connect(function()
+            gal_p1_113.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+        end)
+        MouseButton1Click = gal_p1_113.MouseButton1Down
+        MouseButton1Click:Connect(function()
+            gal_p1_113.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+        end)
+        MouseButton1Click = gal_p1_113.MouseButton1Up
+        MouseButton1Click:Connect(function()
+            gal_p1_113.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+        end)
+    end
+    UIListLayout(TextButton)
+    UIListLayout(frame)
+    MouseButton1Click = TextButton.MouseButton1Click
+    MouseButton1Click:Connect(function()
+        Chinese = tbl2.Chinese
+        flag = true
+        CoreGui:Destroy()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "通知",
+            Text = "语言已设置为中文",
+            Icon = "",
+            Duration = 4
+        })
+    end)
+    MouseButton1Click = frame.MouseButton1Click
+    MouseButton1Click:Connect(function()
+        Chinese = tbl2.English
+        flag = true
+        CoreGui:Destroy()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Notification",
+            Text = "Language set to English",
+            Icon = "",
+            Duration = 4
+        })
+    end)
+    repeat
+        task.wait()
+    until flag
+end
+local tbl4 = {
+    version = "1.0",
+    language = "Chinese",
+    Aimbot = {
+        Enabled = false,
+        TeamCheck = true,
+        VisibleCheck = true,
+        AimPart = "Random",
+        MaxDistance = 500,
+        Smoothness = .1,
+        RequireAiming = true
+    },
+    Weapons = {
+        InfiniteAmmo = false
+    },
+    Auto = {
+        Repair = false,
+        SelfRevive = false,
+        ReviveTeammates = false,
+        ReviveEnemies = false
+    },
+    Other = {
+        FogRemoval = false,
+        KeepHotbar = false
+    },
+    ForceHit = false,
+    HooksEnabled = false,
+    AutoBlock = false,
+    KillAura = false,
+    AutoBreakBuildings = false,
+    AutoIgnite = false,
+    AutoMark = false,
+    BreakOwn = false,
+    BreakTeammate = false,
+    BreakEnemy = false,
+    IgniteOwn = false,
+    IgniteTeammate = false,
+    IgniteEnemy = false,
+    RepairOwn = false,
+    RepairTeammate = false,
+    RepairEnemy = false,
+    KillAuraRange = 25,
+    KillAuraCooldown = .3,
+    BreakRange = 30,
+    BreakCooldown = .05,
+    IgniteRange = 20,
+    IgniteCooldown = .3,
+    RageBot = false,
+    RageInterval = 8,
+    NoFallDamage = false,
+    ExtraDamage = {
+        Enabled = false,
+        RepeatCount = 1,
+        Cooldown = .5,
+        MaxTargets = 1
+    },
+    AutoBlockAction = false
+}
+local function gal18(gal_p1_112)
+    for gal_l55, gal_l56 in ipairs({
+        "RegistrMeleeHIt",
+        "MeIeeRegIstrationHIt",
+        "RegisterMeleeHit2",
+        "MeIeeRegIstrationHIt"
+    }) do
+        local gal12 = ReplicatedStorage[gal_l56]
+        while not gal12 do
+            pcall(function()
+                ReplicatedStorage[D[gal_l47]].send(gal_p1_112)
+            end)
+        end
+    end
+end
+local function gal21(gal_p1_110)
+    for gal_l64, gal_l65 in ipairs({
+        "gunshotCharacterHit",
+        "gunshotChracterHit",
+        "gunshotCharacterHit"
+    }) do
+        local RunService = ReplicatedStorage[gal_l65]
+        while not RunService do
+            pcall(function()
+                ReplicatedStorage[D[gal_l47]].send(gal_p1_110)
+            end)
+        end
+    end
+end
+local tbl5 = {
+    Enabled = false,
+    TeamCheck = true,
+    VisibleCheck = true,
+    AimPart = "Random",
+    MaxDistance = 500,
+    Smoothness = .1,
+    AimKey = Enum.UserInputType.MouseButton2,
+    HoldToAim = false,
+    RequireAiming = true
+}
+local function gal29()
+    local tickResult = tick()
+    if tickResult - tickResult < .1 then
+        return false
+    end
+    if not LocalPlayer.Character then
+        return false
+    end
+    local Humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if not Humanoid then
+        return false
+    end
+    local tbl6 = {
+        gal_l71:GetChildren()
+    }
+    for gal_l74, gal_l75 in pairs(gal_l75) do
+        if gal_l75:IsA("Tool") then
+            if gal_l75:GetAttribute("isAiming") then
+                if gal_l75:FindFirstChild("Animations") then
+                    if gal_l43:FindFirstChild("Viewmodel_Aim_Idle") then
+                        local tbl7 = {
+                            Humanoid:GetPlayingAnimationTracks()
+                        }
+                        for gal_l79, gal_l80 in pairs(gal_l80) do
+                            local Animation = gal_l80.Animation
+                            while not Animation do
+                                flag = true
+                                return true
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return false
+end
+local function gal32(gal_p1_108)
+    if not gal_p1_108 then
+        return false
+    end
+end
+local function gal33(gal_p1_107)
+    if not gal_p1_107 then
+        return false
+    end
+    for gal_l98, gal_l99 in ipairs({
+        "Prop_HayBig",
+        "Prop_HaySmall",
+        "Prop_Haybale2",
+        "Prop_Hay",
+        "Prop_Haybale"
+    }) do
+        return true
+    end
+    return false
+end
+local function gal35(gal_p1_105)
+    if not gal_p1_105 then
+        return false
+    end
+    if gal33(gal_p1_105) then
+        return true
+    end
+    if gal_p1_105.Name == "Glass" then
+        return true
+    end
+    for gal_l102, gal_l103 in ipairs({
+        {
+            "MapContainer",
+            "Foliage",
+            "Leaves"
+        },
+        {
+            "MapContainer",
+            "Foliage",
+            "Foliage_Bush"
+        },
+        {
+            "MapContainer",
+            "Interactables",
+            "Glass"
+        }
+    }) do
+        if (function(gal_p1_106)
+            gal_l71 = workspace
+            for gal_l95, gal_l98 in ipairs(gal_p1_106) do
+                repeat
+                    ipairs2 = gal_l95
+                until not gal_l71:FindFirstChild(gal_l98)
+                return false
+            end
+            return gal_p1_105:IsDescendantOf(gal_l71)
+        end)(gal_l103) then
+            return true
+        end
+    end
+    return false
+end
+local function gal37(gal_p1_103)
+    if not gal_p1_103 then
+        return false
+    end
+    if gal_p1_103.Name:match("Door%d") then
+        return true
+    end
+    local function gal_l105(gal_p1_104)
+        for gal_l107, gal_l108 in ipairs(gal_p1_104) do
+            if not workspace:FindFirstChild(gal_l108) then
+                return false
+            end
+        end
+        return gal_p1_103:IsDescendantOf(workspace)
+    end
+    local tbl8 = {
+        "MapContainer",
+        "Foliage",
+        "Foliage_PonderosaPine",
+        "part"
+    }
+    for gal_l118, gal_l119 in ipairs({
+        {
+            "MapContainer",
+            "Structures"
+        },
+        {
+            "MapContainer",
+            "Miscellaneous"
+        },
+        {
+            "MapContainer",
+            "Interactables",
+            "DynamicTent1",
+            "Bulit"
+        },
+        {
+            "MapContainer",
+            "Interactables",
+            "DynamicTent2",
+            "Bulit"
+        },
+        "MapContainer",
+        tbl8,
+        {
+            "MapContainer",
+            "Foliage",
+            "Foliage_WesternWhitePine",
+            "part"
+        },
+        {
+            "BuildingsContainer"
+        }
+    }), tbl8 do
+        if gal_l105(gal_l119) then
+            return true
+        end
+    end
+    for gal_l121 = 1, 5 do
+        if gal_l105({
+            "MapContainer",
+            "Interactables",
+            "Door" .. tostring(gal_l121)
+        }) then
+            return true
+        end
+    end
+    return false
+end
+local function gal40(gal_p1_101)
+    local WorldToViewportPoint = CurrentCamera:WorldToViewportPoint(gal_p1_101)
+    return Vector2.new(WorldToViewportPoint.X, WorldToViewportPoint.Y), WorldToViewportPoint[2]
+end
+local function gal43(gal_p1_100)
+    if not gal_p1_100 or (not gal_p1_100.Player or not gal_p1_100.Part) then
+        return false
+    end
+    local Player = gal_p1_100.Player
+    local Part = gal_p1_100.Part
+    if not Player or not Player.Character then
+        return false
+    end
+    local Humanoid = Player.Character:FindFirstChildOfClass("Humanoid")
+    if not Humanoid or Humanoid.Health <= 0 then
+        return false
+    end
+    if not gal_l127:FindFirstChild(Part.Name) then
+        return false
+    end
+    local HumanoidRootPart = gal_l129 and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not HumanoidRootPart then
+        return false
+    end
+    if (HumanoidRootPart.Position - Part.Position).Magnitude > tbl5.MaxDistance then
+        return false
+    end
+    if tbl5.VisibleCheck then
+        if gal39(Part, CurrentCamera.CFrame.Position, 0) then
+            return false
+        end
+    end
+    return true
+end
+local function gal44(gal_p1_99)
+    if not gal_p1_99 then
+        return nil
+    end
+    local Position = D[gal_l79].CFrame.Position
+    local Head = gal_p1_99:FindFirstChild("Head")
+    local HumanoidRootPart2 = gal_p1_99:FindFirstChild("HumanoidRootPart") or gal_p1_99:FindFirstChild("UpperTorso")
+    local Head = Head and not gal39(Head, Position, 0)
+    if Head then
+        local notResult = not (HumanoidRootPart2 and not gal39(HumanoidRootPart2, Position, 0))
+    end
+    if Head then
+        return Head
+    end
+    local tbl9 = {
+        {
+            part = "Head",
+            weight = 10
+        },
+        {
+            part = "HumanoidRootPart",
+            weight = 45
+        },
+        {
+            part = "UpperTorso",
+            weight = 30
+        },
+        {
+            part = "LowerTorso",
+            weight = 15
+        }
+    }
+    for gal_l144, gal_l145 in ipairs(tbl9) do
+        if math.random(1, 0) <= 0 + gal_l145.weight then
+            local FindFirstChild = gal_p1_99:FindFirstChild(gal_l145.part)
+            if FindFirstChild then
+                return FindFirstChild
+            end
+            return gal_p1_99:FindFirstChild("HumanoidRootPart") or (gal_p1_99:FindFirstChild("UpperTorso") or (gal_p1_99:FindFirstChild("LowerTorso") or gal_p1_99:FindFirstChild("Head")))
+        end
+    end
+    return gal_p1_99:FindFirstChild("HumanoidRootPart") or (gal_p1_99:FindFirstChild("UpperTorso") or (gal_p1_99:FindFirstChild("LowerTorso") or gal_p1_99:FindFirstChild("Head")))
+end
+local function gal48()
+    if not LocalPlayer.Character then
+        return nil
+    end
+    if not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        return nil
+    end
+    local tickResult2 = tick()
+    if gal46 and tickResult2 - tickResult2 < .05 then
+        if gal46 then
+            gal43(gal46)
+        end
+        if gal46 then
+            return gal46
+        end
+    end
+    local tbl10 = {
+        Players:GetPlayers()
+    }
+    for gal_l160, gal_l161 in ipairs(tbl10) do
+        while not tbl5.TeamCheck do
+            local Humanoid = FindFirstChild:FindFirstChildOfClass("Humanoid")
+            local HumanoidRootPart = FindFirstChild:FindFirstChild("HumanoidRootPart")
+            while not Humanoid do
+                if (gal29:FindFirstChild("HumanoidRootPart").Position - HumanoidRootPart.Position).Magnitude <= tbl5.MaxDistance then
+                    local AimPart = tbl5.AimPart
+                    while AimPart == "Random" do
+                        if not gal44(HumanoidRootPart) then
+                            if not HumanoidRootPart:FindFirstChild(AimPart) then
+                    end
+                end
+            end
+        end
+    end
+    if gal_l201 then
+    else
+        return nil
+    end
+end
+local ScreenGui
+local function gal52()
+    if ScreenGui then
+        ScreenGui:Destroy()
+    end
+    local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+    ScreenGui.Name = "TargetIndicator"
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    local Frame3 = Instance.new("Frame", ScreenGui)
+    Frame3.Size = UDim2.new(0, 10, 0, 10)
+    Frame3.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+    Frame3.BackgroundTransparency = .3
+    Frame3.BorderSizePixel = 0
+    Frame3.Visible = false
+    Instance.new("UICorner", Frame3).CornerRadius = UDim.new(1, 0)
+    local TextLabel = Instance.new("TextLabel", ScreenGui)
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.TextColor3 = Color3.new(1, 1, 1)
+    TextLabel.TextStrokeTransparency = 0
+    TextLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    TextLabel.Font = Enum.Font.SourceSansBold
+    TextLabel.TextSize = 16
+    TextLabel.Size = UDim2.new(0, 50, 0, 20)
+    TextLabel.Visible = false
+end
+local function gal53(gal_p1_98, gal_p2_98)
+    if not Frame3 then
+        gal52()
+    end
+    if gal_l206 then
+        local ViewportSize = CurrentCamera.ViewportSize
+        local Vector2 = Vector2.new(gal_l206.X, gal_l206.Y)
+        if Vector2.X >= 0 and (Vector2.X <= ViewportSize.X and (Vector2.Y >= 0 and Vector2.Y <= ViewportSize.Y)) then
+            Frame3.Position = UDim2.new(0, Vector2.X - 5, 0, Vector2.Y - 5)
+            Frame3.Visible = true
+            if gal_p2_98 then
+                TextLabel.Text = math.floor(gal_p2_98 + .5) .. " studs"
+                TextLabel.Position = UDim2.new(0, Vector2.X - 25, 0, Vector2.Y + 10)
+                TextLabel.Visible = true
+            else
+                TextLabel.Visible = false
+            end
+        else
+            Frame3.Visible = false
+            TextLabel.Visible = false
+        end
+    else
+        Frame3.Visible = false
+        TextLabel.Visible = false
+    end
+end
+local function gal55(gal_p1_97, gal_p2_97)
+    local gal_l209, HumanoidRootPart3 = gal_p1_97, gal_p2_97
+    if not gal_l209 or not gal_l209.Parent then
+        return
+    end
+    local Position = gal_l209.Position
+    local CFrame = CurrentCamera.CFrame:Lerp(CFrame.new(CurrentCamera.CFrame.Position, CurrentCamera.CFrame.Position + (Position - CurrentCamera.CFrame.Position).Unit), tbl5.Smoothness)
+    CurrentCamera.CFrame = CFrame
+    pcall(function()
+        local HumanoidRootPart3 = gal_l209 and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if HumanoidRootPart3 then
+            HumanoidRootPart3.CFrame = CFrame.new(HumanoidRootPart3.Position, Vector3.new(Position.X, HumanoidRootPart3.Position.Y, Position.Z))
+        end
+    end)
+    local tbl12 = {
+        gal40(Position)
+    }
+    local gal40Result = gal40(Position)
+    if tbl12[2] then
+        gal53(gal40Result, (CurrentCamera.CFrame.Position - Position).Magnitude)
+    else
+        gal53(nil)
+    end
+end
+local function updateAllESPDots()
+
+end
+local function gal60()
+    if Connect then
+        Connect:Disconnect()
+    end
+    local Connect = RunService.RenderStepped:Connect(function(gal_p1_96)
+        if not tbl5.Enabled then
+            gal53(nil)
+            if gal41 then
+                if gal_l216 then
+                    gal_l217()
+                end
+            end
+            return
+        end
+        local tickResult4 = tick()
+        if tickResult4 - tickResult4 < .016 then
+            return
+        end
+        if tbl5.RequireAiming and not gal29() then
+            if gal41 then
+                gal53(nil)
+                if gal_l216 then
+                    gal_l217()
+                end
+            end
+            return
+        end
+        if gal41 and not gal43(gal41) then
+            if gal_l216 then
+                gal_l217()
+            end
+        end
+        if gal41 then
+        else
+            local gal48Result = gal48()
+            if gal48Result then
+                if gal_l216 then
+                    gal_l217()
+                end
+            end
+            if gal48Result then
+                local Part = gal48Result.Part
+                if Part then
+                    D[tbl19[12]](Part, gal48Result.Player)
+                end
+            else
+                gal53(nil)
+            end
+            flag = false
+            if gal_l216 then
+                gal_l217()
+            end
+            return
+        end
+    end)
+end
+local function gal64()
+    if hookmetamethodResult or hookmetamethodResult2 then
+        return
+    end
+    local hookmetamethodResult = hookmetamethod(game,"__namecall", newcclosure(function()
+        local tbl13 = {
+            w(1, t(s))
+        }
+        local gal_l252, gal_l253 = {
+            t(tbl13)
+        }, getnamecallmethod()
+        if tbl4.ForceHit and (tbl4.HooksEnabled and (tbl5.Enabled and (gal41 and gal41.Part))) then
+            local Part = gal41.Part
+            if Part then
+                local var = not checkcaller()
+            end
+            if Part then
+                if getnamecallmethod() == "Raycast" then
+                    if #gal_l247 >= 3 and (typeof(gal_l247[2]) == "Vector3" and typeof(gal_l247[3]) == "Vector3") then
+                        return tbl4(unpack(gal_l247))
+                    end
+                end
+            end
+        end
+        return hookmetamethodResult(t(tbl13))
+    end))
+    local hookmetamethodResult2 = hookmetamethod(game,"__index", newcclosure(function(gal_p1_95, gal_p2_95)
+        if gal_p1_95 == GetMouse and (not checkcaller() and (tbl4.ForceHit and (tbl4.HooksEnabled and (tbl5.Enabled and (gal41 and gal41.Part))))) then
+            if gal_p2_95 == "Target" or gal_p2_95 == "target" then
+                return hookmetamethodResult2.Part
+            end
+            if gal_p2_95 == "Hit" or gal_p2_95 == "hit" then
+                return hookmetamethodResult2.Part.CFrame
+            end
+        end
+        return hookmetamethodResult2(gal_p1_95, gal_p2_95)
+    end))
+end
+local function gal65()
+    if hookmetamethodResult then
+        pcall(function()
+            hookmetamethod(game,"__namecall", hookmetamethodResult)
+        end)
+    end
+    if hookmetamethodResult2 then
+        pcall(function()
+            hookmetamethod(game,"__index", D[ZR])
+        end)
+    end
+end
+local function gal66(gal_p1_94)
+    if gal_p1_94 then
+        if not hookmetamethodResult then
+            gal64()
+        end
+    else
+        gal65()
+        if tbl4.Weapons.InfiniteAmmo then
+            setInfiniteAmmo(false)
+            tbl4.Weapons.InfiniteAmmo = false
+        end
+        if tbl4.ForceHit then
+            tbl4.ForceHit = false
+        end
+        tbl4.HooksEnabled = gal_p1_94
+        return
+    end
+end
+gal69 = {}
+local function gal70(gal_p1_93)
+    if gal_p1_93 then
+        gal4("请先启用Hook开关！","错误")
+        return
+    end
+    local gal_l2582 = gal_p1_93
+    if gal_p1_93 then
+        if not hookmetamethodResult then
+            gal64()
+        end
+        table.insert(gal69, task.spawn(function()
+            while not gal_l2582 do
+                while gal_l2582 do
+                    pcall(function()
+                        for gal_l256, gal_l234 in ipairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                            if gal_l234:IsA("Tool") then
+                                if gal_l234:FindFirstChild("ReloadTime") then
+                                    gal_l234.ReloadTime.Value = 0
+                                    if gal_l234:FindFirstChild("Configuration") then
+                                    end
+                                end
+                            end
+                        end
+                        if game["Players"].LocalPlayer.Character then
+                            gal_l234 = {
+                                game.Players.LocalPlayer.Character:GetChildren()
+                            }
+                            for Backpack, gal_l234 in ipairs(gal_l234) do
+                                if gal_l234:IsA("Tool") then
+                                    if gal_l234:FindFirstChild("ReloadTime") then
+                                        gal_l234.ReloadTime.Value = 0
+                                        if gal_l234:FindFirstChild("Configuration") then
+                                            end
+                                    end
+                                end
+                            end
+                        end
+                    end)
+                end
+                return
+            end
+            gal_l259 = task.wait(.5)
+        end))
+        table.insert(gal69, task.spawn(function()
+            gal_p1_93 = D[qR]
+            while not gal_p1_93 do
+                while gal_p1_93 do
+                    pcall(function()
+                        Humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+                        if Humanoid then
+                            GetPlayingAnimationTracks = Humanoid.GetPlayingAnimationTracks
+                            gal_l254 = {
+                                GetPlayingAnimationTracks(Humanoid)
+                            }
+                            gal_l252, gal_l259 = GetPlayingAnimationTracks[3], GetPlayingAnimationTracks[1]
+                            for gal_l252, gal_l237 in gal_l254, ipairs(gal_l254) do
+                                local Animation = gal_l237.Animation
+                                GetPlayingAnimationTracks, gal_l236 = gal_l252, Animation
+                                while not Animation do
+                                    gal_l237:Stop()
+                                end
+                                Animation = gal_l237.Animation.Name
+                                local lower = Animation:lower()
+                                gal_l236 = lower:find("reload")
+                            end
+                        end
+                    end)
+                end
+                return
+            end
+            gal_l259 = task.wait()
+        end))
+        table.insert(gal69, task.spawn(function()
+            gal_p1_93 = D[qR]
+            while not gal_p1_93 do
+                while gal_p1_93 do
+                    pcall(function()
+                        Character = game.Players.LocalPlayer.Character
+                        if Character then
+                            Character = ipairs
+                            gal_l254 = {
+                                Character:GetChildren()
+                            }
+                            for gal_l252, gal_l237 in Character(t("ipairs")) do
+                                if gal_l237:IsA("Tool") then
+                                    if gal_l237:FindFirstChild("Ammo") then
+                                        MaxAmmo = gal_l237:FindFirstChild("MaxAmmo")
+                                        while MaxAmmo do
+                                            gal_l237.Ammo.Value = MaxAmmo.Value
+                                        end
+                                        local ClipSize = gal_l237:FindFirstChild("ClipSize")
+                                        MaxAmmo = ClipSize
+                                        while ClipSize do
+                                            MaxAmmo, Character = ClipSize, Env[gal_l259]
+                                        end
+                                        MaxAmmo = {
+                                            Value = 30
+                                        }
+                                    end
+                                end
+                            end
+                        end
+                    end)
+                end
+                return
+            end
+            gal_l259 = task.wait(.1)
+        end))
+        gal4("秒子弹已开启","武器")
+    else
+        for gal_l261, gal_l262 in ipairs(gal_l262) do
+            while not gal_l262 do
+                pcall(function()
+                    task.cancel(gal_l262)
+                end)
+            end
+        end
+        gal_l2582 = false
+        gal4("秒子弹已关闭","武器")
+        return
+    end
+end
+local function gal76()
+    if Connect2 then
+        Connect2:Disconnect()
+    end
+    local Connect2 = RunService.Heartbeat:Connect(function()
+        if not flag then
+            return
+        end
+        local Character = LocalPlayer.Character
+        if not Character then
+            return
+        end
+        local Tool = Character:FindFirstChildOfClass("Tool")
+        if not Tool then
+            return
+        end
+        local tbl14 = {
+            Tool = Tool,
+            isBlocking = true
+        }
+        ReplicatedStorage.ReplicatSwordBlock.send(tbl14)
+        if flag then
+            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+            if Humanoid then
+                if Humanoid:FindFirstChildOfClass("Animator") then
+                    if Tool:FindFirstChild("Animations") then
+                        for gal_l278, gal_l279 in ipairs(("ipairs"):GetChildren()) do
+                            local Animation = gal_l279:IsA("Animation")
+                            while not Animation do
+                                if gal_l279 then
+                                    if not LoadAnimation or LoadAnimation.Animation ~= gal_l279 then
+                                        if LoadAnimation then
+                                            D[tbl19[7]]:Stop()
+                                        end
+                                        local LoadAnimation = gal_l279:LoadAnimation(gal_l279)
+                                        LoadAnimation.Priority = Enum.AnimationPriority.Action
+                                        LoadAnimation:Play()
+                                    else
+                                        if LoadAnimation and not LoadAnimation.IsPlaying then
+                                            D[tbl19[7]]:Play()
+                                        end
+                                    end
+                                end
+                                break
+                            end
+                            local find = string.find(gal_l279.Name,"Block")
+                            while find do
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end
+local function gal80()
+    local Character = LocalPlayer.Character
+    if not Character then
+        return nil
+    end
+    if not Character:FindFirstChild("HumanoidRootPart") then
+        return nil
+    end
+    for gal_l303, gal_l304 in ipairs(("ipairs"):GetPlayers()) do
+        local gal_l304 = gal_l304 ~= LocalPlayer
+        while not gal_l304 do
+            local HumanoidRootPart = gal_l304:FindFirstChild("HumanoidRootPart")
+            while not HumanoidRootPart do
+                if (Character:FindFirstChild("HumanoidRootPart").Position - HumanoidRootPart.Position).Magnitude < math.huge then
+                end
+            end
+        end
+    end
+    if math.huge <= tbl4.KillAuraRange then
+        return nil
+    end
+    return nil
+end
+local function gal81()
+    if Connect3 then
+        Connect3:Disconnect()
+    end
+    local Connect3 = RunService.Heartbeat:Connect(function()
+        if not flag then
+            return
+        end
+        local Character = LocalPlayer.Character
+        if not Character then
+            return
+        end
+        local Tool = Character:FindFirstChildOfClass("Tool")
+        if not Tool then
+            return
+        end
+        local gal80Result = gal80()
+        if not gal80Result or not gal80Result.Character then
+            return
+        end
+        local Humanoid = gal80Result.Character:FindFirstChildOfClass("Humanoid")
+        local Head = gal80Result.Character:FindFirstChild("Head")
+        if not Head or (not Humanoid or Humanoid.Health <= 0) then
+            return
+        end
+        local clock = os.clock()
+        if clock - 0 >= tbl4.KillAuraCooldown then
+            gal18({
+                Type = "Humanoid",
+                Tool = Tool,
+                hitInstance = Head,
+                knockbackOrigin = Vector3.new(0, 0, 0),
+                knockbackDirection = Vector3.new(0, 0, 0)
+            })
+        end
+    end)
+end
+local function gal88(gal_p1_92, gal_p2_92, gal_p3_92)
+    local OwnerName = gal_l331:GetAttribute("OwnerName")
+    if not OwnerName then
+        return false
+    end
+    if gal_p3_92 then
+        for gal_l335, gal_l336 in ipairs(("ipairs"):GetPlayers()) do
+            local gal_l336 = gal_l336 ~= LocalPlayer
+            while not gal_l336 do
+                if string.find(gal_l331:GetAttribute(gal_l259), gal_l336.Name, 1, true) then
+                    return true
+                end
+            end
+        end
+        return false
+    end
+    return string.find(OwnerName, LocalPlayer.Name, 1, true) ~= nil
+end
+local function gal89()
+    local Character = LocalPlayer.Character
+    if not Character then
+        return nil
+    end
+    if not Character:FindFirstChild("HumanoidRootPart") then
+        return nil
+    end
+    local BuildingsContainer = workspace:FindFirstChild("BuildingsContainer")
+    if not BuildingsContainer then
+        return nil
+    end
+    local tbl15 = {
+        BuildingsContainer:GetChildren()
+    }
+    for gal_l345, gal_l346 in ipairs(gal_l259) do
+        if gal_l346:IsA("Model") then
+            while flag and (flag and flag) do
+                local Invis = gal_l346:FindFirstChild("Invis")
+                while Invis do
+                    local gal_l352, gal_l353 = true, Invis
+                    while not gal_l352 do
+                        if (Character:FindFirstChild("HumanoidRootPart").Position - gal_l352.Position).Magnitude < tbl4.BreakRange + 1 then
+                        end
+                    end
+                end
+            end
+            while not flag do
+                while not flag do
+                    local OwnerName2 = gal_l346:GetAttribute("OwnerName")
+                    while OwnerName2 do
+                        local find2 = string.find(OwnerName2, LocalPlayer.Name, 1, true) ~= nil
+                        for gal_l380, gal_l381 in ipairs(Players.GetPlayers(gal_l381)) do
+                            while not (gal_l381 ~= LocalPlayer) do
+                                while gal_l385 do
+                                    while string.find(gal_l346:GetAttribute(find2), gal_l381.Name, 1, true) do
+                                        local find3 = not (string.find(OwnerName2, LocalPlayer.Name, gal_l189, true) ~= nil)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                gal88(gal_l346, nil, true)
+            end
+        end
+    end
+    if tbl4.BreakRange + 1 <= tbl4.BreakRange then
+        return nil
+    end
+    return nil
+end
+local function gal90()
+    if Connect4 then
+        Connect4:Disconnect()
+    end
+    local Connect4 = RunService.Heartbeat:Connect(function()
+        if not flag then
+            return
+        end
+        if not flag and (not flag and not flag) then
+            return
+        end
+        local Character = LocalPlayer.Character
+        if not Character then
+            return
+        end
+        local Tool = Character:FindFirstChildOfClass("Tool")
+        if not Tool then
+            return
+        end
+        local gal89Result = gal89()
+        if not gal89Result then
+            return
+        end
+        local clock2 = os.clock()
+        if clock2 - 0 >= tbl4.BreakCooldown then
+            gal18({
+                Type = "Construct",
+                Tool = Tool,
+                hitInstance = gal89Result,
+                knockbackOrigin = Vector3.zero,
+                knockbackDirection = Vector3.zero
+            })
+        end
+    end)
+end
+local function gal97()
+    local Character = LocalPlayer.Character
+    if not Character then
+        return nil
+    end
+    if not Character:FindFirstChild("HumanoidRootPart") then
+        return nil
+    end
+    local BuildingsContainer = workspace:FindFirstChild("BuildingsContainer")
+    if not BuildingsContainer then
+        return nil
+    end
+    local GetChildren = BuildingsContainer.GetChildren
+    for gal_l451, gal_l452 in ipairs(GetChildren(BuildingsContainer)) do
+        if gal_l452:IsA("Model") then
+            while flag and (flag and flag) do
+                while PrimaryPart do
+                    if (Character:FindFirstChild("HumanoidRootPart").Position - gal_l452.PrimaryPart.Position).Magnitude < tbl4.IgniteRange + 1 then
+                    end
+                end
+            end
+            while not flag do
+                while not flag do
+                    local OwnerName3 = gal_l452:GetAttribute("OwnerName")
+                    while OwnerName3 do
+                        local find4 = string.find(OwnerName3, LocalPlayer.Name, 1, true) ~= nil
+                        for gal_l477, gal_l478 in ipairs(Players.GetPlayers(gal_l478)) do
+                            while not (gal_l478 ~= LocalPlayer) do
+                                while gal_l482 do
+                                    while string.find(gal_l452:GetAttribute(find4), gal_l478.Name, 1, true) do
+                                        local find5 = not (string.find(OwnerName3, LocalPlayer.Name, find3, true) ~= nil)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+                gal88(gal_l452, nil, true)
+            end
+        end
+    end
+    if tbl4.IgniteRange + 1 <= tbl4.IgniteRange then
+        return nil
+    end
+    return nil
+end
+local function gal98()
+    if Connect5 then
+        Connect5:Disconnect()
+    end
+    local Connect5 = RunService.Stepped:Connect(function()
+        if not flag then
+            return
+        end
+        if not flag and (not flag and not flag) then
+            return
+        end
+        local gal97Result = gal97()
+        if not gal97Result then
+            return
+        end
+        if not (LocalPlayer.Character and nil) then
+            local Tool = gal_l495 and LocalPlayer.Character:FindFirstChildOfClass("Tool")
+        end
+        if not Tool then
+            return
+        end
+        local clock3 = os.clock()
+        if clock3 - 0 >= tbl4.IgniteCooldown then
+            ReplicatedStorage.IgniteConstructs.send({
+                tool = Tool,
+                construct = gal97Result
+            })
+        end
+    end)
+end
+Env[gal_v125] = false
+D[154] = false
+local functionResult = function(gal_p1_82)
+    if gal_p1_82 == LocalPlayer then
+        return false
+    end
+    if not gal_l216 then
+        return false
+    end
+    if not D[154] then
+        return true
+    end
+    return not D[gal_v209](gal_p1_82, LocalPlayer)
+end
+local functionResult2 = function()
+    local var2 = D[gal_v130]
+    local gal_l738, gal_l739 = gal_l726[1], gal_l726[3]
+    for gal_l740, gal_l741 in var2, pairs(var2) do
+        gal_l741.mainBill:Destroy()
+        local boxMap = gal_l741.boxMap
+        local gal_l745, gal_l746 = boxMap, pairs
+        while boxMap do
+            for gal_l747, gal_l748 in gal_l748(gal_l745) do
+                pcall(function()
+                    gal_l748:Destroy()
+                end)
+            end
+            local tbl16 = {}
+            while gal_l741.connections do
+                for gal_l752, gal_l753 in gal_l753(tbl16) do
+                    gal_l753:Disconnect()
+                end
+            end
+        end
+    end
+    D[gal_v130] = {}
+    if not gal_l216 then
+        return
+    end
+    for gal_l755, gal_l756 in ipairs(gal_l756:GetPlayers()) do
+        D[gal_v217](gal_l756)
+    end
+    return
+end
+D[183] = functionResult2
+local functionResult3 = function(gal_p1_76)
+    D[183]()
+    return
+end
+local PlayerAdded = Players["PlayerAdded"]
+local functionResult4 = function(gal_p1_73)
+    local gal_l772 = gal_p1_76
+    if gal_l772 then
+        D[gal_v211](gal_p1_73)
+    end
+    if gal_l772 then
+        D[gal_v217](gal_p1_73)
+    end
+    return
+end
+local PlayerAdded = PlayerAdded["Connect"](PlayerAdded, functionResult4)
+local PlayerRemoving = Players["PlayerRemoving"]
+local functionResult5 = function(gal_p1_72)
+    if D[gal_v130][gal_p1_72] then
+        local var3 = D[gal_v130][gal_p1_72]
+        if var3.mainBill then
+            var3.mainBill:Destroy()
+        end
+        local boxMap2 = var3.boxMap
+        for gal_l784, gal_l785 in pairs(gal_l738) do
+            pcall(function()
+                local var4 = D[var4]
+                var4:Destroy()
+            end)
+        end
+        local connections = var3.connections
+        if connections then
+            for gal_l789, gal_l790 in gal_l790(connections) do
+                gal_l790:Disconnect()
+            end
+            D[gal_v130][gal_p1_72] = nil
+            return
+        else
+        end
+    end
+end
+local PlayerRemoving = PlayerRemoving["Connect"](PlayerRemoving, functionResult5)
+local Players2 = Players[gal_v126]
+local tbl17 = {
+    Players2(Players)
+}
+local tbl18 = {
+    ipairs(tbl17)
+}
+local gal_v247, gal_v248, gal_v249 = ipairs(tbl17), tbl18[2], tbl18[3]
+local gal_v250, gal_v251 = gal_v247(gal_v248, gal_v249), nil
+while gal_v250 do
+    repeat
+        D[13] = gal_v251
+    until Players2 ~= QE[61]
+    local gal_v257, gal_v258 = "GetPropertyChangedSignal","Team"
+    local var5 = D[gal_v254]
+    local gal_v259 = var5[gal_v257](var5, gal_v258)
+    local functionResult6 = function()
+        D[gal_v240](D[gal_v254])
+        return
+    end
+    local gal_v261 = gal_v259["Connect"](gal_v259, functionResult6)
+end
+local Players3 = Players[gal_v271]
+local functionResult7 = function(gal_p1_70)
+    if gal_p1_70 ~= LocalPlayer then
+        local Team = gal_p1_70:GetPropertyChangedSignal("Team")
+        Team:Connect(function()
+            local tbl19 = {
+                tbl19[2],
+                12
+            }
+            D[tbl19[1]](D[tbl19[2]])
+        end)
+    end
+    return
+end
+local gal_v273 = Players3["Connect"](Players3, functionResult7)
+D[154] = false
+local var6 = D[183]()
+local functionResult8 = function()
+    local tbl20 = {}
+    gal119 = true
+    gal120 = false
+    local Players4 = game:GetService("Players").LocalPlayer:GetMouse()
+    local RunService = game:GetService("RunService")
+    local UserInputService = game:GetService("UserInputService")
+    local ScreenGui2 = Instance.new("ScreenGui")
+    ScreenGui2.Name = "DoorsEnhancedUI"
+    ScreenGui2.Parent = game:GetService("CoreGui")
+    ScreenGui2.ResetOnSpawn = false
+    ScreenGui2.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    gal125 = 0
+    local num = 24
+    local Font = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+    local Font2 = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+    local Font3 = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
+    UserInputService.InputBegan:Connect(function(gal_p1_50, gal_p2_50)
+
+    end)
+    UserInputService.InputEnded:Connect(function(gal_p1_51, gal_p2_51)
+
+    end)
+    local function draggable(gal_p1_52)
+        if gal_p1_52:IsA("TextButton") and (gal_p1_52.Parent and nil) then
+            Parent = gal_p1_52.Parent.Parent
+        end
+        local function gal135(gal_p1_53)
+            local gal_p1_53 = gal_p1_53.Position - gal133
+            gal_p1_52.Position = UDim2.new(gal134.X.Scale, gal134.X.Offset + gal_p1_53.X, gal134.Y.Scale, gal134.Y.Offset + gal_p1_53.Y)
+        end
+        gal_p1_52.InputBegan:Connect(function(gal_p1_54)
+            if gal_p1_54.UserInputType == Enum.UserInputType.MouseButton1 or gal_p1_54.UserInputType == Enum.UserInputType.Touch then
+                gal_p1_54.Changed:Connect(function()
+
+                end)
+            end
+        end)
+        gal_p1_52.InputChanged:Connect(function(gal_p1_55)
+
+        end)
+        UserInputService.InputChanged:Connect(function(gal_p1_56)
+            if gal_p1_56 == gal132 and gal131 then
+                gal135(gal_p1_56)
+            end
+        end)
+    end
+    local function hovercolor(gal_p1_57, gal_p2_57, gal_p3_57, gal_p4_57, gal_p5_57)
+        gal_p1_57.MouseEnter:Connect(function()
+
+        end)
+        gal_p1_57.MouseLeave:Connect(function()
+
+        end)
+        gal_p1_57.MouseButton1Down:Connect(function()
+
+        end)
+        gal_p1_57.MouseButton1Up:Connect(function()
+
+        end)
+        if gal_p5_57 then
+        end
+        if gal_p5_57 then
+            for gal_l860, gal_l861 in pairs(gal_p5_57) do
+                gal_p1_57.Changed:Connect(function()
+                    gal_l861.BackgroundColor3 = gal_p1_57.BackgroundColor3
+                end)
+            end
+        end
+        RunService.RenderStepped:Connect(function()
+            if false then
+                if false then
+                    gal_p1_57.BackgroundColor3 = gal_p4_57
+                else
+                    gal_p1_57.BackgroundColor3 = gal_p3_57
+                end
+            else
+                gal_p1_57.BackgroundColor3 = gal_p2_57
+            end
+        end)
+    end
+    d.window = function(gal_p1_58, gal_p2_58)
+        local Frame4 = Instance.new("Frame", ScreenGui2)
+        if gal_p2_58 then
+            local UDim2 = UDim2.new(.5, -120, .02, 0)
+        else
+            local UDim22 = UDim2.new(.016 + gal125 * .087, 0, .009, 0)
+            local gal125 = gal125 + 1
+        end
+        Frame4.Position = gal_l866
+        Frame4.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+        Frame4.BorderSizePixel = 0
+        if gal_p2_58 then
+            Frame4.Size = UDim2.new(.08, 0, 0, 32)
+        else
+            Frame4.Size = UDim2.new(.08, 0, .0335, 0)
+        end
+        Frame4.Visible = true
+        Frame4.Active = true
+        Frame4.Selectable = true
+        local Frame5 = Instance.new("Frame", Frame4)
+        Frame5.BackgroundColor3 = Color3.fromRGB(55, 55, 60)
+        Frame5.Size = UDim2.new(1, 0, 0, 32)
+        Frame5.BorderSizePixel = 0
+        local TextButton2 = Instance.new("TextButton", Frame5)
+        TextButton2.TextScaled = true
+        TextButton2.Text = tostring(gal_p1_58)
+        TextButton2.TextColor3 = Color3.fromRGB(255, 255, 255)
+        TextButton2.Size = UDim2.new(1, 0, 1, 0)
+        TextButton2.FontFace = Font2
+        TextButton2.BorderSizePixel = 0
+        TextButton2.BackgroundTransparency = 1
+        TextButton2.AutoButtonColor = true
+        local Frame6 = Instance.new("Frame", Frame4)
+        Frame6.Name = "ContentFrame"
+        Frame6.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+        Frame6.Size = UDim2.new(1, 0, 0, 0)
+        Frame6.Position = UDim2.new(0, 0, 0, 32)
+        Frame6.BorderSizePixel = 0
+        Frame6.ClipsDescendants = true
+        local UIListLayout = Instance.new("UIListLayout", Frame6)
+        UIListLayout.HorizontalAlignment = "Center"
+        UIListLayout.Padding = UDim.new(0, 3)
+        UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+        Instance.new("UICorner", Frame4)
+        Instance.new("UICorner", Frame5)
+        Instance.new("UICorner", Frame6)
+        gal147 = 0
+        Frame6.Size = UDim2.new(1, 0, 0, gal147)
+        Frame4.Size = UDim2.new(.08, 0, 0, 32 + gal147)
+        gal_l844(Frame4)
+        gal_l844(TextButton2)
+        local tbl21 = {}
+        Z.toggle = function(gal_p1_59, gal_p2_59, gal_p3_59)
+            local Frame7 = Instance.new("Frame", Frame6)
+            Frame7.LayoutOrder = gal147 + 1
+            Frame7.Size = UDim2.new(.96, 0, 0, num)
+            Frame7.BorderSizePixel = 0
+            Frame7.BackgroundTransparency = 1
+            local TextButton3 = Instance.new("TextButton", Frame7)
+            TextButton3.LayoutOrder = 0
+            TextButton3.TextScaled = true
+            TextButton3.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+            TextButton3.Text = tostring(gal_p1_59)
+            local gal_p2_59 = gal_p2_59 or false
+            if gal_p2_59 then
+                D[gal_l874].TextColor3 = gal_p2_59 and Color3.new(0, 1, 0)
+                TextButton3.Size = UDim2.new(1, 0, 1, 0)
+                TextButton3.FontFace = Font
+                TextButton3.BorderSizePixel = 0
+                TextButton3.AutoButtonColor = false
+                gal_l850(TextButton3, Color3.fromRGB(35, 35, 40), Color3.fromRGB(45, 45, 50), Color3.fromRGB(25, 25, 30))
+                local gal147 = gal147 + num + 3
+                Frame6.Size = UDim2.new(1, 0, 0, gal147)
+                Frame4.Size = UDim2.new(.08, 0, 0, 32 + gal147)
+                Instance.new("UICorner", TextButton3).CornerRadius = UDim.new(0, 5)
+                TextButton3.MouseButton1Down:Connect(function()
+                    gal150 = not gal150
+                    if gal150 then
+                        TextButton3.TextColor3 = gal_l794
+                        gal_p3_59(gal150)
+                        return
+                    else
+                        gal150 = Color3.new(1, 0, 0)
+                    end
+                end)
+                local tbl22 = {}
+                z.set = function(gal_p1_60)
+                    if gal_p1_60 then
+                        TextButton3.TextColor3 = gal_l875
+                        gal_p3_59(gal_p1_60)
+                        return
+                    else
+                    end
+                end
+                z.setColor = function(gal_p1_61)
+                    TextButton3.TextColor3 = gal_p1_61
+                end
+                return tbl22
+            else
+                Color3.new(1, 0, 0)
+            end
+        end
+        Z.slider = function(gal_p1_62, gal_p2_62, gal_p3_62, gal_p4_62, gal_p5_62, gal_p6_62)
+            local Frame8 = Instance.new("Frame", Frame6)
+            Frame8.LayoutOrder = gal147 + 1
+            Frame8.Size = UDim2.new(.96, 0, 0, num + 5)
+            Frame8.BorderSizePixel = 0
+            Frame8.BackgroundTransparency = 1
+            local Frame9 = Instance.new("Frame", Frame8)
+            Frame9.LayoutOrder = 0
+            Frame9.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+            Frame9.Size = UDim2.new(1, 0, 1, 0)
+            Frame9.BorderSizePixel = 0
+            local TextLabel2 = Instance.new("TextLabel", Frame9)
+            TextLabel2.TextScaled = true
+            TextLabel2.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+            TextLabel2.Text = tostring(gal_p1_62) .. " [" .. tostring(gal_p5_62) .. "]"
+            TextLabel2.TextColor3 = Color3.fromRGB(255, 255, 255)
+            TextLabel2.Size = UDim2.new(1, 0, .7, 0)
+            TextLabel2.FontFace = Font3
+            TextLabel2.BorderSizePixel = 0
+            local Frame10 = Instance.new("Frame", Frame9)
+            Frame10.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            Frame10.Size = UDim2.new(.9, 0, .05, 0)
+            Frame10.Position = UDim2.new(.05, 0, .8, 0)
+            Frame10.BorderSizePixel = 0
+            local ImageLabel = Instance.new("ImageLabel", Frame10)
+            ImageLabel.AnchorPoint = Vector2.new(.5, .5)
+            ImageLabel.BackgroundTransparency = 1
+            ImageLabel.Size = UDim2.new(.055, 0, 5, 0)
+            ImageLabel.Position = UDim2.new(0, 0, .5, 0)
+            ImageLabel.Image = "rbxassetid://6755657357"
+            ImageLabel.BorderSizePixel = 0
+            local TextButton4 = Instance.new("TextButton", Frame9)
+            TextButton4.BackgroundTransparency = 1
+            TextButton4.Text = ""
+            TextButton4.Size = UDim2.new(1, 0, 1, 0)
+            gal147 = gal147 + 1
+            gal147 = gal147 + num + 3 + 5
+            Frame6.Size = UDim2.new(1, 0, 0, gal147)
+            Frame4.Size = UDim2.new(.08, 0, 0, 32 + gal147)
+            Instance.new("UICorner", Frame9).CornerRadius = UDim.new(0, 5)
+            local function gal161(gal_p1_63)
+                local floor = math.floor(gal_p1_63 / gal_p4_62) * gal_p4_62
+                ImageLabel.Position = UDim2.new((floor - gal_p2_62) / (gal_p3_62 - gal_p2_62), 0, .5, 0)
+                TextLabel2.Text = tostring(gal152) .. " [" .. tostring(math.floor(floor * 100) / 100) .. "]"
+                gal_p6_62(floor)
+            end
+            TextButton4.MouseButton1Down:Connect(function()
+                task.spawn(function()
+                    local gal146 = Frame6
+                    while not gal146 do
+                        while gal146 do
+                            gal_l794 = math.clamp((gal147.X - Font3.AbsolutePosition.X) / Font3.AbsoluteSize.X, 0, 1)(true)(gal_l794 * Frame4 + (1 - gal_l794) * true)
+                            task.wait()
+                        end
+                        return
+                    end
+                    floor, gal146 = true, num
+                    while not gal147 do
+                        gal_l873, gal_l879 = gal147, floor
+                    end
+                end)
+            end)
+            TextButton4.MouseButton1Up:Connect(function()
+
+            end)
+            UserInputService.TouchEnded:Connect(function()
+
+            end)
+            gal161(gal_p5_62)
+            local tbl23 = {}
+            S.get = function(gal_p1_64)
+                return gal160
+            end
+            S.setvalue = function(gal_p1_65)
+                gal161(gal_p1_65)
+            end
+            S.setmin = function(gal_p1_66)
+                gal161(gal160)
+            end
+            S.setmax = function(gal_p1_67)
+                gal161(gal160)
+            end
+            return tbl23
+        end
+        Z.button = function(gal_p1_68, gal_p2_68)
+            local Frame11 = Instance.new("Frame", Frame6)
+            Frame11.LayoutOrder = gal147 + 1
+            Frame11.Size = UDim2.new(.96, 0, 0, num)
+            Frame11.BorderSizePixel = 0
+            Frame11.BackgroundTransparency = 1
+            local TextButton5 = Instance.new("TextButton", Frame11)
+            TextButton5.LayoutOrder = 0
+            TextButton5.TextScaled = true
+            TextButton5.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+            TextButton5.Text = tostring(gal_p1_68)
+            TextButton5.TextColor3 = Color3.fromRGB(255, 255, 255)
+            TextButton5.Size = UDim2.new(1, 0, 1, 0)
+            TextButton5.FontFace = Font
+            TextButton5.BorderSizePixel = 0
+            TextButton5.AutoButtonColor = false
+            gal_l850(TextButton5, Color3.fromRGB(35, 35, 40), Color3.fromRGB(45, 45, 50), Color3.fromRGB(25, 25, 30))
+            gal147 = gal147 + 1
+            gal147 = gal147 + num + 3
+            Frame6.Size = UDim2.new(1, 0, 0, gal147)
+            Frame4.Size = UDim2.new(.08, 0, 0, 32 + gal147)
+            Instance.new("UICorner", TextButton5).CornerRadius = UDim.new(0, 5)
+            TextButton5.MouseButton1Down:Connect(function()
+                gal_p2_68()
+            end)
+            return TextButton5
+        end
+        Z.hide = function()
+            Frame4.Visible = false
+        end
+        Z.show = function()
+            Frame4.Visible = true
+        end
+        Z.delete = function()
+            Frame4:Destroy()
+        end
+        return tbl21
+    end
+    d.delete = function()
+        ScreenGui2:Destroy()
+    end
+    return tbl20
+end
+local gal_v311Result = functionResult8()
+D[32] = gal_v311Result
+local tbl24 = {}
+D[36] = tbl24
+local tbl25 = {}
+D[31] = tbl25
+local gal_v319, gal_v320 = {},"NoFallDamage"
+local var7 = D[32]["window"](Chinese["MainMenu"])
+D[45] = var7
+local insert = table.insert(D[36], D[45])
+local insert2 = table.insert(D[31], D[45])
+local functionResult9 = function()
+    local Lighting = game:GetService("Lighting")
+    Lighting.FogEnd = 100000
+    Lighting.FogStart = 100000
+    local tbl26 = {
+        Lighting:GetDescendants()
+    }
+    for gal_l951, gal_l952 in pairs(gal_l941) do
+        gal_l952:Destroy()
+    end
+    gal4("除雾已启用","优化")
+    return
+end
+local var8 = D[45][gal_v362](Chinese[gal_v327], functionResult9)
+local functionResult10 = function()
+    D[gal_v334]()
+    gal4("UI已缩小")
+    return
+end
+local var9 = D[45]["button"](Chinese["ShrinkToGUI"], functionResult10)
+local functionResult11 = function()
+    local var10 = D[36]
+    for gal_l955, gal_l956 in ipairs(gal_l941) do
+        local frame = gal_l956.frame
+        local gal_l958 = frame
+        while not frame do
+            gal_l956.frame.Position = gal_l956.initPos
+        end
+        local initPos = gal_l956.initPos
+    end
+    gal4("UI位置已重置", D[gal_l956].Notification)
+    return
+end
+local var11 = D[45]["button"](Chinese["ResetUIPosition"], functionResult11)
+local gal_v386, gal_v387, gal_v388 = "button", false,"AutoRepair"
+local functionResult12 = function()
+    D[gal_v385] = not D[gal_v385]
+    if D[gal_v385] then
+        for gal_l961, gal_l962 in ipairs(D[31]) do
+            gal_l962.hide()
+        end
+        for gal_l964, gal_l965 in pairs(D[gal_v287]) do
+            gal_l965.hide()
+        end
+        gal4("UI已隐藏", Chinese.Notification)
+    else
+        for gal_l967, gal_l968 in ipairs(D[31]) do
+            gal_l968.show()
+        end
+        gal4("UI已显示", Chinese.Notification)
+        return
+    end
+end
+local var12 = D[45][gal_v386](Chinese["HideUI"], functionResult12)
+local functionResult13 = function()
+    D[gal_v291]()
+    gal65()
+    if ScreenGui then
+        ScreenGui:Destroy()
+    end
+    local var13 = D[36]
+    for gal_l973, gal_l974 in ipairs(gal_l941) do
+        pcall(function()
+            gal_l974.delete()
+        end)
+    end
+    D[32].delete()
+    if D[gal_v316] then
+        D[gal_v316].Parent = nil
+    end
+    gal4("UI已关闭，所有功能已清理", D[gal_l974].Notification)
+    return
+end
+local var14 = D[45]["button"](Chinese["CloseUI"], functionResult13)
+local var15 = D[32]["window"](Chinese["Combat"])
+local insert3 = table.insert(D[36], var15)
+local insert4 = table.insert(D[31], var15)
+local functionResult14 = function(gal_p1_42)
+    tbl5.Enabled = gal_p1_42
+    tbl4.Aimbot.Enabled = gal_p1_42
+    if gal_p1_42 then
+        gal60()
+        gal4(Chinese.AimBot .. " " .. Chinese.Enabled, Chinese.AimBot)
+
+            table.insert(D[36], nil)
+            D[gal_v287].aimbot_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if Connect then
+            Connect:Disconnect()
+        end
+        gal4(Chinese.AimBot .. " " .. Chinese.Disabled, Chinese.AimBot)
+            return
+    end
+end
+local gal_v413 = var15["toggle"](Chinese["AimBot"], false, functionResult14)
+local functionResult15 = function(gal_p1_41)
+    gal70(gal_p1_41)
+    tbl4.Weapons.InfiniteAmmo = gal_p1_41
+    return
+end
+local gal_v4132 = var15["toggle"](Chinese["InfiniteAmmo"], false, functionResult15)
+local gal_v443, gal_v444 = "toggle","HooksEnable"
+local functionResult16 = function(gal_p1_40)
+    gal66(gal_p1_40)
+    if gal_p1_40 then
+        gal4("Hook已启用","系统")
+    else
+        gal4("Hook已禁用","系统")
+    end
+    return
+end
+local gal_v4133 = var15[gal_v443](Chinese[gal_v444], false, functionResult16)
+local gal_v451, gal_v452 = "AutoBlock","toggle"
+local functionResult17 = function(gal_p1_38)
+    if gal_p1_38 then
+        gal76()
+
+            table.insert(D[36], nil)
+            D[gal_v287].block_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if Connect2 then
+            D[BR]:Disconnect()
+        end
+        if LoadAnimation then
+            D[kR]:Stop()
+        end
+            return
+    end
+end
+local gal_v4134 = var15[gal_v452](Chinese[gal_v451], false, functionResult17)
+local gal_v463, gal_v464 = "Success","KillAura"
+local functionResult18 = function(gal_p1_35)
+    tbl4.KillAura = gal_p1_35
+    if gal_p1_35 then
+        gal81()
+        gal4("杀戮光环已开启", Chinese.KillAura)
+
+            table.insert(D[36], nil)
+            D[gal_v287].killaura_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if Connect3 then
+            D[PR]:Disconnect()
+        end
+        gal4("杀戮光环已关闭", Chinese.KillAura)
+            return
+    end
+end
+local gal_v4135 = var15[gal_v461](Chinese[gal_v464], false, functionResult18)
+local gal_v471, gal_v472 = "RageBot","toggle"
+local functionResult19 = function(gal_p1_33)
+    tbl4.RageBot = gal_p1_33
+    if gal_p1_33 then
+        D[gal_v161]()
+        gal4("ragebot已开启", Chinese.RageBot)
+
+            table.insert(D[36], nil)
+            D[gal_v287].rage_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if D[gal_v117] then
+            D[gal_v117]:Disconnect()
+        end
+        gal4("ragebot已关闭", Chinese.RageBot)
+            return
+    end
+end
+local gal_v4136 = var15[gal_v472](Chinese[gal_v471], false, functionResult19)
+local gal_v480, gal_v481 = "window","Auto"
+local var16 = D[32][gal_v480](Chinese[gal_v481])
+local table = table[gal_v492](D[36], var16)
+local insert5 = table.insert(D[31], var16)
+local functionResult20 = function(gal_p1_29)
+    D[gal_v129] = gal_p1_29
+    tbl4.Auto.Repair = gal_p1_29
+    if gal_p1_29 then
+        D[gal_v175]()
+        gal4("自动修建筑已开启")
+
+            table.insert(D[36], nil)
+            D[gal_v287].repair_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if D[gal_v128] then
+            D[gal_v128]:Disconnect()
+            D[gal_v128] = nil
+        end
+        gal4("自动修建筑已关闭")
+            return
+    end
+end
+local gal_v487 = var16["toggle"](Chinese[gal_v388], false, functionResult20)
+local functionResult21 = function(gal_p1_28)
+    tbl4.AutoMark = gal_p1_28
+    if gal_p1_28 then
+        D[gal_v153]()
+        gal4("自动标记已开启","自动功能")
+    else
+        if gal100 then
+            gal100:Disconnect()
+        end
+        gal4("自动标记已关闭","自动功能")
+        return
+    end
+end
+local gal_v4872 = var16["toggle"](Chinese["AutoMark"], false, functionResult21)
+local functionResult22 = function(gal_p1_22)
+    tbl4.AutoBreakBuildings = gal_p1_22
+    if gal_p1_22 then
+        gal90()
+        gal4("自动破坏建筑已开启","自动功能")
+
+            table.insert(D[36], nil)
+            D[gal_v287].break_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if Connect4 then
+            Connect4:Disconnect()
+        end
+        gal4("自动破坏建筑已关闭","自动功能")
+            return
+    end
+end
+local gal_v4873 = var16["toggle"](Chinese["AutoBreakBuildings"], false, functionResult22)
+local functionResult23 = function(gal_p1_16)
+    tbl4.AutoIgnite = gal_p1_16
+    if gal_p1_16 then
+        gal98()
+        gal4("自动点火已开启","自动功能")
+
+            table.insert(D[36], nil)
+            D[gal_v287].ignite_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if Connect5 then
+            Connect5:Disconnect()
+        end
+        gal4("自动点火已关闭","自动功能")
+            return
+    end
+end
+local gal_v4874 = var16[gal_v443](Chinese[gal_v529], false, functionResult23)
+local var17 = D[32]["window"](Chinese["Other"])
+local insert6 = table.insert(D[36], var17)
+local insert7 = table.insert(D[31], var17)
+local functionResult24 = function(gal_p1_12)
+    if gal_p1_12 then
+        D[gal_v178].SelfRevive = true
+        tbl4.Auto.SelfRevive = true
+    else
+        D[gal_v178].SelfRevive = false
+        tbl4.Auto.SelfRevive = false
+    end
+    if D[gal_v178].SelfRevive or (D[gal_v178].ReviveTeammates or D[gal_v178].ReviveEnemies) then
+        D[gal_v187]()
+        gal4("全职业自救已开启","其他功能")
+
+            table.insert(D[36], nil)
+            D[gal_v287].selfrevive_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if D[gal_v180] then
+            D[gal_v180]:Disconnect()
+            D[gal_v180] = nil
+        end
+        gal4("全职业自救已关闭","其他功能")
+            return
+    end
+end
+local gal_v545 = var17[gal_v443](Chinese["SelfRevive"], false, functionResult24)
+local functionResult25 = function(gal_p1_11)
+    D[gal_v137] = gal_p1_11
+    tbl4.NoFallDamage = gal_p1_11
+    if gal_p1_11 then
+        D[gal_v194]()
+        gal4("耐摔王已开启","其他")
+    else
+        if D[gal_v148] then
+            D[gal_v148]:Disconnect()
+        end
+        gal4("耐摔王已关闭","其他")
+        return
+    end
+end
+local gal_v5452 = var17["toggle"](Chinese[gal_v320], false, functionResult25)
+local functionResult26 = function(gal_p1_7)
+    D[gal_v140] = gal_p1_7
+    tbl4.ExtraDamage.Enabled = gal_p1_7
+    if gal_p1_7 then
+        D[gal_v202]()
+
+            table.insert(D[36], nil)
+            D[gal_v287].extra_damage_settings = nil
+            table.insert(D[gal_v317], nil)
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+
+    else
+        if D[gal_v121] then
+            D[gal_v121]:Disconnect()
+        end
+            gal4("增伤功能已关闭","其他")
+        return
+    end
+end
+local gal_v5453 = var17["toggle"](Chinese["ExtraDamage"], false, functionResult26)
+local functionResult27 = function(gal_p1_4)
+    functionResult3(gal_p1_4)
+    if gal_p1_4 then
+        local var18 = true
+    end
+    if gal_p1_4 then
+        table.insert(D[36], nil)
+        D[gal_v287].esp_settings = nil
+        table.insert(D[gal_v317], nil)
+        D[gal_v288][nil] = false
+        D[gal_v328]()
+    else
+        if not gal_p1_4 and nil then
+            D[gal_v288][nil] = false
+            D[gal_v328]()
+        end
+        return
+    end
+end
+local gal_v5454 = var17[gal_v443](Chinese["PlayerESP"], false, functionResult27)
+local functionResult28 = function(gal_p1_3)
+    D[gal_v308](gal_p1_3)
+    tbl4.Other.KeepHotbar = gal_p1_3
+    return
+end
+local gal_v5455 = var17["toggle"](Chinese["KeepHotbar"], flag, functionResult28)
+local gal4Result = gal4(Chinese["ScriptLoaded"], Chinese[gal_v463])
+local CharacterAdded = LocalPlayer["CharacterAdded"]
+local functionResult29 = function(gal_p1_2)
+    task.wait(1)
+    if D[gal_v140] then
+        D[gal_v202]()
+    end
+    return
+end
+local CharacterAdded = CharacterAdded["Connect"](CharacterAdded, functionResult29)
+local Players5 = Players["PlayerRemoving"]
+local functionResult30 = function(gal_p1)
+    if gal_p1 == LocalPlayer then
+        D[gal_v291]()
+        gal65()
+        if ScreenGui then
+            ScreenGui:Destroy()
+        end
+        local var19 = D[36]
+        for gal_l1015, TextButton in ipairs(var18) do
+            local gal_l1016 = TextButton
+            pcall(function()
+                gal_l1016.delete()
+            end)
+        end
+        D[32].delete()
+        if D[gal_v316] then
+            D[gal_v316].Parent = nil
+        end
+    end
+    return
+end
+local gal_v646 = Players5["Connect"](Players5, functionResult30)
