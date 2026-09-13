@@ -1,0 +1,5532 @@
+--Yeskid
+local players = game:GetService("Players")
+local coreGui = game:GetService("CoreGui")
+local lighting = game:GetService("Lighting")
+local starterGui = game:GetService("StarterGui")
+local guiService = game:GetService("GuiService")
+local runService = game:GetService("RunService")
+local httpService = game:GetService("HttpService")
+local soundService = game:GetService("SoundService")
+local tweenService = game:GetService("TweenService")
+local teleportService = game:GetService("TeleportService")
+local textChatService = game:GetService("TextChatService")
+local userInputService = game:GetService("UserInputService")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local marketplaceService = game:GetService("MarketplaceService")
+local proximityPromptService = game:GetService("ProximityPromptService")
+local virtualUser = game:GetService("VirtualUser")
+local stats = game:GetService("Stats")
+local assetService = game:GetService("AssetService")
+local avatarEditorService = game:GetService("AvatarEditorService")
+
+local v1, v2 = pcall(function()
+  if not game:IsLoaded() then
+    game.Loaded:Wait()
+  end
+
+  if not isfolder("XA-Hub") then
+    makefolder("XA-Hub")
+  end
+
+  if not isfolder("XA-Hub/Music") then
+    makefolder("XA-Hub/Music")
+  end
+
+  TimeStart = tick()
+  local espLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/ESPLibrary.lua"))()
+  local luaWare = loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Library/Lua_Ware.lua"))()
+  local flags = luaWare.flags
+  local notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Library/Notification.lua"))()
+  local v3 = cloneref or function(...) return ... end
+  local v4 = getthreadidentity or function() return "未知" end
+  local v5 = v3(players)
+  local v6 = v3(coreGui)
+  local v7 = v3(lighting)
+  local v8 = v3(starterGui)
+  v3(guiService)
+  local v9 = v3(runService)
+  local v10 = v3(httpService)
+  local v11 = v3(soundService)
+  local v12 = v3(tweenService)
+  local v13 = v3(teleportService)
+  local v14 = v3(textChatService)
+  local v15 = v3(userInputService)
+  local v16 = v3(replicatedStorage)
+  local v17 = v3(Instance.new("VirtualInputManager"))
+  local v18 = v3(marketplaceService)
+  local v19 = v3(proximityPromptService)
+  local localPlayer = v5.LocalPlayer
+  local character = localPlayer.Character
+  local v20 = v3(localPlayer:GetMouse())
+  local currentCamera = workspace.CurrentCamera
+
+  function luaWare:GiveSignal(p1)
+  end
+
+  local function f1(fn)
+    fn()
+  end
+
+  local v21 = table.find({ Enum.Platform.Android, Enum.Platform.IOS }, v15:GetPlatform())
+  Instance.new("BindableFunction")
+  local v22 = 0.5
+  local v23 = {}
+
+  local function f2()
+    local instance = Instance.new("ScreenGui", v6)
+    instance.Enabled = false
+
+    Instance.new("Frame", instance)
+    local clone = instance:Clone()
+
+    instance.SafeAreaCompatibility = Enum.SafeAreaCompatibility.FullscreenExtension
+    instance.ScreenInsets = Enum.ScreenInsets.None
+
+    local v24 = clone.AbsolutePosition - instance.AbsolutePosition
+    instance:Destroy()
+    clone:Destroy()
+    return v24.X, v24.Y
+  end
+
+  local v25, v26 = f2()
+  local v27 = {}
+
+  task.spawn(function()
+    local v28, v29 = pcall(function() return v5:GetFriendsAsync(localPlayer.UserId) end)
+
+    if v28 then
+      while true do
+        for index, value in ipairs(v29:GetCurrentPage()) do
+          table.insert(v27, value.Id)
+        end
+
+        if v29.IsFinished then
+          break
+        end
+
+        v29:AdvanceToNextPageAsync()
+      end
+    end
+  end)
+
+  local v30 = {}
+  v30.ProximityPrompt = {}
+  v30.ClickDetector = {}
+  v30.TouchTransmitter = {}
+
+  local v31 = {}
+  local v32 = {}
+  local v33 = {}
+
+  local function f3(p2)
+    return p2:IsA("Humanoid") and p2.Parent and p2.Parent:IsA("Model")
+      and not v5:GetPlayerFromCharacter(p2.Parent)
+  end
+
+  local isnetworkowner
+
+  if identifyexecutor() ~= "Arceus X" and getfenv().isnetworkowner then
+    isnetworkowner = getfenv().isnetworkowner
+  else
+    function isnetworkowner(p3)
+      if not p3:IsGrounded() and not p3.Anchored and p3.ReceiveAge == 0 then
+        return true
+      end
+    end
+  end
+
+  local function f4(p4, p5)
+    local findFirstChildOfClass = p4:FindFirstChildOfClass(p5)
+
+    if findFirstChildOfClass then
+      return findFirstChildOfClass
+    end
+
+    while p4.Parent do
+      local v34 = p4.ChildAdded:Wait()
+
+      if v34:IsA(p5) then
+        return v34
+      end
+    end
+  end
+
+  task.spawn(function()
+    for key, value2 in pairs(workspace:GetDescendants()) do
+      if f3(value2) then
+        v31[value2.Parent] = true
+      elseif value2:IsA("BasePart") and not value2.Anchored then
+        table.insert(v32, value2)
+      else
+        if not v30[value2.ClassName] then
+          v30[value2.ClassName] = {}
+        end
+
+        table.insert(v30[value2.ClassName], value2)
+      end
+    end
+  end)
+
+  workspace.DescendantAdded:Connect(function(descendant)
+    if f3(descendant) then
+      v31[descendant.Parent] = true
+    elseif descendant:IsA("BasePart") and not descendant.Anchored then
+      table.insert(v32, descendant)
+    else
+      if not v30[descendant.ClassName] then
+        v30[descendant.ClassName] = {}
+      end
+
+      table.insert(v30[descendant.ClassName], descendant)
+    end
+
+    for key2, value3 in pairs(v33) do
+      task.spawn(value3, descendant)
+    end
+  end)
+
+  local descendantRemoving = workspace.DescendantRemoving
+
+  local function f5(p6)
+    local function f6(p7)
+      return string.format("%02i", p7)
+    end
+
+    local v35 = (p6 - p6 % 60) / 60
+    local v36 = (v35 - v35 % 60) / 60
+    return f6(v36) .. ":" .. f6(v35 - v36 * 60) .. ":" .. f6(p6 - v35 * 60)
+  end
+
+  descendantRemoving:Connect(function(p8)
+    if f3(p8) then
+      v31[p8.Parent] = nil
+    end
+  end)
+
+  local function f7(p9, p10)
+    local v37 = {}
+
+    if p9.Players then
+      for key3, value4 in pairs(v5:GetPlayers()) do
+        if value4 ~= localPlayer and (not p10 or value4.Team ~= localPlayer.Team) then
+          table.insert(v37, value4.Character)
+        end
+      end
+    end
+
+    if p9.NPCs then
+      for key4, value5 in pairs(v31) do
+        if key4 ~= localPlayer.Character then
+          table.insert(v37, key4)
+        end
+      end
+    end
+
+    return v37
+  end
+
+  flags.typeofName = "用户名(UserName)"
+  local v38
+
+  local function f8()
+    if not v38 then
+      notification("XA:错误", "请先选择玩家", 5)
+      return true
+    end
+
+    if v38 ~= "All" and not v5:FindFirstChild(v38) then
+      notification("XA:错误", "该玩家已离开", 5)
+      return true
+    end
+
+    return false
+  end
+
+  local function f9()
+    if flags.Direction == "前" then
+      return CFrame.new(0, 0, -flags.TPdistance)
+    elseif flags.Direction == "后" then
+      return CFrame.new(0, 0, flags.TPdistance)
+    elseif flags.Direction == "左" then
+      return CFrame.new(-flags.TPdistance, 0, 0)
+    elseif flags.Direction == "右" then
+      return CFrame.new(flags.TPdistance, 0, 0)
+    elseif flags.Direction == "上" then
+      return CFrame.new(0, flags.TPdistance, 0)
+    else
+      if flags.Direction == "下" then
+        return CFrame.new(0, -flags.TPdistance, 0)
+      end
+
+      return
+    end
+  end
+
+  local v39 = {}
+
+  local function f10()
+    v39 = { "All" }
+
+    if flags.typeofName == "用户名(UserName)" then
+      local v40, v41 = v5:GetChildren()
+
+      for key5, value6 in next, v40, v41 do
+        table.insert(v39, value6.Name)
+      end
+    elseif flags.typeofName == "昵称(DisplayName)" then
+      local v42 = next
+      local v43, v44 = v5:GetChildren()
+
+      for v45, v46 in v42, v43, v44 do
+        table.insert(v39, v46.DisplayName)
+      end
+    end
+
+    task.wait()
+    table.sort(v39, function(p11, p12) return p11:lower() < p12:lower() end)
+  end
+
+  f10()
+
+  local function f11(p13)
+    local v47 = math.floor(p13 / 60)
+    return string.format("%02d:%02d", v47, p13 % 60)
+  end
+
+  local humanoid, humanoidRootPart, f12
+
+  local function f13()
+    local getPlayers
+
+    if v38 == "All" then
+      getPlayers = v5:GetPlayers()
+    else
+      getPlayers = { f12(v38) }
+    end
+
+    local cframe = humanoidRootPart.CFrame
+    local fallenPartsDestroyHeight = workspace.FallenPartsDestroyHeight
+    humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+    workspace.FallenPartsDestroyHeight = (0 / 0)
+    local sit
+
+    for key6, value7 in next, getPlayers, nil do
+      local character2 = value7.Character
+
+      local humanoid2 = character2
+      humanoid2 = character2 and character2:FindFirstChildOfClass("Humanoid")
+
+      local humanoidRootPart2 = character2 and character2:FindFirstChild("HumanoidRootPart")
+
+      if humanoid2 and humanoidRootPart2 and humanoidRootPart and humanoid2.Health > 0
+        and value7 ~= localPlayer then
+        if not humanoid2.Sit then
+          local v48 = tick()
+          local total = 0
+          currentCamera.CameraSubject = humanoid2
+
+          local function f14(p14, p15)
+            humanoidRootPart.CFrame = CFrame.new(humanoidRootPart2.Position) * p14 * p15
+            humanoidRootPart.Velocity = Vector3.new(0, 1000000, 0)
+          end
+
+          if character2 then
+            if not not humanoidRootPart then
+              if not humanoid2.Sit then
+                if not (humanoidRootPart2.Velocity.Magnitude > 200) then
+                  v330 = humanoid2.Health <= 0 or tick() - v48 >= 2
+                end
+              end
+            end
+          end
+
+          repeat
+            task.wait()
+            local magnitude = humanoidRootPart2.Velocity.Magnitude
+            local moveDirection = humanoid2.MoveDirection
+            total = total + 100
+            local v49 = math.rad(total)
+            local cframe2 = CFrame.Angles(v49, 0, 0)
+            f14(CFrame.new(0, 1.5, 0) + moveDirection * magnitude / 1.25, cframe2)
+            task.wait()
+            f14(CFrame.new(0, -1.5, 0) + moveDirection * magnitude / 1.25, cframe2)
+            task.wait()
+            f14(CFrame.new(2.25, 1.5, -2.25) + moveDirection * magnitude / 1.25, cframe2)
+            task.wait()
+            f14(CFrame.new(-2.25, -1.5, 2.25) + moveDirection * magnitude / 1.25, cframe2)
+            task.wait()
+            f14(CFrame.new(0, 1.5, 0) + moveDirection, cframe2)
+            task.wait()
+            f14(CFrame.new(0, -1.5, 0) + moveDirection, cframe2)
+            task.wait()
+            local v50 = not character2
+
+            sit = v50
+
+            sit = v50 or not humanoidRootPart or humanoid2.Sit
+              or humanoidRootPart2.Velocity.Magnitude > 200 or humanoid2.Health <= 0
+              or tick() - v48 >= 2
+          until sit
+        end
+      end
+    end
+
+    humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+    local v51
+
+    repeat
+      humanoidRootPart.CFrame = cframe * CFrame.new(0, 0.5, 0)
+      humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+      currentCamera.CameraSubject = humanoid
+      local v52 = next
+      local v53, v54 = character:GetChildren()
+
+      for v55, v56 in v52, v53, v54 do
+        if v56:IsA("BasePart") then
+          v56.Velocity = Vector3.zero
+          v56.RotVelocity = Vector3.zero
+        end
+      end
+
+      task.wait()
+      v51 = not humanoidRootPart or (humanoidRootPart.Position - cframe.p).Magnitude < 20
+    until v51
+
+    workspace.FallenPartsDestroyHeight = fallenPartsDestroyHeight
+    return true
+  end
+
+  function f12(p16, p17)
+    local gsub = p16:gsub("%s+", "")
+
+    for key7, value8 in pairs(v5:GetPlayers()) do
+      if value8.Name:lower():match("^" .. gsub:lower())
+        or value8.DisplayName:lower():match("^" .. gsub:lower()) then
+        return value8
+      end
+    end
+
+    if not p17 then
+      v8:SetCore("SendNotification", { Title = "XA:错误", Text = "未找到玩家" })
+    end
+
+    return nil
+  end
+
+  local function f15(p18, p19, p20)
+    if p19 and p20 then
+      local v57 = v3(virtualUser)
+
+      local chatBar = localPlayer.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+      chatBar:SetTextFromInput(p18, v57:CaptureController())
+
+      v57:TypeKey("0x0D", chatBar:CaptureFocus())
+    elseif p19 and not p20 then
+      if v14:FindFirstChild("TextChannels") then
+        v14.TextChannels.RBXGeneral:SendAsync(p18)
+      else
+        v16.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(p18, "All")
+      end
+    elseif not p19 and p20 then
+      v5:Chat(p18)
+    end
+  end
+
+  local circle = Drawing.new("Circle")
+  circle.Thickness = 2
+  circle.Color = Color3.fromRGB(255, 255, 255)
+  circle.Filled = false
+  circle.Radius = 60
+  circle.Position = currentCamera.ViewportSize / 2
+  circle.Visible = false
+
+  local screenGui = Instance.new("ScreenGui")
+  screenGui.Parent = v6
+
+  local instance2 = Instance.new("Frame", screenGui)
+  instance2.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+  instance2.Size = UDim2.new(0, 15, 0, 15)
+  instance2.Visible = false
+
+  local instance3 = Instance.new("TextLabel", screenGui)
+  instance3.Size = UDim2.new(0, 50, 0, 10)
+  instance3.Position = UDim2.new(0, 100, 0, 50)
+  instance3.TextSize = 16
+  instance3.Font = Enum.Font.SourceSansBold
+  instance3.Text = "当前瞄准:无"
+  instance3.TextColor3 = Color3.new(1, 1, 1)
+  instance3.TextStrokeColor3 = Color3.new(0, 0, 0)
+  instance3.TextStrokeTransparency = 0.6
+  instance3.BackgroundTransparency = 1
+  instance3.ZIndex = 50
+  instance3.Visible = false
+
+  local uiCorner = Instance.new("UICorner")
+  uiCorner.Parent = instance2
+  uiCorner.CornerRadius = UDim.new(0, 10)
+
+  local uiStroke = Instance.new("UIStroke")
+  uiStroke.Parent = instance2
+  uiStroke.Thickness = 1.5
+  uiStroke.Color = Color3.fromRGB(255, 255, 255)
+
+  local line = Drawing.new("Line")
+  line.Color = Color3.new(1, 1, 1)
+  line.Thickness = 1
+  line.Visible = false
+
+  local line2 = Drawing.new("Line")
+  line2.Color = Color3.new(1, 1, 1)
+  line2.Thickness = 1
+  line2.Visible = false
+
+  local line3 = Drawing.new("Line")
+  line3.Color = Color3.new(1, 1, 1)
+  line3.Thickness = 1
+  line3.Visible = false
+
+  local v58 = currentCamera.ViewportSize / 2
+
+  line2.From = Vector2.new(v58.X - 10, v58.Y)
+  line2.To = Vector2.new(v58.X + 10, v58.Y)
+
+  line3.From = Vector2.new(v58.X, v58.Y - 10)
+  line3.To = Vector2.new(v58.X, v58.Y + 10)
+
+  local instance4 = Instance.new("TextButton", screenGui)
+  instance4.Text = "射击"
+  instance4.TextColor3 = Color3.fromRGB(255, 255, 255)
+  instance4.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+  instance4.BackgroundTransparency = 0.5
+  instance4.Position = UDim2.new(0, 645, 0, 165)
+  instance4.Size = UDim2.new(0, 55, 0, 55)
+  instance4.Draggable = true
+  instance4.Visible = false
+  instance4.ZIndex = 5
+
+  Instance.new("UICorner", instance4)
+
+  local instance5 = Instance.new("TextButton", screenGui)
+  instance5.TextSize = 10
+  instance5.TextColor3 = Color3.fromRGB(255, 255, 255)
+  instance5.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+  instance5.BackgroundTransparency = 0.5
+  instance5.Size = UDim2.new(0, 48, 0, 48)
+  instance5.Text = "OFF"
+  instance5.Position = UDim2.new(0, 16, 0, 48)
+  instance5.Draggable = true
+  instance5.Visible = false
+
+  Instance.new("UICorner", instance5)
+
+  local v59 = {
+    Enabled = false,
+    FovPosition = "准星",
+    LockMethod = "相机",
+    AimPart = "Head",
+    TeamCheck = false,
+    WallCheck = false,
+    AliveCheck = false,
+    MaxDistance = 400,
+    Smoothness = 0.6,
+    Prediction = 0.15,
+    Targets = { Players = true, NPCs = false },
+  }
+
+  local v60 = {
+    Enabled = false,
+    Method = "Raycast",
+    HitChance = 100,
+    Wallbang = false,
+    ShowTarget = false,
+  }
+
+  local function f16(p21, p22)
+    if not v59.WallCheck then
+      return true
+    else
+      local p = currentCamera.CFrame.p
+      return workspace:FindPartOnRayWithIgnoreList(Ray.new(p, p21.Position - p), p22) == nil
+    end
+  end
+
+  local v61 = { Enabled = false, DelayAmount = 0 }
+
+  local function f17(p23)
+    if not p23 then
+      return
+    else
+      local v62 = p23.Position + p23.Velocity * v59.Prediction
+
+      if v59.LockMethod == "鼠标" then
+        local v63 = currentCamera
+        local getMouseLocation = v15:GetMouseLocation()
+        local worldToViewportPoint = v63:WorldToViewportPoint(v62)
+
+        local v64 = Vector2.new(worldToViewportPoint.X, worldToViewportPoint.Y)
+          - Vector2.new(getMouseLocation.X, getMouseLocation.Y)
+
+        mousemoverel(v64.X * v59.Smoothness, v64.Y * v59.Smoothness)
+      elseif v59.LockMethod == "相机" then
+        local cframe3 = CFrame.lookAt(currentCamera.CFrame.Position, currentCamera.CFrame.Position
+          + (v62 - currentCamera.CFrame.Position).Unit)
+
+        if v59.Smoothness > 0 then
+          currentCamera.CFrame = currentCamera.CFrame:Lerp(cframe3, v59.Smoothness)
+        else
+          currentCamera.CFrame = cframe3
+        end
+      else
+        local v65, v66 = currentCamera:WorldToViewportPoint(v62)
+        local v67 = currentCamera.ViewportSize / 2
+
+        if v66 then
+          local v68 = Vector2.new(v65.X, v65.Y) - v67
+          local v69 = v68.X * v59.Smoothness
+          local v70 = v68.Y * v59.Smoothness
+
+          v17:SendTouchEvent(1, 0, 0, 0)
+          v17:SendTouchEvent(1, 1, v69, v70)
+          v17:SendTouchEvent(1, 2, v69, v70)
+        end
+      end
+
+      if v59.FacingWhenAimbot then
+        humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position, p23.Position)
+      end
+
+      return
+    end
+  end
+
+  local v71 = { "Head", "HumanoidRootPart" }
+
+  local function f18()
+    local huge = math.huge
+    local v72
+
+    local function f19(p24)
+      local v73 = not p24 or not humanoidRootPart
+      local magnitude2
+
+      if v73 then
+        return
+      else
+        local findFirstChild = p24:FindFirstChild(v59.AimPart == "随机" and v71[math.random(2)]
+          or v59.AimPart)
+
+        if findFirstChild
+          and (humanoidRootPart.Position - findFirstChild.Position).Magnitude < v59.MaxDistance
+          and (not v59.AliveCheck or p24:FindFirstChildOfClass("Humanoid").Health > 0) then
+          local v74, v75 = currentCamera:WorldToViewportPoint(findFirstChild.Position)
+
+          if flags.TargetPriority == "离准星最近" then
+            magnitude2 = ((v59.FovPosition == "准星" and currentCamera.ViewportSize / 2
+                or v15:GetMouseLocation())
+              - Vector2.new(v74.X, v74.Y)).Magnitude
+
+            if magnitude2 > circle.Radius then
+              return
+            end
+          else
+            magnitude2 = (findFirstChild.Position - humanoidRootPart.Position).Magnitude
+          end
+
+          if v75 and magnitude2 < huge and f16(findFirstChild, { character, p24 }) then
+            v72 = findFirstChild
+            huge = magnitude2
+          end
+
+          return
+        end
+
+        return
+      end
+    end
+
+    for key8, value9 in pairs(f7(v59.Targets, v59.TeamCheck)) do
+      f19(value9)
+    end
+
+    return v72
+  end
+
+  local v76
+
+  luaWare:GiveSignal(v9.RenderStepped:Connect(function()
+    v76 = f18()
+
+    if v59.Enabled then
+      f17(v76)
+    end
+
+    local getMouseLocation2
+
+    if v59.FovPosition == "准星" then
+      getMouseLocation2 = currentCamera.ViewportSize / 2
+    else
+      getMouseLocation2 = v15:GetMouseLocation()
+    end
+
+    if circle.Visible then
+      circle.Position = getMouseLocation2
+    end
+
+    if v60.ShowTarget and v76 then
+      local v77, v78 = currentCamera:WorldToScreenPoint(v76.Position)
+
+      if v78 then
+        instance2.Position = UDim2.new(
+          0, v77.X - instance2.AbsoluteSize.X / 2, 0, v77.Y - instance2.AbsoluteSize.Y / 2
+        )
+
+        instance2.Visible = true
+        instance3.Text = "当前瞄准:" .. v76.Parent.Name
+      else
+        instance2.Visible = false
+        instance3.Text = "当前瞄准:无"
+      end
+    else
+      instance2.Visible = false
+      instance3.Text = "当前瞄准:无"
+    end
+
+    if flags.TargetLine then
+      if not v76 then
+        line.Visible = false
+        return
+      end
+
+      local v79, v80 = currentCamera:WorldToViewportPoint(v76.Position)
+
+      if v80 then
+        line.From = getMouseLocation2
+        line.To = Vector2.new(v79.X, v79.Y)
+        line.Visible = true
+      end
+
+      return
+    end
+  end))
+
+  instance4.MouseButton1Click:Connect(function()
+    if not v76 then
+      return
+    else
+      local v81, v82 = currentCamera:WorldToViewportPoint(v76.Position)
+
+      if v82 then
+        local v83 = math.random(999)
+        v17:SendTouchEvent(v83, 0, v81.X + v25, v81.Y)
+        v17:SendTouchEvent(v83, 2, v81.X + v25, v81.Y)
+      end
+
+      return
+    end
+  end)
+
+  local function f20(p25)
+    return p25:sub(1, 1):upper() .. p25:sub(2)
+  end
+
+  function v60.Init()
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterType = Enum.RaycastFilterType.Include
+
+    local v84
+
+    v84 = hookmetamethod(game, "__namecall", newcclosure(function(p26, ...)
+      local v85 = { ... }
+      local v86 = f20(getnamecallmethod())
+
+      if not checkcaller() and v60.Enabled and v60.Method == v86
+        and math.random(1, 100) <= v60.HitChance then
+        if p26 == workspace and v86 == "Raycast" then
+          local v87 = v85[1]
+          local magnitude3 = flags.RayLength == "1000" and 1000 or v85[2].Magnitude
+
+          if v76 then
+            v85[2] = (v76.Position - v87).Unit * magnitude3
+          end
+
+          if v60.Wallbang and v76 then
+            raycastParams.FilterDescendantsInstances = { v76 }
+            v85[3] = raycastParams
+          end
+
+          return v84(p26, unpack(v85))
+        end
+
+        if p26 == workspace and v86:match("FindPartOnRay") then
+          local origin = v85[1].Origin
+          local magnitude4 = flags.RayLength == "1000" and 1000 or v85[1].Direction.Magnitude
+
+          if v76 then
+            v85[1] = Ray.new(origin, (v76.Position - origin).Unit * magnitude4)
+          end
+
+          if v60.Wallbang and v76 then
+            return workspace:FindPartOnRayWithWhitelist(v85[1], { v76 })
+          end
+
+          return v84(p26, unpack(v85))
+        end
+
+        if p26 == currentCamera and v86:match("PointToRay") then
+          local v88 = getcallingscript()
+
+          if table.find({ "ControlScript", "ControlModule" }, tostring(v88)) then
+            return v84(p26, ...)
+          else
+            local position = currentCamera.CFrame.Position
+            local unit = (v76.Position - position).Unit
+            return Ray.new(position + (v85[3] and unit * v85[3] or Vector3.zero), unit)
+          end
+        else
+          return v84(p26, ...)
+        end
+      else
+        return v84(p26, ...)
+      end
+    end))
+
+    local isA = game.IsA
+
+    local v89
+
+    v89 = hookmetamethod(game, "__index", newcclosure(function(p27, p28)
+      if not checkcaller() and v60.Enabled and math.random(1, 100) <= v60.HitChance and v76 then
+        if isA(p27, "Mouse") and v60.Method == "Mouse.Hit/Target" then
+          local lower = p28:lower()
+
+          if lower == "target" then
+            return v76
+          end
+
+          if lower == "hit" then
+            return v76.CFrame + v76.Velocity * v59.Prediction
+          end
+
+          if lower == "x" or lower == "y" then
+            return currentCamera:WorldToScreenPoint(v76.Position)[p28]
+          elseif lower == "unitray" then
+            local origin2 = v89(p27, p28).Origin
+            return Ray.new(origin2, (v76.Position - origin2).Unit)
+          else
+            return v89(p27, p28)
+          end
+        elseif p27 == currentCamera and v60.Method == "Camera.CFrame" then
+          if p28 == "CFrame" or p28 == "CoordinateFrame" then
+            if tostring(getcallingscript()) == "CameraModule" then
+              return v89(p27, p28)
+            end
+
+            return CFrame.new(v89(p27, p28).Position, v76.Position)
+          end
+
+          return v89(p27, p28)
+        else
+          return v89(p27, p28)
+        end
+      else
+        return v89(p27, p28)
+      end
+    end))
+
+    local v90
+
+    v90 = hookfunction(Ray.new, function(p29, p30)
+      if not checkcaller() and v60.Enabled and v60.Method == "Ray.new"
+        and math.random(1, 100) <= v60.HitChance then
+        getcallingscript()
+
+        if v76 then
+          local magnitude5 = flags.RayLength == "1000" and 1000 or p30.Magnitude
+          return v90(p29, (v76.Position - p29).Unit * magnitude5)
+        end
+
+        return v90(p29, p30)
+      end
+
+      return v90(p29, p30)
+    end)
+  end
+
+  luaWare:GiveSignal(v9.RenderStepped:Connect(function()
+    local getPlayers2 = v5:GetPlayers()
+
+    if flags.CurrentPlayers then
+      flags.CurrentPlayers.Text = "当前玩家数:" .. #getPlayers2
+    end
+
+    if flags.RunTime then
+      flags.RunTime.Text = "运行时间:" .. f5(time())
+    end
+
+    if flags.CurrentPing then
+      local ping = stats:FindFirstChild("PerformanceStats").Ping
+      flags.CurrentPing.Text = "延迟:" .. math.round(ping:GetValue())
+    end
+
+    if flags.LoopSpeed and flags.LoopSpeedV then
+      humanoid.WalkSpeed = flags.LoopSpeedV
+    end
+
+    if flags.CSpeedBoost and flags.CSpeedBoost ~= 0 and character then
+      if humanoid and humanoid.MoveDirection.Magnitude > 0 then
+        local v91 = humanoidRootPart
+        v91.CFrame = v91.CFrame + humanoid.MoveDirection.Unit * flags.CSpeedBoost
+      end
+    end
+
+    if flags.TSpeedBoost and flags.TSpeedBoost ~= 0 and character then
+      character:TranslateBy(humanoid.MoveDirection * flags.TSpeedBoost / 10)
+    end
+
+    if flags.VSpeedBoost and flags.VSpeedBoost ~= 0 and character then
+      local v92 = humanoid.MoveDirection * flags.VSpeedBoost * 10
+      humanoidRootPart.Velocity = Vector3.new(v92.X, humanoidRootPart.Velocity.Y, v92.Z)
+    end
+
+    if flags.LoopJump and flags.LoopJumpV then
+      humanoid.JumpPower = flags.LoopJumpV
+    end
+
+    if flags.UseJumpPower then
+      humanoid.UseJumpPower = true
+    end
+
+    if flags.LoopFov and flags.LoopFovV then
+      currentCamera.FieldOfView = flags.LoopFovV
+    end
+
+    if flags.LoopTeleport then
+      if f8() then
+        flags.LoopTeleport = false
+        return
+      end
+
+      character:PivotTo(v5[v38].Character.HumanoidRootPart.CFrame * f9())
+    end
+
+    if flags.HoldPlayer then
+      if v38 == "All" then
+        for key9, value10 in pairs(getPlayers2) do
+          if value10 == localPlayer then
+          else
+            if not v23[value10.Name] then
+              local character3 = value10.Character
+              v23[value10.Name] = character3:GetPivot()
+            end
+
+            value10.Character:PivotTo(v23[value10.Name])
+          end
+        end
+      else
+        if not v23[v38] then
+          v23[v38] = v5[v38].Character:GetPivot()
+        end
+
+        v5[v38].Character:PivotTo(v23[v38])
+      end
+
+      if flags.NoTouch then
+        for key10, value11 in pairs(character:GetDescendants()) do
+          if value11:IsA("BasePart") then
+            value11.CanTouch = false
+          end
+        end
+      end
+
+      if flags.Noclip then
+        for key11, value12 in pairs(character:GetDescendants()) do
+          if value12:IsA("BasePart") then
+            value12.CanCollide = false
+          end
+        end
+      end
+
+      if flags.Fullbright then
+        v7.Ambient = Color3.new(1, 1, 1)
+      end
+
+      if flags.NoFog then
+        v7.FogStart = 0
+        v7.FogEnd = 100000
+      end
+
+      return
+    elseif flags.BringPlayer then
+      if f8() then
+        flags.BringPlayer = false
+        return
+      end
+
+      if v38 == "All" then
+        for key12, value13 in pairs(getPlayers2) do
+          if value13 == localPlayer then
+          else
+            value13.Character:PivotTo(humanoidRootPart.CFrame * f9())
+          end
+        end
+      else
+        v5[v38].Character:PivotTo(humanoidRootPart.CFrame * f9())
+      end
+
+      if flags.NoTouch then
+        for key13, value14 in pairs(character:GetDescendants()) do
+          if value14:IsA("BasePart") then
+            value14.CanTouch = false
+          end
+        end
+      end
+
+      if flags.Noclip then
+        for key14, value15 in pairs(character:GetDescendants()) do
+          if value15:IsA("BasePart") then
+            value15.CanCollide = false
+          end
+        end
+      end
+
+      if flags.Fullbright then
+        v7.Ambient = Color3.new(1, 1, 1)
+      end
+
+      if flags.NoFog then
+        v7.FogStart = 0
+        v7.FogEnd = 100000
+      end
+
+      return
+    else
+      if flags.NoTouch then
+        for key15, value16 in pairs(character:GetDescendants()) do
+          if value16:IsA("BasePart") then
+            value16.CanTouch = false
+          end
+        end
+      end
+
+      if flags.Noclip then
+        for key16, value17 in pairs(character:GetDescendants()) do
+          if value17:IsA("BasePart") then
+            value17.CanCollide = false
+          end
+        end
+      end
+
+      if flags.Fullbright then
+        v7.Ambient = Color3.new(1, 1, 1)
+      end
+
+      if flags.NoFog then
+        v7.FogStart = 0
+        v7.FogEnd = 100000
+      end
+
+      return
+    end
+  end))
+
+  local cframe4
+
+  local function f21(p31)
+    character = p31
+    humanoid = f4(character, "Humanoid")
+
+    if humanoid then
+      humanoid.Died:Connect(function()
+        if character:FindFirstChild("HumanoidRootPart") then
+          cframe4 = humanoidRootPart.CFrame
+        end
+      end)
+
+      humanoid.Jumping:Connect(function()
+        if flags.VJumpBoost and flags.VJumpBoost ~= 0 then
+          humanoidRootPart.Velocity = Vector3.new(
+            humanoidRootPart.Velocity.X, flags.VJumpBoost * 5, humanoidRootPart.Velocity.Z
+          )
+        end
+      end)
+    end
+
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+    if flags.AutoRespawn and cframe4 then
+      task.wait(flags.ARWaitTime)
+      character:PivotTo(cframe4)
+      currentCamera.CameraType = Enum.CameraType.Attach
+      task.wait(0.5)
+      currentCamera.CameraType = Enum.CameraType.Custom
+    end
+  end
+
+  luaWare:GiveSignal(localPlayer.CharacterAdded:Connect(f21))
+
+  if character then
+    task.spawn(f21, character)
+  end
+
+  if not humanoid then
+    humanoid = Instance.new("Humanoid")
+  end
+
+  luaWare:GiveSignal(workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
+    currentCamera = workspace.CurrentCamera
+  end))
+
+  luaWare:GiveSignal(v15.JumpRequest:Connect(function()
+    if flags.InfiniteJump then
+      humanoid:ChangeState("Jumping")
+    end
+  end))
+
+  luaWare:GiveSignal(v7.DescendantAdded:Connect(function(descendant2)
+    if flags.Fullbright and descendant2:IsA("PostEffect") then
+      descendant2.Enabled = false
+    end
+
+    if flags.NoFog and descendant2:IsA("Atmosphere") then
+      descendant2:Destroy()
+    end
+  end))
+
+  local xaHub = luaWare:new("XA Hub")
+  luaWare.Gui.AncestryChanged:Connect(function() end)
+  local tab = xaHub:Tab("通用", "6035145364")
+
+  local section = tab:Section("信息", false)
+  section:Label("您的用户名:" .. localPlayer.Name)
+  section:Label("您的昵称:" .. localPlayer.DisplayName)
+  section:Label("UserId:" .. localPlayer.UserId)
+  section:Label("账号年龄:" .. localPlayer.AccountAge)
+  section:Label("注入器名称:" .. identifyexecutor())
+  section:Label("注入器等级:" .. v4())
+
+  local label = section:Label("服务器名称:加载中")
+
+  task.spawn(function()
+    local v93, v94 = pcall(function() return v18:GetProductInfo(game.PlaceId).Name end)
+    local text = v94
+
+    if not v93 then
+      text = "无法获取"
+    end
+
+    label.Text = text
+  end)
+
+  flags.CurrentPlayers = section:Label("当前玩家数:加载中")
+  section:Label("最大玩家数:" .. v5.MaxPlayers)
+  flags.RunTime = section:Label("运行时间:加载中")
+
+  section:Label("GameId:" .. game.GameId)
+  section:Label("PlaceId:" .. game.PlaceId)
+  section:Label("JobId:" .. game.JobId)
+
+  flags.CurrentPing = section:Label("延迟:加载中")
+  local v95 = tick()
+  local v96 = false
+
+  luaWare:GiveSignal(flags.CurrentPing:GetPropertyChangedSignal("Text"):Connect(function()
+    v95 = tick()
+    v96 = false
+  end))
+
+  local section2 = tab:Section("选择玩家", false)
+  section2:Label("提示:All代表所有人")
+
+  section2:Dropdown("名称类型", "typeofName", { "昵称(DisplayName)", "用户名(UserName)" }, 2, function(p32)
+    f10()
+    dropdown:SetOptions(v39)
+  end)
+
+  local v97
+
+  dropdown = section2:Dropdown("选择玩家", "Dropdown", v39, function(p33)
+    local name = p33
+
+    if name == "All" then
+      v97.Visible = true
+    else
+      v97.Visible = false
+    end
+
+    if flags.typeofName == "昵称(DisplayName)" then
+      local v98, v99 = v5:GetChildren()
+
+      for key17, value18 in next, v98, v99 do
+        if value18.DisplayName == name then
+          name = value18.Name
+        end
+      end
+    end
+
+    v38 = name
+  end)
+
+  section2:Button("传送", function()
+    if f8() then
+      return
+    end
+
+    if v38 == "All" then
+      for key18, value19 in pairs(v5:GetPlayers()) do
+        if value19.Character then
+          character:PivotTo(value19.Character:GetPivot())
+          task.wait(v22)
+        end
+      end
+    else
+      character:PivotTo(v5[v38].Character:GetPivot())
+    end
+  end)
+
+  local v100
+
+  _, v100 = section2:Slider("传送延迟", "Slider", 0.5, 0, 5, true, function(p34)
+    v22 = p34
+  end)
+
+  v97 = v100
+  v97.Visible = false
+
+  section2:Button("甩飞", function()
+    if f8() then
+      return
+    end
+
+    f13()
+  end)
+
+  section2:Toggle("循环甩飞", "LoopFling", false, function(p35)
+    if p35 then
+      if f8() then
+        return
+      end
+
+      while f13() == true and flags.LoopFling do
+        task.wait(0.5)
+      end
+
+      return
+    end
+  end)
+
+  section2:Toggle("锁定传送玩家", "LoopTeleport", false, function(p36)
+    if p36 then
+      if f8() then
+        return
+      end
+
+      if v38 == "All" then
+        notification("XA:错误", "暂不支持用All", 5)
+        return
+      end
+
+      return
+    end
+  end)
+
+  section2:Toggle("吸取该玩家(客户端)", "BringPlayer", false)
+
+  section2:Toggle("定住(客户端)", "HoldPlayer", false, function(p37)
+    if not p37 then
+      v23 = {}
+    end
+  end)
+
+  section2:Dropdown("方向", "Direction", { "前", "后", "左", "右", "上", "下" }, 2)
+  section2:Slider("距离", "TPdistance", 5, 0, 30, false)
+
+  section2:Toggle("观看玩家", "Toggle", false, function(p38)
+    if p38 then
+      if f8() then
+        return
+      end
+
+      if v38 == "All" then
+        notification("XA:错误", "暂不支持用All", 5)
+        return
+      end
+
+      currentCamera.CameraSubject = v5[v38].Character:FindFirstChildOfClass("Humanoid")
+      return
+    end
+
+    workspace.Camera.CameraSubject = humanoid
+  end)
+
+  luaWare:GiveSignal(v5.PlayerAdded:Connect(function(player)
+    f10()
+    dropdown:SetOptions(v39)
+  end))
+
+  luaWare:GiveSignal(v5.PlayerRemoving:Connect(function(player2)
+    if flags.typeofName == "用户名(UserName)" then
+      dropdown:RemoveOption(player2.Name)
+    elseif flags.typeofName == "昵称(DisplayName)" then
+      dropdown:RemoveOption(player2.DisplayName)
+    end
+  end))
+
+  local section3 = tab:Section("本地玩家", false)
+
+  section3:Slider("移动速度", "LoopSpeedV", humanoid.WalkSpeed, 0, 500, false, function(walkSpeed)
+    humanoid.WalkSpeed = walkSpeed
+  end)
+
+  section3:Textbox("移动速度 当前" .. humanoid.WalkSpeed, "LoopSpeedV", "", function(walkSpeed2)
+    humanoid.WalkSpeed = walkSpeed2
+  end)
+
+  section3:Toggle("锁定移动速度", "LoopSpeed", false)
+  section3:Slider("CFrame加速", "CSpeedBoost", 0, 0, 200, true)
+  section3:Slider("Translate加速", "TSpeedBoost", 0, 0, 200, true)
+  section3:Slider("Velocity加速", "VSpeedBoost", 0, 0, 200, true)
+
+  section3:Slider("跳跃高度", "LoopJumpV", humanoid.JumpPower, 0, 500, false, function(jumpPower)
+    humanoid.JumpPower = jumpPower
+  end)
+
+  section3:Textbox("跳跃高度 当前" .. math.round(humanoid.JumpPower), "LoopJumpV", "", function(jumpPower2)
+    humanoid.JumpPower = jumpPower2
+  end)
+
+  section3:Toggle("锁定跳跃高度", "LoopJump", false)
+
+  section3:Toggle("使用跳跃高度", "UseJumpPower", false, function(useJumpPower)
+    humanoid.UseJumpPower = useJumpPower
+  end)
+
+  section3:Slider("Velocity高跳", "VJumpBoost", 0, 0, 200, true)
+
+  section3:Slider("人物高度", "Slider", humanoid.HipHeight, 0, 200, false, function(hipHeight)
+    humanoid.HipHeight = hipHeight
+  end)
+
+  section3:Textbox("人物高度 当前" .. math.round(humanoid.HipHeight), "Textbox", "", function(hipHeight2)
+    humanoid.HipHeight = hipHeight2
+  end)
+
+  section3:Slider("最大倾斜角", "Slider", humanoid.MaxSlopeAngle, 0, 90, false, function(maxSlopeAngle)
+    humanoid.MaxSlopeAngle = maxSlopeAngle
+  end)
+
+  section3:Slider("视角", "LoopFovV", currentCamera.FieldOfView, 0, 120, true, function(fieldOfView)
+    currentCamera.FieldOfView = fieldOfView
+  end)
+
+  section3:Textbox("视角 当前" .. currentCamera.FieldOfView, "LoopFovV", "", function(fieldOfView2)
+    currentCamera.FieldOfView = fieldOfView2
+  end)
+
+  section3:Toggle("锁定视角", "LoopFov", false)
+
+  section3:Slider("重力", "Slider", workspace.Gravity, 0, 200, false, function(gravity)
+    workspace.Gravity = gravity
+  end)
+
+  section3:Textbox("重力 当前" .. math.round(workspace.Gravity), "Textbox", "", function(gravity2)
+    workspace.Gravity = gravity2
+  end)
+
+  section3:Textbox("最大缩放距离 当前" .. localPlayer.CameraMaxZoomDistance, "Textbox", "", function(cameraMaxZoomDistance)
+    localPlayer.CameraMaxZoomDistance = cameraMaxZoomDistance
+  end)
+
+  section3:Textbox("最大血量", "Textbox", "", function(maxHealth)
+    humanoid.MaxHealth = maxHealth
+  end)
+
+  section3:Textbox("当前血量", "Textbox", "", function(health) humanoid.Health = health end)
+
+  section3:Dropdown("相机类型", "Dropdown", {
+    "Fixed", "Attach", "Watch", "Track", "Follow", "Custom", "Scriptable", "Orbital",
+  }, function(p39) currentCamera.CameraType = Enum.CameraType[p39] end)
+
+  section3:Dropdown("相机模式", "Dropdown", { "Classic", "LockFirstPerson" }, function(cameraMode)
+    localPlayer.CameraMode = cameraMode
+  end)
+
+  section3:Toggle("相机穿墙", "CameraNoclip", false, function(p40)
+    localPlayer.DevCameraOcclusionMode = p40 and Enum.DevCameraOcclusionMode.Invisicam
+      or Enum.DevCameraOcclusionMode.Zoom
+  end)
+
+  local v101, v102, v103
+
+  task.spawn(function()
+    local v104 = game
+    local v105, v106
+    v101, v106, v105 = loadstring(v104:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Content/Freecam.lua"))(screenGui)
+    v102 = v106
+    v103 = v105
+  end)
+
+  section3:Toggle("相机飞行", "CameraFly", false, function(p41)
+    if p41 then
+      v101()
+    else
+      v102()
+    end
+  end)
+
+  section3:Textbox("飞行速度", "Textbox", "0.5", function(p42)
+    v103.MobileSpeed = tonumber(p42)
+  end)
+
+  section3:Toggle("自动跳跃", "Toggle", humanoid.AutoJumpEnabled, function(autoJumpEnabled)
+    humanoid.AutoJumpEnabled = autoJumpEnabled
+  end)
+
+  section3:Button("重新检测角色", function()
+    if localPlayer.Character then
+      notification("XA:提示", "已检测到角色", 5)
+      character = localPlayer.Character
+      humanoid = character:WaitForChild("Humanoid")
+      humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    else
+      notification("XA:提示", "没有检测到角色", 5)
+    end
+  end)
+
+  local section4 = tab:Section("实用", false)
+
+  section4:Button("飞行v3", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/FlyGuiV3"))()
+  end)
+
+  section4:Button("反挂机", function()
+    for key19, value20 in pairs(getconnections(localPlayer.Idled)) do
+      if value20.Disable then
+        value20:Disable()
+      elseif value20.Disconnect then
+        value20:Disconnect()
+      end
+    end
+  end)
+
+  section4:Button("Delta键盘", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Content/DeltaKeyBoard.lua"))()
+  end)
+
+  section4:Button("建筑工具", function()
+    local hopperBin = Instance.new("HopperBin")
+    hopperBin.Name = "复制"
+    hopperBin.BinType = 3
+    hopperBin.Parent = localPlayer.Backpack
+
+    local hopperBin2 = Instance.new("HopperBin")
+    hopperBin2.Name = "删除"
+    hopperBin2.BinType = 4
+    hopperBin2.Parent = localPlayer.Backpack
+  end)
+
+  section4:Button("F3X", function()
+    loadstring(game:GetObjects("rbxassetid://6695644299")[1].Source)()
+  end)
+
+  section4:Button("玩家加入/退出服务器信息", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/boyscp/scriscriptsc/main/bbn.lua"))()
+  end)
+
+  section4:Button("重新加入服务器", function()
+    if #v5:GetPlayers() <= 1 then
+      localPlayer:Kick("重新加入中...")
+      wait()
+      v13:Teleport(game.PlaceId, localPlayer)
+    else
+      v13:TeleportToPlaceInstance(game.PlaceId, game.JobId, localPlayer)
+    end
+  end)
+
+  section4:Button("复制加入当前游戏脚本", function()
+    setclipboard((string.format(
+      "game:GetService(\"TeleportService\"):Teleport(%d, game:GetService(\"Players\").LocalPlayer)",
+      game.PlaceId
+    )))
+  end)
+
+  section4:Button("复制加入当前服务器脚本", function()
+    setclipboard(string.format(
+      "game:GetService(\"TeleportService\"):TeleportToPlaceInstance(%d, \"%s\", game:GetService(\"Players\").LocalPlayer)",
+      game.PlaceId, game.JobId
+    ))
+  end)
+
+  section4:Button("复制位置", function()
+    setclipboard("CFrame.new(" .. tostring(humanoidRootPart.Position) .. ")")
+  end)
+
+  section4:Button("锁定视角", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Content/Shiftlock.lua"))()
+  end)
+
+  section4:Button("提高画质", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/HighQuality"))()
+  end)
+
+  section4:Button("光影", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/MZEEN2424/Graphics/main/Graphics.xml"))()
+  end)
+
+  section4:Toggle("高亮", "Fullbright", false, function(p43)
+    if not p43 then
+      v7.Ambient = Color3.new(0, 0, 0)
+    end
+
+    for key20, value21 in pairs(v7:GetDescendants()) do
+      if value21:IsA("PostEffect") then
+        value21.Enabled = not p43
+      end
+    end
+  end)
+
+  section4:Toggle("没有雾", "NoFog", false, function(p44)
+    v7.FogEnd = 100000
+
+    for key21, value22 in pairs(v7:GetDescendants()) do
+      if value22:IsA("Atmosphere") then
+        value22:Destroy()
+      end
+    end
+  end)
+
+  section4:Toggle("去除阴影", "Toggle", false, function(p45) v7.GlobalShadows = not p45 end)
+
+  section4:Toggle("穿墙", "Noclip", false, function(p46)
+    if not p46 then
+      humanoid:ChangeState("Flying")
+    end
+  end)
+
+  section4:Toggle("身体不可触碰(伪无敌)", "NoTouch", false, function(p47)
+    if not p47 then
+      for key22, value23 in pairs(character:GetDescendants()) do
+        if value23:IsA("BasePart") then
+          value23.CanTouch = true
+        end
+      end
+    end
+  end)
+
+  section4:Button("载具飞行", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/VehicleFly"))()
+  end)
+
+  local textButton = Instance.new("TextButton")
+  textButton.Size = UDim2.new(0, 90, 0, 50)
+  textButton.Position = UDim2.new(0.5, 350, 1, -210)
+  textButton.AnchorPoint = Vector2.new(0.5, 1)
+  textButton.Text = "加速"
+  textButton.Font = Enum.Font.SourceSansBold
+  textButton.TextSize = 24
+  textButton.BackgroundColor3 = Color3.fromRGB(255, 180, 0)
+  textButton.TextColor3 = Color3.new(1, 1, 1)
+  textButton.Parent = screenGui
+  textButton.Draggable = true
+  textButton.Visible = false
+
+  local v107 = false
+  local v108 = 0
+
+  textButton.InputBegan:Connect(function() v107 = true end)
+
+  textButton.InputEnded:Connect(function()
+    v107 = false
+    v108 = 0
+    textButton.Text = 0
+  end)
+
+  luaWare:GiveSignal(v9.RenderStepped:Connect(function(delta)
+    if not humanoid then
+      return
+    else
+      local seatPart = humanoid.SeatPart
+
+      if not seatPart then
+        return
+      else
+        local model = seatPart:FindFirstAncestorOfClass("Model")
+
+        if not model then
+          return
+        else
+          local primaryPart = model.PrimaryPart
+            or model:FindFirstChildWhichIsA("BasePart", true)
+
+          if not primaryPart then
+            return
+          end
+
+          if v107 then
+            v108 = math.clamp(v108 + 5, 0, 300)
+          end
+
+          textButton.Text = v108
+
+          if v108 > 0 then
+            primaryPart.AssemblyLinearVelocity = primaryPart.AssemblyLinearVelocity
+              + seatPart.CFrame.LookVector * (v108 * delta)
+          end
+
+          return
+        end
+      end
+    end
+  end))
+
+  section4:Toggle("载具加速", "Toggle", false, function(visible)
+    textButton.Visible = visible
+  end)
+
+  section4:Toggle("触碰甩飞", "WalkFling", false, function(p48)
+    local v109 = 0.1
+
+    while flags.WalkFling do
+      v9.Heartbeat:Wait()
+
+      if humanoidRootPart and humanoidRootPart.Parent then
+        local velocity = humanoidRootPart.Velocity
+        humanoidRootPart.Velocity = velocity * 10000 + Vector3.new(0, 10000, 0)
+        v9.RenderStepped:Wait()
+        humanoidRootPart.Velocity = velocity
+        v9.Stepped:Wait()
+        humanoidRootPart.Velocity = velocity + Vector3.new(0, v109, 0)
+        v109 = -v109
+      end
+    end
+  end)
+
+  section4:Toggle("防甩飞", "AntiFling", false, function(p49)
+    while flags.AntiFling do
+      task.wait()
+
+      for key23, value24 in pairs(v5:GetPlayers()) do
+        if value24 ~= localPlayer and value24.Character then
+          for key24, value25 in pairs(value24.Character:GetDescendants()) do
+            if value25:IsA("BasePart") then
+              value25.CanCollide = false
+            end
+          end
+        end
+      end
+    end
+  end)
+
+  local physicsService
+
+  task.spawn(function()
+    physicsService = loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Content/PhysicsService.lua"))()
+  end)
+
+  local v110 = {}
+
+  section4:Toggle("防甩飞(Physics)", "AntiFling2", false, function(p50)
+    local f22
+
+    if not p50 then
+      physicsService.UnregisterCollisionGroup("Players")
+
+      for key25, value26 in pairs(v110) do
+      end
+
+      return
+    else
+      physicsService.RegisterCollisionGroup("Players")
+      physicsService.CollisionGroupSetCollidable("Players", "Players", false)
+
+      function f22(p51)
+        local descendantAdded = p51.DescendantAdded
+
+        table.insert(v110, descendantAdded:Connect(function(p52)
+          if p52:IsA("BasePart") and p52.CollisionGroup ~= "Players" then
+            p52.CollisionGroup = "Players"
+          end
+        end))
+
+        for key26, value27 in pairs(p51:GetDescendants()) do
+          if value27:IsA("BasePart") and value27.CollisionGroup ~= "Players" then
+            value27.CollisionGroup = "Players"
+          end
+        end
+      end
+
+      local function f23(p53)
+        local characterAdded = p53.CharacterAdded
+        table.insert(v110, characterAdded:Connect(f22))
+
+        if p53.Character then
+          f22(p53.Character)
+        end
+      end
+
+      local playerAdded = v5.PlayerAdded
+      table.insert(v110, playerAdded:Connect(f23))
+
+      for key27, value28 in pairs(v5:GetPlayers()) do
+        f23(value28)
+      end
+
+      return
+    end
+  end)
+
+  section4:Button("点击传送工具", function()
+    local tool = Instance.new("Tool")
+    tool.RequiresHandle = false
+    tool.Name = "点击传送"
+    tool.Activated:Connect(function() character:PivotTo(v20.Hit + Vector3.new(0, 2.5, 0)) end)
+    tool.Parent = localPlayer.Backpack
+  end)
+
+  section4:Textbox("瞬移道具", "Textbox", "", function(p54)
+    local tool2 = Instance.new("Tool")
+    tool2.Name = "" .. p54 .. "瞬移单位"
+    tool2.RequiresHandle = false
+    tool2.Parent = localPlayer.Backpack
+
+    tool2.Activated:Connect(function()
+      local v111 = humanoidRootPart
+      v111.CFrame = v111.CFrame * CFrame.new(0, 0, -p54)
+    end)
+  end)
+
+  local function f24()
+    local v112 = character
+    local floatPart = Instance.new("Part")
+    local rightLeg = v112:FindFirstChild("Right Leg")
+
+    if rightLeg == nil then
+      rightLeg = character:FindFirstChild("RightLowerLeg")
+    end
+
+    local new = Vector3.new
+    local x = rightLeg.Position.X
+    local y = rightLeg.Position.Y
+    local z = rightLeg.Position.Z
+    local position2 = new(x, y - 2, z)
+
+    floatPart.Name = "FloatPart"
+    floatPart.Color = Color3.new(0, 0, 0)
+    floatPart.Material = Enum.Material.Plastic
+    floatPart.Transparency = 1
+    floatPart.Position = position2
+    floatPart.Size = Vector3.new(10000000, 0.5, 10000000)
+    floatPart.CastShadow = true
+    floatPart.Anchored = true
+    floatPart.CanCollide = true
+    floatPart.Parent = workspace
+  end
+
+  local connect
+
+  section4:Toggle("踏空行走", "Toggle", false, function(p55)
+    if p55 then
+      f24()
+
+      connect = humanoid.Jumping:Connect(function()
+        if workspace:FindFirstChild("FloatPart") then
+          workspace.FloatPart:Destroy()
+          wait(0.3)
+          f24()
+        end
+      end)
+    else
+      connect:Disconnect()
+      workspace.FloatPart:Destroy()
+    end
+  end)
+
+  section4:Toggle("无限跳", "InfiniteJump", false)
+  section4:Toggle("原地复活", "AutoRespawn", false)
+  section4:Slider("等待时间", "ARWaitTime", 0, 0, 5, true)
+
+  section4:Button("FE声音", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Content/SpamSounds.lua"))()
+  end)
+
+  section4:Button("偷物品", function()
+    for key28, value29 in pairs(v5:GetChildren()) do
+      task.wait()
+
+      for key29, value30 in pairs(value29.Backpack:GetChildren()) do
+        value30.Parent = localPlayer.Backpack
+      end
+    end
+  end)
+
+  section4:Toggle("显示聊天栏", "ShowChat", false, function(p56)
+    while flags.ShowChat do
+      task.wait()
+
+      if not v8:GetCoreGuiEnabled(Enum.CoreGuiType.Chat) then
+        v8:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true)
+      end
+
+      local chatWindowConfiguration = v14:FindFirstChild("ChatWindowConfiguration")
+
+      if chatWindowConfiguration then
+        chatWindowConfiguration.Enabled = true
+      end
+    end
+  end)
+
+  section4:Toggle("隐身", "Invisible", false, function(p57)
+    if p57 then
+      local cframe5 = humanoidRootPart.CFrame
+      character:MoveTo(Vector3.new(-25.95, 84, 3537.55))
+      task.wait(0.15)
+
+      local invisibleSeat = Instance.new("Seat", workspace)
+      invisibleSeat.Anchored = false
+      invisibleSeat.CanCollide = false
+      invisibleSeat.Name = "_InvisibleSeat"
+      invisibleSeat.Transparency = 1
+      invisibleSeat.Position = Vector3.new(-25.95, 84, 3537.55)
+
+      local instance6 = Instance.new("Weld", invisibleSeat)
+      instance6.Part0 = invisibleSeat
+
+      instance6.Part1 = character:FindFirstChild("Torso")
+        or character:FindFirstChild("UpperTorso")
+
+      task.wait()
+      invisibleSeat.CFrame = cframe5
+    else
+      workspace:FindFirstChild("_InvisibleSeat"):Destroy()
+    end
+  end)
+
+  local loadAnimation
+
+  section4:Toggle("隐身R15", "InvisibleR15", false, function(p58)
+    if humanoid.RigType ~= Enum.HumanoidRigType.R15 then
+      return notification("XA:错误", "仅支持R15", 5)
+    end
+
+    if p58 then
+      local animation = Instance.new("Animation")
+      animation.AnimationId = "rbxassetid://139081119798399"
+
+      loadAnimation = humanoid:LoadAnimation(animation)
+      loadAnimation:Play(0, 1, 0)
+    else
+      loadAnimation:Stop()
+      wait(0.1)
+
+      character.Head.CanCollide = true
+      character.UpperTorso.CanCollide = true
+      character.LowerTorso.CanCollide = true
+
+      humanoidRootPart.CanCollide = true
+    end
+  end)
+
+  luaWare:GiveSignal(v9.Stepped:connect(function()
+    if flags.InvisibleR15 then
+      character.Head.CanCollide = false
+      character.UpperTorso.CanCollide = false
+      character.LowerTorso.CanCollide = false
+
+      humanoidRootPart.CanCollide = false
+    end
+  end))
+
+  section4:Toggle("Desync", "Toggle", false, function(p59)
+    setfflag("NextGenReplicatorEnabledWrite4", tostring(p59))
+  end)
+
+  section4:Button("重置人物", function() character:BreakJoints() end)
+
+  local section5 = tab:Section("触发类", false)
+  section5:Label("TouchInterests 可触碰类物体")
+
+  section5:Button("触发所有TouchInterests", function()
+    for index2, value31 in ipairs(workspace:GetDescendants()) do
+      if value31:IsA("TouchTransmitter") then
+        firetouchinterest(value31.Parent, humanoidRootPart, 0)
+        firetouchinterest(value31.Parent, humanoidRootPart, 1)
+      end
+    end
+  end)
+
+  local huge2 = math.huge
+
+  section5:Toggle("自动触发TouchInterest", "AutoFireTouch", false, function(p60)
+    while flags.AutoFireTouch do
+      task.wait()
+
+      for key30, value32 in pairs(v30.TouchTransmitter) do
+        local parent = value32.Parent
+        local v113 = parent
+
+        if parent then
+          local parent2 = value32.Parent
+          v113 = (humanoidRootPart.Position - parent2:GetPivot().Position).Magnitude <= huge2
+        end
+
+        if v113 then
+          firetouchinterest(value32.Parent, humanoidRootPart, 0)
+          firetouchinterest(value32.Parent, humanoidRootPart, 1)
+        end
+      end
+    end
+  end)
+
+  section5:Textbox("设定范围", "Textbox", 0, function(p61) huge2 = tonumber(p61) end)
+
+  section5:Toggle("透视TouchInterests", "ESPTouchInterests", false, function(p62)
+    if p62 then
+      function v33.ESPTouchInterests(p63)
+        if p63:IsA("TouchTransmitter") then
+          local v114 = espLibrary.Add(
+            p63.Parent, p63.Parent.Name, Color3.new(1, 1, 1), 15, "TouchInterestESP"
+          )
+
+          local boxHandleAdornment = Instance.new("BoxHandleAdornment")
+          boxHandleAdornment.Size = p63.Parent.Size
+          boxHandleAdornment.AlwaysOnTop = true
+          boxHandleAdornment.ZIndex = 1
+          boxHandleAdornment.AdornCullingMode = Enum.AdornCullingMode.Never
+          boxHandleAdornment.Color3 = Color3.new(1, 1, 1)
+          boxHandleAdornment.Transparency = 0.7
+          boxHandleAdornment.Adornee = p63.Parent
+          boxHandleAdornment.Parent = v114.Folder
+        end
+      end
+
+      for key31, value33 in pairs(game:GetDescendants()) do
+        v33.ESPTouchInterests(value33)
+      end
+    else
+      espLibrary.Clear("TouchInterestESP")
+      v33.ESPTouchInterests = nil
+    end
+  end)
+
+  section5:Label("ClickDetectors 可点击类物体")
+
+  section5:Button("触发所有ClickDetectors", function()
+    for index3, value34 in ipairs(workspace:GetDescendants()) do
+      if value34:IsA("ClickDetector") then
+        fireclickdetector(value34)
+      end
+    end
+  end)
+
+  section5:Toggle("自动触发ClickDetector", "AutoFireClick", false, function(p64)
+    while flags.AutoFireClick do
+      task.wait()
+
+      for key32, value35 in pairs(v30.ClickDetector) do
+        if value35.Parent then
+          local ignoreActivationDistance = flags.IgnoreActivationDistance
+          local v115 = ignoreActivationDistance
+
+          if not ignoreActivationDistance then
+            local parent3 = value35.Parent
+
+            v115 = (humanoidRootPart.Position - parent3:GetPivot().Position).Magnitude
+              < value35.MaxActivationDistance
+          end
+
+          if v115 then
+            fireclickdetector(value35)
+          end
+        end
+      end
+    end
+  end)
+
+  section5:Toggle("透视ClickDetectors", "ESPClickDetectors", false, function(p65)
+    if p65 then
+      function v33.ESPClickDetectors(p66)
+        if p66:IsA("ClickDetector") then
+          espLibrary.Add(
+            p66.Parent, p66.Parent.Name, Color3.new(0, 1, 0), 15, "ClickDetectorESP"
+          )
+        end
+      end
+
+      for key33, value36 in pairs(game:GetDescendants()) do
+        v33.ESPClickDetectors(value36)
+      end
+    else
+      espLibrary.Clear("ClickDetectorESP")
+      v33.ESPClickDetectors = nil
+    end
+  end)
+
+  section5:Label("ProximityPrompts 可互动类物体")
+
+  section5:Button("触发所有ProximityPrompts", function()
+    for key34, value37 in pairs(workspace:GetDescendants()) do
+      if value37:IsA("ProximityPrompt") then
+        fireproximityprompt(value37)
+      end
+    end
+  end)
+
+  section5:Toggle("自动触发ProximityPrompt (自动互动)", "AutoInteract", false, function(p67)
+    while flags.AutoInteract do
+      task.wait()
+
+      for key35, value38 in pairs(v30.ProximityPrompt) do
+        local basePart = value38:FindFirstAncestorWhichIsA("BasePart")
+
+        local model2 = basePart
+        model2 = basePart or value38:FindFirstAncestorWhichIsA("Model") or value38.Parent
+
+        if model2
+          and (humanoidRootPart.Position - model2:GetPivot().Position).Magnitude
+            < value38.MaxActivationDistance then
+          fireproximityprompt(value38)
+        end
+      end
+    end
+  end)
+
+  section5:Toggle("透视ProximityPrompts", "ESPPrompts", false, function(p68)
+    if p68 then
+      function v33.ESPPrompts(p69)
+        if p69:IsA("ProximityPrompt") then
+          local basePart2 = p69:FindFirstAncestorWhichIsA("BasePart")
+            or p69:FindFirstAncestorWhichIsA("Model") or p69.Parent
+
+          espLibrary.Add(basePart2, basePart2.Name, Color3.new(1, 1, 1), 15, "PromptESP")
+        end
+      end
+
+      for key36, value39 in pairs(game:GetDescendants()) do
+        v33.ESPPrompts(value39)
+      end
+    else
+      espLibrary.Clear("PromptESP")
+      v33.ESPPrompts = nil
+    end
+  end)
+
+  local connect2
+
+  section5:Toggle("快速互动", "Toggle", false, function(p70)
+    if p70 then
+      connect2 = v19.PromptButtonHoldBegan:Connect(function(player3)
+        fireproximityprompt(player3)
+      end)
+    else
+      connect2:Disconnect()
+    end
+  end)
+
+  section5:Textbox("交互距离", "Textbox", 0, function(maxActivationDistance)
+    for key37, value40 in pairs(v30.ProximityPrompt) do
+      value40.MaxActivationDistance = maxActivationDistance
+    end
+  end)
+
+  section5:Toggle(
+    "设置:自动触发Prompt/Click无视交互距离限制", "IgnoreActivationDistance",
+    false
+  )
+
+  local esp = {}
+
+  task.spawn(function()
+    esp = loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/ESP.lua"))()
+  end)
+
+  local tab2 = xaHub:Tab("透视", "6035145364")
+
+  local section6 = tab2:Section("玩家透视", false)
+  section6:Toggle("总开关", "Toggle", false, function(enabled) esp.Enabled = enabled end)
+  section6:Toggle("名字", "Toggle", false, function(showName) esp.ShowName = showName end)
+  section6:Toggle("方框", "Toggle", false, function(showBox) esp.ShowBox = showBox end)
+
+  section6:Toggle("血量", "Toggle", false, function(showHealth)
+    esp.ShowHealth = showHealth
+  end)
+
+  section6:Toggle("距离", "Toggle", false, function(showDistance)
+    esp.ShowDistance = showDistance
+  end)
+
+  section6:Toggle("线条", "Toggle", false, function(showTracer)
+    esp.ShowTracer = showTracer
+  end)
+
+  section6:Toggle("队伍检查", "Toggle", false, function(teamCheck)
+    esp.TeamCheck = teamCheck
+  end)
+
+  section6:Toggle("可见检查", "Toggle", false, function(wallCheck)
+    esp.WallCheck = wallCheck
+  end)
+
+  section6:Toggle("队伍颜色", "Toggle", false, function(teamColor)
+    esp.TeamColor = teamColor
+  end)
+
+  section6:Dropdown("线条位置", "Dropdown", { "上", "中", "下" }, 1, function(p71)
+    if p71 == "上" then
+      esp.TracerPosition = "Top"
+    elseif p71 == "中" then
+      esp.TracerPosition = "Middle"
+    elseif p71 == "下" then
+      esp.TracerPosition = "Bottom"
+    end
+  end)
+
+  section6:Slider("线条厚度", "Slider", 1, 0, 10, false, function(tracerThickness)
+    esp.TracerThickness = tracerThickness
+  end)
+
+  tab2:Section("NPC透视", false):Toggle("开关", "Toggle", false, function(p72)
+    if p72 then
+      for key38, value41 in pairs(v31) do
+        espLibrary.Add(key38, key38.Name, Color3.new(1, 1, 1), 15, "NPC")
+      end
+
+      setmetatable(v31, {
+        __newindex = function(object, key39, value42)
+          if value42 then
+            espLibrary.Add(key39, key39.Name, Color3.new(1, 1, 1), 15, "NPC")
+          end
+
+          rawset(object, key39, value42)
+        end,
+      })
+    else
+      espLibrary.Clear("NPC")
+      getmetatable(v31).__newindex = nil
+    end
+  end)
+
+  local section7 = tab2:Section("其他", false)
+
+  section7:Button("通用透视", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/Content/ESP-Universal"))()
+  end)
+
+  section7:Button("血量名称透视", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Content/NameHealthESP.lua"))()
+  end)
+
+  local tab3 = xaHub:Tab("自瞄", "6035145364")
+  local section8 = tab3:Section("Aimbot", false)
+
+  local toggle = section8:Toggle("开关", "Toggle", false, function(enabled2)
+    v59.Enabled = enabled2
+  end)
+
+  section8:Toggle("显示快捷开关", "Toggle", false, function(visible2)
+    instance5.Visible = visible2
+  end)
+
+  instance5.MouseButton1Click:Connect(function()
+    toggle:SetState()
+    instance5.Text = v59.Enabled and "ON" or "OFF"
+    instance5.BackgroundColor3 = v59.Enabled and Color3.new(0, 1, 0) or Color3.new(1, 0, 0)
+  end)
+
+  section8:Dropdown("锁定方式", "Dropdown", { "相机", "鼠标", "触摸" }, 1, function(lockMethod)
+    v59.LockMethod = lockMethod
+  end)
+
+  section8:Dropdown("瞄准部位", "Dropdown", { "头部", "身体", "随机" }, 1, function(p73)
+    if p73 == "头部" then
+      v59.AimPart = "Head"
+    elseif p73 == "身体" then
+      v59.AimPart = "HumanoidRootPart"
+    end
+  end)
+
+  section8:Dropdown(
+    "目标优先级", "TargetPriority", { "离准星最近", "离本地玩家最近" }, 1
+  )
+
+  section8:Toggle("瞄准玩家", "Toggle", true, function(players2)
+    v59.Targets.Players = players2
+  end)
+
+  section8:Toggle("瞄准NPC", "Toggle", false, function(npCs) v59.Targets.NPCs = npCs end)
+
+  section8:Toggle("可见检查", "Toggle", false, function(wallCheck2)
+    v59.WallCheck = wallCheck2
+  end)
+
+  section8:Toggle("队伍检查", "Toggle", false, function(teamCheck2)
+    v59.TeamCheck = teamCheck2
+  end)
+
+  section8:Toggle("存活检查", "Toggle", false, function(aliveCheck)
+    v59.AliveCheck = aliveCheck
+  end)
+
+  section8:Slider("最大距离", "Slider", 800, 100, 2000, false, function(maxDistance)
+    v59.MaxDistance = maxDistance
+  end)
+
+  section8:Slider("平滑度", "Slider", 0.6, 0, 1, true, function(smoothness)
+    v59.Smoothness = smoothness
+  end)
+
+  section8:Slider("预测值/1000", "Slider", 100, 0, 500, false, function(p74)
+    v59.Prediction = p74 / 1000
+  end)
+
+  local section9 = tab3:Section("子弹追踪", false)
+
+  local button
+
+  button = section9:Button("初始化", function()
+    v60.Init()
+    button:Destroy()
+  end)
+
+  section9:Toggle("开关", "Toggle", false, function(enabled3) v60.Enabled = enabled3 end)
+
+  section9:Dropdown("方法", "Dropdown", {
+    "Raycast", "Ray.new", "FindPartOnRay", "FindPartOnRayWithIgnoreList",
+    "FindPartOnRayWithWhitelist", "ScreenPointToRay", "ViewportPointToRay", "Mouse.Hit/Target",
+    "Camera.CFrame",
+  }, 1, function(method) v60.Method = method end)
+
+  section9:Dropdown("射线长度", "RayLength", { "默认", "1000" }, 1)
+
+  section9:Slider("命中率", "Slider", 100, 0, 100, false, function(hitChance)
+    v60.HitChance = hitChance
+  end)
+
+  section9:Toggle("子弹穿墙", "Toggle", false, function(wallbang)
+    v60.Wallbang = wallbang
+  end)
+
+  section9:Toggle("显示目标", "Toggle", false, function(p75)
+    v60.ShowTarget = p75
+    instance2.Visible = p75
+    instance3.Visible = p75
+  end)
+
+  section9:Slider("圆点大小", "Slider", 12, 0, 30, true, function(p76)
+    instance2.Size = UDim2.new(0, p76, 0, p76)
+  end)
+
+  section9:Toggle("目标连线", "TargetLine", false, function(visible3)
+    line.Visible = visible3
+  end)
+
+  local section10 = tab3:Section("FOV", false)
+  section10:Toggle("开关", "Toggle", false, function(visible4) circle.Visible = visible4 end)
+
+  section10:Dropdown("FOV位置", "Dropdown", { "准星", "鼠标" }, 1, function(fovPosition)
+    v59.FovPosition = fovPosition
+  end)
+
+  section10:Slider("大小", "Slider", 80, 20, 300, false, function(radius)
+    circle.Radius = radius
+  end)
+
+  if identifyexecutor() ~= "Delta" then
+    section10:Slider("透明度", "Slider", 1, 0, 1, true, function(transparency)
+      circle.Transparency = transparency
+    end)
+  end
+
+  section10:Slider("厚度", "Slider", 1, 1, 10, false, function(thickness)
+    circle.Thickness = thickness
+  end)
+
+  section10:Dropdown("颜色", "Dropdown", { "红色", "绿色", "蓝色", "黄色", "白色", "黑色" }, 5, function(p77)
+    if p77 == "红色" then
+      circle.Color = Color3.fromRGB(255, 0, 0)
+    elseif p77 == "绿色" then
+      circle.Color = Color3.fromRGB(0, 255, 0)
+    elseif p77 == "蓝色" then
+      circle.Color = Color3.fromRGB(0, 0, 255)
+    elseif p77 == "黄色" then
+      circle.Color = Color3.fromRGB(255, 255, 0)
+    elseif p77 == "白色" then
+      circle.Color = Color3.fromRGB(255, 255, 255)
+    elseif p77 == "黑色" then
+      circle.Color = Color3.fromRGB(0, 0, 0)
+    end
+  end)
+
+  local triggerBot = tab3:Section("Trigger Bot")
+
+  triggerBot:Toggle("开关", "Toggle", false, function(enabled4)
+    v61.Enabled = enabled4
+
+    while v61.Enabled do
+      task.wait()
+
+      if not v20.Target then
+      else
+        local v116, v117 = v5:GetPlayers()
+
+        for key40, value43 in next, v116, v117 do
+          if value43 ~= localPlayer and value43.Character then
+            local humanoid3 = value43.Character:FindFirstChildOfClass("Humanoid")
+
+            if humanoid3 and humanoid3.Health > 0
+              and v20.Target:IsDescendantOf(value43.Character) then
+              mouse1press()
+              task.wait()
+              mouse1release()
+              task.wait(v61.DelayAmount)
+              break
+            end
+          end
+        end
+      end
+    end
+  end)
+
+  triggerBot:Slider("射击延迟", "Slider", 0, 0, 1, true, function(delayAmount)
+    v61.DelayAmount = delayAmount
+  end)
+
+  local section11 = tab3:Section("朝向系统", false)
+  local v118 = false
+  local v119 = false
+
+  local function f25()
+    local getPlayers3 = v5:GetPlayers()
+
+    for key41, value44 in pairs(getPlayers3) do
+      getPlayers3[key41] = value44.Name
+    end
+
+    return getPlayers3
+  end
+
+  local v120
+
+  local v121 = section11:Dropdown("选择玩家", "Dropdown", f25(), function(p78)
+    v120 = p78
+  end)
+
+  v5.PlayerAdded:Connect(function(player4) v121:AddOption(player4.Name) end)
+  v5.PlayerRemoving:Connect(function(player5) v121:RemoveOption(player5.Name) end)
+
+  local v122 = false
+
+  section11:Toggle("朝向指定玩家", "Toggle", false, function(p79)
+    v122 = p79
+
+    while v122 do
+      task.wait()
+
+      humanoidRootPart.CFrame = CFrame.new(
+        humanoidRootPart.Position, v5[v120].Character.HumanoidRootPart.Position
+      )
+    end
+  end)
+
+  local function f26(p80)
+    local huge3 = math.huge
+    local v123
+
+    local function f27(p81)
+      local humanoidRootPart3 = p81:FindFirstChild("HumanoidRootPart")
+
+      if humanoidRootPart3 then
+        local magnitude6 = (humanoidRootPart3.Position - humanoidRootPart.Position).Magnitude
+
+        if magnitude6 < huge3 then
+          v123 = humanoidRootPart3
+          huge3 = magnitude6
+        end
+      end
+    end
+
+    if p80 == "Players" then
+      for key42, value45 in pairs(v5:GetPlayers()) do
+        if value45 == localPlayer then
+        elseif v118 and table.find(v27, value45.UserId) then
+        elseif v119 and value45.Team == localPlayer.Team then
+        else
+          local character4 = value45.Character
+
+          if character4 then
+            f27(character4)
+          end
+        end
+      end
+    elseif p80 == "NPC" then
+      for key43, value46 in pairs(v31) do
+        f27(key43)
+      end
+    end
+
+    return v123
+  end
+
+  local v124 = false
+
+  section11:Toggle("自动朝向最近玩家", "Toggle", false, function(p82)
+    v124 = p82
+
+    while v124 do
+      task.wait()
+      local players3 = f26("Players")
+
+      if players3 then
+        humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position, players3.Position)
+      end
+    end
+  end)
+
+  local v125 = false
+
+  section11:Toggle("自动朝向最近NPC", "Toggle", false, function(p83)
+    v125 = p83
+
+    while v125 do
+      task.wait()
+      local npc = f26("NPC")
+
+      if npc then
+        humanoidRootPart.CFrame = CFrame.new(humanoidRootPart.Position, npc.Position)
+      end
+    end
+  end)
+
+  section11:Toggle("不朝向好友", "Toggle", false, function(p84) v118 = p84 end)
+  section11:Toggle("不朝向队友", "Toggle", false, function(p85) v119 = p85 end)
+
+  local section12 = tab3:Section("其他", false)
+
+  section12:Toggle("Aimbot的同时也朝向", "Toggle", false, function(facingWhenAimbot)
+    v59.FacingWhenAimbot = facingWhenAimbot
+  end)
+
+  section12:Toggle("显示十字瞄准线", "Toggle", false, function(visible5)
+    line2.Visible = visible5
+    line3.Visible = visible5
+  end)
+
+  if v15.TouchEnabled then
+    section12:Toggle("射击按钮(用于点击射击游戏)", "Toggle", false, function(visible6)
+      instance4.Visible = visible6
+    end)
+  end
+
+  section12:Button("反hook绕过", function()
+    local v126 = false
+    local v127
+
+    for key44, value47 in pairs(getreg()) do
+      if typeof(value47) == "thread" then
+        local v128 = debug.info(value47, 1, "s")
+
+        if not v128 then
+        else
+          if v128:match("%.Core.Anti") or v128:match("%.Plugins.Anti_Cheat") then
+            v126 = true
+          end
+
+          if v128:match("%.BAC_") then
+            v127 = "BAC"
+            coroutine.close(value47)
+          end
+        end
+      end
+    end
+
+    local v129
+
+    if not v126 then
+      v129 = nil
+
+      v129 = hookfunction(getrenv().getfenv, function(...)
+        local v130 = { ... }
+
+        if not checkcaller() and typeof(v130[1]) == "number" then
+          v127 = "getfenv"
+          print(debug.traceback("getfenv"))
+          return coroutine.yield()
+        end
+
+        return v129(unpack(v130))
+      end)
+    end
+
+    task.wait(2)
+
+    local v131
+
+    v131 = hookmetamethod(game, "__namecall", function(...)
+      local v132 = { pcall(v131, ...) }
+      local v133 = v132[1]
+
+      if not checkcaller() and not v133 then
+        v127 = "AntiHook"
+        print(debug.traceback("namecall"))
+        return coroutine.yield()
+      end
+
+      return unpack(v132, 2)
+    end)
+
+    repeat
+      task.wait()
+    until v127
+
+    notification("XA:提示", "绕过成功:" .. v127, 5)
+  end)
+
+  local v134 = {
+    Size = 15,
+    Part = "HumanoidRootPart",
+    Transparency = 0.8,
+    TeamCheck = false,
+    Collide = false,
+    Targets = { Players = true, NPCs = false },
+  }
+
+  local v135 = {}
+  local section13 = xaHub:Tab("范围", "6035145364"):Section("范围", true)
+  local connect3
+
+  section13:Toggle("开关", "Toggle", false, function(p86)
+    if p86 then
+      connect3 = v9.RenderStepped:Connect(function()
+        local v136, v137 = f7(v134.Targets, v134.TeamCheck)
+
+        for key45, value48 in next, v136, v137 do
+          local findFirstChild2 = value48:FindFirstChild(v134.Part)
+
+          if not findFirstChild2 then
+          else
+            if not v135[findFirstChild2] then
+              v135[findFirstChild2] = findFirstChild2.Size
+            end
+
+            findFirstChild2.Size = Vector3.new(v134.Size, v134.Size, v134.Size)
+            findFirstChild2.Transparency = v134.Transparency
+            findFirstChild2.CanCollide = v134.Collide
+
+            if v134.Part == "Head" then
+              findFirstChild2.Massless = true
+            else
+              findFirstChild2.Color = Color3.fromRGB(0, 0, 0)
+            end
+          end
+        end
+      end)
+    else
+      connect3:Disconnect()
+      task.wait()
+
+      for key46, value49 in next, v135, nil do
+        key46.Size = value49
+        key46.Transparency = v134.Part == "HumanoidRootPart" and 1 or 0
+        key46.CanCollide = false
+
+        if v134.Part == "Head" then
+          key46.Massless = false
+        else
+          key46.Color = Color3.fromRGB(163, 162, 165)
+        end
+      end
+
+      v135 = {}
+    end
+  end)
+
+  section13:Textbox("Hitbox大小", "Textbox", 15, function(size) v134.Size = size end)
+
+  section13:Dropdown("Hitbox部位", "Dropdown", { "身体", "头部" }, 1, function(p87)
+    if p87 == "身体" then
+      v134.Part = "HumanoidRootPart"
+    else
+      v134.Part = "Head"
+    end
+  end)
+
+  section13:Textbox("Hitbox透明度", "Textbox", 0.8, function(transparency2)
+    v134.Transparency = transparency2
+  end)
+
+  section13:Toggle("队伍检查", "Toggle", false, function(teamCheck3)
+    v134.TeamCheck = teamCheck3
+  end)
+
+  section13:Toggle("可碰撞", "Toggle", false, function(collide) v134.Collide = collide end)
+
+  section13:Toggle("目标玩家", "Toggle", true, function(players4)
+    v134.Targets.Players = players4
+  end)
+
+  section13:Toggle("目标NPC", "Toggle", false, function(npCs2) v134.Targets.NPCs = npCs2 end)
+
+  f1(function()
+    local tab4 = xaHub:Tab("网络所有权", "6035145364")
+    local section14 = tab4:Section("未锚固物体控制", false)
+
+    local function f28()
+      local getPlayers4 = v5:GetPlayers()
+
+      for key47, value50 in pairs(getPlayers4) do
+        getPlayers4[key47] = value50.Name
+      end
+
+      return getPlayers4
+    end
+
+    local v138 = section14:Dropdown("选择玩家", "SelectPlayer", f28())
+
+    v5.PlayerAdded:Connect(function(player6) v138:AddOption(player6.Name) end)
+    v5.PlayerRemoving:Connect(function(player7) v138:RemoveOption(player7.Name) end)
+
+    section14:Button("传送未锚固物体给他", function()
+      if not flags.SelectPlayer then
+        notification("XA:提示", "请先选择玩家", 5)
+        return
+      end
+
+      if not v5[flags.SelectPlayer].Character then
+        return
+      end
+
+      for key48, value51 in pairs(v32) do
+        if value51.Parent and not value51:IsDescendantOf(character) and isnetworkowner(value51) then
+          value51.CFrame = v5[flags.SelectPlayer].Character:GetPivot()
+        end
+      end
+    end)
+
+    section14:Button("使用未锚固物体甩飞", function()
+      local v139
+
+      if not flags.SelectPlayer then
+        notification("XA:提示", "请先选择玩家", 5)
+        return
+      else
+        local character5 = v5[flags.SelectPlayer].Character
+
+        if not character5 then
+          return
+        end
+
+        for key49, value52 in pairs(v32) do
+          if value52.Parent and not value52:IsDescendantOf(character)
+            and isnetworkowner(value52) and value52.CanCollide then
+            repeat
+              task.wait()
+
+              value52.CFrame = character5:GetPivot()
+              value52.Velocity = Vector3.new(0, 1000000, 0)
+
+              v139 = not character5.Parent or character5.PrimaryPart.Velocity.Magnitude > 200
+            until v139
+
+            break
+          end
+        end
+
+        return
+      end
+    end)
+
+    section14:Button("传送未锚固物体至自己", function()
+      for key50, value53 in pairs(v32) do
+        if value53.Parent and not value53:IsDescendantOf(character) and isnetworkowner(value53) then
+          value53.CFrame = humanoidRootPart.CFrame
+        end
+      end
+    end)
+
+    local dragPart = Instance.new("Part")
+    dragPart.Name = "_DragPart"
+    dragPart.Anchored = true
+    dragPart.CanCollide = false
+    dragPart.Transparency = 1
+
+    local instance7 = Instance.new("Attachment", dragPart)
+    local v140 = false
+
+    local instance8 = Instance.new("Frame", screenGui)
+    instance8.Position = UDim2.new(1, -95, 1, -90)
+    instance8.Size = UDim2.new(0, 70, 0, 70)
+    instance8.BackgroundTransparency = 1
+    instance8.Visible = false
+
+    local instance9 = Instance.new("ImageButton", instance8)
+    instance9.Position = UDim2.new(-0.007, 0, -0.957, 0)
+    instance9.Size = UDim2.new(0.59, 0, 0.59, 0)
+    instance9.Image = "rbxassetid://121117383391041"
+    instance9.BackgroundTransparency = 1
+
+    local instance10 = Instance.new("TextLabel", instance9)
+    instance10.Position = UDim2.new(0.5, 0, 0.5, 0)
+    instance10.AnchorPoint = Vector2.new(0.5, 0.5)
+    instance10.Size = UDim2.new(0.7, 0, 0.7, 0)
+    instance10.TextSize = 14
+    instance10.Text = "扔"
+    instance10.TextColor3 = Color3.new(1, 1, 1)
+    instance10.BackgroundTransparency = 1
+
+    local instance11 = Instance.new("ImageButton", instance8)
+    instance11.Position = UDim2.new(-0.787, 0, -0.578, 0)
+    instance11.Size = UDim2.new(0.59, 0, 0.59, 0)
+    instance11.Image = "rbxassetid://121117383391041"
+    instance11.BackgroundTransparency = 1
+
+    local instance12 = Instance.new("TextLabel", instance11)
+    instance12.Position = UDim2.new(0.5, 0, 0.5, 0)
+    instance12.AnchorPoint = Vector2.new(0.5, 0.5)
+    instance12.Size = UDim2.new(0.7, 0, 0.7, 0)
+    instance12.TextSize = 14
+    instance12.Text = "卸下"
+    instance12.TextColor3 = Color3.new(1, 1, 1)
+    instance12.BackgroundTransparency = 1
+
+    local f29, f30
+
+    local function f31(p88)
+      v140 = true
+      p88.CanCollide = false
+      instance8.Visible = true
+
+      if p88:FindFirstChild("Attachment") then
+        p88.Attachment:Destroy()
+      end
+
+      if p88:FindFirstChild("AlignPosition") then
+        p88.AlignPosition:Destroy()
+      end
+
+      if p88:FindFirstChild("Torque") then
+        p88.Torque:Destroy()
+      end
+
+      local instance13 = Instance.new("Attachment", p88)
+
+      local instance14 = Instance.new("AlignPosition", p88)
+      instance14.MaxForce = 1000000000
+      instance14.MaxVelocity = math.huge
+      instance14.Responsiveness = 200
+      instance14.Attachment0 = instance13
+      instance14.Attachment1 = instance7
+
+      local instance15 = Instance.new("Highlight", p88)
+      instance15.FillTransparency = 1
+      instance15.OutlineColor = Color3.new(1, 1, 1)
+
+      local instance16
+
+      if flags.ObjectTorque then
+        instance16 = Instance.new("Torque", p88)
+        instance16.Torque = Vector3.new(1000000, 1000000, 1000000)
+        instance16.Attachment0 = instance13
+      end
+
+      function f29()
+        v140 = false
+        p88.CanCollide = true
+        instance8.Visible = false
+
+        if flags.ObjectTorque then
+          p88.AssemblyLinearVelocity = Vector3.zero
+          p88.AssemblyAngularVelocity = Vector3.zero
+          instance16:Destroy()
+        end
+
+        instance13:Destroy()
+        instance14:Destroy()
+        instance15:Destroy()
+      end
+
+      function f30()
+        f29()
+        p88.Velocity = currentCamera.CFrame.LookVector * flags.ThrowStrength
+      end
+
+      local v141 = (humanoidRootPart.Position - p88:GetPivot().Position).Magnitude - 1.5
+
+      task.spawn(function()
+        while true do
+          if not p88.Parent or not isnetworkowner(p88) then
+            f29()
+          end
+
+          if not v140 then
+            break
+          end
+
+          if character:FindFirstChild("Head") and character.Head.LocalTransparencyModifier == 1 then
+            instance7.WorldCFrame = workspace.CurrentCamera.CFrame * CFrame.new(0, 0, -v141)
+          elseif v21 then
+            instance7.WorldCFrame = CFrame.lookAlong(
+              humanoidRootPart.Position, currentCamera.CFrame.LookVector * Vector3.new(1, 0, 1)
+            ) * CFrame.new(3, 0, -8)
+          else
+            instance7.WorldCFrame = CFrame.new(v20.UnitRay.Origin + v20.UnitRay.Direction * v141)
+          end
+
+          v9.RenderStepped:Wait()
+        end
+      end)
+    end
+
+    instance9.MouseButton1Click:Connect(function() f30() end)
+    instance11.MouseButton1Click:Connect(function() f29() end)
+
+    section14:Toggle("拖动未锚固物体", "DragUnanchored", false, function(p89)
+      if p89 then
+        dragPart.Parent = workspace
+      else
+        dragPart.Parent = nil
+        v140 = false
+
+        if f29 then
+          f29()
+        end
+      end
+    end)
+
+    section14:Slider("扔的力度", "ThrowStrength", 350, 0, 500, false)
+    section14:Toggle("物体旋转", "ObjectTorque", false)
+    section14:Toggle("最大模拟半径", "MaxSimulation", false)
+
+    local section15 = tab4:Section("传送未锚固物体")
+    local cframe6
+
+    section15:Button("设置传送点", function()
+      pcall(function()
+        workspace.BasedropCord:Destroy()
+        cframe6 = nil
+      end)
+
+      local basedropCord = Instance.new("Part")
+      basedropCord.Name = "BasedropCord"
+      basedropCord.Anchored = true
+      basedropCord.CanCollide = false
+      basedropCord.Parent = workspace
+      basedropCord.Shape = Enum.PartType.Ball
+      basedropCord.Size = Vector3.new(2, 2, 2)
+      basedropCord.Color = Color3.fromRGB(0, 217, 255)
+      basedropCord.Material = Enum.Material.ForceField
+      basedropCord.CFrame = humanoidRootPart.CFrame
+
+      cframe6 = humanoidRootPart.CFrame
+    end)
+
+    section15:Button("删除传送点", function()
+      pcall(function()
+        workspace.BasedropCord:Destroy()
+        cframe6 = nil
+      end)
+    end)
+
+    local v142 = {}
+    local label2 = section15:Label("选择物品总个数:0")
+
+    local function f32()
+      label2.Text = "选择物品中个数:" .. #v142
+    end
+
+    section15:Toggle("点击以选择物品", "SelectingItems", false)
+    local label3 = section15:Label("物品名称:nil")
+
+    local instance17 = Instance.new("Highlight", v6)
+    instance17.FillColor = Color3.new(0, 1, 0)
+    instance17.OutlineColor = Color3.new(0, 1, 0)
+
+    section15:Toggle("点击以查看物品名称", "ShowItemName", false)
+
+    section15:Textbox("输入想选择物品的名称", "Textbox", "", function(p90)
+      local count = 0
+
+      for key51, value54 in pairs(workspace:GetDescendants()) do
+        if value54:IsA("BasePart") and isnetworkowner(value54) and value54.Name == p90 then
+          table.insert(v142, value54)
+          count = count + 1
+        end
+      end
+
+      f32()
+      notification("XA:提示", "共找到" .. count .. "个物品", 5)
+    end)
+
+    section15:Textbox("输入想选择物品的名称(match)", "Textbox", "", function(p91)
+      local count2 = 0
+
+      for key52, value55 in pairs(workspace:GetDescendants()) do
+        if value55:IsA("BasePart") and isnetworkowner(value55) and value55.Name:match(p91) then
+          table.insert(v142, value55)
+          count2 = count2 + 1
+        end
+      end
+
+      f32()
+      notification("XA:提示", "共找到" .. count2 .. "个物品", 5)
+    end)
+
+    section15:Button("取消选择所有物品", function()
+      for key53, value56 in pairs(v142) do
+      end
+
+      v142 = {}
+      f32()
+    end)
+
+    section15:Button("传送物品至所选地点", function()
+      for key54, value57 in pairs(v142) do
+        value57.CFrame = cframe6
+      end
+    end)
+
+    local section16 = tab4:Section("物体环绕", false)
+    section16:Toggle("开关", "Blackhole", false)
+    section16:Slider("半径", "RingRadius", 50, 0, 100, false)
+    section16:Textbox("高度", "RingHeight", 100)
+    section16:Textbox("旋转速度", "RotationSpeed", 10)
+    section16:Textbox("吸引力强度", "AttractionStrength", 1000)
+
+    v9.Heartbeat:Connect(function()
+      if flags.MaxSimulation then
+        localPlayer.SimulationRadius = math.huge
+      end
+
+      if flags.Blackhole then
+        local position3 = humanoidRootPart.Position
+
+        for key55, value58 in pairs(v32) do
+          task.wait()
+
+          if value58.Parent and not value58:IsDescendantOf(character)
+            and isnetworkowner(value58) then
+            value58.Massless = true
+            local position4 = value58.Position
+            local magnitude7 = (Vector3.new(position4.X, position3.Y, position4.Z) - position3).Magnitude
+
+            local v143 = math.atan2(position4.Z - position3.Z, position4.X - position3.X)
+              + math.rad(flags.RotationSpeed)
+
+            local v144 = math.cos(v143)
+            local v145 = math.min(flags.RingRadius, magnitude7)
+            local v146 = math.abs(math.sin((position4.Y - position3.Y) / flags.RingHeight))
+            local v147 = math.sin(v143)
+            local v148 = math.min(flags.RingRadius, magnitude7)
+
+            value58.Velocity = (Vector3.new(
+              position3.X + v144 * v145, position3.Y + flags.RingHeight * v146,
+              position3.Z + v147 * v148
+            ) - value58.Position).unit * flags.AttractionStrength
+          end
+        end
+      end
+    end)
+
+    local section17 = tab4:Section("NPC控制", false)
+
+    local instance18 = Instance.new("Highlight", v6)
+    instance18.FillTransparency = 1
+
+    local npc2 = section17:Label("当前已选择NPC:无")
+    section17:Toggle("点击以选择NPC", "ClickNPC", false)
+    local v149, v150
+
+    section17:Button("杀死NPC", function()
+      if v149 and isnetworkowner(v150) then
+        local humanoid4 = v149:FindFirstChildOfClass("Humanoid")
+
+        if humanoid4 then
+          humanoid4.Health = 0
+        end
+      end
+    end)
+
+    section17:Button("带来NPC", function()
+      if v149 and isnetworkowner(v150) then
+        v149:PivotTo(humanoidRootPart.CFrame)
+      end
+    end)
+
+    section17:Button("传送至NPC", function()
+      if v149 then
+        character:PivotTo(v149:GetPivot())
+      end
+    end)
+
+    local character6
+
+    section17:Toggle("控制NPC", "ControlNPC", false, function(p92)
+      if p92 then
+        if v149 and isnetworkowner(v150) then
+          character6 = localPlayer.Character
+          localPlayer.Character = v149
+          currentCamera.CameraSubject = v149:FindFirstChildOfClass("Humanoid")
+        end
+      elseif character6 then
+        localPlayer.Character = character6
+        currentCamera.CameraSubject = humanoid
+        character6 = nil
+      end
+    end)
+
+    section17:Button("甩飞NPC", function()
+      if v149 and isnetworkowner(v150) then
+        v150.Velocity = Vector3.new(9000000000, 9000000000, 9000000000)
+      end
+    end)
+
+    section17:Toggle("冻住NPC", "FreezeNPC", false, function(p93)
+      if p93 then
+        if v149 and isnetworkowner(v150) then
+          local bodyPosition = Instance.new("BodyPosition")
+          bodyPosition.Name = "_BodyPosition"
+          bodyPosition.Parent = v150
+          bodyPosition.Position = v150.Position
+          bodyPosition.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+
+          local bodyGyro = Instance.new("BodyGyro")
+          bodyGyro.Name = "_BodyGyro"
+          bodyGyro.Parent = v150
+          bodyGyro.CFrame = v150.CFrame
+          bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+        end
+      elseif v149 and v150 then
+        for key56, value59 in pairs(v150:GetChildren()) do
+          if value59.Name == "_BodyPosition" or value59.Name == "_BodyGyro" then
+            value59:Destroy()
+          end
+        end
+      end
+    end)
+
+    section17:Button("让NPC跳", function()
+      if v149 and isnetworkowner(v150) then
+        local humanoid5 = v149:FindFirstChildOfClass("Humanoid")
+
+        if humanoid5 then
+          humanoid5:ChangeState(3)
+        end
+      end
+    end)
+
+    section17:Toggle("NPC杀戮光环", "NPCKillAura", false, function(p94)
+      while flags.NPCKillAura do
+        for key57, value60 in pairs(v31) do
+          local primaryPart2 = key57.PrimaryPart
+
+          local basePart3 = primaryPart2
+          basePart3 = primaryPart2 or key57:FindFirstChildWhichIsA("BasePart")
+
+          if basePart3
+            and isnetworkowner(basePart3)
+            and (humanoidRootPart.Position - basePart3.Position).Magnitude
+              <= flags.NPCKillAuraRange then
+            local humanoid6 = key57:FindFirstChildOfClass("Humanoid")
+
+            if humanoid6 then
+              humanoid6.Health = 0
+            end
+          end
+        end
+
+        v9.RenderStepped:Wait()
+      end
+    end)
+
+    section17:Slider("NPC杀戮光环范围", "NPCKillAuraRange", 15, 0, 50, false)
+
+    v20.Button1Down:Connect(function()
+      if not v20.Target then
+        return
+      else
+        local model3 = v20.Target:FindFirstAncestorOfClass("Model")
+
+        if flags.ClickNPC and model3 and model3:FindFirstChildOfClass("Humanoid") then
+          if not v5:GetPlayerFromCharacter(model3) then
+            local primaryPart3 = model3.PrimaryPart or model3:FindFirstChildWhichIsA("BasePart")
+
+            if primaryPart3 and isnetworkowner(primaryPart3) then
+              v149 = model3
+              v150 = primaryPart3
+              npc2.Text = "当前已选择NPC:" .. v149.Name
+
+              instance18.Adornee = v149
+              instance18.OutlineColor = Color3.fromRGB(0, 255, 0)
+            else
+              instance18.Adornee = model3
+              instance18.OutlineColor = Color3.fromRGB(255, 0, 0)
+            end
+          end
+        end
+
+        if v20.Target:IsA("BasePart") and isnetworkowner(v20.Target) then
+          if flags.DragUnanchored and not v140 then
+            f31(v20.Target)
+          end
+
+          if flags.SelectingItems then
+            local v151 = table.find(v142, v20.Target)
+
+            if v151 then
+              table.remove(v142, v151)
+              f32()
+            else
+              table.insert(v142, v20.Target)
+              f32()
+              Instance.new("Highlight", v20.Target).FillTransparency = 1
+            end
+          end
+
+          if flags.ShowItemName then
+            instance17.Adornee = v20.Target
+            label3.Text = "物品名称:" .. v20.Target.Name
+          end
+        end
+
+        return
+      end
+    end)
+  end)
+
+  local section18 = xaHub:Tab("国内脚本", "6035145364"):Section("国内脚本", true)
+
+  section18:Button("脚本中心XC", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/gemxHwA1"))()
+  end)
+
+  section18:Button("ScriptHub-银狼", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/rbxluau/Roblox/main/ScriptHub.lua"))()
+  end)
+
+  section18:Button("落叶中心", function()
+    getgenv().LS = "落叶中心"
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/krlpl/Deciduous-center-LS/main/%E8%90%BD%E5%8F%B6%E4%B8%AD%E5%BF%83%E6%B7%B7%E6%B7%86.txt"))()
+  end)
+
+  section18:Button("情云", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ChinaQY/-/refs/heads/Main/%E6%83%85%E4%BA%91"))()
+  end)
+
+  section18:Button("导管中心", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/useranewrff/roblox-/main/%E6%9D%A1%E6%AC%BE%E5%8D%8F%E8%AE%AE"))()
+  end)
+
+  local tab5 = xaHub:Tab("其他", "6035145364")
+  local section19 = tab5:Section("XA分支", false)
+  local v152 = loadstring
+  local v153 = game
+  local v154
+
+  section19:Dropdown(
+    "选择游戏", "Dropdown",
+    v152(v153:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/GameLoad.lua"))(true),
+    function(p95) v154 = p95 .. ".lua" end
+  )
+
+  section19:Button("执行", function()
+    if not v154 then
+      notification("XA:提示", "请先选择游戏", 5)
+      return
+    end
+
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Games/"
+      .. v154))()
+  end)
+
+  section19:Button("复制执行脚本", function()
+    if not v154 then
+      notification("XA:提示", "请先选择游戏", 5)
+      return
+    end
+
+    setclipboard("loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Games/"
+      .. v154 .. "\"))()")
+  end)
+
+  section19:Button("自动检测游戏并执行", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/GameLoad.lua"))()
+  end)
+
+  section19:Button("复制自动执行脚本", function()
+    setclipboard("loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/GameLoad.lua\"))()")
+  end)
+
+  local section20 = tab5:Section("FE脚本", false)
+
+  section20:Button("Infinite Yield", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+  end)
+
+  section20:Button("Nameless Admin", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source"))()
+  end)
+
+  section20:Button("Rochips Panel", function()
+    loadstring(game:HttpGet("https://glot.io/snippets/gzrux646yj/raw/main.ts"))()
+  end)
+
+  section20:Button("CMD-X", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source", true))()
+  end)
+
+  section20:Button("C00lgui", function()
+    loadstring(game:GetObjects("rbxassetid://8127297852")[1].Source)()
+  end)
+
+  section20:Button("C00lgui(2.0)", function()
+    loadstring(game:HttpGet(
+      "https://raw.githubusercontent.com/theawesomari0/c00lgui/main/c00lgui", true
+    ))()
+  end)
+
+  section20:Button("1x1x1x1", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/JipYNCht", true))()
+  end)
+
+  section20:Button("Control", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Content/Controller.lua"))()
+  end)
+
+  section20:Textbox("变玩家(输入名称)", "Textbox", "", function(p96)
+    localPlayer:ClearCharacterAppearance()
+    humanoid:ApplyDescriptionClientServer((v5:GetHumanoidDescriptionFromUserId((v5:GetUserIdFromNameAsync(p96)))))
+  end)
+
+  local v155 = {}
+
+  section20:Button("后门扫描", function()
+    for key58, value61 in pairs(game:GetDescendants()) do
+      local v156 = value61
+
+      if v156:IsA("RemoteEvent") or v156:IsA("RemoteFunction") then
+        local v157 = "Instance.new(\"Model\", workspace).Name = \"_Detector" .. key58 .. "\""
+        v155[key58] = v156
+
+        if v156:IsA("RemoveEvent") then
+          v156:FireServer(v157)
+        elseif v156:IsA("RemoteFunction") then
+          spawn(function() v156:InvokeServer(v157) end)
+        end
+      end
+    end
+
+    task.wait(1)
+
+    for key59, value62 in pairs(v155) do
+      if workspace:FindFirstChild("_Detector" .. key59) then
+        notification("XA:提示", "已找到后门!", 5)
+      end
+    end
+  end)
+
+  local section21 = tab5:Section("免费通行证", false)
+  section21:Label("仅部分服务器生效")
+
+  task.spawn(function()
+    for key60, value63 in next, v18:GetDeveloperProductsAsync():GetCurrentPage(), nil do
+      local v158 = value63
+
+      section21:Button("名称: " .. v158.displayName .. " 价格: " .. v158.PriceInRobux
+        .. " Id: " .. v158.ProductId, function()
+        v18:SignalPromptProductPurchaseFinished(localPlayer.UserId, v158.ProductId, true)
+      end)
+    end
+  end)
+
+  section21:Button("GamepassHook绕过", function()
+    local v159
+
+    v159 = hookmetamethod(game, "__namecall", function(p97, ...)
+      if tostring(p97) == "MarketplaceService"
+        and getnamecallmethod():lower() == "userownsgamepassasync" then
+        return true
+      end
+
+      return v159(p97, ...)
+    end)
+
+    hookfunction(v18.UserOwnsGamePassAsync, function(...) return true end)
+  end)
+
+  local section22 = tab5:Section("Reach", false)
+  section22.Targets = { Players = true, NPCs = false }
+
+  local overlapParams = OverlapParams.new()
+  overlapParams.FilterType = Enum.RaycastFilterType.Include
+
+  section22:Toggle("Reach", "Reach", false, function(p98)
+    while flags.Reach do
+      task.wait()
+      local tool3 = localPlayer.Character:FindFirstChildWhichIsA("Tool")
+
+      local findFirstChildWhichIsA = tool3
+        and tool3:FindFirstChildWhichIsA("TouchTransmitter", true)
+
+      if findFirstChildWhichIsA then
+        overlapParams.FilterDescendantsInstances = f7(section22.Targets, section22.TeamCheck)
+
+        for v160, v161 in workspace:GetPartBoundsInBox(findFirstChildWhichIsA.Parent.CFrame, findFirstChildWhichIsA.Parent.Size + Vector3.new(
+          flags.Range, flags.Range, flags.Range
+        ), overlapParams), nil, nil do
+          tool3:Activate()
+          firetouchinterest(findFirstChildWhichIsA.Parent, v161, 1)
+          firetouchinterest(findFirstChildWhichIsA.Parent, v161, 0)
+        end
+      end
+    end
+  end)
+
+  section22:Slider("范围", "Range", 10, 0, 30, true)
+
+  section22:Toggle("目标玩家", "Toggle", true, function(players5)
+    section22.Targets.Players = players5
+  end)
+
+  section22:Toggle("目标NPC", "Toggle", false, function(npCs3)
+    section22.Targets.NPCs = npCs3
+  end)
+
+  section22:Toggle("队伍检查", "Toggle", false, function(teamCheck4)
+    section22.TeamCheck = teamCheck4
+  end)
+
+  f1(function()
+    local section23 = tab5:Section("连点器", false)
+    local v162 = false
+    local v163 = 0
+
+    local v164 = {
+      Start = "rbxassetid://128832474920642",
+      Stop = "rbxassetid://113047868752296",
+      AddButton = "rbxassetid://80871366492449",
+      DeleteButton = "rbxassetid://122610572797061",
+      EyesOn = "rbxassetid://82900330630483",
+      EyesOff = "rbxassetid://89558029527587",
+      ClickPoint = "rbxassetid://110626268563466",
+      ClickPointClicking = "rbxassetid://104432635380836",
+    }
+
+    local instance19 = Instance.new("Frame", screenGui)
+    instance19.Visible = false
+    instance19.Position = UDim2.new(0.5, 0, 0.5, 0)
+
+    local clickPointTemp = Instance.new("ImageLabel")
+    clickPointTemp.Name = "ClickPoint_Temp"
+    clickPointTemp.Size = UDim2.new(0, 40, 0, 40)
+    clickPointTemp.Position = UDim2.new(0.5, 0, 0.5, 0)
+    clickPointTemp.BackgroundTransparency = 1
+    clickPointTemp.Draggable = true
+    clickPointTemp.Active = true
+    clickPointTemp.Image = v164.ClickPoint
+    clickPointTemp.ZIndex = 100000
+
+    local instance20 = Instance.new("TextLabel", clickPointTemp)
+    instance20.Position = UDim2.new(0.5, 0, 0.5, 0)
+    instance20.AnchorPoint = Vector2.new(0.5, 0.5)
+    instance20.Size = UDim2.new(0.7, 0, 0.7, 0)
+    instance20.TextSize = 14
+    instance20.Text = "1"
+    instance20.TextColor3 = Color3.new(0, 0, 0)
+    instance20.BackgroundTransparency = 1
+    instance20.ZIndex = 100001
+
+    local instance21 = Instance.new("Frame", screenGui)
+    instance21.BorderSizePixel = 0
+    instance21.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    instance21.Size = UDim2.new(0, 30, 0, 192)
+    instance21.Position = UDim2.new(0, 16, 0, 34)
+    instance21.BackgroundTransparency = 0.5
+    instance21.Draggable = true
+    instance21.Active = true
+    instance21.Visible = false
+
+    Instance.new("UIListLayout", instance21)
+
+    local imageButton = Instance.new("ImageButton")
+    imageButton.BorderSizePixel = 0
+    imageButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    imageButton.Size = UDim2.new(0, 30, 0, 30)
+    imageButton.BackgroundTransparency = 1
+
+    local clone2 = imageButton:Clone()
+    clone2.Parent = instance21
+    clone2.Image = v164.Start
+
+    clone2.MouseButton1Click:Connect(function()
+      v162 = not v162
+      instance21.BackgroundColor3 = v162 and Color3.fromRGB(0, 255, 125) or Color3.new(1, 1, 1)
+
+      if v162 then
+        for key61, value64 in pairs(instance19:GetChildren()) do
+          if not value64:IsA("ImageLabel") then
+          else
+            value64.Active = false
+            value64.Image = v164.ClickPointClicking
+          end
+        end
+
+        clone2.Image = v164.Stop
+      else
+        for key62, value65 in pairs(instance19:GetChildren()) do
+          if not value65:IsA("ImageLabel") then
+          else
+            value65.Active = true
+            value65.Image = v164.ClickPoint
+          end
+        end
+
+        clone2.Image = v164.Start
+      end
+
+      while v162 do
+        for key63, value66 in pairs(instance19:GetChildren()) do
+          if not value66:IsA("ImageLabel") then
+          else
+            local absoluteSize = value66.AbsoluteSize
+            local absolutePosition = value66.AbsolutePosition
+            local v165 = absolutePosition.X + absoluteSize.X / 2 + v25
+            local v166 = absolutePosition.Y + absoluteSize.Y / 2 + v26
+
+            if v21 then
+              local v167 = math.random(999)
+              v17:SendTouchEvent(v167, 0, v165, v166)
+              task.wait()
+              v17:SendTouchEvent(v167, 2, v165, v166)
+            else
+              v17:SendMouseButtonEvent(v165, v166, 0, true, game, 0)
+              task.wait()
+              v17:SendMouseButtonEvent(v165, v166, 0, false, game, 0)
+            end
+          end
+        end
+
+        task.wait(v163)
+      end
+    end)
+
+    local v168 = 1
+
+    local clone3 = imageButton:Clone()
+    clone3.Parent = instance21
+    clone3.Image = v164.AddButton
+
+    clone3.MouseButton1Click:Connect(function()
+      local clone4 = clickPointTemp:Clone()
+      clone4.Parent = instance19
+      clone4.TextLabel.Text = v168
+
+      v168 = v168 + 1
+    end)
+
+    local clone5 = imageButton:Clone()
+    clone5.Parent = instance21
+    clone5.Image = v164.DeleteButton
+
+    clone5.MouseButton1Click:Connect(function()
+      local getChildren = instance19:GetChildren()
+
+      if #getChildren == 0 then
+        return
+      end
+
+      getChildren[#getChildren]:Destroy()
+
+      if v168 > 1 then
+        v168 = v168 - 1
+      end
+    end)
+
+    local clone6 = imageButton:Clone()
+    clone6.Parent = instance21
+    clone6.Image = v164.EyesOn
+
+    local v169 = true
+
+    clone6.MouseButton1Click:Connect(function()
+      v169 = not v169
+      clone6.Image = v169 and v164.EyesOn or v164.EyesOff
+
+      for key64, value67 in pairs(instance19:GetChildren()) do
+        if not value67:IsA("ImageLabel") then
+        else
+          value67.Visible = v169
+        end
+      end
+    end)
+
+    section23:Toggle("显示UI", "Toggle", false, function(visible7)
+      instance19.Visible = visible7
+      instance21.Visible = visible7
+    end)
+
+    section23:Textbox("点击延迟(输入数字)", "Textbox", "", function(p99)
+      if tonumber(p99) then
+        v163 = tonumber(p99)
+      end
+    end)
+  end)
+
+  local section24 = tab5:Section("翻译/Translation", false)
+  local v170 = {}
+  local sub = localPlayer.LocaleId:sub(1, 2)
+  local v171 = 6000
+
+  local function f33(p100)
+    local v172 = {}
+    local v173 = {}
+
+    for key65, value68 in pairs(p100) do
+      if not value68.Parent then
+      else
+        for key66, value69 in pairs(value68:GetDescendants()) do
+          if (value69:IsA("TextLabel") or value69:IsA("TextButton") or value69:IsA("TextBox"))
+            and not value69:GetAttribute("Translated") then
+            table.insert(v172, value69.Text)
+            table.insert(v173, value69)
+          end
+        end
+      end
+    end
+
+    print("需要翻译的文本数量:", #v172)
+    local v174 = 1
+
+    while v174 <= #v172 do
+      local v175 = {}
+      local v176 = #v172
+      local v177 = {}
+      local total2 = 0
+
+      for i = v174, v176 do
+        local v178 = v172[i]
+        local v179 = #v178
+
+        if total2 + v179 > v171 and #v175 > 0 then
+          break
+        end
+
+        total2 = total2 + v179
+
+        table.insert(v175, v178)
+        table.insert(v177, v173[i])
+
+        v174 = i + 1
+      end
+
+      local v180 = request({
+        Url = "https://transmart.qq.com/api/imt",
+        Method = "POST",
+        Headers = { ["Content-Type"] = "application/json" },
+        Body = v10:JSONEncode({
+          header = {
+            fn = "auto_translation",
+            client_key = "browser-chrome-110.0.0-Mac OS-df4bd4c5-a65d-44b2-a40f-42f34f3535f2-1677486696487",
+          },
+          type = "plain",
+          model_category = "normal",
+          source = { lang = "en", text_list = v175 },
+          target = { lang = sub },
+        }),
+      })
+
+      if v180.Success then
+        local jsonDecode = v10:JSONDecode(v180.Body)
+        local autoTranslation = jsonDecode and jsonDecode.auto_translation or {}
+
+        for index4, value70 in ipairs(v177) do
+          if autoTranslation[index4] then
+            value70.Text = autoTranslation[index4]
+            value70:SetAttribute("Translated", true)
+          end
+        end
+
+        print(string.format("成功翻译一批:%d 条,总字符数:%d", #v175, total2))
+        task.wait(1)
+      else
+        warn("翻译失败:", v180.StatusMessage, v180.Body)
+        break
+      end
+    end
+  end
+
+  section24:Label("为了性能考虑, 我们只翻译后面添加的GUI")
+
+  local button2
+
+  button2 = section24:Button("启用hook检测", function()
+    local v181
+
+    v181 = hookfunction(Instance.new, function(...)
+      local v182 = ...
+
+      if checkcaller() and v182 == "ScreenGui" then
+        local v183 = v181(...)
+        table.insert(v170, v183)
+        return v183
+      end
+
+      return v181(...)
+    end)
+
+    button2:Destroy()
+  end)
+
+  section24:Button("翻译", function() f33(v170) end)
+
+  f1(function()
+    local function f34()
+      character.Animate.Disabled = false
+
+      for key67, value71 in pairs((humanoid:GetPlayingAnimationTracks())) do
+        value71:Stop()
+      end
+    end
+
+    local function f35(p101)
+      local getHumanoidDescriptionFromOutfitId
+
+      for key68, value72 in next, assetService:GetBundleDetailsAsync(p101).Items, nil do
+        if value72.Type == "UserOutfit" then
+          getHumanoidDescriptionFromOutfitId = v5:GetHumanoidDescriptionFromOutfitId(value72.Id)
+          break
+        end
+      end
+
+      if not getHumanoidDescriptionFromOutfitId then
+        return
+      else
+        local getAppliedDescription = humanoid:GetAppliedDescription()
+
+        for key69, value73 in next, {
+          "ClimbAnimation", "FallAnimation", "IdleAnimation", "JumpAnimation", "RunAnimation",
+          "SwimAnimation", "WalkAnimation",
+        }, nil do
+          getAppliedDescription[value73] = getHumanoidDescriptionFromOutfitId[value73]
+        end
+
+        humanoid:ApplyDescriptionClientServer(getAppliedDescription)
+        return
+      end
+    end
+
+    local tab6 = xaHub:Tab("动画区", "6035145364")
+
+    local section25 = tab6:Section("动画包", false)
+    section25:Label("动画为FE,别人能看见,对没有动画的服务器无效")
+
+    local v184 = {}
+    local v185
+
+    section25:Textbox("搜索动画包", "Textbox", "", function(searchKeyword)
+      v184 = {}
+
+      local catalogSearchParams = CatalogSearchParams.new()
+      catalogSearchParams.SearchKeyword = searchKeyword
+      catalogSearchParams.BundleTypes = { Enum.BundleType.Animations }
+
+      for key70, value74 in pairs(avatarEditorService:SearchCatalog(catalogSearchParams):GetCurrentPage()) do
+        v184[value74.Id] = value74.Name
+      end
+
+      v185:SetOptions(v184)
+      notification("XA:提示", "搜索成功", 5)
+    end)
+
+    local v186
+    v185 = section25:Dropdown("搜索结果", "Dropdown", {}, function(p102) v186 = p102 end)
+
+    section25:Button("加载动画", function()
+      for key71, value75 in pairs(v184) do
+        if value75 == v186 then
+          f35(key71)
+        end
+      end
+    end)
+
+    section25:Button("Vampire(吸血鬼)", function()
+      local animate = character.Animate
+      animate.Disabled = true
+
+      f34()
+
+      animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1083445855"
+      animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1083450166"
+      animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083473930"
+      animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083462077"
+      animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083455352"
+      animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083439238"
+      animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083443587"
+
+      humanoid:ChangeState(3)
+      animate.Disabled = false
+    end)
+
+    section25:Button("Hero(英雄)", function()
+      local animate2 = character.Animate
+      animate2.Disabled = true
+
+      f34()
+
+      animate2.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616111295"
+      animate2.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616113536"
+      animate2.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616122287"
+      animate2.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616117076"
+      animate2.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616115533"
+      animate2.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616104706"
+      animate2.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616108001"
+
+      humanoid:ChangeState(3)
+      animate2.Disabled = false
+    end)
+
+    section25:Button("Zombie(僵尸)", function()
+      local animate3 = character.Animate
+      animate3.Disabled = true
+
+      f34()
+
+      animate3.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616158929"
+      animate3.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616160636"
+      animate3.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+      animate3.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+      animate3.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
+      animate3.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
+      animate3.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
+
+      humanoid:ChangeState(3)
+      animate3.Disabled = false
+    end)
+
+    section25:Button("Mage(法师)", function()
+      local animate4 = character.Animate
+      animate4.Disabled = true
+
+      f34()
+
+      animate4.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=707742142"
+      animate4.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=707855907"
+      animate4.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=707897309"
+      animate4.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=707861613"
+      animate4.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=707853694"
+      animate4.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=707826056"
+      animate4.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
+
+      humanoid:ChangeState(3)
+      animate4.Disabled = false
+    end)
+
+    section25:Button("Ghost(幽灵)", function()
+      local animate5 = character.Animate
+      animate5.Disabled = true
+
+      f34()
+
+      animate5.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616006778"
+      animate5.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616008087"
+      animate5.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616010382"
+      animate5.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616013216"
+      animate5.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616008936"
+      animate5.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
+      animate5.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
+
+      humanoid:ChangeState(3)
+      animate5.Disabled = false
+    end)
+
+    section25:Button("Elder(长者)", function()
+      local animate6 = character.Animate
+      animate6.Disabled = true
+
+      f34()
+
+      animate6.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=845397899"
+      animate6.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=845400520"
+      animate6.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=845403856"
+      animate6.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=845386501"
+      animate6.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=845398858"
+      animate6.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=845392038"
+      animate6.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=845396048"
+
+      humanoid:ChangeState(3)
+      animate6.Disabled = false
+    end)
+
+    section25:Button("Levitation(漂浮)", function()
+      local animate7 = character.Animate
+      animate7.Disabled = true
+
+      f34()
+
+      animate7.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616006778"
+      animate7.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616008087"
+      animate7.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616013216"
+      animate7.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616010382"
+      animate7.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616008936"
+      animate7.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
+      animate7.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
+
+      humanoid:ChangeState(3)
+      animate7.Disabled = false
+    end)
+
+    section25:Button("Astronaut(宇航员)", function()
+      local animate8 = character.Animate
+      animate8.Disabled = true
+
+      f34()
+
+      animate8.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=891621366"
+      animate8.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=891633237"
+      animate8.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=891667138"
+      animate8.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=891636393"
+      animate8.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=891627522"
+      animate8.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=891609353"
+      animate8.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=891617961"
+
+      humanoid:ChangeState(3)
+      animate8.Disabled = false
+    end)
+
+    section25:Button("Ninja(忍者)", function()
+      local animate9 = character.Animate
+      animate9.Disabled = true
+
+      f34()
+
+      animate9.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=656117400"
+      animate9.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=656118341"
+      animate9.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=656121766"
+      animate9.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=656118852"
+      animate9.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=656117878"
+      animate9.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=656114359"
+      animate9.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=656115606"
+
+      humanoid:ChangeState(3)
+      animate9.Disabled = false
+    end)
+
+    section25:Button("Werewolf(狼人)", function()
+      local animate10 = character.Animate
+      animate10.Disabled = true
+
+      f34()
+
+      animate10.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1083195517"
+      animate10.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1083214717"
+      animate10.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083178339"
+      animate10.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083216690"
+      animate10.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083218792"
+      animate10.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083182000"
+      animate10.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083189019"
+
+      humanoid:ChangeState(3)
+      animate10.Disabled = false
+    end)
+
+    section25:Button("Cartoon(卡通)", function()
+      local animate11 = character.Animate
+      animate11.Disabled = true
+
+      f34()
+
+      animate11.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=742637544"
+      animate11.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=742638445"
+      animate11.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=742640026"
+      animate11.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=742638842"
+      animate11.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=742637942"
+      animate11.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=742636889"
+      animate11.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=742637151"
+
+      humanoid:ChangeState(3)
+      animate11.Disabled = false
+    end)
+
+    section25:Button("Pirate(海盗)", function()
+      local animate12 = character.Animate
+      animate12.Disabled = true
+
+      f34()
+
+      animate12.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=750781874"
+      animate12.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=750782770"
+      animate12.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=750785693"
+      animate12.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=750783738"
+      animate12.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=750782230"
+      animate12.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=750779899"
+      animate12.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=750780242"
+
+      humanoid:ChangeState(3)
+      animate12.Disabled = false
+    end)
+
+    section25:Button("Sneaky(鬼祟)", function()
+      local animate13 = character.Animate
+      animate13.Disabled = true
+
+      f34()
+
+      animate13.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1132473842"
+      animate13.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1132477671"
+      animate13.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1132510133"
+      animate13.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1132494274"
+      animate13.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1132489853"
+      animate13.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1132461372"
+      animate13.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1132469004"
+
+      humanoid:ChangeState(3)
+      animate13.Disabled = false
+    end)
+
+    section25:Button("Toy(玩具)", function()
+      local animate14 = character.Animate
+      animate14.Disabled = true
+
+      f34()
+
+      animate14.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=782841498"
+      animate14.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=782845736"
+      animate14.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=782843345"
+      animate14.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=782842708"
+      animate14.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=782847020"
+      animate14.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=782843869"
+      animate14.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=782846423"
+
+      humanoid:ChangeState(3)
+      animate14.Disabled = false
+    end)
+
+    section25:Button("Knight(骑士)", function()
+      local animate15 = character.Animate
+      animate15.Disabled = true
+
+      f34()
+
+      animate15.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=657595757"
+      animate15.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=657568135"
+      animate15.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=657552124"
+      animate15.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=657564596"
+      animate15.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=658409194"
+      animate15.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=658360781"
+      animate15.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=657600338"
+
+      humanoid:ChangeState(3)
+      animate15.Disabled = false
+    end)
+
+    section25:Button("Confident(自信)", function()
+      local animate16 = character.Animate
+      animate16.Disabled = true
+
+      f34()
+
+      animate16.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1069977950"
+      animate16.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1069987858"
+      animate16.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1070017263"
+      animate16.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1070001516"
+      animate16.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1069984524"
+      animate16.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1069946257"
+      animate16.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1069973677"
+
+      humanoid:ChangeState(3)
+      animate16.Disabled = false
+    end)
+
+    section25:Button("Popstar(明星)", function()
+      local animate17 = character.Animate
+      animate17.Disabled = true
+
+      f34()
+
+      animate17.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1212900985"
+      animate17.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1212900985"
+      animate17.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1212980338"
+      animate17.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1212980348"
+      animate17.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1212954642"
+      animate17.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1213044953"
+      animate17.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1212900995"
+
+      humanoid:ChangeState(3)
+      animate17.Disabled = false
+    end)
+
+    section25:Button("Princess(公主)", function()
+      local animate18 = character.Animate
+      animate18.Disabled = true
+
+      f34()
+
+      animate18.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=941003647"
+      animate18.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=941013098"
+      animate18.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=941028902"
+      animate18.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=941015281"
+      animate18.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=941008832"
+      animate18.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=940996062"
+      animate18.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=941000007"
+
+      humanoid:ChangeState(3)
+      animate18.Disabled = false
+    end)
+
+    section25:Button("Cowboy(牛仔)", function()
+      local animate19 = character.Animate
+      animate19.Disabled = true
+
+      f34()
+
+      animate19.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1014390418"
+      animate19.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1014398616"
+      animate19.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1014421541"
+      animate19.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1014401683"
+      animate19.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1014394726"
+      animate19.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1014380606"
+      animate19.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1014384571"
+
+      humanoid:ChangeState(3)
+      animate19.Disabled = false
+    end)
+
+    section25:Button("Patrol(巡逻)", function()
+      local animate20 = character.Animate
+      animate20.Disabled = true
+
+      f34()
+
+      animate20.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1149612882"
+      animate20.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1150842221"
+      animate20.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1151231493"
+      animate20.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1150967949"
+      animate20.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1150944216"
+      animate20.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1148811837"
+      animate20.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1148863382"
+
+      humanoid:ChangeState(3)
+      animate20.Disabled = false
+    end)
+
+    section25:Button("FE Zombie(FE僵尸)", function()
+      local animate21 = character.Animate
+      animate21.Disabled = true
+
+      f34()
+
+      animate21.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=3489171152"
+      animate21.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=3489171152"
+      animate21.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=3489174223"
+      animate21.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=3489173414"
+      animate21.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
+      animate21.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
+      animate21.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
+
+      humanoid:ChangeState(3)
+      animate21.Disabled = false
+    end)
+
+    local section26 = tab6:Section("动画Emotes", false)
+    local animationId
+
+    section26:Textbox("输入动画ID", "Textbox", "", function(p103)
+      if string.match(p103, "id=(%d+)") then
+        animationId = p103
+        return
+      end
+
+      if not p103:find("rbxassetid://") then
+        animationId = "rbxassetid://" .. p103
+      end
+    end)
+
+    section26:Button("播放动画", function()
+      local animation2 = Instance.new("Animation")
+      animation2.AnimationId = animationId
+
+      local loadAnimation2 = humanoid:LoadAnimation(animation2)
+      loadAnimation2.Looped = flags.AnimationLooped
+      loadAnimation2:Play()
+      loadAnimation2:AdjustSpeed(flags.AnimationSpeed)
+    end)
+
+    section26:Button("停止播放所有动画", function()
+      for key72, value76 in pairs(humanoid:GetPlayingAnimationTracks()) do
+        value76:Stop()
+      end
+    end)
+
+    section26:Toggle("是否循环", "AnimationLooped", false)
+
+    section26:Slider("动画播放速度", "AnimationSpeed", 1, 0, 10, false, function(p104)
+      for key73, value77 in pairs(humanoid:GetPlayingAnimationTracks()) do
+        value77:AdjustSpeed(p104)
+      end
+    end)
+
+    section26:Toggle("循环动画播放速度", "EnableAnimSpeed", false, function(p105)
+      while flags.EnableAnimSpeed do
+        task.wait()
+
+        for key74, value78 in pairs(humanoid:GetPlayingAnimationTracks()) do
+          value78:AdjustSpeed(flags.AnimationSpeed)
+        end
+      end
+    end)
+
+    section26:Button("EmotesGui", function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Content/EmotesGui.lua"))()(screenGui)
+    end)
+
+    section26:Button("JerkOff工具", function()
+      local animation3 = Instance.new("Animation")
+
+      animation3.AnimationId = humanoid.RigType == Enum.HumanoidRigType.R15
+          and "rbxassetid://698251653"
+        or "rbxassetid://72042024"
+
+      local jerk = Instance.new("Tool")
+      jerk.Name = "Jerk"
+      jerk.RequiresHandle = false
+      jerk.Parent = localPlayer:WaitForChild("Backpack")
+
+      local v187 = false
+      local loadAnimation3
+
+      local function f36()
+        if loadAnimation3 then
+          loadAnimation3:Stop()
+          loadAnimation3:Destroy()
+          loadAnimation3 = nil
+        end
+      end
+
+      jerk.Equipped:Connect(function()
+        v187 = true
+
+        loadAnimation3 = humanoid:LoadAnimation(animation3)
+        loadAnimation3.Priority = Enum.AnimationPriority.Action
+        loadAnimation3:Play()
+        loadAnimation3:AdjustSpeed(0.7)
+
+        task.spawn(function()
+          while v187 and loadAnimation3 do
+            if loadAnimation3.TimePosition >= 0.7 then
+              loadAnimation3.TimePosition = 0.6
+            end
+
+            task.wait(0.05)
+          end
+        end)
+      end)
+
+      jerk.Unequipped:Connect(function()
+        v187 = false
+        f36()
+      end)
+
+      humanoid.Died:Connect(function()
+        v187 = false
+        f36()
+      end)
+    end)
+
+    local section27 = tab6:Section("游戏中的动画", false)
+    local v188 = {}
+
+    task.spawn(function()
+      for key75, value79 in pairs(game:GetDescendants()) do
+        if value79:IsA("Animation") then
+          v188[value79.Name] = value79
+        end
+      end
+    end)
+
+    local v189 = section27:Dropdown("选择动画", "SelectAnimation", v188)
+
+    section27:Button("播放动画", function()
+      local loadAnimation4 = humanoid:LoadAnimation(v188[flags.SelectAnimation])
+      loadAnimation4.Looped = flags.AnimationLooped
+      loadAnimation4:Play()
+      loadAnimation4:AdjustSpeed(flags.AnimationSpeed)
+    end)
+
+    section27:Button("复制动画ID", function()
+      setclipboard(v188[flags.SelectAnimation].AnimationId)
+    end)
+
+    section27:Button("刷新列表", function()
+      local v190, v191 = game:GetDescendants()
+
+      for key76, value80 in next, v190, v191 do
+        if value80:IsA("Animation") then
+          v188[value80.Name] = value80
+        end
+      end
+
+      v189:SetOptions(v188)
+    end)
+
+    local section28 = tab6:Section("正在播放的动画", false)
+
+    local function f37()
+      local getPlayers5 = v5:GetPlayers()
+
+      for key77, value81 in pairs(getPlayers5) do
+        getPlayers5[key77] = value81.Name
+      end
+
+      return getPlayers5
+    end
+
+    local v192
+
+    local v193 = section28:Dropdown("选择玩家", "Dropdown", f37(), function(p106)
+      v192 = p106
+    end)
+
+    v5.PlayerAdded:Connect(function(player8) v193:AddOption(player8.Name) end)
+    v5.PlayerRemoving:Connect(function(player9) v193:RemoveOption(player9.Name) end)
+
+    local v194
+
+    local v195 = section28:Dropdown("正在播放动画列表", "Dropdown", {}, function(p107)
+      v194 = p107
+    end)
+
+    section28:Button("播放动画", function()
+      local animation4 = Instance.new("Animation")
+      animation4.AnimationId = v194
+
+      local loadAnimation5 = humanoid:LoadAnimation(animation4)
+      loadAnimation5.Looped = flags.AnimationLooped
+      loadAnimation5:Play()
+      loadAnimation5:AdjustSpeed(flags.AnimationSpeed)
+    end)
+
+    section28:Button("复制动画ID", function() setclipboard(v194) end)
+
+    section28:Button("刷新列表", function()
+      v195:SetOptions({})
+
+      for key78, value82 in pairs(v5[v192].Character:FindFirstChildOfClass("Humanoid"):GetPlayingAnimationTracks()) do
+        v195:AddOption(value82.Animation.AnimationId)
+      end
+    end)
+  end)
+
+  f1(function()
+    local v196 = {}
+    v196.ScreenGui = screenGui
+    v196.MainFrame = Instance.new("Frame", v196.ScreenGui)
+    v196.MainFrame.Active = true
+    v196.MainFrame.BorderSizePixel = 0
+    v196.MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.MainFrame.Size = UDim2.new(0, 500, 0, 300)
+    v196.MainFrame.Position = UDim2.new(0, 172, 0, 7)
+    v196.MainFrame.Name = "MainFrame"
+    v196.MainFrame.Visible = false
+    v196.UIDragDetector = Instance.new("UIDragDetector", v196.MainFrame)
+    v196.BottomFrame = Instance.new("Frame", v196.MainFrame)
+    v196.BottomFrame.Active = true
+    v196.BottomFrame.BorderSizePixel = 0
+    v196.BottomFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.BottomFrame.AnchorPoint = Vector2.new(0, 1)
+    v196.BottomFrame.Size = UDim2.new(1, 0, 0, 62)
+    v196.BottomFrame.Position = UDim2.new(0, 0, 1, 0)
+    v196.BottomFrame.Name = "BottomFrame"
+    v196.Current_SongName = Instance.new("TextLabel", v196.BottomFrame)
+    v196.Current_SongName.BorderSizePixel = 0
+    v196.Current_SongName.TextSize = 13
+    v196.Current_SongName.TextXAlignment = Enum.TextXAlignment.Left
+    v196.Current_SongName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Current_SongName.Size = UDim2.new(0, 86, 0, 18)
+    v196.Current_SongName.Text = "歌曲名称"
+    v196.Current_SongName.Name = "Current_SongName"
+    v196.Current_SongName.Position = UDim2.new(0, 10, 0, 7)
+    v196.Current_Singer = Instance.new("TextLabel", v196.BottomFrame)
+    v196.Current_Singer.BorderSizePixel = 0
+    v196.Current_Singer.TextSize = 10
+    v196.Current_Singer.TextXAlignment = Enum.TextXAlignment.Left
+    v196.Current_Singer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Current_Singer.Size = UDim2.new(0, 78, 0, 14)
+    v196.Current_Singer.Text = "歌手"
+    v196.Current_Singer.Name = "Current_Singer"
+    v196.Current_Singer.Position = UDim2.new(0, 10, 0, 27)
+    v196.Current_Time = Instance.new("TextLabel", v196.BottomFrame)
+    v196.Current_Time.BorderSizePixel = 0
+    v196.Current_Time.TextSize = 10
+    v196.Current_Time.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Current_Time.Size = UDim2.new(0.2, 0, 0.3, 0)
+    v196.Current_Time.Text = "00:00/00:00"
+    v196.Current_Time.Name = "Current_Time"
+    v196.Current_Time.Position = UDim2.new(0, 390, 0, 10)
+    v196.Progress = Instance.new("Frame", v196.BottomFrame)
+    v196.Progress.Active = true
+    v196.Progress.BorderSizePixel = 0
+    v196.Progress.BackgroundColor3 = Color3.fromRGB(192, 192, 192)
+    v196.Progress.Size = UDim2.new(1, 0, 0, 4)
+    v196.Progress.Name = "Progress"
+    v196.Fill = Instance.new("Frame", v196.Progress)
+    v196.Fill.BorderSizePixel = 0
+    v196.Fill.BackgroundColor3 = Color3.fromRGB(252, 47, 47)
+    v196.Fill.Size = UDim2.new(0, 0, 1, 0)
+    v196.Fill.Name = "Fill"
+    v196.Circle = Instance.new("Frame", v196.Fill)
+    v196.Circle.ZIndex = 2
+    v196.Circle.BorderSizePixel = 0
+    v196.Circle.BackgroundColor3 = Color3.fromRGB(252, 47, 47)
+    v196.Circle.AnchorPoint = Vector2.new(1, 0.5)
+    v196.Circle.Size = UDim2.new(0, 10, 0, 10)
+    v196.Circle.Position = UDim2.new(1, 0, 0.5, 0)
+    v196.Circle.Name = "Circle"
+    v196.UICorner = Instance.new("UICorner", v196.Circle)
+    v196.UICorner.CornerRadius = UDim.new(0, 10)
+    v196.UIPadding = Instance.new("UIPadding", v196.Fill)
+    v196.UIPadding.PaddingLeft = UDim.new(0, 5)
+    v196.Play = Instance.new("ImageButton", v196.BottomFrame)
+    v196.Play.BorderSizePixel = 0
+    v196.Play.BackgroundTransparency = 1
+    v196.Play.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Play.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    v196.Play.AnchorPoint = Vector2.new(0.5, 0.5)
+    v196.Play.Image = "rbxassetid://129543182573744"
+    v196.Play.Size = UDim2.new(0, 40, 0, 40)
+    v196.Play.Name = "Play"
+    v196.Play.Position = UDim2.new(0.5, 0, 0.5, 5)
+    v196.Previous = Instance.new("ImageButton", v196.BottomFrame)
+    v196.Previous.BorderSizePixel = 0
+    v196.Previous.BackgroundTransparency = 1
+    v196.Previous.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Previous.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    v196.Previous.AnchorPoint = Vector2.new(0.5, 0.5)
+    v196.Previous.Image = "rbxassetid://114138954917019"
+    v196.Previous.Size = UDim2.new(0, 25, 0, 25)
+    v196.Previous.Name = "Previous"
+    v196.Previous.Position = UDim2.new(0.5, -50, 0.5, 5)
+    v196.Next = Instance.new("ImageButton", v196.BottomFrame)
+    v196.Next.BorderSizePixel = 0
+    v196.Next.BackgroundTransparency = 1
+    v196.Next.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Next.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    v196.Next.AnchorPoint = Vector2.new(0.5, 0.5)
+    v196.Next.Image = "rbxassetid://128554058391470"
+    v196.Next.Size = UDim2.new(0, 25, 0, 25)
+    v196.Next.Name = "Next"
+    v196.Next.Position = UDim2.new(0.5, 50, 0.5, 5)
+    v196.Like = Instance.new("ImageButton", v196.BottomFrame)
+    v196.Like.BorderSizePixel = 0
+    v196.Like.BackgroundTransparency = 1
+    v196.Like.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Like.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    v196.Like.AnchorPoint = Vector2.new(0.5, 0.5)
+    v196.Like.Image = "rbxassetid://122940095996865"
+    v196.Like.Size = UDim2.new(0, 25, 0, 25)
+    v196.Like.Name = "Like"
+    v196.Like.Position = UDim2.new(0.5, -100, 0.5, 5)
+    v196.Loop = Instance.new("ImageButton", v196.BottomFrame)
+    v196.Loop.BorderSizePixel = 0
+    v196.Loop.BackgroundTransparency = 1
+    v196.Loop.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Loop.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    v196.Loop.AnchorPoint = Vector2.new(0.5, 0.5)
+    v196.Loop.Image = "rbxassetid://116146140475722"
+    v196.Loop.Size = UDim2.new(0, 25, 0, 25)
+    v196.Loop.Name = "Loop"
+    v196.Loop.Position = UDim2.new(0.5, 100, 0.5, 5)
+    v196.UICorner_2 = Instance.new("UICorner", v196.BottomFrame)
+    v196.UIPadding_2 = Instance.new("UIPadding", v196.BottomFrame)
+    v196.UIPadding_2.PaddingBottom = UDim.new(0, 10)
+    v196.ToggleLyric = Instance.new("TextButton", v196.BottomFrame)
+    v196.ToggleLyric.TextWrapped = true
+    v196.ToggleLyric.BorderSizePixel = 0
+    v196.ToggleLyric.TextScaled = true
+    v196.ToggleLyric.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.ToggleLyric.BackgroundTransparency = 1
+    v196.ToggleLyric.Size = UDim2.new(0, 30, 0, 30)
+    v196.ToggleLyric.Text = "∧"
+    v196.ToggleLyric.Name = "ToggleLyric"
+    v196.ToggleLyric.Position = UDim2.new(0, 450, 0, 27)
+    v196.UICorner_3 = Instance.new("UICorner", v196.MainFrame)
+    v196.Title = Instance.new("TextLabel", v196.MainFrame)
+    v196.Title.BorderSizePixel = 0
+    v196.Title.TextSize = 15
+    v196.Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Title.BackgroundTransparency = 1
+    v196.Title.Size = UDim2.new(0, 96, 0, 24)
+    v196.Title.Text = "网易云音乐"
+    v196.Title.Name = "Title"
+    v196.Title.Position = UDim2.new(0, 6, 0, 5)
+    v196.CloseButton = Instance.new("ImageButton", v196.MainFrame)
+    v196.CloseButton.BorderSizePixel = 0
+    v196.CloseButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.CloseButton.ImageColor3 = Color3.fromRGB(0, 0, 0)
+    v196.CloseButton.Image = "rbxassetid://137161637202736"
+    v196.CloseButton.Size = UDim2.new(0, 18, 0, 18)
+    v196.CloseButton.Name = "CloseButton"
+    v196.CloseButton.Position = UDim2.new(0.95, 0, 0, 10)
+    v196.Search = Instance.new("TextBox", v196.MainFrame)
+    v196.Search.CursorPosition = -1
+    v196.Search.Name = "Search"
+    v196.Search.BorderSizePixel = 0
+    v196.Search.TextColor3 = Color3.fromRGB(0, 0, 0)
+    v196.Search.BackgroundColor3 = Color3.fromRGB(242, 242, 242)
+    v196.Search.PlaceholderText = "搜索..."
+    v196.Search.Size = UDim2.new(0, 100, 0, 18)
+    v196.Search.Position = UDim2.new(0.7, 0, 0, 10)
+    v196.Search.Text = ""
+    v196.UICorner_4 = Instance.new("UICorner", v196.Search)
+    v196.ImageLabel = Instance.new("ImageLabel", v196.Search)
+    v196.ImageLabel.BorderSizePixel = 0
+    v196.ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.ImageLabel.Image = "rbxassetid://88867690872223"
+    v196.ImageLabel.Size = UDim2.new(0, 18, 0, 18)
+    v196.ImageLabel.BackgroundTransparency = 1
+    v196.Pages = Instance.new("Frame", v196.MainFrame)
+    v196.Pages.BorderSizePixel = 0
+    v196.Pages.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Pages.AnchorPoint = Vector2.new(0, 1)
+    v196.Pages.Size = UDim2.new(1, 0, 0.67, 0)
+    v196.Pages.Position = UDim2.new(0, 0, 1, -62)
+    v196.Pages.Name = "Pages"
+    v196.LeftFrame = Instance.new("ScrollingFrame", v196.Pages)
+    v196.LeftFrame.BorderSizePixel = 0
+    v196.LeftFrame.Name = "LeftFrame"
+    v196.LeftFrame.BackgroundColor3 = Color3.fromRGB(242, 242, 242)
+    v196.LeftFrame.AnchorPoint = Vector2.new(0, 1)
+    v196.LeftFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    v196.LeftFrame.Size = UDim2.new(0, 98, 1, 0)
+    v196.LeftFrame.ScrollBarImageColor3 = Color3.fromRGB(103, 103, 103)
+    v196.LeftFrame.Position = UDim2.new(0, 0, 1, 0)
+    v196.LeftFrame.ScrollBarThickness = 1
+    v196.UIListLayout = Instance.new("UIListLayout", v196.LeftFrame)
+    v196.UIListLayout.Padding = UDim.new(0.005, 0)
+    v196.ExampleTab = Instance.new("TextButton", v196.LeftFrame)
+    v196.ExampleTab.TextWrapped = true
+    v196.ExampleTab.BorderSizePixel = 0
+    v196.ExampleTab.TextSize = 12
+    v196.ExampleTab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.ExampleTab.Size = UDim2.new(1, 0, 0, 30)
+    v196.ExampleTab.Text = "ExampleTab"
+    v196.ExampleTab.Name = "ExampleTab"
+    v196.ExampleTab.Visible = false
+    v196.ExampleFrame = Instance.new("ScrollingFrame", v196.Pages)
+    v196.ExampleFrame.Visible = false
+    v196.ExampleFrame.BorderSizePixel = 0
+    v196.ExampleFrame.CanvasPosition = Vector2.new(3, 0)
+    v196.ExampleFrame.Name = "ExampleFrame"
+    v196.ExampleFrame.BackgroundColor3 = Color3.fromRGB(242, 242, 242)
+    v196.ExampleFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    v196.ExampleFrame.Size = UDim2.new(1, -98, 1, 0)
+    v196.ExampleFrame.ScrollBarImageColor3 = Color3.fromRGB(104, 104, 104)
+    v196.ExampleFrame.Position = UDim2.new(0, 98, 0, 0)
+    v196.ExampleFrame.ScrollBarThickness = 3
+    v196.UIListLayout_2 = Instance.new("UIListLayout", v196.ExampleFrame)
+    v196.UIListLayout_2.Padding = UDim.new(0.005, 0)
+    v196.TempButton = Instance.new("TextButton", v196.ExampleFrame)
+    v196.TempButton.BorderSizePixel = 0
+    v196.TempButton.TextSize = 10
+    v196.TempButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.TempButton.Size = UDim2.new(1, 0, 0, 30)
+    v196.TempButton.Text = ""
+    v196.TempButton.Name = "TempButton"
+    v196.TempButton.Visible = false
+    v196.Number = Instance.new("TextLabel", v196.TempButton)
+    v196.Number.BorderSizePixel = 0
+    v196.Number.TextXAlignment = Enum.TextXAlignment.Left
+    v196.Number.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Number.BackgroundTransparency = 1
+    v196.Number.Size = UDim2.new(0, 10, 1, 0)
+    v196.Number.Name = "Number"
+    v196.Number.Position = UDim2.new(0, 10, 0, 0)
+    v196.SongName = Instance.new("TextLabel", v196.TempButton)
+    v196.SongName.BorderSizePixel = 0
+    v196.SongName.TextSize = 10
+    v196.SongName.TextXAlignment = Enum.TextXAlignment.Left
+    v196.SongName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.SongName.BackgroundTransparency = 1
+    v196.SongName.Size = UDim2.new(0, 10, 1, 0)
+    v196.SongName.Name = "SongName"
+    v196.SongName.Position = UDim2.new(0, 30, 0, 0)
+    v196.Singer = Instance.new("TextLabel", v196.TempButton)
+    v196.Singer.BorderSizePixel = 0
+    v196.Singer.TextSize = 10
+    v196.Singer.TextXAlignment = Enum.TextXAlignment.Left
+    v196.Singer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Singer.BackgroundTransparency = 1
+    v196.Singer.Size = UDim2.new(0, 10, 1, 0)
+    v196.Singer.Name = "Singer"
+    v196.Singer.Position = UDim2.new(0.55, 0, 0, 0)
+    v196.TextLabel = Instance.new("TextLabel", v196.TempButton)
+    v196.TextLabel.BorderSizePixel = 0
+    v196.TextLabel.TextSize = 10
+    v196.TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+    v196.TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.TextLabel.BackgroundTransparency = 1
+    v196.TextLabel.Size = UDim2.new(0, 10, 1, 0)
+    v196.TextLabel.Position = UDim2.new(0.8, 0, 0, 0)
+    v196.Divider_Top = Instance.new("Frame", v196.Pages)
+    v196.Divider_Top.ZIndex = 2
+    v196.Divider_Top.BorderSizePixel = 0
+    v196.Divider_Top.BackgroundColor3 = Color3.fromRGB(204, 204, 204)
+    v196.Divider_Top.AnchorPoint = Vector2.new(0.5, 0)
+    v196.Divider_Top.Size = UDim2.new(0.975, 0, 0, 1)
+    v196.Divider_Top.Position = UDim2.new(0.5, 0, 0, 0)
+    v196.Divider_Top.Name = "Divider_Top"
+    v196.Divider = Instance.new("Frame", v196.Pages)
+    v196.Divider.ZIndex = 2
+    v196.Divider.BorderSizePixel = 0
+    v196.Divider.BackgroundColor3 = Color3.fromRGB(184, 184, 184)
+    v196.Divider.AnchorPoint = Vector2.new(0, 0.5)
+    v196.Divider.Size = UDim2.new(0, 2, 0.975, 0)
+    v196.Divider.Position = UDim2.new(0, 98, 0.5, 0)
+    v196.Divider.Name = "Divider"
+    v196.Contents = Instance.new("Frame", v196.MainFrame)
+    v196.Contents.BorderSizePixel = 0
+    v196.Contents.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.Contents.AnchorPoint = Vector2.new(0, 1)
+    v196.Contents.Size = UDim2.new(1, 0, 0.67, 0)
+    v196.Contents.Position = UDim2.new(0, 0, 1, -62)
+    v196.Contents.Name = "Contents"
+    v196.Contents.Visible = false
+    v196.SongList = Instance.new("ScrollingFrame", v196.Contents)
+    v196.SongList.BorderSizePixel = 0
+    v196.SongList.CanvasPosition = Vector2.new(1, 0)
+    v196.SongList.Name = "SongList"
+    v196.SongList.BackgroundColor3 = Color3.fromRGB(242, 242, 242)
+    v196.SongList.AnchorPoint = Vector2.new(0, 1)
+    v196.SongList.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    v196.SongList.Size = UDim2.new(0.25, 0, 1, 0)
+    v196.SongList.ScrollBarImageColor3 = Color3.fromRGB(103, 103, 103)
+    v196.SongList.Position = UDim2.new(0, 0, 1, 0)
+    v196.SongList.ScrollBarThickness = 1
+    v196.UIListLayout_3 = Instance.new("UIListLayout", v196.SongList)
+    v196.UIListLayout_3.Padding = UDim.new(0.005, 0)
+    v196.ExampleSong = Instance.new("TextButton", v196.SongList)
+    v196.ExampleSong.BorderSizePixel = 0
+    v196.ExampleSong.TextSize = 12
+    v196.ExampleSong.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.ExampleSong.Size = UDim2.new(1, 0, 0, 30)
+    v196.ExampleSong.Text = ""
+    v196.ExampleSong.Name = "ExampleSong"
+    v196.ExampleSong.Visible = false
+    v196.SongName_2 = Instance.new("TextLabel", v196.ExampleSong)
+    v196.SongName_2.BorderSizePixel = 0
+    v196.SongName_2.TextXAlignment = Enum.TextXAlignment.Left
+    v196.SongName_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.SongName_2.Size = UDim2.new(0, 3, 1, 0)
+    v196.SongName_2.Text = "SongName"
+    v196.SongName_2.Name = "SongName"
+    v196.SongName_2.Position = UDim2.new(0, 5, 0, 0)
+    v196.SongTime = Instance.new("TextLabel", v196.ExampleSong)
+    v196.SongTime.BorderSizePixel = 0
+    v196.SongTime.TextXAlignment = Enum.TextXAlignment.Right
+    v196.SongTime.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    v196.SongTime.AnchorPoint = Vector2.new(1, 0)
+    v196.SongTime.Size = UDim2.new(0, 3, 1, 0)
+    v196.SongTime.Text = "00:00"
+    v196.SongTime.Name = "SongTime"
+    v196.SongTime.Position = UDim2.new(1, -3, 0, 0)
+    v196.Lyrics = Instance.new("ScrollingFrame", v196.Contents)
+    v196.Lyrics.BorderSizePixel = 0
+    v196.Lyrics.CanvasPosition = Vector2.new(1.63928, 0)
+    v196.Lyrics.Name = "Lyrics"
+    v196.Lyrics.BackgroundColor3 = Color3.fromRGB(242, 242, 242)
+    v196.Lyrics.AnchorPoint = Vector2.new(1, 0)
+    v196.Lyrics.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    v196.Lyrics.Size = UDim2.new(0.75, 0, 1, 0)
+    v196.Lyrics.ScrollBarImageColor3 = Color3.fromRGB(104, 104, 104)
+    v196.Lyrics.Position = UDim2.new(1, 0, 0, 0)
+    v196.Lyrics.ScrollBarThickness = 3
+    v196.UIListLayout_4 = Instance.new("UIListLayout", v196.Lyrics)
+    v196.UIListLayout_4.Padding = UDim.new(0.005, 0)
+    v196.UIListLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
+    v196.ExampleLyric = Instance.new("TextButton", v196.Lyrics)
+    v196.ExampleLyric.TextWrapped = true
+    v196.ExampleLyric.BorderSizePixel = 0
+    v196.ExampleLyric.TextScaled = true
+    v196.ExampleLyric.TextColor3 = Color3.fromRGB(150, 150, 150)
+    v196.ExampleLyric.BackgroundTransparency = 1
+    v196.ExampleLyric.Size = UDim2.new(1, 0, 0, 20)
+    v196.ExampleLyric.Name = "ExampleLyric"
+    v196.ExampleLyric.Visible = false
+    v196.ExampleLyric.Active = false
+    v196.UIPadding_3 = Instance.new("UIPadding", v196.Lyrics)
+    v196.UIPadding_3.PaddingTop = UDim.new(0, 2)
+    v196.Divider_Top_2 = Instance.new("Frame", v196.Contents)
+    v196.Divider_Top_2.ZIndex = 2
+    v196.Divider_Top_2.BorderSizePixel = 0
+    v196.Divider_Top_2.BackgroundColor3 = Color3.fromRGB(204, 204, 204)
+    v196.Divider_Top_2.AnchorPoint = Vector2.new(0.5, 0)
+    v196.Divider_Top_2.Size = UDim2.new(0.975, 0, 0, 1)
+    v196.Divider_Top_2.Position = UDim2.new(0.5, 0, 0, 0)
+    v196.Divider_Top_2.Name = "Divider_Top"
+    v196.Divider_2 = Instance.new("Frame", v196.Contents)
+    v196.Divider_2.ZIndex = 2
+    v196.Divider_2.BorderSizePixel = 0
+    v196.Divider_2.BackgroundColor3 = Color3.fromRGB(184, 184, 184)
+    v196.Divider_2.AnchorPoint = Vector2.new(0, 0.5)
+    v196.Divider_2.Size = UDim2.new(0, 2, 0.975, 0)
+    v196.Divider_2.Position = UDim2.new(0.25, 0, 0.5, 0)
+    v196.Divider_2.Name = "Divider"
+
+    local toggleMusicMobile
+
+    if v21 then
+      toggleMusicMobile = Instance.new("TextButton", screenGui)
+      toggleMusicMobile.Name = "ToggleMusicMobile"
+      toggleMusicMobile.TextScaled = true
+      toggleMusicMobile.TextColor3 = Color3.fromRGB(255, 255, 255)
+      toggleMusicMobile.AnchorPoint = Vector2.new(0, 1)
+      toggleMusicMobile.BackgroundTransparency = 1
+      toggleMusicMobile.Size = UDim2.new(0.08079, 0, 0.09357, 0)
+      toggleMusicMobile.Text = "音乐"
+      toggleMusicMobile.Position = UDim2.new(0, 0, 1, 0)
+      toggleMusicMobile.Visible = false
+      toggleMusicMobile.Draggable = true
+
+      Instance.new("UIStroke", toggleMusicMobile)
+
+      toggleMusicMobile.MouseButton1Click:Connect(function()
+        v196.MainFrame.Visible = not v196.MainFrame.Visible
+
+        toggleMusicMobile.TextColor3 = v196.MainFrame.Visible and Color3.fromRGB(0, 255, 0)
+          or Color3.fromRGB(255, 255, 255)
+      end)
+    end
+
+    local v197 = {
+      Self = nil,
+      IsPlaying = false,
+      LoopPlay = false,
+      CurrentIndex = 1,
+    }
+
+    local function f38()
+      for key79, value83 in pairs(v196.SongList:GetChildren()) do
+        if value83.Name ~= "UIListLayout" and value83.Visible == true then
+          value83:Destroy()
+        end
+      end
+
+      for key80, value84 in pairs(v197[v197.Current]) do
+        local clone7 = v196.ExampleSong:Clone()
+        clone7.Parent = v196.SongList
+        clone7.Visible = true
+
+        local songName = value84.SongName
+
+        clone7.SongName.Text = songName:gsub(".mp3", "")
+        clone7.SongTime.Text = f11(value84.Time)
+        clone7.LayoutOrder = key80
+        clone7.MouseButton1Click:Connect(value84.Play)
+      end
+    end
+
+    local v198 = {}
+
+    local function f39(p108, p109)
+      v197[p108] = {}
+
+      local clone8 = v196.ExampleTab:Clone()
+      clone8.Text = p108
+      clone8.Parent = v196.LeftFrame
+      clone8.Visible = true
+
+      local clone9 = v196.ExampleFrame:Clone()
+      clone9.Name = p108
+      clone9.Parent = v196.Pages
+      clone9.ChildAdded:Connect(f38)
+      clone9.ChildRemoved:Connect(f38)
+
+      local function f40()
+        for key81, value85 in pairs(v196.LeftFrame:GetChildren()) do
+          if value85.Name ~= "UIListLayout" then
+            value85.TextColor3 = Color3.new(0, 0, 0)
+          end
+        end
+
+        clone8.TextColor3 = Color3.new(1, 0, 0)
+
+        for key82, value86 in pairs(v198) do
+          value86.Visible = false
+        end
+
+        clone9.Visible = true
+        v197.Current = p108
+        f38()
+      end
+
+      clone8.MouseButton1Click:Connect(function() f40() end)
+
+      if p109 then
+        f40()
+      end
+
+      table.insert(v198, clone9)
+      return clone9
+    end
+
+    local v199 = f39("首页", true)
+    local v200 = f39("我喜欢的")
+    local jsonDecode2 = {}
+
+    if isfile("XA-Hub/Music/FavoriteList.json") then
+      jsonDecode2 = v10:JSONDecode(readfile("XA-Hub/Music/FavoriteList.json"))
+    end
+
+    local function f41(p110, p111, p112, p113, fn2)
+      local v201 = #p110:GetChildren()
+
+      if v201 == 1 then
+        v197[p110.Name] = {}
+      end
+
+      local clone10 = v196.TempButton:Clone()
+      clone10.Visible = true
+
+      local number = clone10.Number
+      number.Text = v201 < 10 and "0" .. v201 or v201
+
+      clone10.SongName.Text = p111
+
+      local singer = clone10.Singer
+      singer.Text = p112 or "未知"
+
+      clone10.TextLabel.Text = f11(p113)
+
+      local function f42()
+        fn2()
+        v197.CurrentIndex = v201
+
+        for key83, value87 in pairs(p110:GetChildren()) do
+          if value87.Name ~= "UIListLayout" then
+            value87.SongName.TextColor3 = Color3.new(0, 0, 0)
+          end
+        end
+
+        clone10.SongName.TextColor3 = Color3.new(1, 0, 0)
+
+        for key84, value88 in pairs(v196.SongList:GetChildren()) do
+          if not value88:IsA("TextButton") then
+          elseif value88.LayoutOrder == v201 then
+            value88.SongName.TextColor3 = Color3.new(1, 0, 0)
+          else
+            value88.SongName.TextColor3 = Color3.new(0, 0, 0)
+          end
+        end
+      end
+
+      v197[p110.Name][v201] = { Play = f42, SongName = p111, Time = p113 }
+
+      clone10.Parent = p110
+      clone10.MouseButton1Click:Connect(function() f42() end)
+    end
+
+    local function f43(text2, p114)
+      local textLabel = Instance.new("TextLabel")
+      textLabel.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+      textLabel.TextColor3 = Color3.new(1, 1, 1)
+      textLabel.Text = text2
+      textLabel.Font = Enum.Font.SourceSansBold
+      textLabel.TextSize = 20
+      textLabel.AutomaticSize = Enum.AutomaticSize.XY
+      textLabel.TextWrapped = true
+      textLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+      textLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
+      textLabel.BackgroundTransparency = 1
+      textLabel.TextTransparency = 1
+      textLabel.Parent = screenGui
+
+      Instance.new("UICorner", textLabel).CornerRadius = UDim.new(0, 10)
+
+      local instance22 = Instance.new("UIPadding", textLabel)
+      instance22.PaddingLeft = UDim.new(0, 20)
+      instance22.PaddingRight = UDim.new(0, 20)
+      instance22.PaddingTop = UDim.new(0, 10)
+      instance22.PaddingBottom = UDim.new(0, 10)
+
+      local create = v12:Create(textLabel, TweenInfo.new(0.3), {
+        BackgroundTransparency = 0.2,
+        TextTransparency = 0,
+      })
+
+      create:Play()
+      create.Completed:Wait()
+
+      task.wait(p114 or 2)
+
+      local create2 = v12:Create(textLabel, TweenInfo.new(0.3), {
+        BackgroundTransparency = 1,
+        TextTransparency = 1,
+      })
+
+      create2:Play()
+      create2.Completed:Wait()
+
+      textLabel:Destroy()
+    end
+
+    local function f44()
+      for key85, value89 in pairs(v11:GetChildren()) do
+        if value89:IsA("Sound") then
+          value89:Stop()
+          value89:Destroy()
+        end
+      end
+
+      v196.Current_SongName.Text = "歌曲名称"
+    end
+
+    local function f45(p115)
+      for key86, value90 in pairs(v196.Lyrics:GetChildren()) do
+        if value90.Name ~= "UIListLayout" then
+          value90:Destroy()
+        end
+      end
+
+      local v202 = {}
+
+      local dDD = p115:gmatch([[
+%[(%d+):(%d+%.?%d*)%](.-)
+]])
+
+      local v203, v204, text3 = dDD()
+
+      while v203 do
+        local v205 = tonumber(v203)
+        local v206 = tonumber(v204)
+        table.insert(v202, { time = v205 * 60 + v206, text = text3 })
+        v203, v204, text3 = dDD()
+      end
+
+      table.sort(v202, function(p116, p117) return p116.time < p117.time end)
+      v197.Lyrics = v202
+
+      for index5, value91 in ipairs(v202) do
+        local v207 = value91
+
+        local clone11 = v196.ExampleLyric:Clone()
+        clone11.Name = "Line_" .. index5
+        clone11.LayoutOrder = index5
+        clone11.Visible = true
+        clone11.Text = v207.text
+        clone11.Parent = v196.Lyrics
+        clone11.MouseButton1Click:Connect(function() v197.Self.TimePosition = v207.time end)
+      end
+    end
+
+    local function f46(p118, p119, p120)
+      local name2 = p119
+
+      if not (name2 and name2:match(".mp3")) and not name2 then
+        local gsub2 = p118:gsub("rbxassetid://", "")
+
+        if not pcall(function() name2 = v18:GetProductInfo(gsub2).Name end) then
+          name2 = "无法获取名称"
+        end
+      end
+
+      local like = v196.Like
+
+      like.Image = jsonDecode2[name2] and "rbxassetid://81577006040798"
+        or "rbxassetid://122940095996865"
+
+      f44()
+
+      local sound = Instance.new("Sound")
+      sound.Name = name2
+      sound.SoundId = p118
+      sound.Volume = MusicVolume or 0.5
+      sound.PlaybackSpeed = MusicSpeed or 1
+      sound.Looped = v197.LoopPlay
+      sound.Parent = v11
+      sound:Play()
+
+      sound.Ended:Connect(function()
+        sound:Destroy()
+
+        if not v197.LoopPlay then
+          if v197.CurrentIndex == #v197[v197.Current] then
+            v197[v197.Current][1].Play()
+          else
+            v197[v197.Current][v197.CurrentIndex + 1].Play()
+          end
+        end
+      end)
+
+      sound.Loaded:Wait()
+
+      v197.Self = sound
+      v196.Play.Image = "rbxassetid://79730020141529"
+      v197.IsPlaying = true
+      local name3 = sound.Name
+      v196.Current_SongName.Text = name3:gsub(".mp3", "")
+
+      local currentSinger = v196.Current_Singer
+      currentSinger.Text = p120 or "未知"
+
+      notification("XA:提示", "当前正在播放音乐:" .. name2:gsub(".mp3", "") .. "\n时长:"
+        .. f11(sound.TimeLength), 5)
+
+      local v208 = "XA-Hub/Music/" .. name2:gsub(".mp3", ".lrc")
+
+      if isfile(v208) then
+        f45(readfile(v208))
+      else
+        f45("[00:00.000]暂无歌词\n")
+      end
+    end
+
+    local function f47(p121, p122, p123)
+      local v209 = request({ Url = p121, Method = "GET" })
+      local body = v209.Body
+      local v210
+
+      if v209.StatusCode ~= 200 then
+        if v209.StatusCode == 302 then
+          body = game:HttpGet(v209.Headers.Location)
+          v210 = body == ""
+
+          if v210 or body:sub(1, 15) == "<!DOCTYPE html>" then
+            f43("此音乐不可用", 2)
+            return
+          else
+            local gsub3 = p122:gsub("[\\/:*?\"<>|]", "_")
+            writefile("XA-Hub/Music/" .. gsub3, body)
+
+            if p121:match("music.163.com") then
+              local lyric = v10:JSONDecode((game:HttpGet("https://music.163.com/api/song/media?id="
+                .. p121:match("id%=(%d+)")))).lyric
+
+              if lyric then
+                writefile("XA-Hub/Music/" .. gsub3:gsub(".mp3", ".lrc"), lyric)
+              end
+            end
+
+            task.wait()
+            f46(getcustomasset("XA-Hub/Music/" .. gsub3), gsub3, p123)
+            return
+          end
+        else
+          notification("XA:错误", "请求并未成功\n原因:" .. v209.StatusCode, 5)
+          return
+        end
+      else
+        v210 = body == ""
+
+        if v210 or body:sub(1, 15) == "<!DOCTYPE html>" then
+          f43("此音乐不可用", 2)
+          return
+        else
+          local gsub4 = p122:gsub("[\\/:*?\"<>|]", "_")
+          writefile("XA-Hub/Music/" .. gsub4, body)
+
+          if p121:match("music.163.com") then
+            local lyric2 = v10:JSONDecode((game:HttpGet("https://music.163.com/api/song/media?id="
+              .. p121:match("id%=(%d+)")))).lyric
+
+            if lyric2 then
+              writefile("XA-Hub/Music/" .. gsub4:gsub(".mp3", ".lrc"), lyric2)
+            end
+          end
+
+          task.wait()
+          f46(getcustomasset("XA-Hub/Music/" .. gsub4), gsub4, p123)
+          return
+        end
+      end
+    end
+
+    v196.CloseButton.MouseButton1Click:Connect(function() v196.MainFrame:Destroy() end)
+
+    v196.Play.MouseButton1Click:Connect(function()
+      v197.IsPlaying = not v197.IsPlaying
+
+      local play = v196.Play
+
+      play.Image = v197.IsPlaying and "rbxassetid://79730020141529"
+        or "rbxassetid://129543182573744"
+
+      for key87, value92 in pairs(v11:GetChildren()) do
+        if value92:IsA("Sound") then
+          value92.Playing = v197.IsPlaying
+        end
+      end
+    end)
+
+    v196.Loop.MouseButton1Click:Connect(function()
+      v197.LoopPlay = not v197.LoopPlay
+
+      local loop = v196.Loop
+
+      loop.Image = v197.LoopPlay and "rbxassetid://127031857777656"
+        or "rbxassetid://116146140475722"
+
+      if v197.LoopPlay then
+        f43("单曲循环")
+      else
+        f43("顺序播放")
+      end
+
+      for key88, value93 in pairs(v11:GetChildren()) do
+        if value93:IsA("Sound") then
+          value93.Looped = v197.LoopPlay
+        end
+      end
+    end)
+
+    local function f48()
+      writefile("XA-Hub/Music/FavoriteList.json", v10:JSONEncode(jsonDecode2))
+
+      for key89, value94 in pairs(v200:GetChildren()) do
+        if value94.Name ~= "UIListLayout" then
+          value94:Destroy()
+        end
+      end
+
+      for key90, value95 in pairs(jsonDecode2) do
+        local v211 = key90
+        local v212 = value95
+
+        if v211:match(".mp3") and not pcall(readfile, "XA-Hub/Music/" .. v211) then
+          jsonDecode2[v211] = nil
+        else
+          f41(v200, v211, v212.Singer, v212.Duration, function()
+            if v211:match(".mp3") then
+              f46(getcustomasset("XA-Hub/Music/" .. v211), v211, v212.Singer)
+            else
+              f46(v212.SoundId, v211, v212.Singer)
+            end
+          end)
+        end
+      end
+    end
+
+    task.spawn(f48)
+
+    v196.Like.MouseButton1Click:Connect(function()
+      if jsonDecode2[v197.Self.Name] then
+        jsonDecode2[v197.Self.Name] = nil
+        task.spawn(f48)
+        v196.Like.Image = "rbxassetid://122940095996865"
+      else
+        jsonDecode2[v197.Self.Name] = {
+          Singer = v196.Current_Singer.Text,
+          Duration = v197.Self.TimeLength,
+          SoundId = v197.Self.SoundId,
+        }
+
+        task.spawn(f48)
+        v196.Like.Image = "rbxassetid://81577006040798"
+      end
+    end)
+
+    v196.Next.MouseButton1Click:Connect(function()
+      if v197.CurrentIndex == #v197[v197.Current] then
+        v197[v197.Current][1].Play()
+      else
+        v197[v197.Current][v197.CurrentIndex + 1].Play()
+      end
+    end)
+
+    v196.Previous.MouseButton1Click:Connect(function()
+      if v197.CurrentIndex == 1 then
+        v197[v197.Current][#v197[v197.Current]].Play()
+      else
+        v197[v197.Current][v197.CurrentIndex - 1].Play()
+      end
+    end)
+
+    v196.ToggleLyric.MouseButton1Click:Connect(function()
+      v196.Pages.Visible = not v196.Pages.Visible
+      v196.Contents.Visible = not v196.Contents.Visible
+
+      local toggleLyric = v196.ToggleLyric
+      toggleLyric.Text = v196.Pages.Visible and "∧" or "∨"
+    end)
+
+    local function f49()
+      if not v197.Self then
+        return
+      else
+        local v213 = (v20.X - v196.Progress.AbsolutePosition.X) / v196.Progress.AbsoluteSize.X
+
+        if v213 < 0 or v213 > 1 then
+          return
+        end
+
+        v197.Self.TimePosition = v197.Self.TimeLength * v213
+        v196.Fill.Size = UDim2.new(v213, 0, 1, 0)
+        return
+      end
+    end
+
+    local function f50(p124)
+      v12:Create(
+        v196.Lyrics, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        { CanvasPosition = Vector2.new(0, v196.Lyrics.CanvasPosition.Y + p124) }
+      ):Play()
+    end
+
+    local v214 = false
+
+    v196.Progress.InputBegan:Connect(function(input)
+      if input.UserInputType == Enum.UserInputType.MouseButton1
+        or input.UserInputType == Enum.UserInputType.Touch then
+        f49()
+        v214 = true
+      end
+    end)
+
+    v15.InputChanged:Connect(function(input2)
+      if input2.UserInputType == Enum.UserInputType.MouseMovement
+        or input2.UserInputType == Enum.UserInputType.Touch then
+        if v214 then
+          f49()
+        end
+      end
+    end)
+
+    local v215 = false
+    local v216 = 0
+
+    v196.Lyrics.InputBegan:Connect(function(input3)
+      if input3.UserInputType == Enum.UserInputType.MouseButton1
+        or input3.UserInputType == Enum.UserInputType.Touch then
+        v215 = true
+        v216 = tick()
+      end
+    end)
+
+    v15.InputEnded:Connect(function(input4)
+      if input4.UserInputType == Enum.UserInputType.MouseButton1
+        or input4.UserInputType == Enum.UserInputType.Touch then
+        if v214 then
+          v214 = false
+        end
+
+        v216 = tick()
+        task.wait(5)
+
+        if tick() - v216 >= 5 then
+          v215 = false
+          local v217 = v196.Lyrics.AbsolutePosition.Y + v196.Lyrics.AbsoluteSize.Y / 2 * 0.75
+
+          if not v197.CurrentLabel then
+            return
+          end
+
+          f50(v197.CurrentLabel.AbsolutePosition.Y + v197.CurrentLabel.AbsoluteSize.Y / 2 - v217)
+          return
+        end
+
+        return
+      end
+    end)
+
+    local v218 = 0
+
+    v9.RenderStepped:Connect(function()
+      if v197.IsPlaying then
+        local v219 = v197.Self
+
+        v196.Current_Time.Text = f11(v219.TimePosition) .. "/" .. f11(v219.TimeLength)
+        v196.Fill.Size = UDim2.new(v219.TimePosition / v219.TimeLength, 0, 1, 0)
+
+        if not v197.Lyrics then
+          return
+        end
+
+        local timePosition = v219.TimePosition
+
+        for j = #v197.Lyrics, 1, -1 do
+          if timePosition >= v197.Lyrics[j].time then
+            if v218 ~= j then
+              v218 = j
+
+              for index6, value96 in ipairs(v196.Lyrics:GetChildren()) do
+                if value96:IsA("TextButton") then
+                  value96.TextColor3 = Color3.fromRGB(150, 150, 150)
+                end
+              end
+
+              local findFirstChild3 = v196.Lyrics:FindFirstChild("Line_" .. j)
+              v197.CurrentLabel = findFirstChild3
+
+              if findFirstChild3 then
+                findFirstChild3.TextColor3 = Color3.fromRGB(0, 0, 0)
+
+                if v215 then
+                  return
+                end
+
+                f50(findFirstChild3.AbsolutePosition.Y + findFirstChild3.AbsoluteSize.Y / 2
+                  - (v196.Lyrics.AbsolutePosition.Y + v196.Lyrics.AbsoluteSize.Y / 2 * 0.75))
+              end
+            end
+
+            break
+          end
+        end
+
+        return
+      end
+    end)
+
+    local tab7 = xaHub:Tab("音乐区", "6035145364")
+
+    local section29 = tab7:Section("音乐区", false)
+    section29:Textbox("输入SoundID", "Textbox", "", function(p125) SoundID = p125 end)
+    section29:Button("播放", function() f46("rbxassetid://" .. SoundID) end)
+    section29:Button("shabi", function() f46("rbxassetid://7908417389") end)
+    section29:Button("彩虹瀑布", function() f46("rbxassetid://1837879082") end)
+
+    section29:Button("All My People", function()
+      f47(
+        "https://github.com/Xingtaiduan/Script/raw/refs/heads/main/Assets/Music/All-My-People.mp3",
+        "All-My-People.mp3"
+      )
+    end)
+
+    section29:Button("Cure For Me", function()
+      f47(
+        "https://github.com/Xingtaiduan/Script/raw/refs/heads/main/Assets/Music/Cure-For-Me.mp3",
+        "Cure-For-Me.mp3"
+      )
+    end)
+
+    local section30 = tab7:Section("本地音乐", false)
+    section30:Label("目录:手机目录/" .. identifyexecutor() .. "/Workspace/XA-Hub/Music")
+
+    for index7, value97 in ipairs(listfiles("XA-Hub/Music")) do
+      local v220 = value97
+      local gsub5 = v220:gsub("(.*)/(.*)", "%2")
+      section30:Button(gsub5, function() f46(getcustomasset(v220), gsub5) end)
+    end
+
+    local section31 = tab7:Section("设置", false)
+
+    section31:Toggle("显示网易云音乐", "Toggle", false, function(visible8)
+      v196.MainFrame.Visible = visible8
+
+      if v21 then
+        screenGui.ToggleMusicMobile.Visible = visible8
+      end
+    end)
+
+    section31:Slider("音量", "Slider", 0.5, 0, 10, true, function(p126)
+      MusicVolume = p126
+
+      for key91, value98 in pairs(v11:GetChildren()) do
+        if value98:IsA("Sound") then
+          value98.Volume = p126
+        end
+      end
+    end)
+
+    section31:Slider("播放速度", "Slider", 1, 0, 10, true, function(p127)
+      MusicSpeed = p127
+
+      for key92, value99 in pairs(v11:GetChildren()) do
+        if value99:IsA("Sound") then
+          value99.PlaybackSpeed = p127
+        end
+      end
+    end)
+
+    local v221 = "5"
+
+    section31:Textbox("输入搜索数量(默认5)", "Textbox", "", function(p128)
+      v221 = p128
+    end)
+
+    local httpGet
+
+    v196.Search.FocusLost:Connect(function()
+      for key93, value100 in pairs(v199:GetChildren()) do
+        if value100.Name ~= "UIListLayout" then
+          value100:Destroy()
+        end
+      end
+
+      task.wait()
+
+      httpGet = game:HttpGet("https://music.163.com/api/search/get?s="
+        .. v10:UrlEncode(v196.Search.Text) .. "&type=1&offset=0&total=true&limit=" .. v221)
+
+      httpGet = v10:JSONDecode(httpGet)
+
+      if httpGet.code == 200 then
+        for key94, value101 in pairs(httpGet.result.songs) do
+          local v222 = value101
+
+          f41(v199, v222.name, v222.artists[1].name, v222.duration / 1000, function()
+            f47(
+              "http://music.163.com/song/media/outer/url?id=" .. v222.id, v222.name .. ".mp3",
+              v222.artists[1].name
+            )
+          end)
+        end
+
+        notification("XA:提示", "搜索成功,找到" .. httpGet.result.songCount
+          .. "首歌曲\n当前显示" .. v221 .. "首", 5)
+      else
+        notification("XA:错误", "搜索失败\n状态码" .. httpGet.code, 5)
+      end
+    end)
+  end)
+
+  local tab8 = xaHub:Tab("设置", "6035145364")
+
+  local section32 = tab8:Section("ui设置", false)
+
+  section32:Textbox("背景透明度(默认0.5)", "Textbox", "", function(backgroundTransparency)
+    luaWare.Gui.Main.BackgroundTransparency = backgroundTransparency
+    luaWare.Gui.Main.SB.BackgroundTransparency = backgroundTransparency
+    luaWare.Gui.Main.SB.Side.BackgroundTransparency = backgroundTransparency
+  end)
+
+  section32:Keybind("UI开关快捷键", Enum.KeyCode.LeftControl, function(p129)
+    luaWare.ToggleKeybind = Enum.KeyCode[p129]
+  end)
+
+  section32:Button("销毁UI", function() luaWare.Gui:Destroy() end)
+
+  section32:Button("将toggle恢复默认位置", function()
+    luaWare.Gui.Open.Position = UDim2.new(0.00829315186, 0, 0.31107837, 0)
+  end)
+
+  local section33 = tab8:Section("开发工具", false)
+
+  section33:Button("Dex Mobile", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Tools/DexMobile.lua"))()
+  end)
+
+  section33:Button("Simple Spy", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/refs/heads/main/Tools/SimpleSpy.lua"))()
+  end)
+
+  section33:Button("Hydroxide", function()
+    local function f51(p130)
+      return loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/%s/MC-Hydroxide/%s/%s.lua"):format(
+        "Hosvile", "revision", p130
+      )), p130 .. ".lua")()
+    end
+
+    f51("init")
+    f51("ui/main")
+  end)
+
+  section33:Button("UNC测试", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xingtaiduan/Script/main/Tools/UNCTest.lua"))()
+  end)
+
+  section33:Button("防踢(客户端)", function()
+    local v223
+
+    v223 = hookmetamethod(game, "__namecall", newcclosure(function(p131, ...)
+      local v224 = getnamecallmethod()
+
+      if p131 == localPlayer and v224:lower() == "kick" then
+        v8:SetCore("SendNotification", { Title = "提示", Text = "成功拦截踢出" })
+        warn(debug.traceback())
+        return coroutine.yield()
+      end
+
+      return v223(p131, ...)
+    end))
+
+    hookfunction(localPlayer.Kick, function()
+      v8:SetCore("SendNotification", { Title = "提示", Text = "成功拦截踢出" })
+      warn(debug.traceback())
+      return coroutine.yield()
+    end)
+
+    game.GuiService.ErrorMessageChanged:Connect(function(p132)
+      game.GuiService:ClearError()
+      print("Kick Has Occured: " .. p132)
+    end)
+  end)
+
+  section33:Toggle("掉线警告", "PingWarning", false, function(p133)
+    while flags.PingWarning do
+      task.wait()
+
+      if tick() - v95 > 5 and not v96 then
+        notification("XA:警告", "您可能已经掉线", 5)
+        v96 = true
+      end
+    end
+  end)
+
+  section33:Toggle("显示XA用户", "Toggle", false, function(p134)
+    _G.XAUserESP = p134
+
+    if p134 then
+      for key95, value102 in pairs(v5:GetPlayers()) do
+        local v225 = value102
+
+        if v225 ~= localPlayer and v225:IsInGroup(35310933) then
+          espLibrary.Add(
+            v225.Character, "XA用户" .. v225.Name, Color3.fromRGB(255, 255, 255), 10,
+            "XAUserESP"
+          )
+
+          v225.CharacterAdded:Connect(function()
+            if not _G.XAUserESP then
+              return
+            end
+
+            espLibrary.Add(
+              v225.Character, "XA用户" .. v225.Name, Color3.fromRGB(255, 255, 255), 10,
+              "XAUserESP"
+            )
+          end)
+        end
+      end
+
+      PlayerAdded2 = v5.PlayerAdded:Connect(function(player10)
+        if player10 ~= localPlayer and player10:IsInGroup(35310933) then
+          espLibrary.Add(
+            player10.Character, "XA用户" .. player10.Name, Color3.fromRGB(255, 255, 255), 10,
+            "XAUserESP"
+          )
+
+          player10.CharacterAdded:Connect(function()
+            if not _G.XAUserESP then
+              return
+            end
+
+            espLibrary.Add(
+              player10.Character, "XA用户" .. player10.Name, Color3.fromRGB(255, 255, 255),
+              10, "XAUserESP"
+            )
+          end)
+        end
+      end)
+    else
+      espLibrary.Clear("XAUserESP")
+      PlayerAdded2:Disconnect()
+    end
+  end)
+
+  section33:Toggle("显示FPS", "Toggle", false, function(p135)
+    local fps, v226
+
+    if p135 then
+      local fpsGui = Instance.new("ScreenGui")
+      fps = Instance.new("TextLabel")
+
+      fpsGui.Name = "FPSGui"
+      fpsGui.Parent = v6
+      fpsGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+      fps.Name = "Fps"
+      fps.Parent = fpsGui
+      fps.BackgroundTransparency = 1
+      fps.Position = UDim2.new(0.78, 0, 0, 0)
+      fps.Size = UDim2.new(0, 130, 0, 30)
+      fps.Font = Enum.Font.SourceSans
+      fps.Text = "FPS: 0"
+      fps.TextSize = 14
+      fps.TextColor3 = Color3.new(1, 1, 1)
+
+      v226 = 0
+
+      v9.RenderStepped:Connect(function(delta2)
+        v226 = v226 + 1
+
+        if v226 >= 10 then
+          fps.Text = "FPS: " .. math.floor(1 / delta2)
+          v226 = 0
+        end
+      end)
+    else
+      v6.FPSGui:Destroy()
+    end
+  end)
+
+  section33:Toggle("显示NetworkOwner", "Toggle", false, function(areOwnersShown)
+    settings().Physics.AreOwnersShown = areOwnersShown
+  end)
+
+  section33:Textbox("Incoming延迟", "Textbox", "", function(p136)
+    settings().Network.IncomingReplicationLag = math.huge
+  end)
+
+  section33:Textbox("输入信息", "Textbox", "", function(p137) message = p137 end)
+  section33:Button("发送信息", function() f15(message, true, false) end)
+
+  local cframe7
+
+  section33:Button("保存当前位置", function() cframe7 = humanoidRootPart.CFrame end)
+
+  section33:Button("传送保存位置", function()
+    if cframe7 then
+      character:PivotTo(cframe7)
+    else
+      notification("XA:错误", "没有检测到位置", 5)
+    end
+  end)
+
+  section33:Button("打开Console", function() v8:SetCore("DevConsoleVisible", true) end)
+  section33:Button("开启最高FPS", function() setfpscap(120) end)
+  section33:Button("退出游戏", function() game:Shutdown() end)
+
+  local section34 = xaHub:Tab("关于", "6035145364"):Section("关于", true)
+  local v227
+
+  section34:Textbox("反馈作者", "Textbox", "", function(p138)
+    if p138 == "" then
+      return notification("提示", "请输入内容后再尝试", 5)
+    end
+
+    if v227 then
+      notification("提示", "你只能每15秒发送一次", 5)
+    else
+      v227 = true
+
+      request({
+        Url = "https://discord.com/api/webhooks/1380956596691144865/D0TKd1ohAUdrGboCK9DsbuXdx3caDgkqCg6JCjD3WWNffasp5jWY9hjM4YuI5k1_kVp3",
+        Method = "POST",
+        Headers = { ["Content-Type"] = "application/json" },
+        Body = v10:JSONEncode({
+          embeds = {
+            {
+              color = 65280,
+              fields = {
+                { name = "用户", value = localPlayer.Name },
+                { name = "建议", value = p138 },
+              },
+            },
+          },
+        }),
+      })
+
+      notification("提示", "发送成功", 5)
+      task.wait(15)
+      v227 = false
+    end
+  end)
+
+  section34:Label("QQ群聊:1057545155")
+  section34:Button("复制QQ群聊", function() setclipboard("1057545155") end)
+  section34:Label("Discord: discord.gg/yE7M4TPbqw")
+  section34:Label("版本号:Beta-4.7.1")
+  section34:Label("最近更新时间:2025.12.21")
+
+  local v228 = tick()
+
+  notification(
+    "XA:加载成功",
+    "共耗时" .. string.format("%.2f", math.abs(TimeStart - v228)) .. "秒", 5
+  )
+end)
+
+if not v1 then
+  game.StarterGui:SetCore("SendNotification", {
+    Title = "XA:脚本发生错误",
+    Text = v2,
+    Duration = 10,
+  })
+
+  warn(v2)
+end
