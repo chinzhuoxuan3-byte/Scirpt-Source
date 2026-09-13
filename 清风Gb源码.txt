@@ -1,0 +1,4624 @@
+-- deobfuscated by SL | Source Leak | https://discord.gg/btRTQhgmm
+
+-- Thiѕ Fіle Wаs Dеobfusсаtеԁ By LeakD
+-- 
+
+if setclipboard then
+
+	if toclipboard then
+
+		if set_clipboard then
+
+			if not Clipboard then
+			end
+
+		end
+
+	end
+
+end
+
+function Lib()
+	local v1 = game:GetService("Players")
+	local v2 = v1.LocalPlayer:GetMouse()
+	local v3 = game:GetService("RunService")
+	local v4 = game:GetService("UserInputService")
+	local v5 = Instance.new("ScreenGui", game.CoreGui)
+	local v6 = Font.new("rbxassetid://11702779517", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+	local v7 = Font.new("rbxassetid://11702779517", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+	local v8 = Font.new("rbxassetid://11702779517", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
+	v4.InputBegan:Connect(function(a, b)
+		if a.UserInputType == Enum.UserInputType.MouseButton1 then
+			_u0 = true
+		end
+	end)
+	v4.InputEnded:Connect(function(a, b)
+		if a.UserInputType == Enum.UserInputType.MouseButton1 then
+			_u0 = false
+		end
+	end)
+
+	function draggable(a)
+		local v9 = game:GetService("UserInputService")
+
+		local function v10(a)
+			local v11 = UDim2.new(_u2.X.Scale, _u2.X.Offset + ((a.Position - _u0).X), _u2.Y.Scale, _u2.Y.Offset + ((a.Position - _u0).Y))
+			_u1.Position = v11
+		end
+
+		a.InputBegan:Connect(function(a)
+			if a.UserInputType ~= Enum.UserInputType.MouseButton1 then
+
+				if a.UserInputType == Enum.UserInputType.Touch then
+				else
+					_u0 = true
+					_u1 = a.Position
+					_u2 = _u3.Position
+					a.Changed:Connect(function()
+						if _u0.UserInputState == Enum.UserInputState.End then
+							_u1 = false
+						end
+					end)
+				end
+
+			end
+		end)
+		a.InputChanged:Connect(function(a)
+			if a.UserInputType ~= Enum.UserInputType.MouseMovement then
+
+				if a.UserInputType == Enum.UserInputType.Touch then
+				else
+					_u0 = a
+				end
+
+			end
+		end)
+		v9.InputChanged:Connect(function(a)
+			if a == _u0 then
+
+				if not _u1 then
+					_u2(a)
+				end
+
+			end
+		end)
+	end
+
+	function hovercolor(a, b, c, d, e)
+		a.MouseEnter:Connect(function() _u0 = true end)
+		a.MouseLeave:Connect(function() _u0 = false end)
+		a.MouseButton1Down:Connect(function() _u0 = true end)
+		a.MouseButton1Up:Connect(function() _u0 = false end)
+
+		if not e then
+			local v12 = typeof(e)
+
+			if v12 == "table" then
+
+				if 0 < #e then
+					local v12, v13, v14 = pairs(e)
+
+					while true do
+						a.Changed:Connect(function() _u0.BackgroundColor3 = _u1.BackgroundColor3 end)
+
+						for v15, v16 in v12, v13, v14 do
+						end
+
+					end
+
+				end
+
+			end
+
+			_u0.RenderStepped:Connect(function()
+				if not _u0 then
+
+					if not _u1 then
+						_u2.BackgroundColor3 = _u3
+					else
+						_u2.BackgroundColor3 = _u4
+					else
+						_u2.BackgroundColor3 = _u5
+					end
+
+				end
+			end)
+	end
+
+	return {
+		window = function(a)
+		local v17 = Instance.new("TextLabel", _u0)
+		local v18 = UDim2.new(0.016 + _u1 / 12, 0, 0.009, 0)
+		v17.Position = v18
+		v18 = Color3.fromRGB(15, 15, 20)
+		v17.BackgroundColor3 = v18
+		v17.BorderSizePixel = 0
+		v18 = Instance.new("UIListLayout", v17)
+		v18.HorizontalAlignment = "Center"
+		local v19 = UDim.new(0, 3)
+		v18.Padding = v19
+		v18.SortOrder = Enum.SortOrder.LayoutOrder
+		draggable(v17)
+		_u1 = _u1 + 1
+		v19 = Instance.new("Frame", v17)
+		local v20 = Color3.fromRGB(55, 55, 60)
+		v19.BackgroundColor3 = v20
+		v20 = UDim2.new(1, 0, 0, 32)
+		v19.Size = v20
+		v19.BorderSizePixel = 0
+		v20 = Instance.new("Frame", v19)
+		local v21 = Color3.fromRGB(55, 55, 60)
+		v20.BackgroundColor3 = v21
+		v21 = UDim2.new(1, 0, 0.4, 0)
+		v20.Size = v21
+		v21 = UDim2.new(0, 0, 0.6, 0)
+		v20.Position = v21
+		v20.BorderSizePixel = 0
+		Instance.new("UICorner", v17)
+		Instance.new("UICorner", v19)
+		v21 = Instance.new("TextLabel", v19)
+		v21.TextScaled = true
+		local v22 = tostring(a)
+		v21.Text = v22
+		v22 = Color3.fromRGB(255, 255, 255)
+		v21.TextColor3 = v22
+		v22 = UDim2.new(1, 0, 1, 0)
+		v21.Size = v22
+		v21.FontFace = _u2
+		v21.BorderSizePixel = 0
+		v21.BackgroundTransparency = 1
+		v22 = UDim2.new(0.08, 0, 0.0335, 0)
+		v17.Size = v22
+		return {
+			label = function(a, b)
+			if b then
+			end
+
+			local v23 = Instance.new("TextLabel", _u0)
+			v23.LayoutOrder = 0
+			v23.TextScaled = true
+			v23.BackgroundTransparency = 1
+			local v24 = tostring(a)
+			v23.Text = v24
+			v24 = Color3.fromRGB(255, 255, 255)
+			v23.TextColor3 = v24
+			v24 = UDim2.new(0.96, 0, 0, _u1 + 0)
+			v23.Size = v24
+			v23.FontFace = _u2
+			v23.BorderSizePixel = 0
+			_u3 = _u3 + 1
+			local v25 = UDim2.new(0, 0, 0, _u1 + 3 + 0)
+			_u0.Size = _u0.Size + v25
+			return {
+				changetext = function(a)
+				local v26 = tostring(a)
+				_u0.Text = v26
+			end,
+			}
+		end,
+			copy = function(a, b)
+			if b then
+			end
+
+			local v27 = Instance.new("TextButton", _u0)
+			v27.LayoutOrder = 0
+			v27.TextScaled = true
+			local v28 = Color3.fromRGB(35, 35, 40)
+			v27.BackgroundColor3 = v28
+			v28 = tostring(a)
+			v27.Text = v28
+			v28 = Color3.fromRGB(255, 255, 255)
+			v27.TextColor3 = v28
+			v28 = UDim2.new(0.96, 0, 0, _u1 + 0)
+			v27.Size = v28
+			v27.FontFace = _u2
+			v27.BorderSizePixel = 0
+			v27.AutoButtonColor = false
+			v27.ZIndex = 10
+			_u3 = _u3 + 1
+			local v29 = UDim2.new(0, 0, 0, _u1 + 3 + 0)
+			_u0.Size = _u0.Size + v29
+			v27.MouseButton1Down:Connect(function()
+				if not _u0 then
+					local v30 = tostring(_u2)
+
+					if _u1.Text == v30 then
+						_u0("shiQbushiY")
+						_u1.Text = "��制成功!"
+						task.wait(1)
+						v30 = tostring(_u2)
+						_u1.Text = v30
+					end
+
+				end
+			end)
+			return {
+				changetext = function(a)
+				local v31 = tostring(a)
+				_u0.Text = v31
+			end,
+			}
+		end,
+			button = function(a, b)
+			local v32 = Instance.new("Frame", _u0)
+			v32.LayoutOrder = 0
+			local v33 = UDim2.new(0.96, 0, 0, _u1)
+			v32.Size = v33
+			v32.BorderSizePixel = 0
+			v32.BackgroundTransparency = 1
+			v33 = Instance.new("TextButton", v32)
+			v33.LayoutOrder = 0
+			v33.TextScaled = true
+			local v34 = Color3.fromRGB(35, 35, 40)
+			v33.BackgroundColor3 = v34
+			v34 = tostring(a)
+			v33.Text = v34
+			v34 = Color3.fromRGB(255, 255, 255)
+			v33.TextColor3 = v34
+			v34 = UDim2.new(1, 0, 1, 0)
+			v33.Size = v34
+			v33.FontFace = _u2
+			v33.BorderSizePixel = 0
+			v33.AutoButtonColor = false
+			v33.ZIndex = 10
+			v34 = Instance.new("Frame", v32)
+			local v35 = UDim2.new(1, 0, 0.4, 0)
+			v34.Size = v35
+			v35 = UDim2.new(0, 0, 0, 0)
+			v34.Position = v35
+			v34.BorderSizePixel = 0
+			v35 = Instance.new("Frame", v32)
+			local v36 = UDim2.new(1, 0, 0.4, 0)
+			v35.Size = v36
+			v36 = UDim2.new(0, 0, 0.6, 0)
+			v35.Position = v36
+			v35.BorderSizePixel = 0
+			local v37 = Color3.fromRGB(35, 35, 40)
+			local v38 = Color3.fromRGB(45, 45, 50)
+			local v39 = Color3.fromRGB(25, 25, 30)
+			hovercolor(v33, v37, v38, v39, { v34, v35 })
+			_u3 = _u3 + 1
+			local v40 = Instance.new("UICorner", v33)
+			local v41 = UDim.new(0, 5)
+			v40.CornerRadius = v41
+			spawn(function()
+				while true do
+
+					if not _u0 then
+
+						if _u3 >= _u2 then
+							_u1.Visible = false
+							task.wait()
+						end
+
+					end
+			end)
+			v37 = UDim2.new(0, 0, 0, _u1 + 3)
+			_u0.Size = _u0.Size + v37
+			v33.MouseButton1Down:Connect(b)
+		end,
+			toggle = function(a, b, c)
+			if b then
+			end
+
+			local v42 = Instance.new("Frame", _u0)
+			v42.LayoutOrder = 0
+			local v43 = UDim2.new(0.96, 0, 0, _u1)
+			v42.Size = v43
+			v42.BorderSizePixel = 0
+			v42.BackgroundTransparency = 1
+			v43 = Instance.new("TextButton", v42)
+			v43.LayoutOrder = 0
+			v43.TextScaled = true
+			local v44 = Color3.fromRGB(35, 35, 40)
+			v43.BackgroundColor3 = v44
+			v44 = tostring(a)
+			v43.Text = v44
+
+			if not false then
+				v44 = Color3.new(0, 1, 0)
+
+				if v44 then
+				else
+					v44 = Color3.new(1, 0, 0)
+				end
+
+			end
+
+			v43.TextColor3 = v44
+			v44 = UDim2.new(1, 0, 1, 0)
+			v43.Size = v44
+			v43.FontFace = _u2
+			v43.BorderSizePixel = 0
+			v43.AutoButtonColor = false
+			v43.ZIndex = 10
+			v44 = Instance.new("Frame", v42)
+			local v45 = UDim2.new(1, 0, 0.4, 0)
+			v44.Size = v45
+			v45 = UDim2.new(0, 0, 0, 0)
+			v44.Position = v45
+			v44.BorderSizePixel = 0
+			v45 = Instance.new("Frame", v42)
+			local v46 = UDim2.new(1, 0, 0.4, 0)
+			v45.Size = v46
+			v46 = UDim2.new(0, 0, 0.6, 0)
+			v45.Position = v46
+			v45.BorderSizePixel = 0
+			local v47 = Color3.fromRGB(35, 35, 40)
+			local v48 = Color3.fromRGB(45, 45, 50)
+			local v49 = Color3.fromRGB(25, 25, 30)
+			hovercolor(v43, v47, v48, v49, { v44, v45 })
+			_u3 = _u3 + 1
+			local v50 = Instance.new("UICorner", v43)
+			local v51 = UDim.new(0, 5)
+			v50.CornerRadius = v51
+			spawn(function()
+				while true do
+
+					if not _u0 then
+
+						if _u3 >= _u2 then
+							_u1.Visible = false
+							task.wait()
+						end
+
+					end
+			end)
+			v47 = UDim2.new(0, 0, 0, _u1 + 3)
+			_u0.Size = _u0.Size + v47
+			v43.MouseButton1Down:Connect(function()
+				_u0 = not _u0
+
+				if not _u0 then
+					local v52 = Color3.new(0, 1, 0)
+
+					if v52 then
+					else
+						v52 = Color3.new(1, 0, 0)
+					end
+
+				end
+
+				_u1.TextColor3 = v52
+				_u2(_u0)
+			end)
+			return {
+				set = function(a)
+				_u0 = a
+
+				if not _u0 then
+					local v53 = Color3.new(0, 1, 0)
+
+					if v53 then
+					else
+						v53 = Color3.new(1, 0, 0)
+					end
+
+				end
+
+				_u1.TextColor3 = v53
+				_u2(_u0)
+			end,
+			}
+		end,
+			textbox = function(a, b)
+			local v54 = Instance.new("Frame", _u0)
+			v54.LayoutOrder = 0
+			local v55 = UDim2.new(0.96, 0, 0, _u1)
+			v54.Size = v55
+			v54.BorderSizePixel = 0
+			v54.BackgroundTransparency = 1
+			v55 = Instance.new("TextBox", v54)
+			v55.LayoutOrder = 0
+			v55.TextScaled = true
+			local v56 = Color3.fromRGB(35, 35, 40)
+			v55.BackgroundColor3 = v56
+			v56 = tostring(a)
+			v55.PlaceholderText = v56
+			v56 = Color3.fromRGB(80, 80, 80)
+			v55.PlaceholderColor3 = v56
+			v55.Text = ""
+			v56 = Color3.fromRGB(125, 200, 255)
+			v55.TextColor3 = v56
+			v56 = UDim2.new(1, 0, 1, 0)
+			v55.Size = v56
+			v55.FontFace = _u2
+			v55.BorderSizePixel = 0
+			v55.ZIndex = 10
+			v56 = Instance.new("Frame", v54)
+			local v57 = UDim2.new(1, 0, 0.4, 0)
+			v56.Size = v57
+			v57 = UDim2.new(0, 0, 0, 0)
+			v56.Position = v57
+			v56.BorderSizePixel = 0
+			v56.BackgroundColor3 = v55.BackgroundColor3
+			v57 = Instance.new("Frame", v54)
+			local v58 = UDim2.new(1, 0, 0.4, 0)
+			v57.Size = v58
+			v58 = UDim2.new(0, 0, 0.6, 0)
+			v57.Position = v58
+			v57.BorderSizePixel = 0
+			v57.BackgroundColor3 = v55.BackgroundColor3
+			_u3 = _u3 + 1
+			local v59 = Instance.new("UICorner", v55)
+			local v60 = UDim.new(0, 5)
+			v59.CornerRadius = v60
+			task.spawn(function()
+				while true do
+
+					if not _u0 then
+
+						if _u3 >= _u2 then
+							_u1.Visible = false
+							task.wait()
+						end
+
+					end
+			end)
+			local v61 = UDim2.new(0, 0, 0, _u1 + 3)
+			_u0.Size = _u0.Size + v61
+			v55.FocusLost:Connect(function() _u0(_u1.Text) end)
+			return {
+				text = function() return _u0.Text end,
+				changetext = function(a) _u0.Text = a end,
+			}
+		end,
+			dropdown = function(a, b)
+			local v62 = Instance.new("Frame", _u0)
+			v62.LayoutOrder = 0
+			local v63 = UDim2.new(0.96, 0, 0, _u1)
+			v62.Size = v63
+			v62.BorderSizePixel = 0
+			v62.BackgroundTransparency = 1
+			v62.ZIndex = 2
+			v63 = Instance.new("TextButton", v62)
+			v63.LayoutOrder = 0
+			v63.TextScaled = true
+			local v64 = Color3.fromRGB(35, 35, 40)
+			v63.BackgroundColor3 = v64
+			v64 = tostring(a)
+			v63.Text = v64 .. " >"
+			v64 = Color3.fromRGB(255, 255, 255)
+			v63.TextColor3 = v64
+			v64 = UDim2.new(1, 0, 1, 0)
+			v63.Size = v64
+			v63.FontFace = _u2
+			v63.BorderSizePixel = 0
+			v63.AutoButtonColor = false
+			v63.ZIndex = 2
+			v64 = Instance.new("Frame", v63)
+			local v65 = Vector2.new(0.5, 0)
+			v64.AnchorPoint = v65
+			v65 = UDim2.new(0.5, 0, 0.72, 0)
+			v64.Position = v65
+			v65 = UDim2.new(1.04, 0, 0, 9)
+			v64.Size = v65
+			v65 = Color3.fromRGB(15, 15, 20)
+			v64.BackgroundColor3 = v65
+			v64.AutomaticSize = Enum.AutomaticSize.Y
+			v64.BorderSizePixel = 0
+			v64.Visible = false
+			v64.ZIndex = 2
+			v65 = Instance.new("UIListLayout", v64)
+			v65.HorizontalAlignment = "Center"
+			local v66 = UDim.new(0, 3)
+			v65.Padding = v66
+			v65.SortOrder = Enum.SortOrder.LayoutOrder
+			v66 = Instance.new("Frame", v64)
+			v66.BackgroundTransparency = 1
+			local v67 = UDim2.new(1, 0, 0, 6)
+			v66.Size = v67
+			v67 = Instance.new("Frame", v62)
+			local v68 = UDim2.new(1, 0, 0.4, 0)
+			v67.Size = v68
+			v68 = UDim2.new(0, 0, 0, 0)
+			v67.Position = v68
+			v67.BorderSizePixel = 0
+			v68 = Instance.new("Frame", v62)
+			local v69 = UDim2.new(1, 0, 0.4, 0)
+			v68.Size = v69
+			v69 = UDim2.new(0, 0, 0.6, 0)
+			v68.Position = v69
+			v68.BorderSizePixel = 0
+			local v70 = Color3.fromRGB(35, 35, 40)
+			local v71 = Color3.fromRGB(45, 45, 50)
+			local v72 = Color3.fromRGB(25, 25, 30)
+			hovercolor(v63, v70, v71, v72, { v67, v68 })
+			_u3 = _u3 + 1
+			local v73 = Instance.new("UICorner", v63)
+			local v74 = UDim.new(0, 5)
+			v73.CornerRadius = v74
+			Instance.new("UICorner", v64)
+			spawn(function()
+				while true do
+
+					if not _u0 then
+
+						if _u3 >= _u2 then
+							_u1.Visible = false
+							task.wait()
+						end
+
+					end
+			end)
+			v70 = UDim2.new(0, 0, 0, _u1 + 3)
+			_u0.Size = _u0.Size + v70
+
+			local function v70(a)
+				local v75 = typeof(a)
+
+				if v75 == "Instance" then
+				end
+
+				v75 = Instance.new("TextButton", _u0)
+				v75.LayoutOrder = 0
+				v75.TextScaled = true
+				local v76 = Color3.fromRGB(75, 75, 80)
+				v75.BackgroundColor3 = v76
+				v76 = tostring(a.Name)
+				v75.Text = v76
+				v76 = Color3.fromRGB(255, 255, 255)
+				v75.TextColor3 = v76
+				v76 = UDim2.new(0.96, 0, 0, _u1)
+				v75.Size = v76
+				v75.FontFace = _u2
+				v75.BorderSizePixel = 0
+				v75.Name = a.Name
+				v75.ZIndex = 35 - _u3
+				Instance.new("UICorner", v75)
+				local v77 = UDim2.new(0, 0, 0, 25)
+				_u0.Size = _u0.Size + v77
+				v75.MouseButton1Down:Connect(function()
+					_u0.Visible = false
+					_u1.ZIndex = 2
+					local v78 = tostring(_u2)
+					_u1.Text = v78 .. " >"
+					v78 = Color3.fromRGB(200, 255, 200)
+					_u1.TextColor3 = v78
+					_u3 = _u2
+				end)
+				spawn(function()
+					while true do
+						local v79 = task.wait()
+
+						if not v79 then
+							v79 = _u0:lower()
+
+							if v79 ~= "" then
+								local v80 = tostring(_u1)
+								v80 = v80:lower()
+								v80 = v80:find(v79)
+
+								if not v80 then
+									_u2.Visible = true
+								end
+
+							end
+
+							_u2.Visible = false
+						end
+
+					end
+
+					_u2.Visible = true
+				end
+
+			end
+				end)
+			end
+
+			local v71, v72, v81 = pairs(b)
+
+			while true do
+				v70(v68)
+
+				for v82, v83 in v71, v72, v81 do
+				end
+
+				v63.MouseButton1Down:Connect(function()
+					_u0.Visible = not _u0.Visible
+
+					if not _u0.Visible then
+
+						if 10 then
+						else
+						end
+
+					end
+
+					_u1.ZIndex = 12
+
+					if not _u0.Visible then
+
+						if 22 then
+						else
+						end
+
+					end
+
+					_u2.ZIndex = 10
+
+					if not _u0.Visible then
+
+						if _u1 then
+						else
+						end
+
+					end
+
+					_u3 = nil
+
+					if _u4 then
+
+						if not _u0.Visible then
+							local v84 = tostring(_u5)
+
+							if v84 .. " <" then
+							else
+								v84 = tostring(_u5)
+							end
+
+						end
+
+						_u2.Text = v84 .. " >"
+					else
+
+						if not _u0.Visible then
+							v84 = tostring(_u4)
+
+							if v84 .. " <" then
+							else
+								v84 = tostring(_u4)
+							end
+
+						end
+
+						_u2.Text = v84 .. " >"
+					end
+
+					while true do
+						task.wait()
+
+						if _u3 ~= _u1 then
+						end
+
+						_u0.Visible = false
+
+						if not _u0.Visible then
+
+							if 10 then
+							else
+							end
+
+						end
+
+						_u1.ZIndex = 12
+
+						if not _u0.Visible then
+
+							if 22 then
+							else
+							end
+
+						end
+
+						_u2.ZIndex = 10
+				end)
+				return {
+					get = function() return _u0 end,
+					add = function(a) _u0(a) end,
+					search = function(a)
+					local v85 = tostring(a)
+					_u0 = v85
+					local v86 = UDim2.new(1.04, 0, 0, 0)
+					_u1.Size = v86
+					task.wait()
+					local v86, v87, v88 = pairs(_u1:GetChildren())
+
+					while true do
+						local v89 = 0:IsA("TextButton")
+
+						if not v89 then
+
+							if not 0.Visible then
+								local v90 = UDim2.new(0, 0, 0, 25)
+								_u1.Size = _u1.Size + v90
+							end
+
+						end
+
+						for v91, v92 in v86, v87, v88 do
+						end
+				end,
+					delete = function(a)
+					local v93 = _u0:FindFirstChild(a)
+
+					if not v93 then
+						v93 = _u0:FindFirstChild(a)
+						v93:Destroy()
+						local v94 = UDim2.new(0, 0, 0, 25)
+						_u0.Size = _u0.Size - v94
+
+						if _u1 == a then
+							local v95 = Color3.fromRGB(255, 255, 255)
+							_u2.TextColor3 = v95
+							v95 = tostring(_u3)
+							_u2.Text = v95 .. " >"
+							_u1 = nil
+						end
+
+					end
+				end,
+					clear = function()
+					local v97, v96, v98 = pairs(_u0:GetChildren())
+
+					while true do
+						local v100 = v99:IsA("TextButton")
+
+						if not v100 then
+							v99:Destroy()
+							local v101 = UDim2.new(0, 0, 0, 25)
+							_u0.Size = _u0.Size - v101
+						end
+
+						for v102, v99 in v97, v96, v98 do
+						end
+
+						v96 = Color3.fromRGB(255, 255, 255)
+						_u1.TextColor3 = v96
+						v96 = tostring(_u2)
+						_u1.Text = v96 .. " >"
+						_u3 = nil
+				end,
+				}
+		end,
+			slider = function(a, b, c, d, e, f)
+			local v103 = Instance.new("Frame", _u0)
+			v103.LayoutOrder = 0
+			local v104 = UDim2.new(0.96, 0, 0, _u1 + 5)
+			v103.Size = v104
+			v103.BorderSizePixel = 0
+			v103.BackgroundTransparency = 1
+			v104 = Instance.new("Frame", v103)
+			v104.LayoutOrder = 0
+			local v105 = Color3.fromRGB(35, 35, 40)
+			v104.BackgroundColor3 = v105
+			v105 = UDim2.new(1, 0, 1, 0)
+			v104.Size = v105
+			v104.BorderSizePixel = 0
+			v104.ZIndex = 10
+			v105 = Instance.new("TextLabel", v104)
+			v105.TextScaled = true
+			local v106 = Color3.fromRGB(35, 35, 40)
+			v105.BackgroundColor3 = v106
+			v106 = tostring(a)
+			local v107 = tostring(e)
+			v105.Text = v106 .. " [" .. v107 .. "]"
+			v106 = Color3.fromRGB(255, 255, 255)
+			v105.TextColor3 = v106
+			v106 = UDim2.new(1, 0, 0.7, 0)
+			v105.Size = v106
+			v105.FontFace = _u2
+			v105.BorderSizePixel = 0
+			v105.ZIndex = 10
+			v106 = Instance.new("Frame", v104)
+			local v108 = Color3.fromRGB(255, 255, 255)
+			v106.BackgroundColor3 = v108
+			v108 = UDim2.new(0.9, 0, 0.05, 0)
+			v106.Size = v108
+			v108 = UDim2.new(0.05, 0, 0.8, 0)
+			v106.Position = v108
+			v106.BorderSizePixel = 0
+			v106.ZIndex = 10
+			v108 = Instance.new("ImageLabel", v106)
+			v107 = Vector2.new(0.5, 0.5)
+			v108.AnchorPoint = v107
+			v108.BackgroundTransparency = 1
+			v107 = UDim2.new(0.055, 0, 5, 0)
+			v108.Size = v107
+			v107 = UDim2.new(0, 0, 0.5, 0)
+			v108.Position = v107
+			v108.Image = "rbxassetid://6755657357"
+			v108.BorderSizePixel = 0
+			v108.ZIndex = 12
+			v107 = Instance.new("TextButton", v104)
+			v107.BackgroundTransparency = 1
+			v107.Text = ""
+			local v109 = UDim2.new(1, 0, 1, 0)
+			v107.Size = v109
+			v107.ZIndex = 35
+			v109 = Instance.new("Frame", v103)
+			local v110 = UDim2.new(1, 0, 0.4, 0)
+			v109.Size = v110
+			v110 = UDim2.new(0, 0, 0, 0)
+			v109.Position = v110
+			v109.BorderSizePixel = 0
+			v109.BackgroundColor3 = v104.BackgroundColor3
+			v110 = Instance.new("Frame", v103)
+			local v111 = UDim2.new(1, 0, 0.4, 0)
+			v110.Size = v111
+			v111 = UDim2.new(0, 0, 0.6, 0)
+			v110.Position = v111
+			v110.BorderSizePixel = 0
+			v110.BackgroundColor3 = v104.BackgroundColor3
+			_u3 = _u3 + 1
+			local v112 = Instance.new("UICorner", v104)
+			local v113 = UDim.new(0, 5)
+			v112.CornerRadius = v113
+			task.spawn(function()
+				while true do
+
+					if not _u0 then
+
+						if _u3 >= _u2 then
+							_u1.Visible = false
+							task.wait()
+						end
+
+					end
+			end)
+
+			local function v113(a)
+				local v114 = math.floor(a / _u0)
+				local v115 = UDim2.new((v114 * _u0 - _u1) / (_u2 - _u1), 0, 0.5, 0)
+				_u3.Position = v115
+				v115 = tostring(_u5)
+				local v116 = math.floor(v114 * _u0 * 100)
+				local v117 = tostring(v116 / 100)
+				_u4.Text = v115 .. " [" .. v117 .. "]"
+				_u6 = v114 * _u0
+				_u7(v114 * _u0)
+			end
+
+			v107.MouseButton1Down:Connect(function()
+				_u0 = true
+				task.spawn(function()
+					while true do
+
+						if not _u0 then
+
+							if not _u1 then
+
+								if not _u2 then
+									local v118 = math.clamp((_u4.X - _u3.AbsolutePosition.X) / _u3.AbsoluteSize.X, 0, 1)
+									_u7(v118 * _u5 + ((1 - v118) * _u6))
+									task.wait()
+								end
+
+							end
+
+						end
+
+					end
+				end)
+			end)
+			v107.MouseButton1Up:Connect(function()
+				_u0 = false
+				_u1 = false
+			end)
+			local v119 = game:GetService("UserInputService")
+			v119.TouchEnded:Connect(function()
+				if _u0 then
+
+					if not _u1 then
+					else
+						_u1 = false
+						_u0 = false
+					end
+
+				end
+			end)
+			local v120 = UDim2.new(0, 0, 0, _u1 + 3 + 5)
+			_u0.Size = _u0.Size + v120
+			function()
+				while true do
+
+					if not _u0 then
+
+						if _u3 >= _u2 then
+							_u1.Visible = false
+							task.wait()
+						end
+
+					end
+			end(e)
+			return {
+				get = function(a) return _u0 end,
+				setValue = function(a) _u0(a) end,
+				setmin = function(a)
+				_u0 = a
+				_u1(_u2)
+			end,
+				setmax = function(a)
+				_u0 = a
+				_u1(_u2)
+			end,
+			}
+		end,
+			hide = function() _u0.Visible = false end,
+			show = function() _u0.Visible = true end,
+			delete = function()
+			_u0 = false
+			_u1:Destroy()
+		end,
+		}
+	end,
+		delete = function()
+		_u0 = false
+		_u1:Destroy()
+	end,
+	}
+end
+
+function randomstring()
+	local v121 = math.random(10, 40)
+
+	for v122 = 1, v121 do
+		local v124 = string.char(math.random(16, 128))
+	end
+
+	return table.concat(v125)
+	return table.concat
+end
+
+local v126 = Lib()
+
+function message(a)
+	local v127 = Instance.new("Message", workspace)
+	local v128 = tostring(a)
+	v127.Text = v128
+	task.wait(2)
+	v127:Destroy()
+end
+
+local function v129(a)
+	local v130 = tostring(a)
+	print("error print: " .. v130)
+end
+
+local v131 = Instance.new("Folder")
+local v132 = randomstring()
+v132 = Instance.new("NumberValue", v131)
+local v133 = randomstring()
+v132.Name = v133
+v132.Value = 16
+
+local function v133(a, b, c, d, e)
+	local v134 = Instance.new("Highlight")
+	v134.Parent = a
+	v134.FillColor = b
+	v134.Name = "Highlight"
+	local v135 = Instance.new("BillboardGui")
+	v135.AlwaysOnTop = true
+	v135.Parent = a
+	v135.Size = c
+	local v136 = Vector3.new(0, 1, 0)
+	v135.StudsOffset = v136
+	v135.Name = "QF"
+	v136 = Instance.new("TextLabel")
+	v136.Text = d
+	v136.Font = Enum.Font.SourceSans
+	v136.FontSize = Enum.FontSize.Size24
+	v136.TextColor3 = b
+	v136.BackgroundTransparency = 1
+	v136.Size = c
+	v136.Parent = v135
+	v136.Name = "QF"
+	v136.TextStrokeTransparency = 0
+	local v137 = Color3.new(1, 1, 1)
+	v136.TextStrokeColor3 = v137
+	return Cham, v135
+end
+
+function textesp(a, b, c, d)
+	if not b then
+
+		if not c then
+			local v138 = Instance.new("BillboardGui", game.CoreGui)
+			v138.AlwaysOnTop = true
+			v138 = UDim2.new(0, 400, 0, 100)
+			v138.Size = v138
+			v138.Adornee = b
+			v138.MaxDistance = 2000
+			v138 = Instance.new("Frame", v138)
+			local v139 = Vector2.new(0.5, 0.5)
+			v138.AnchorPoint = v139
+			v138.BackgroundColor3 = a
+			v139 = UDim2.new(0, 8, 0, 8)
+			v138.Size = v139
+			v139 = UDim2.new(0.5 + d, 0, 0.5 + d, 0)
+			v138.Position = v139
+			v139 = Instance.new("UICorner", v138)
+			local v140 = UDim.new(1, 0)
+			v139.CornerRadius = v140
+			Instance.new("UIStroke", v138)
+			v139 = Instance.new("TextLabel", v138)
+			v140 = Vector2.new(0.5, 0.5)
+			v139.AnchorPoint = v140
+			v139.BackgroundTransparency = 1
+			v139.BackgroundColor3 = a
+			v139.TextColor3 = a
+			v140 = UDim2.new(1, 0, 0, 20)
+			v139.Size = v140
+			v140 = UDim2.new(0.5, 0, 0.7, 0)
+			v139.Position = v140
+			v139.Text = c
+			Instance.new("UIStroke", v139)
+			task.spawn(function()
+				while true do
+
+					if not _u0 then
+
+						if _u0.Adornee ~= nil then
+							local v141 = _u0.Adornee:IsDescendantOf(workspace)
+
+							if v141 then
+							else
+								_u0.Enabled = false
+								_u0.Adornee = nil
+								_u0:Destroy()
+							end
+
+						end
+
+						task.wait()
+					end
+
+				end
+			end)
+		end
+
+	end
+
+	return {
+		delete = function()
+		if not _u0 then
+			_u0.Enabled = false
+			_u0.Adornee = nil
+			_u0:Destroy()
+		end
+	end,
+	}
+end
+
+function esp(a, b, c, d, e)
+	local v142 = typeof(a)
+
+	if v142 == "Instance" then
+		v142 = a:IsA("Model")
+
+		if not v142 then
+			v142 = a:GetChildren()
+		else
+			v142 = a:IsA("BasePart")
+
+			if not v142 then
+			else
+				v142 = typeof(a)
+
+				if v142 == "table" then
+				end
+
+			end
+
+		end
+
+	end
+
+	local v144, v143, v145 = pairs(a)
+
+	while true do
+		local v147 = v146:IsA("BasePart")
+
+		if not v147 then
+			v147 = Instance.new("BoxHandleAdornment")
+			v147.Size = v146.Size
+			v147.AlwaysOnTop = true
+			v147.ZIndex = 1
+			v147.AdornCullingMode = Enum.AdornCullingMode.Never
+			v147.Color3 = b
+			v147.Transparency = 0.8
+			v147.Adornee = v146
+			v147.Parent = game.CoreGui
+			table.insert(v148, v147)
+			task.spawn(function()
+				while true do
+
+					if not _u0 then
+
+						if _u0.Adornee ~= nil then
+							local v149 = _u0.Adornee:IsDescendantOf(workspace)
+
+							if v149 then
+							else
+								_u0.Adornee = nil
+								_u0.Visible = false
+								_u0:Destroy()
+							end
+
+						end
+
+						task.wait()
+					end
+
+				end
+			end)
+		end
+
+		for v150, v146 in v144, v143, v145 do
+		end
+
+		if not c then
+
+			if not d then
+				v144 = Instance.new("BillboardGui", game.CoreGui)
+				v144 = UDim2.new(0, 400, 0, 100)
+				v144 = Instance.new("Frame", v144)
+				v143 = Vector2.new(0.5, 0.5)
+				v144.AnchorPoint = v143
+				v144.BackgroundColor3 = b
+				v143 = UDim2.new(0, 8, 0, 8)
+				v144.Size = v143
+				v143 = UDim2.new(0.5 + e, 0, 0.5 + e, 0)
+				v144.Position = v143
+				v143 = Instance.new("UICorner", v144)
+				v145 = UDim.new(1, 0)
+				v143.CornerRadius = v145
+				Instance.new("UIStroke", v144)
+				v143 = Instance.new("TextLabel", v144)
+				v145 = Vector2.new(0.5, 0.5)
+				v143.AnchorPoint = v145
+				v143.BackgroundTransparency = 1
+				v143.BackgroundColor3 = b
+				v143.TextColor3 = b
+				v145 = UDim2.new(1, 0, 0, 20)
+				v143.Size = v145
+				v145 = UDim2.new(0.5, 0, 0.7, 0)
+				v143.Position = v145
+				v143.Text = d
+				Instance.new("UIStroke", v143)
+				task.spawn(function()
+					while true do
+
+						if not _u0 then
+
+							if _u0.Adornee ~= nil then
+								local v151 = _u0.Adornee:IsDescendantOf(workspace)
+
+								if v151 then
+								else
+									_u0.Enabled = false
+									_u0.Adornee = nil
+									_u0:Destroy()
+								end
+
+							end
+
+							task.wait()
+						end
+
+					end
+				end)
+			end
+
+		end
+
+		return {
+			delete = function()
+			local v152, v153, v154 = pairs(_u0)
+
+			while true do
+				v155.Adornee = nil
+				v155.Visible = false
+				v155:Destroy()
+
+				for v156, v155 in v152, v153, v154 do
+				end
+
+				if not _u1 then
+					_u1.Enabled = false
+					_u1.Adornee = nil
+					_u1:Destroy()
+				end
+		end,
+		}
+end
+
+if not hookmetamethod then
+	local v157 = workspace:FindFirstChild("Zombies")
+
+	if v157 then
+	else
+
+		if hookmetamethod then
+			v126.delete()
+		else
+			v126.delete()
+			v157 = game:GetService("StarterGui")
+			v157:SetCore("SendNotification", {
+				Title = "��示",
+				Text = "��傻逼去黑火药里执行",
+				Icon = "rbxassetid://14250466898",
+				Duration = 5,
+			})
+			v157 = Instance.new("Sound")
+			v157.SoundId = "rbxassetid://4590662766"
+			v157.Parent = game.Workspace
+			v157.Volume = 5
+			v157:Play()
+		end
+
+		do return end
+	end
+
+end
+
+v157 = game:GetService("Players")
+local v158 = v157.LocalPlayer.CharacterAdded:Connect(function(a) _u0 = a end)
+
+function isfriend(a)
+	local v159, v160, v161 = pairs(_u0.friends)
+
+	while true do
+
+		if not v162 then
+
+			if v162 == a then
+				do return true end
+			end
+
+		end
+
+		for v163, v162 in v159, v160, v161 do
+		end
+
+		return false
+end
+
+function getMelee()
+	local v164 = game:GetService("Players")
+	local v165, v164, v166 = pairs(v164.LocalPlayer.Character:GetChildren())
+
+	while true do
+		local v168 = v167:GetAttribute("Melee")
+
+		if not v168 then
+			do return v167 end
+		end
+
+		for v169, v167 in v165, v164, v166 do
+		end
+
+		v164 = game:GetService("Players")
+		local v165, v164, v166 = pairs(v164.LocalPlayer.Backpack:GetChildren())
+
+		while true do
+			v168 = v167:GetAttribute("Melee")
+
+			if not v168 then
+				do return v167 end
+			end
+
+			for v169, v167 in v165, v164, v166 do
+			end
+end
+
+function Distance(a)
+	if _u0 then
+		do return 1145141919810 end
+	end
+
+	return (a.HumanoidRootPart.CFrame.Position - _u0.HumanoidRootPart.CFrame.Position).magnitude
+end
+
+function CPlayer()
+	local v171, v170, v172 = pairs(game.Players:GetPlayers())
+
+	while true do
+
+		if v173 ~= _u0 then
+
+			if not v173.Character then
+				local v174 = v173.Character:FindFirstChild("HumanoidRootPart")
+
+				if not v174 then
+					v174 = v173.Character:FindFirstChildOfClass("Humanoid")
+
+					if v174 then
+						v174 = v173.Character:FindFirstChildOfClass("AnimationController")
+					end
+
+					local v175, v176 = v174:GetPlayingAnimationTracks()
+
+					while true do
+						local v178 = tostring(v177)
+
+						if v178 == "Use" then
+							do return v173 end
+						end
+
+						for v179, v177 in next, v175, v176 do
+						end
+
+						if v173.Character.Name ~= "Do12Kr" then
+							local v180 = v173.Character:GetAttribute("BaseSpeed")
+
+							if v180 >= 10 then
+
+								if v173.Character.Humanoid.Health < 35 then
+
+									if 0 < v173.Character.Humanoid.Health then
+									else
+									else
+										do return v173 end
+									end
+
+								end
+
+							end
+
+						end
+
+						if 0 < v173.Character.Humanoid.Health then
+
+							if 0 < (_u1.HumanoidRootPart.CFrame.Position - v173.Character.HumanoidRootPart.CFrame.Position).magnitude then
+							end
+
+						end
+
+					end
+
+				end
+
+			end
+
+			for v181, v173 in v171, v170, v172 do
+			end
+
+			return v173
+end
+
+local function v158(a)
+	local v182 = a:FindFirstChildOfClass("Humanoid")
+	v182.WalkSpeed = 0.001
+	v182.PlatformStand = true
+	local v183 = Vector3.new(0, 2000, 0)
+	a.HumanoidRootPart.AssemblyLinearVelocity = v183
+end
+
+local function v184(a)
+	local v185 = a:FindFirstChildOfClass("Humanoid")
+	v185.WalkSpeed = 1
+	local v186 = Vector3.new(0, 0, 0)
+	a.HumanoidRootPart.AssemblyLinearVelocity = v186
+end
+
+local function v187(a)
+	local v188 = a:FindFirstChildOfClass("Humanoid")
+	v188.WalkSpeed = 1e-05
+	v188.PlatformStand = true
+	local v189 = math.random(100, 200)
+	local v190 = Vector3.new(0, 2000 + v189, 0)
+	a.HumanoidRootPart.AssemblyLinearVelocity = v190
+	local v191 = Instance.new("BodyAngularVelocity")
+	v191.Name = "Spinning"
+	v191.Parent = a.HumanoidRootPart
+	v190 = Vector3.new(0, math.huge, 0)
+	v191.MaxTorque = v190
+	v190 = Vector3.new(0, 114514, 0)
+	v191.AngularVelocity = v190
+	a.HumanoidRootPart.CanCollide = false
+end
+
+local function v192(a)
+	local v193 = a:FindFirstChildOfClass("Humanoid")
+	local v194 = v193:MoveTo(20)
+	v193:MoveTo(v193)
+	v193.WalkSpeed = 0.0001
+	v193.PlatformStand = true
+	a.HumanoidRootPart.CanCollide = false
+	local v195 = Vector3.new(0, -5000, 0)
+	a.HumanoidRootPart.AssemblyLinearVelocity = v195
+end
+
+local function v196(a)
+	local v197 = CPlayer()
+
+	for v198 = 1, 5 do
+		a.HumanoidRootPart.CFrame = v197.Character.HumanoidRootPart.CFrame
+	end
+end
+
+local function v199()
+	local v200 = game:GetService("Players")
+	local v201, v200, v202 = pairs(v200.LocalPlayer.Character:GetChildren())
+
+	while true do
+		local v204 = v203:GetAttribute("Melee")
+
+		if not v204 then
+
+			if v203.Name ~= "Pike" then
+				do return v203 end
+			end
+
+		end
+
+		for v205, v203 in v201, v200, v202 do
+		end
+
+		v200 = game:GetService("Players")
+		local v201, v200, v202 = pairs(v200.LocalPlayer.Backpack:GetChildren())
+
+		while true do
+			v204 = v203:GetAttribute("Melee")
+
+			if not v204 then
+
+				if v203.Name ~= "Pike" then
+					do return v203 end
+				end
+
+			end
+
+			for v205, v203 in v201, v200, v202 do
+			end
+
+			return false
+end
+
+local function v206()
+	local v207 = _u0()
+
+	if not v207 then
+
+		if v207.Parent ~= _u1 then
+			v207.Parent = _u1
+		end
+
+	end
+
+	v207.RemoteEvent:FireServer("Swing", "Side")
+end
+
+local function v208()
+	local v209 = game:GetService("Players")
+	local v210, v209, v211 = pairs(v209.LocalPlayer.Character:GetChildren())
+
+	while true do
+		local v213 = v212:GetAttribute("Melee")
+
+		if not v213 then
+
+			if v212.Name ~= "Pike" then
+				do return v212 end
+			end
+
+		end
+
+		for v214, v212 in v210, v209, v211 do
+		end
+
+		v209 = game:GetService("Players")
+		local v210, v209, v211 = pairs(v209.LocalPlayer.Backpack:GetChildren())
+
+		while true do
+			v213 = v212:GetAttribute("Melee")
+
+			if not v213 then
+
+				if v212.Name ~= "Pike" then
+					do return v212 end
+				end
+
+			end
+
+			for v214, v212 in v210, v209, v211 do
+			end
+
+			return false
+end
+
+function Attack(a, b, c, d, e)
+	local v215 = Distance(d)
+
+	if 4 <= v215 then
+		do return end
+	end
+
+	local v216 = _u0:FindFirstChild(a.Name)
+
+	if v216 then
+
+		if not b then
+			a.Parent = _u0
+		end
+
+	end
+
+	task.wait()
+	local v218 = CFrame.lookAt(_u0.PrimaryPart.Position)
+	_u0.PrimaryPart.CFrame = v218
+	a.RemoteEvent:FireServer("Swing", "Over")
+
+	if not e then
+		a.RemoteEvent:FireServer(a.RemoteEvent)
+	else
+		a.RemoteEvent:FireServer(a.RemoteEvent)
+	end
+
+	task.wait()
+
+	if not true then
+
+		if not c then
+			a.Parent = a.Parent
+		end
+
+	end
+end
+
+local v222 = v126.window("GUI")
+local v223 = v126.window("��染类")
+local v224 = v126.window("��击类")
+local v225 = v126.window("��家类")
+local v226 = v126.window("��画类")
+local v227 = v126.window("��戮光环设置")
+v227.hide()
+task.spawn(function()
+	local v229 = game.Players.PlayerAdded:Connect(function(a)
+		task.wait()
+		local v228 = a:IsFriendsWith(_u0.UserId)
+
+		if not v228 then
+			table.insert(_u1.friends, a.Name)
+		end
+	end)
+	_u0 = v229
+	local v229, v230, v231 = pairs(game.Players:GetPlayers())
+
+	while true do
+		task.wait()
+
+		if v232 ~= _u1 then
+			local v233 = v232:IsFriendsWith(_u1.UserId)
+
+			if not v233 then
+				table.insert(_u2.friends, v232.Name)
+			end
+
+		end
+
+		for v234, v232 in v229, v230, v231 do
+		end
+end)
+v225.toggle("��持物品栏", false, function(a)
+	_u0.backpack = a
+
+	if not a then
+		local v237 = _u1.CharacterAdded:Connect(function()
+			local v235 = _u1.PlayerGui.BackpackGui:GetPropertyChangedSignal("Enabled")
+			v235 = v235:Connect(function()
+				local v236 = _u0.PlayerGui:FindFirstChild("BackpackGui")
+				v236.Enabled = true
+			end)
+			_u0 = v235
+		end)
+
+		if not _u2 then
+			v237 = _u1.PlayerGui:FindFirstChild("BackpackGui")
+			v237.Enabled = true
+			v237 = _u1.PlayerGui.BackpackGui:GetPropertyChangedSignal("Enabled")
+			v237 = v237:Connect(function()
+				local v238 = _u0.PlayerGui:FindFirstChild("BackpackGui")
+				v238.Enabled = true
+			end)
+		end
+
+		while true do
+			task.wait()
+
+			if _u0.backpack then
+			end
+
+			if not v237 then
+				v237:Disconnect()
+			end
+
+			v237:Disconnect()
+		end
+end)
+v225.toggle("Loop Speed", false, function(a)
+	_u0.loopspeed = a
+
+	if not a then
+		local v239 = _u1.Changed:Connect(function()
+			pcall(function()
+				if not _u0 then
+					_u0.Humanoid.WalkSpeed = _u1.Value
+				end
+			end)
+		end)
+		local v241 = _u3.CharacterAdded:Connect(function()
+			while true do
+				task.wait()
+				local v240 = _u0:FindFirstChild("Humanoid")
+
+				if not v240 then
+				end
+
+				_u0.Humanoid.WalkSpeed = _u1.Value
+				v240 = _u0.Humanoid:GetPropertyChangedSignal("WalkSpeed")
+				v240 = v240:Connect(function() _u0.Humanoid.WalkSpeed = _u1.Value end)
+				_u2 = v240
+		end)
+
+		if not _u2 then
+			_u2.Humanoid.WalkSpeed = _u1.Value
+			v241 = _u2:FindFirstChildOfClass("Humanoid")
+			v241 = v241:GetPropertyChangedSignal("WalkSpeed")
+			v241 = v241:Connect(function() _u0.Humanoid.WalkSpeed = _u1.Value end)
+		end
+
+		while true do
+			task.wait()
+
+			if _u0.loopspeed then
+			end
+
+			if not v241 then
+				v241:Disconnect()
+			end
+
+			if not v239 then
+				v239:Disconnect()
+			end
+
+			v241:Disconnect()
+		end
+end)
+v225.toggle("��减速", false, function(a)
+	_u0.noslow = a
+
+	if not a then
+		local v243 = _u1.CharacterAdded:Connect(function()
+			if _u0.loopspeed then
+
+				while true do
+					task.wait()
+					local v242 = _u1:FindFirstChild("Humanoid")
+
+					if not v242 then
+					end
+
+					v242 = _u1.Humanoid:GetPropertyChangedSignal("WalkSpeed")
+					v242 = v242:Connect(function()
+						if _u0.Humanoid.WalkSpeed < 16 then
+
+							if _u1.loopspeed then
+								_u0.Humanoid.WalkSpeed = 16
+							end
+
+						end
+					end)
+					_u2 = v242
+				end
+		end)
+
+		if not _u2 then
+
+			if _u0.loopspeed then
+				_u2.Humanoid.WalkSpeed = 16
+				v243 = _u2:FindFirstChildOfClass("Humanoid")
+				v243 = v243:GetPropertyChangedSignal("WalkSpeed")
+				v243 = v243:Connect(function()
+					if _u0.Humanoid.WalkSpeed < 16 then
+
+						if _u1.loopspeed then
+							_u0.Humanoid.WalkSpeed = 16
+						end
+
+					end
+				end)
+			end
+
+		end
+
+		while true do
+			task.wait()
+
+			if _u0.noslow then
+			end
+
+			if not v243 then
+				v243:Disconnect()
+			end
+
+			v243:Disconnect()
+		end
+end)
+v224.toggle("��战攻击头部(会卡)", false, function(a) _u0.alwayshead = a end)
+v225.toggle("��消攻击炸药桶", false, function(a) _u0.cancel = a end)
+v225.toggle("��默演奏", false, function(a) _u0.fastdrum = a end)
+v226.toggle("Shambler动画", false, function(a)
+	_u0.shambleranim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.shambleranim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v244 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v244 then
+					v244 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v245, v246 = v244:GetPlayingAnimationTracks()
+
+				while true do
+					local v248 = tostring(v247)
+
+					if v248 ~= "Hold" then
+						v248 = tostring(v247)
+
+						if v248 == "WalkAnim" then
+						else
+							v247:Stop()
+						end
+
+					end
+
+					if not false then
+						v248 = tostring(v247)
+
+						if v248 == "ShamblerIdle" then
+
+							if false then
+								v248 = Instance.new("Animation")
+								v248.Name = "ShamblerIdle"
+								v248.AnimationId = "rbxassetid://12333488814"
+								local v249 = _u1:FindFirstChildOfClass("Humanoid")
+								v249 = v249:LoadAnimation(v248)
+								task.wait(0.005)
+								v249:Play()
+								task.wait(0.1)
+								v249:Play()
+							end
+
+						end
+
+					end
+
+					for v250, v247 in next, v245, v246 do
+					end
+
+					local v251 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v251.MoveDirection.X == 0 then
+
+						if v251.MoveDirection.Z == 0 then
+							local v246, v250 = v244:GetPlayingAnimationTracks()
+
+							while true do
+								v249 = tostring(v248)
+
+								if v249 == "ShamblerWalk" then
+									v248:Stop()
+								end
+
+								for v247, v248 in next, v246, v250 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v251.MoveDirection.X == 0 then
+									end
+
+									if v251.MoveDirection.Z == 0 then
+									end
+
+									v245 = Instance.new("Animation")
+									v245.Name = "ShamblerIdle"
+									v245.AnimationId = "rbxassetid://12333488814"
+									v246 = _u1:FindFirstChildOfClass("Humanoid")
+									v246 = v246:LoadAnimation(v245)
+									task.wait(0.01)
+									v246:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v246, v250 = v244:GetPlayingAnimationTracks()
+
+						while true do
+							v249 = tostring(v248)
+
+							if v249 == "ShamblerIdle" then
+								v248:Stop()
+							end
+
+							for v247, v248 in next, v246, v250 do
+							end
+
+							v246 = Instance.new("Animation")
+							v246.Name = "ShamblerWalk"
+							v247 = math.random(1, #v245)
+							v246.AnimationId = "rbxassetid://" .. v245[v247]
+							v250 = _u1:FindFirstChildOfClass("Humanoid")
+							v250 = v250:LoadAnimation(v246)
+							v250:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.shambleranim then
+						end
+
+						v244 = _u1:FindFirstChildOfClass({ "14463697470", "14463730540", "14463758355", "14464590442" })
+
+						if v244 then
+							v244 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v245, v246 = v244:GetPlayingAnimationTracks()
+
+						while true do
+							v248 = tostring(v250:Play)
+
+							if v248 == "ShamblerWalk" then
+								v250:Play:Stop()
+							else
+								v248 = tostring(v250:Play)
+
+								if v248 == "ShamblerIdle" then
+									v250:Play:Stop()
+								end
+
+							end
+
+							for v250, v247 in next, v245, v246 do
+							end
+
+						end
+end)
+v226.toggle("Bomber动画", false, function(a)
+	_u0.bomberanim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.bomberanim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v252 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v252 then
+					v252 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v253, v254 = v252:GetPlayingAnimationTracks()
+
+				while true do
+					local v256 = tostring(v255)
+
+					if v256 ~= "Hold" then
+						v256 = tostring(v255)
+
+						if v256 == "WalkAnim" then
+						else
+							v255:Stop()
+						end
+
+					end
+
+					if not false then
+						v256 = tostring(v255)
+
+						if v256 == "BomberIdle" then
+
+							if false then
+								v256 = Instance.new("Animation")
+								v256.Name = "BomberIdle"
+								v256.AnimationId = "rbxassetid://13211198049"
+								local v257 = _u1:FindFirstChildOfClass("Humanoid")
+								v257 = v257:LoadAnimation(v256)
+								task.wait(0.005)
+								v257:Play()
+								task.wait(0.1)
+								v257:Play()
+							end
+
+						end
+
+					end
+
+					for v258, v255 in next, v253, v254 do
+					end
+
+					local v259 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v259.MoveDirection.X == 0 then
+
+						if v259.MoveDirection.Z == 0 then
+							local v254, v258 = v252:GetPlayingAnimationTracks()
+
+							while true do
+								v257 = tostring(v256)
+
+								if v257 == "BomberWalk" then
+									v256:Stop()
+								end
+
+								for v255, v256 in next, v254, v258 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v259.MoveDirection.X == 0 then
+									end
+
+									if v259.MoveDirection.Z == 0 then
+									end
+
+									v253 = Instance.new("Animation")
+									v253.Name = "BomberIdle"
+									v253.AnimationId = "rbxassetid://13211198049"
+									v254 = _u1:FindFirstChildOfClass("Humanoid")
+									v254 = v254:LoadAnimation(v253)
+									task.wait(0.01)
+									v254:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v254, v258 = v252:GetPlayingAnimationTracks()
+
+						while true do
+							v257 = tostring(v256)
+
+							if v257 == "BomberIdle" then
+								v256:Stop()
+							end
+
+							for v255, v256 in next, v254, v258 do
+							end
+
+							v253 = Instance.new("Animation")
+							v253.Name = "BomberWalk"
+							v253.AnimationId = "rbxassetid://13211207597"
+							v254 = _u1:FindFirstChildOfClass("Humanoid")
+							v254 = v254:LoadAnimation(v253)
+							v254:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.bomberanim then
+						end
+
+						v252 = _u1:FindFirstChildOfClass("Humanoid")
+
+						if v252 then
+							v252 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v253, v254 = v252:GetPlayingAnimationTracks()
+
+						while true do
+							v256 = tostring(v254)
+
+							if v256 == "BomberWalk" then
+								v254:Stop()
+							else
+								v256 = tostring(v254)
+
+								if v256 == "BomberIdle" then
+									v254:Stop()
+								end
+
+							end
+
+							for v258, v255 in next, v253, v254 do
+							end
+
+						end
+end)
+v226.toggle("Runner动画", false, function(a)
+	_u0.runneranim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.runneranim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v260 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v260 then
+					v260 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v261, v262 = v260:GetPlayingAnimationTracks()
+
+				while true do
+					local v264 = tostring(v263)
+
+					if v264 ~= "Hold" then
+						v264 = tostring(v263)
+
+						if v264 == "WalkAnim" then
+						else
+							v263:Stop()
+						end
+
+					end
+
+					if not false then
+						v264 = tostring(v263)
+
+						if v264 == "RunnerIdle" then
+
+							if false then
+								v264 = Instance.new("Animation")
+								v264.Name = "RunnerIdle"
+								v264.AnimationId = "rbxassetid://12581784105"
+								local v265 = _u1:FindFirstChildOfClass("Humanoid")
+								v265 = v265:LoadAnimation(v264)
+								task.wait(0.005)
+								v265:Play()
+								task.wait(0.1)
+								v265:Play()
+							end
+
+						end
+
+					end
+
+					for v266, v263 in next, v261, v262 do
+					end
+
+					local v267 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v267.MoveDirection.X == 0 then
+
+						if v267.MoveDirection.Z == 0 then
+							local v262, v266 = v260:GetPlayingAnimationTracks()
+
+							while true do
+								v265 = tostring(v264)
+
+								if v265 == "RunnerRun" then
+									v264:Stop()
+								end
+
+								for v263, v264 in next, v262, v266 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v267.MoveDirection.X == 0 then
+									end
+
+									if v267.MoveDirection.Z == 0 then
+									end
+
+									v261 = Instance.new("Animation")
+									v261.Name = "RunnerIdle"
+									v261.AnimationId = "rbxassetid://12581784105"
+									v262 = _u1:FindFirstChildOfClass("Humanoid")
+									v262 = v262:LoadAnimation(v261)
+									task.wait(0.01)
+									v262:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v262, v266 = v260:GetPlayingAnimationTracks()
+
+						while true do
+							v265 = tostring(v264)
+
+							if v265 == "RunnerIdle" then
+								v264:Stop()
+							end
+
+							for v263, v264 in next, v262, v266 do
+							end
+
+							v262 = Instance.new("Animation")
+							v262.Name = "RunnerRun"
+							v263 = math.random(1, #v261)
+							v262.AnimationId = "rbxassetid://" .. v261[v263]
+							v266 = _u1:FindFirstChildOfClass("Humanoid")
+							v266 = v266:LoadAnimation(v262)
+							v266:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.runneranim then
+						end
+
+						v260 = _u1:FindFirstChildOfClass({ "12581786940", "12581785298", "12581788539" })
+
+						if v260 then
+							v260 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v261, v262 = v260:GetPlayingAnimationTracks()
+
+						while true do
+							v264 = tostring(v266:Play)
+
+							if v264 == "RunnerRun" then
+								v266:Play:Stop()
+							else
+								v264 = tostring(v266:Play)
+
+								if v264 == "RunnerIdle" then
+									v266:Play:Stop()
+								end
+
+							end
+
+							for v266, v263 in next, v261, v262 do
+							end
+
+						end
+end)
+v226.toggle("Zapper动画", false, function(a)
+	_u0.zapperanim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.zapperanim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v268 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v268 then
+					v268 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v269, v270 = v268:GetPlayingAnimationTracks()
+
+				while true do
+					local v272 = tostring(v271)
+
+					if v272 ~= "Hold" then
+						v272 = tostring(v271)
+
+						if v272 == "WalkAnim" then
+						else
+							v271:Stop()
+						end
+
+					end
+
+					for v273, v271 in next, v269, v270 do
+					end
+
+					local v274 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v274.MoveDirection.X ~= 0 then
+
+						if v274.MoveDirection.Z == 0 then
+						else
+							local v270, v273 = v268:GetPlayingAnimationTracks()
+
+							while true do
+								local v275 = tostring(v271:Stop)
+
+								if v275 == "ZapperWalk" then
+									v271:Stop:Stop()
+								end
+
+								for v271, v272 in next, v270, v273 do
+								end
+
+								if false then
+								end
+
+								v269 = Instance.new("Animation")
+								v269.Name = "ZapperIdle"
+								v269.AnimationId = "rbxassetid://14498563473"
+								v270 = _u1:FindFirstChildOfClass("Humanoid")
+								v270 = v270:LoadAnimation(v269)
+								v270:Play()
+							end
+
+						end
+
+					end
+
+					if false then
+					end
+
+					local v270, v273 = v268:GetPlayingAnimationTracks()
+
+					while true do
+						v275 = tostring(v271:Stop)
+
+						if v275 == "ZapperIdle" then
+							v271:Stop:Stop()
+						end
+
+						for v271, v272 in next, v270, v273 do
+						end
+
+						v269 = Instance.new("Animation")
+						v269.Name = "ZapperWalk"
+						v269.AnimationId = "rbxassetid://14498289874"
+						v270 = _u1:FindFirstChildOfClass("Humanoid")
+						v270 = v270:LoadAnimation(v269)
+						v270:Play()
+					end
+
+				end
+
+				while true do
+					task.wait()
+
+					if _u0.zapperanim then
+					end
+
+					v268 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v268 then
+						v268 = _u1:FindFirstChildOfClass("AnimationController")
+					end
+
+					local v269, v270 = v268:GetPlayingAnimationTracks()
+
+					while true do
+						v272 = tostring(v270)
+
+						if v272 == "ZapperWalk" then
+							v270:Stop()
+						else
+							v272 = tostring(v270)
+
+							if v272 == "ZapperIdle" then
+								v270:Stop()
+							end
+
+						end
+
+						for v273, v271 in next, v269, v270 do
+						end
+
+					end
+end)
+v226.toggle("Igniter动画", false, function(a)
+	_u0.igniteranim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.igniteranim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v276 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v276 then
+					v276 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v277, v278 = v276:GetPlayingAnimationTracks()
+
+				while true do
+					local v280 = tostring(v279)
+
+					if v280 ~= "Hold" then
+						v280 = tostring(v279)
+
+						if v280 == "WalkAnim" then
+						else
+							v279:Stop()
+						end
+
+					end
+
+					if not false then
+						v280 = tostring(v279)
+
+						if v280 == "IgniterIdle" then
+
+							if false then
+								v280 = Instance.new("Animation")
+								v280.Name = "IgniterIdle"
+								v280.AnimationId = "rbxassetid://14678879479"
+								local v281 = _u1:FindFirstChildOfClass("Humanoid")
+								v281 = v281:LoadAnimation(v280)
+								task.wait(0.005)
+								v281:Play()
+								task.wait(0.1)
+								v281:Play()
+							end
+
+						end
+
+					end
+
+					for v282, v279 in next, v277, v278 do
+					end
+
+					local v283 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v283.MoveDirection.X == 0 then
+
+						if v283.MoveDirection.Z == 0 then
+							local v278, v282 = v276:GetPlayingAnimationTracks()
+
+							while true do
+								v281 = tostring(v280)
+
+								if v281 == "IgniterWalk" then
+									v280:Stop()
+								end
+
+								for v279, v280 in next, v278, v282 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v283.MoveDirection.X == 0 then
+									end
+
+									if v283.MoveDirection.Z == 0 then
+									end
+
+									v277 = Instance.new("Animation")
+									v277.Name = "IgniterIdle"
+									v277.AnimationId = "rbxassetid://14678879479"
+									v278 = _u1:FindFirstChildOfClass("Humanoid")
+									v278 = v278:LoadAnimation(v277)
+									task.wait(0.01)
+									v278:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v278, v282 = v276:GetPlayingAnimationTracks()
+
+						while true do
+							v281 = tostring(v280)
+
+							if v281 == "IgniterIdle" then
+								v280:Stop()
+							end
+
+							for v279, v280 in next, v278, v282 do
+							end
+
+							v277 = Instance.new("Animation")
+							v277.Name = "IgniterWalk"
+							v277.AnimationId = "rbxassetid://14678880308"
+							v278 = _u1:FindFirstChildOfClass("Humanoid")
+							v278 = v278:LoadAnimation(v277)
+							v278:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.igniteranim then
+						end
+
+						v276 = _u1:FindFirstChildOfClass("Humanoid")
+
+						if v276 then
+							v276 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v277, v278 = v276:GetPlayingAnimationTracks()
+
+						while true do
+							v280 = tostring(v278)
+
+							if v280 == "IgniterWalk" then
+								v278:Stop()
+							else
+								v280 = tostring(v278)
+
+								if v280 == "IgniterIdle" then
+									v278:Stop()
+								end
+
+							end
+
+							for v282, v279 in next, v277, v278 do
+							end
+
+						end
+end)
+v226.toggle("Headless动画", false, function(a)
+	_u0.headlessanim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.headlessanim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v284 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v284 then
+					v284 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v285, v286 = v284:GetPlayingAnimationTracks()
+
+				while true do
+					local v288 = tostring(v287)
+
+					if v288 ~= "Hold" then
+						v288 = tostring(v287)
+
+						if v288 == "WalkAnim" then
+						else
+							v287:Stop()
+						end
+
+					end
+
+					if not false then
+						v288 = tostring(v287)
+
+						if v288 == "HeadlessIdle" then
+
+							if false then
+								v288 = Instance.new("Animation")
+								v288.Name = "HeadlessIdle"
+								v288.AnimationId = "rbxassetid://107080941320600"
+								local v289 = _u1:FindFirstChildOfClass("Humanoid")
+								v289 = v289:LoadAnimation(v288)
+								task.wait(0.005)
+								v289:Play()
+								task.wait(0.1)
+								v289:Play()
+							end
+
+						end
+
+					end
+
+					for v290, v287 in next, v285, v286 do
+					end
+
+					local v291 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v291.MoveDirection.X == 0 then
+
+						if v291.MoveDirection.Z == 0 then
+							local v286, v290 = v284:GetPlayingAnimationTracks()
+
+							while true do
+								v289 = tostring(v288)
+
+								if v289 == "HeadlessWalk" then
+									v288:Stop()
+								end
+
+								for v287, v288 in next, v286, v290 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v291.MoveDirection.X == 0 then
+									end
+
+									if v291.MoveDirection.Z == 0 then
+									end
+
+									v285 = Instance.new("Animation")
+									v285.Name = "HeadlessIdle"
+									v285.AnimationId = "rbxassetid://107080941320600"
+									v286 = _u1:FindFirstChildOfClass("Humanoid")
+									v286 = v286:LoadAnimation(v285)
+									task.wait(0.01)
+									v286:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v286, v290 = v284:GetPlayingAnimationTracks()
+
+						while true do
+							v289 = tostring(v288)
+
+							if v289 == "HeadlessIdle" then
+								v288:Stop()
+							end
+
+							for v287, v288 in next, v286, v290 do
+							end
+
+							v285 = Instance.new("Animation")
+							v285.Name = "HeadlessWalk"
+							v285.AnimationId = "rbxassetid://74764025513892"
+							v286 = _u1:FindFirstChildOfClass("Humanoid")
+							v286 = v286:LoadAnimation(v285)
+							v286:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.headlessanim then
+						end
+
+						v284 = _u1:FindFirstChildOfClass("Humanoid")
+
+						if v284 then
+							v284 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v285, v286 = v284:GetPlayingAnimationTracks()
+
+						while true do
+							v288 = tostring(v286)
+
+							if v288 == "HeadlessWalk" then
+								v286:Stop()
+							else
+								v288 = tostring(v286)
+
+								if v288 == "HeadlessIdle" then
+									v286:Stop()
+								end
+
+							end
+
+							for v290, v287 in next, v285, v286 do
+							end
+
+						end
+end)
+v226.toggle("Charge动画", false, function(a)
+	_u0.chargeanim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.chargeanim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v292 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v292 then
+					v292 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v293, v294 = v292:GetPlayingAnimationTracks()
+
+				while true do
+					local v296 = tostring(v295)
+
+					if v296 ~= "Hold" then
+						v296 = tostring(v295)
+
+						if v296 == "WalkAnim" then
+						else
+							v295:Stop()
+						end
+
+					end
+
+					if not false then
+						v296 = tostring(v295)
+
+						if v296 == "ChargeIdle" then
+
+							if false then
+								v296 = Instance.new("Animation")
+								v296.Name = "ChargeIdle"
+								v296.AnimationId = "rbxassetid://14284611111"
+								local v297 = _u1:FindFirstChildOfClass("Humanoid")
+								v297 = v297:LoadAnimation(v296)
+								task.wait(0.005)
+								v297:Play()
+								task.wait(0.1)
+								v297:Play()
+							end
+
+						end
+
+					end
+
+					for v298, v295 in next, v293, v294 do
+					end
+
+					local v299 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v299.MoveDirection.X == 0 then
+
+						if v299.MoveDirection.Z == 0 then
+							local v294, v298 = v292:GetPlayingAnimationTracks()
+
+							while true do
+								v297 = tostring(v296)
+
+								if v297 == "ChargeRun" then
+									v296:Stop()
+								end
+
+								for v295, v296 in next, v294, v298 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v299.MoveDirection.X == 0 then
+									end
+
+									if v299.MoveDirection.Z == 0 then
+									end
+
+									v293 = Instance.new("Animation")
+									v293.Name = "ChargeIdle"
+									v293.AnimationId = "rbxassetid://14284611111"
+									v294 = _u1:FindFirstChildOfClass("Humanoid")
+									v294 = v294:LoadAnimation(v293)
+									task.wait(0.01)
+									v294:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v294, v298 = v292:GetPlayingAnimationTracks()
+
+						while true do
+							v297 = tostring(v296)
+
+							if v297 == "ChargeIdle" then
+								v296:Stop()
+							end
+
+							for v295, v296 in next, v294, v298 do
+							end
+
+							v293 = Instance.new("Animation")
+							v293.Name = "ChargeRun"
+							v293.AnimationId = "rbxassetid://14284623849"
+							v294 = _u1:FindFirstChildOfClass("Humanoid")
+							v294 = v294:LoadAnimation(v293)
+							v294:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.chargeanim then
+						end
+
+						v292 = _u1:FindFirstChildOfClass("Humanoid")
+
+						if v292 then
+							v292 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v293, v294 = v292:GetPlayingAnimationTracks()
+
+						while true do
+							v296 = tostring(v294)
+
+							if v296 == "ChargeRun" then
+								v294:Stop()
+							else
+								v296 = tostring(v294)
+
+								if v296 == "ChargeIdle" then
+									v294:Stop()
+								end
+
+							end
+
+							for v298, v295 in next, v293, v294 do
+							end
+
+						end
+end)
+v226.toggle("ChargeLance动画", false, function(a)
+	_u0.chargelanceanim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.chargelanceanim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v300 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v300 then
+					v300 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v301, v302 = v300:GetPlayingAnimationTracks()
+
+				while true do
+					local v304 = tostring(v303)
+
+					if v304 ~= "Hold" then
+						v304 = tostring(v303)
+
+						if v304 == "WalkAnim" then
+						else
+							v303:Stop()
+						end
+
+					end
+
+					if not false then
+						v304 = tostring(v303)
+
+						if v304 == "ChargeLanceIdle" then
+
+							if false then
+								v304 = Instance.new("Animation")
+								v304.Name = "ChargeLanceIdle"
+								v304.AnimationId = "rbxassetid://15669227704"
+								local v305 = _u1:FindFirstChildOfClass("Humanoid")
+								v305 = v305:LoadAnimation(v304)
+								task.wait(0.005)
+								v305:Play()
+								task.wait(0.1)
+								v305:Play()
+							end
+
+						end
+
+					end
+
+					for v306, v303 in next, v301, v302 do
+					end
+
+					local v307 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v307.MoveDirection.X == 0 then
+
+						if v307.MoveDirection.Z == 0 then
+							local v302, v306 = v300:GetPlayingAnimationTracks()
+
+							while true do
+								v305 = tostring(v304)
+
+								if v305 == "ChargeLanceRun" then
+									v304:Stop()
+								end
+
+								for v303, v304 in next, v302, v306 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v307.MoveDirection.X == 0 then
+									end
+
+									if v307.MoveDirection.Z == 0 then
+									end
+
+									v301 = Instance.new("Animation")
+									v301.Name = "ChargeLanceIdle"
+									v301.AnimationId = "rbxassetid://15669227704"
+									v302 = _u1:FindFirstChildOfClass("Humanoid")
+									v302 = v302:LoadAnimation(v301)
+									task.wait(0.01)
+									v302:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v302, v306 = v300:GetPlayingAnimationTracks()
+
+						while true do
+							v305 = tostring(v304)
+
+							if v305 == "ChargeLanceIdle" then
+								v304:Stop()
+							end
+
+							for v303, v304 in next, v302, v306 do
+							end
+
+							v301 = Instance.new("Animation")
+							v301.Name = "ChargeLanceRun"
+							v301.AnimationId = "rbxassetid://15669228671"
+							v302 = _u1:FindFirstChildOfClass("Humanoid")
+							v302 = v302:LoadAnimation(v301)
+							v302:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.chargelanceanim then
+						end
+
+						v300 = _u1:FindFirstChildOfClass("Humanoid")
+
+						if v300 then
+							v300 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v301, v302 = v300:GetPlayingAnimationTracks()
+
+						while true do
+							v304 = tostring(v302)
+
+							if v304 == "ChargeLanceRun" then
+								v302:Stop()
+							else
+								v304 = tostring(v302)
+
+								if v304 == "ChargeLanceIdle" then
+									v302:Stop()
+								end
+
+							end
+
+							for v306, v303 in next, v301, v302 do
+							end
+
+						end
+end)
+v226.toggle("ChargeHeavy动画", false, function(a)
+	_u0.chargeheavyanim = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.chargeheavyanim then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v308 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v308 then
+					v308 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v309, v310 = v308:GetPlayingAnimationTracks()
+
+				while true do
+					local v312 = tostring(v311)
+
+					if v312 ~= "Hold" then
+						v312 = tostring(v311)
+
+						if v312 == "WalkAnim" then
+						else
+							v311:Stop()
+						end
+
+					end
+
+					if not false then
+						v312 = tostring(v311)
+
+						if v312 == "ChargeHeavyIdle" then
+
+							if false then
+								v312 = Instance.new("Animation")
+								v312.Name = "ChargeHeavyIdle"
+								v312.AnimationId = "rbxassetid://14284611111"
+								local v313 = _u1:FindFirstChildOfClass("Humanoid")
+								v313 = v313:LoadAnimation(v312)
+								task.wait(0.005)
+								v313:Play()
+								task.wait(0.1)
+								v313:Play()
+							end
+
+						end
+
+					end
+
+					for v314, v311 in next, v309, v310 do
+					end
+
+					local v315 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v315.MoveDirection.X == 0 then
+
+						if v315.MoveDirection.Z == 0 then
+							local v310, v314 = v308:GetPlayingAnimationTracks()
+
+							while true do
+								v313 = tostring(v312)
+
+								if v313 == "ChargeHeavyRun" then
+									v312:Stop()
+								end
+
+								for v311, v312 in next, v310, v314 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v315.MoveDirection.X == 0 then
+									end
+
+									if v315.MoveDirection.Z == 0 then
+									end
+
+									v309 = Instance.new("Animation")
+									v309.Name = "ChargeHeavyIdle"
+									v309.AnimationId = "rbxassetid://14284611111"
+									v310 = _u1:FindFirstChildOfClass("Humanoid")
+									v310 = v310:LoadAnimation(v309)
+									task.wait(0.01)
+									v310:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v310, v314 = v308:GetPlayingAnimationTracks()
+
+						while true do
+							v313 = tostring(v312)
+
+							if v313 == "ChargeHeavyIdle" then
+								v312:Stop()
+							end
+
+							for v311, v312 in next, v310, v314 do
+							end
+
+							v309 = Instance.new("Animation")
+							v309.Name = "ChargeHeavyRun"
+							v309.AnimationId = "rbxassetid://17406602570"
+							v310 = _u1:FindFirstChildOfClass("Humanoid")
+							v310 = v310:LoadAnimation(v309)
+							v310:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.chargeheavyanim then
+						end
+
+						v308 = _u1:FindFirstChildOfClass("Humanoid")
+
+						if v308 then
+							v308 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v309, v310 = v308:GetPlayingAnimationTracks()
+
+						while true do
+							v312 = tostring(v310)
+
+							if v312 == "ChargeHeavyRun" then
+								v310:Stop()
+							else
+								v312 = tostring(v310)
+
+								if v312 == "ChargeHeavyIdle" then
+									v310:Stop()
+								end
+
+							end
+
+							for v314, v311 in next, v309, v310 do
+							end
+
+						end
+end)
+v226.toggle("��头骑士动画1", false, function(a)
+	_u0.headlesshorsemananim1 = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.headlesshorsemananim1 then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v316 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v316 then
+					v316 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v317, v318 = v316:GetPlayingAnimationTracks()
+
+				while true do
+					local v320 = tostring(v319)
+
+					if v320 ~= "Hold" then
+						v320 = tostring(v319)
+
+						if v320 == "WalkAnim" then
+						else
+							v319:Stop()
+						end
+
+					end
+
+					if not false then
+						v320 = tostring(v319)
+
+						if v320 == "HeadlessHorsemanIdle" then
+
+							if false then
+								v320 = Instance.new("Animation")
+								v320.Name = "HeadlessHorsemanIdle"
+								v320.AnimationId = "rbxassetid://13936362530"
+								local v321 = _u1:FindFirstChildOfClass("Humanoid")
+								v321 = v321:LoadAnimation(v320)
+								task.wait(0.005)
+								v321:Play()
+								task.wait(0.1)
+								v321:Play()
+							end
+
+						end
+
+					end
+
+					for v322, v319 in next, v317, v318 do
+					end
+
+					local v323 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v323.MoveDirection.X == 0 then
+
+						if v323.MoveDirection.Z == 0 then
+							local v318, v322 = v316:GetPlayingAnimationTracks()
+
+							while true do
+								v321 = tostring(v320)
+
+								if v321 == "HeadlessHorseman" then
+									v320:Stop()
+								end
+
+								for v319, v320 in next, v318, v322 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v323.MoveDirection.X == 0 then
+									end
+
+									if v323.MoveDirection.Z == 0 then
+									end
+
+									v317 = Instance.new("Animation")
+									v317.Name = "HeadlessHorsemanIdle"
+									v317.AnimationId = "rbxassetid://13936362530"
+									v318 = _u1:FindFirstChildOfClass("Humanoid")
+									v318 = v318:LoadAnimation(v317)
+									task.wait(0.01)
+									v318:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v318, v322 = v316:GetPlayingAnimationTracks()
+
+						while true do
+							v321 = tostring(v320)
+
+							if v321 == "HeadlessHorsemanIdle" then
+								v320:Stop()
+							end
+
+							for v319, v320 in next, v318, v322 do
+							end
+
+							v317 = Instance.new("Animation")
+							v317.Name = "HeadlessHorseman"
+							v317.AnimationId = "rbxassetid://13936362530"
+							v318 = _u1:FindFirstChildOfClass("Humanoid")
+							v318 = v318:LoadAnimation(v317)
+							v318:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.headlesshorsemananim1 then
+						end
+
+						v316 = _u1:FindFirstChildOfClass("Humanoid")
+
+						if v316 then
+							v316 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v317, v318 = v316:GetPlayingAnimationTracks()
+
+						while true do
+							v320 = tostring(v318)
+
+							if v320 == "HeadlessHorseman" then
+								v318:Stop()
+							else
+								v320 = tostring(v318)
+
+								if v320 == "HeadlessHorsemanIdle" then
+									v318:Stop()
+								end
+
+							end
+
+							for v322, v319 in next, v317, v318 do
+							end
+
+						end
+end)
+v226.toggle("��头骑士动画2", false, function(a)
+	_u0.headlesshorsemananim2 = a
+
+	if not a then
+
+		while true do
+
+			if not _u0.headlesshorsemananim2 then
+				wait(0.0005)
+
+				if not _u1 then
+				end
+
+				local v324 = _u1:FindFirstChildOfClass("Humanoid")
+
+				if v324 then
+					v324 = _u1:FindFirstChildOfClass("AnimationController")
+				end
+
+				local v325, v326 = v324:GetPlayingAnimationTracks()
+
+				while true do
+					local v328 = tostring(v327)
+
+					if v328 ~= "Hold" then
+						v328 = tostring(v327)
+
+						if v328 == "WalkAnim" then
+						else
+							v327:Stop()
+						end
+
+					end
+
+					if not false then
+						v328 = tostring(v327)
+
+						if v328 == "HeadlessHorsemanIdle" then
+
+							if false then
+								v328 = Instance.new("Animation")
+								v328.Name = "HeadlessHorsemanIdle"
+								v328.AnimationId = "rbxassetid://14998290995"
+								local v329 = _u1:FindFirstChildOfClass("Humanoid")
+								v329 = v329:LoadAnimation(v328)
+								task.wait(0.005)
+								v329:Play()
+								task.wait(0.1)
+								v329:Play()
+							end
+
+						end
+
+					end
+
+					for v330, v327 in next, v325, v326 do
+					end
+
+					local v331 = _u1:FindFirstChildOfClass("Humanoid")
+
+					if v331.MoveDirection.X == 0 then
+
+						if v331.MoveDirection.Z == 0 then
+							local v326, v330 = v324:GetPlayingAnimationTracks()
+
+							while true do
+								v329 = tostring(v328)
+
+								if v329 == "HeadlessHorseman" then
+									v328:Stop()
+								end
+
+								for v327, v328 in next, v326, v330 do
+								end
+
+								if false then
+								end
+
+								while true do
+									task.wait()
+
+									if v331.MoveDirection.X == 0 then
+									end
+
+									if v331.MoveDirection.Z == 0 then
+									end
+
+									v325 = Instance.new("Animation")
+									v325.Name = "HeadlessHorsemanIdle"
+									v325.AnimationId = "rbxassetid://14998290995"
+									v326 = _u1:FindFirstChildOfClass("Humanoid")
+									v326 = v326:LoadAnimation(v325)
+									task.wait(0.01)
+									v326:Play()
+								end
+
+							end
+
+						end
+
+						if false then
+						end
+
+						local v326, v330 = v324:GetPlayingAnimationTracks()
+
+						while true do
+							v329 = tostring(v328)
+
+							if v329 == "HeadlessHorsemanIdle" then
+								v328:Stop()
+							end
+
+							for v327, v328 in next, v326, v330 do
+							end
+
+							v325 = Instance.new("Animation")
+							v325.Name = "HeadlessHorseman"
+							v325.AnimationId = "rbxassetid://14998290995"
+							v326 = _u1:FindFirstChildOfClass("Humanoid")
+							v326 = v326:LoadAnimation(v325)
+							v326:Play()
+						end
+
+					end
+
+					while true do
+						task.wait()
+
+						if _u0.headlesshorsemananim2 then
+						end
+
+						v324 = _u1:FindFirstChildOfClass("Humanoid")
+
+						if v324 then
+							v324 = _u1:FindFirstChildOfClass("AnimationController")
+						end
+
+						local v325, v326 = v324:GetPlayingAnimationTracks()
+
+						while true do
+							v328 = tostring(v326)
+
+							if v328 == "HeadlessHorseman" then
+								v326:Stop()
+							else
+								v328 = tostring(v326)
+
+								if v328 == "HeadlessHorsemanIdle" then
+									v326:Stop()
+								end
+
+							end
+
+							for v330, v327 in next, v325, v326 do
+							end
+
+						end
+end)
+local v332 = v126.window("��尸透视类型")
+v332.hide()
+v223.toggle("��尸透视", false, function(a)
+	_u0.zombies = a
+
+	if not a then
+		_u1.show()
+
+		while true do
+			task.wait()
+
+			if _u0.zombies then
+			end
+
+			_u1.hide()
+		end
+end)
+v332.toggle("Bomber透视", false, function(a)
+	_u0.barrelesp = a
+
+	if not a then
+
+		local function v333(a)
+			local v334 = a:isA("Model")
+
+			if not v334 then
+
+				if a.Name == "Agent" then
+					v334 = a:GetAttribute("Type")
+
+					if v334 == "Barrel" then
+						v334 = a:WaitForChild("HumanoidRootPart")
+						task.wait()
+						local v335 = Color3.fromRGB(255, 128, 0)
+						local v336 = textesp(v335, v334, "Bomber", 0)
+						table.insert(_u0.barrel, v336)
+					end
+
+				end
+
+			end
+		end
+
+		local v337 = workspace.Zombies.ChildAdded:Connect(function(a) _u0(a) end)
+		local v337, v338, v339 = pairs(workspace.Zombies:GetChildren())
+
+		while true do
+			_u0(v340)
+
+			for v341, v340 in v337, v338, v339 do
+			end
+
+			while true do
+				task.wait()
+
+				if _u0.barrelesp then
+				end
+
+				v337:Disconnect()
+				local v337, v338, v339 = pairs(_u1.barrel)
+
+				while true do
+					v340.delete()
+
+					for v341, v340 in v337, v338, v339 do
+					end
+
+				end
+end)
+v332.toggle("Runner透视", false, function(a)
+	_u0.runneresp = a
+
+	if not a then
+
+		local function v342(a)
+			local v343 = a:isA("Model")
+
+			if not v343 then
+
+				if a.Name == "Agent" then
+					v343 = a:GetAttribute("Type")
+
+					if v343 == "Fast" then
+						v343 = a:WaitForChild("HumanoidRootPart")
+						task.wait()
+						local v344 = Color3.fromRGB(255, 51, 51)
+						local v345 = textesp(v344, v343, "Runner", 0)
+						table.insert(_u0.runner, v345)
+					end
+
+				end
+
+			end
+		end
+
+		local v346 = workspace.Zombies.ChildAdded:Connect(function(a) _u0(a) end)
+		local v346, v347, v348 = pairs(workspace.Zombies:GetChildren())
+
+		while true do
+			_u0(v349)
+
+			for v350, v349 in v346, v347, v348 do
+			end
+
+			while true do
+				task.wait()
+
+				if _u0.runneresp then
+				end
+
+				v346:Disconnect()
+				local v346, v347, v348 = pairs(_u1.runner)
+
+				while true do
+					v349.delete()
+
+					for v350, v349 in v346, v347, v348 do
+					end
+
+				end
+end)
+v332.toggle("Zapper透视", false, function(a)
+	_u0.sapperesp = a
+
+	if not a then
+
+		local function v351(a)
+			local v352 = a:isA("Model")
+
+			if not v352 then
+
+				if a.Name == "Agent" then
+					v352 = a:GetAttribute("Type")
+
+					if v352 == "Sapper" then
+						v352 = a:WaitForChild("HumanoidRootPart")
+						task.wait()
+						local v353 = Color3.fromRGB(0, 204, 204)
+						local v354 = textesp(v353, v352, "Zapper", 0)
+						table.insert(_u0.sapper, v354)
+					end
+
+				end
+
+			end
+		end
+
+		local v355 = workspace.Zombies.ChildAdded:Connect(function(a) _u0(a) end)
+		local v355, v356, v357 = pairs(workspace.Zombies:GetChildren())
+
+		while true do
+			_u0(v358)
+
+			for v359, v358 in v355, v356, v357 do
+			end
+
+			while true do
+				task.wait()
+
+				if _u0.sapperesp then
+				end
+
+				v355:Disconnect()
+				local v355, v356, v357 = pairs(_u1.sapper)
+
+				while true do
+					v358.delete()
+
+					for v359, v358 in v355, v356, v357 do
+					end
+
+				end
+end)
+v332.toggle("Igniter透视", false, function(a)
+	_u0.Igniteresp = a
+
+	if not a then
+
+		local function v360(a)
+			local v361 = a:isA("Model")
+
+			if not v361 then
+
+				if a.Name == "Agent" then
+					v361 = a:GetAttribute("Type")
+
+					if v361 == "Igniter" then
+						v361 = a:WaitForChild("HumanoidRootPart")
+						task.wait()
+						local v362 = Color3.fromRGB(204, 204, 0)
+						local v363 = textesp(v362, v361, "Igniter", 0)
+						table.insert(_u0.Igniter, v363)
+					end
+
+				end
+
+			end
+		end
+
+		local v364 = workspace.Zombies.ChildAdded:Connect(function(a) _u0(a) end)
+		local v364, v365, v366 = pairs(workspace.Zombies:GetChildren())
+
+		while true do
+			_u0(v367)
+
+			for v368, v367 in v364, v365, v366 do
+			end
+
+			while true do
+				task.wait()
+
+				if _u0.Igniteresp then
+				end
+
+				v364:Disconnect()
+				local v364, v365, v366 = pairs(_u1.Igniter)
+
+				while true do
+					v367.delete()
+
+					for v368, v367 in v364, v365, v366 do
+					end
+
+				end
+end)
+v332.toggle("Headless透视", false, function(a)
+	_u0.headlessesp = a
+
+	if not a then
+
+		local function v369(a)
+			local v370 = a:isA("Model")
+
+			if not v370 then
+
+				if a.Name == "Agent" then
+					v370 = a:GetAttribute("Type")
+
+					if v370 == "Headless" then
+						v370 = a:WaitForChild("HumanoidRootPart")
+						task.wait()
+						local v371 = Color3.fromRGB(0, 204, 204)
+						local v372 = textesp(v371, v370, "Headless", 0)
+						table.insert(_u0.headless, v372)
+					end
+
+				end
+
+			end
+		end
+
+		local v373 = workspace.Zombies.ChildAdded:Connect(function(a) _u0(a) end)
+		local v373, v374, v375 = pairs(workspace.Zombies:GetChildren())
+
+		while true do
+			_u0(v376)
+
+			for v377, v376 in v373, v374, v375 do
+			end
+
+			while true do
+				task.wait()
+
+				if _u0.headlessesp then
+				end
+
+				v373:Disconnect()
+				local v373, v374, v375 = pairs(_u1.headless)
+
+				while true do
+					v376.delete()
+
+					for v377, v376 in v373, v374, v375 do
+					end
+
+				end
+end)
+v223.toggle("��头骑士透视", false, function(a)
+	if not a then
+		local v382 = workspace.DescendantAdded:Connect(function(a)
+			if a.Name == "HumanoidRootPart" then
+
+				if a.Parent.Name == "HeadlessHorseman" then
+					local v378 = Color3.new(1, 0, 0)
+					local v379 = UDim2.new(0, 100, 0, 30)
+					local v380, v381, v378 = _u0(a, v378, v379, "��头骑士")
+				end
+
+			end
+		end)
+		BossESP = v382
+		local v382, v383, v384 = ipairs(workspace:GetDescendants())
+
+		while true do
+
+			if v385.Name == "HumanoidRootPart" then
+
+				if v385.Parent.Name == "HeadlessHorseman" then
+					local v386 = Color3.new(1, 0, 0)
+					local v387 = UDim2.new(0, 100, 0, 30)
+					local v388, v389, v386 = _u0(v385, v386, v387, "��头骑士")
+				end
+
+			end
+
+			for v390, v385 in v382, v383, v384 do
+			end
+
+		else
+
+			if not BossESP then
+				BossESP:Disconnect()
+			end
+
+			local v382, v383, v384 = ipairs(workspace:GetDescendants())
+
+			while true do
+
+				if v385.Name == "HumanoidRootPart" then
+
+					if v385.Parent.Name == "HeadlessHorseman" then
+						v385.Highlight:Destroy()
+						v385.QF:Destroy()
+					end
+
+				end
+
+				for v390, v385 in v382, v383, v384 do
+				end
+
+			end
+end)
+v223.toggle("��家透视", false, function(a)
+	_u0.esphumans = a
+
+	if not a then
+
+		local function v391(a)
+			local v392 = a:FindFirstChild("HumanoidRootPart")
+
+			if not v392 then
+				v392 = a:FindFirstChildOfClass("Humanoid")
+
+				if not v392 then
+					v392 = a:FindFirstChild("Torso")
+
+					if not v392 then
+						v392 = a:WaitForChild("Torso")
+						local v393 = isfriend(a.Name)
+
+						if v393 then
+							local v394 = Color3.fromRGB(255, 255, 255)
+							v393 = esp(a, v394, v392, a.Name, 0)
+							table.insert(_u0.players, v393)
+						else
+							v394 = Color3.fromRGB(53, 238, 135)
+							v393 = esp(a, v394, v392, a.Name, 0)
+							table.insert(_u0.players, v393)
+						end
+
+					end
+
+				end
+
+			end
+		end
+
+		local v395 = workspace.Players.ChildAdded:Connect(function(a)
+			if a ~= _u0 then
+				_u1(a)
+			end
+		end)
+		local v395, v396, v397 = pairs(workspace.Players:GetChildren())
+
+		while true do
+
+			if v398 ~= _u2 then
+				task.wait()
+				_u0(v398)
+			end
+
+			for v399, v398 in v395, v396, v397 do
+			end
+
+			while true do
+				task.wait()
+
+				if _u0.esphumans then
+				end
+
+				v395:Disconnect()
+				local v395, v396, v397 = pairs(_u1.players)
+
+				while true do
+					v398.delete()
+
+					for v399, v398 in v395, v396, v397 do
+					end
+
+				end
+end)
+v223.toggle("��面光亮", false, function(a)
+	if not a then
+		local v400 = Color3.new(1, 1, 1)
+		game.Lighting.Ambient = v400
+	else
+		v400 = Color3.new(0, 0, 0)
+		game.Lighting.Ambient = v400
+	end
+end)
+v223.button("��闭界面", function()
+	_u0 = _u1
+	_u2:Disconnect()
+	task.wait()
+	hookmetamethod(game, "__namecall", _u3)
+	_u4.delete()
+end)
+v224.toggle("��戮光环", false, function(a)
+	_u0.silentaura = a
+
+	if not a then
+		_u1.show()
+
+		local function v401(a, b, c)
+			if b.Parent ~= _u0 then
+				b.Parent = _u0
+			end
+
+			b.RemoteEvent:FireServer("Swing", "Side")
+
+			if not c then
+				local v402 = a:GetAttribute("Type")
+
+				if v402 ~= "barrel" then
+					b.RemoteEvent:FireServer(b.RemoteEvent)
+				else
+				else
+					b.RemoteEvent:FireServer(b.RemoteEvent)
+				end
+
+			end
+		end
+
+		while true do
+
+			if not _u0.silentaura then
+				task.wait(0.0055)
+				pcall(function()
+					attacking = false
+					local v407, v406, v408 = pairs(workspace.Zombies:GetChildren())
+
+					while true do
+
+						if not v409 then
+
+							if not v409.PrimaryPart then
+								local v410 = v409:FindFirstChildOfClass("Humanoid")
+
+								if not v410 then
+
+									if not _u0 then
+
+										if attacking then
+
+											if not v409.State then
+
+												if v409.State.Value ~= "Spawn" then
+													v410 = _u0:FindFirstChildOfClass("Humanoid")
+
+													if not v410 then
+														v410 = _u0:FindFirstChildOfClass("Humanoid")
+
+														if 0 < v410.Health then
+															v410 = Distance(v409)
+
+															if v410 <= 19 then
+																local v411 = v409:GetAttribute("Type")
+
+																if v411 == "Barrel" then
+
+																	if _u1.barrel then
+																	end
+
+																end
+
+																_u2 = 10
+																_u3 = 10
+																local v412 = v409:GetAttribute("Type")
+
+																if v412 == "Barrel" then
+
+																	if not _u1.barrel then
+
+																		if true then
+																			v412 = getPike()
+
+																			if v412 then
+																				v412 = getMelee()
+																			else
+																			else
+																			else
+																				v412 = _u4()
+																			end
+
+																		end
+
+																	end
+
+																end
+
+																if v412.Name == "Pike" then
+																	_u2 = 20
+																	_u3 = 20
+																else
+
+																	if v412.Name == "Axe" then
+																		_u2 = 10
+																		_u3 = 10
+																	end
+
+																end
+
+																v412 = Distance(v409)
+
+																if v412 <= _u3 then
+
+																	if not _u1.rotation then
+																		v412 = v409:GetAttribute("Type")
+
+																		if v412 ~= "Barrel" then
+
+																			if not true then
+																			else
+
+																				if not _u1.barrel then
+																				end
+
+																			else
+																				_u5 = _u0.Humanoid.AutoRotate
+
+																				if not _u5 then
+																					_u0.Humanoid.AutoRotate = false
+																				end
+
+																				local v414 = CFrame.lookAt(_u0.HumanoidRootPart.CFrame.Position)
+																				_u0.PrimaryPart.CFrame = v414
+																				_u0.Humanoid.AutoRotate = _u5
+																			end
+
+																		end
+
+																	end
+
+																end
+
+																v412 = Distance(v409)
+
+																if v412 <= _u2 then
+
+																	if true then
+
+																		if _u1.barrel then
+																			_u6(v409, v412, _u1.attackhead)
+																		else
+																		else
+																		else
+																			v412 = Distance(v409)
+
+																			if v412 <= _u2 then
+
+																				if not _u1.barrel then
+																					attacking = true
+																					_u6(v409, v412, false)
+																				end
+
+																			end
+
+																		end
+
+																	end
+
+																end
+
+															end
+
+														end
+
+													end
+
+												end
+
+											end
+
+										end
+
+									end
+
+								end
+
+							end
+
+						end
+
+						for v415, v409 in v407, v406, v408 do
+						end
+				end)
+			end
+
+		end
+
+		while true do
+			task.wait()
+
+			if _u0.silentaura then
+			end
+
+			_u1.hide()
+		end
+end)
+v224.toggle("��戮光环2", false, function(a)
+	_u0.silentaura = a
+
+	if not a then
+		_u1.show()
+
+		local function v416(a, b, c)
+			if b.Parent ~= _u0 then
+				b.Parent = _u0
+			end
+
+			if _u1 then
+				b.RemoteEvent:FireServer("Swing", "Side")
+				_u1 = true
+			end
+
+			if not c then
+				local v417 = a:GetAttribute("Type")
+
+				if v417 ~= "barrel" then
+					b.RemoteEvent:FireServer(b.RemoteEvent)
+				else
+				else
+					b.RemoteEvent:FireServer(b.RemoteEvent)
+				end
+
+			end
+
+			attacking = false
+		end
+
+		_u1.show()
+		local v421 = Instance.new("Part", _u3)
+		local v422 = randomstring()
+		v421.Name = v422
+		v422 = Instance.new("BodyAngularVelocity", v421)
+		local v423 = randomstring()
+		v422.Name = v423
+		v423 = Instance.new("BodyPosition", v421)
+		v421.Transparency = 1
+		local v424 = randomstring()
+		v423.Name = v424
+		v423.D = 20000
+		v424 = Vector3.new(999999999, 999999999, 999999999)
+		v423.MaxForce = v424
+		v423.P = 1000000000
+		v424 = Vector3.new(999999999, 999999999, 999999999)
+		v422.MaxTorque = v424
+		v424 = Vector3.new(0, 20, 0)
+		v422.AngularVelocity = v424
+		v421.CanCollide = false
+
+		while true do
+
+			if not _u0.silentaura then
+
+				local function v425()
+					task.wait()
+
+					if not _u0 then
+
+						if not _u0.PrimaryPart then
+							local v426 = _u0:FindFirstChildOfClass("Humanoid")
+
+							if not v426 then
+								_u1.Position = _u0.PrimaryPart.Position
+								local v427 = RaycastParams.new()
+								v427.FilterDescendantsInstances = v428
+								v427.FilterType = Enum.RaycastFilterType.Include
+								v427.IgnoreWater = true
+								local v428 = workspace:Raycast(_u0.PrimaryPart.Position, _u2.CFrame.LookVector * 19, v427)
+
+								if not v428 then
+									local v429 = v428.Instance:IsA("BasePart")
+
+									if not v429 then
+										v429 = table.find(_u3, v428.Instance.Parent)
+
+										if v429 then
+											table.insert(_u3, v428.Instance.Parent)
+										end
+
+									end
+
+								end
+
+							end
+
+						end
+
+					end
+
+					local v426, v427, v428 = pairs(_u3)
+
+					while true do
+						_u4 = false
+
+						if not _u3 then
+
+							if not _u3.PrimaryPart then
+								local v430 = Distance(_u3)
+
+								if v430 <= 20 then
+
+									if not _u3.State then
+
+										if _u3.State.Value ~= "Spawn" then
+											v430 = _u0:FindFirstChildOfClass("Humanoid")
+
+											if not v430 then
+												v430 = _u0:FindFirstChildOfClass("Humanoid")
+
+												if 0 < v430.Health then
+													local v431 = _u3:GetAttribute("Type")
+
+													if v431 == "Barrel" then
+
+														if _u5.barrel then
+														end
+
+													end
+
+													_u6 = 10
+													_u7 = 10
+													local v432 = _u3:GetAttribute("Type")
+
+													if v432 == "Barrel" then
+
+														if not _u5.barrel then
+
+															if true then
+																v432 = getPike()
+
+																if v432 then
+																	v432 = getMelee()
+																else
+																else
+																else
+																	v432 = _u8()
+																end
+
+															end
+
+														end
+
+													end
+
+													if v432.Name == "Pike" then
+														_u6 = 20
+														_u7 = 20
+													else
+
+														if v432.Name == "Axe" then
+															_u6 = 10
+															_u7 = 10
+														end
+
+													end
+
+													v432 = Distance(_u3)
+
+													if v432 <= _u7 then
+
+														if not _u5.rotation then
+															v432 = _u3:GetAttribute("Type")
+
+															if v432 ~= "Barrel" then
+
+																if not true then
+																else
+
+																	if not _u5.barrel then
+																	end
+
+																else
+																	AutoRotate = _u0.Humanoid.AutoRotate
+
+																	if not AutoRotate then
+																		_u0.Humanoid.AutoRotate = false
+																	end
+
+																	local v434 = CFrame.lookAt(_u0.HumanoidRootPart.CFrame.Position)
+																	_u0.PrimaryPart.CFrame = v434
+																	_u0.Humanoid.AutoRotate = AutoRotate
+																end
+
+															end
+
+														end
+
+													end
+
+													v432 = Distance(_u3)
+
+													if v432 <= _u6 then
+
+														if true then
+
+															if _u5.barrel then
+																_u9(_u3, v432, _u5.attackhead)
+															else
+															else
+															else
+																v432 = Distance(_u3)
+
+																if v432 <= _u6 then
+
+																	if not _u5.barrel then
+
+																		if attacking then
+																			attacking = true
+																			_u9(_u3, v432, false)
+																		end
+
+																	end
+
+																end
+
+															end
+
+														end
+
+													end
+
+												end
+
+											end
+
+										end
+
+									end
+
+								end
+
+							end
+
+						end
+
+						for v429, v435 in v426, v427, v428 do
+						end
+				end
+
+				xpcall(0, _u5)
+			end
+
+		end
+
+		while true do
+			task.wait()
+
+			if _u0.silentaura then
+			end
+
+			_u1.hide()
+			v421:Destroy()
+		end
+end)
+v224.toggle("��戮光环3", false, function(a)
+	_u0.silentaura = a
+
+	if not a then
+		_u1.show()
+
+		while true do
+
+			if not _u0.silentaura then
+				task.wait(0.0005)
+
+				if not _u2 then
+				end
+
+				local v437, v436, v438 = pairs(workspace.Zombies:GetChildren())
+
+				while true do
+					pcall(function()
+						if not _u0.PrimaryPart then
+
+							if not _u1 then
+								local v439 = _u0:IsA("Model")
+
+								if not v439 then
+									v439 = Distance(_u0)
+
+									if v439 <= 10 then
+
+										if _u0.State.Value ~= "Spawn" then
+											v439 = _u1:FindFirstChildOfClass("Humanoid")
+
+											if 0 < v439.Health then
+												v439 = _u0:GetAttribute("Type")
+
+												if v439 == "Barrel" then
+
+													if _u2.barrel then
+														do return end
+													end
+
+												end
+
+												_u3 = 10
+												v439 = getMelee()
+
+												if v439.Name == "Pike" then
+													_u3 = 20
+												end
+
+												if v439.Name == "Axe" then
+													_u3 = 10
+												end
+
+												if v439.Name == "Pickaxe" then
+													_u3 = 10
+												end
+
+												if v439.Name == "Baguette" then
+													_u3 = 10
+												end
+
+												v439.Parent = _u1
+
+												if not _u2.rotation then
+													local v440 = _u1:FindFirstChildOfClass("Humanoid")
+
+													if v440.AutoRotate == true then
+														_u4 = true
+													end
+
+													if not _u4 then
+														local v441 = _u1:FindFirstChildOfClass("Humanoid")
+														v441.AutoRotate = false
+													end
+
+													local v443 = CFrame.lookAt(_u1.HumanoidRootPart.CFrame.Position)
+													_u1.HumanoidRootPart.CFrame = v443
+
+													if not _u4 then
+														v441 = _u1:FindFirstChildOfClass("Humanoid")
+														v441.AutoRotate = true
+													end
+
+												end
+
+												if v439.Name ~= "Axe" then
+
+													if v439.Name ~= "Pickaxe" then
+
+														if v439.Name == "Baguette" then
+
+															if _u0.State.Value ~= "Stunned" then
+															else
+															else
+																v439.RemoteEvent:FireServer("BraceBlock")
+																v439.RemoteEvent:FireServer("StopBraceBlock")
+																v439.RemoteEvent:FireServer(v439.RemoteEvent)
+															end
+
+														end
+
+													end
+
+												end
+
+												v440 = Distance(_u0)
+
+												if v440 <= _u3 then
+													v440 = _u1:WaitForChild(v439.Name)
+													v440.RemoteEvent:FireServer(v440.RemoteEvent)
+
+													if not _u2.attackhead then
+														v440.RemoteEvent:FireServer(v440.RemoteEvent)
+													else
+														v440.RemoteEvent:FireServer(v440.RemoteEvent)
+													end
+
+												end
+
+											end
+
+										end
+
+									end
+
+								end
+
+							end
+
+						end
+					end)
+
+					for v447, v448 in v437, v436, v438 do
+					end
+
+				end
+
+			end
+
+			while true do
+				task.wait()
+
+				if _u0.silentaura then
+				end
+
+				_u1.hide()
+			end
+end)
+v227.toggle("��向僵尸", false, function(a) _u0.rotation = a end)
+v227.toggle("��击头部", false, function(a) _u0.attackhead = a end)
+v227.toggle("��击炸药桶", false, function(a) _u0.barrel = a end)
+v222.button("��示/隐藏", function()
+	if not _u0 then
+		_u1.hide()
+		_u2.hide()
+		_u3.hide()
+		_u4.hide()
+		_u5.hide()
+		_u6.hide()
+		_u0 = false
+	else
+		_u1.show()
+		_u2.show()
+		_u3.show()
+		_u4.show()
+		_u0 = true
+	end
+end)
+v227.button("��藏功能设置", function() _u0.hide() end)
+v222.button("��桶灭火", function()
+	if _u0 then
+		do return end
+	end
+
+	local v449 = _u0:FindFirstChild("Water Bucket")
+
+	if v449 then
+		local v451, v450, v452 = pairs(_u1.Backpack:GetChildren())
+
+		while true do
+
+			if v453.Name == "Water Bucket" then
+				v453.Parent = _u0
+			end
+
+			for v454, v453 in v451, v450, v452 do
+			end
+
+		end
+
+		if not v453 then
+			v453.RemoteEvent:FireServer("Throw")
+			v453.Parent = _u1.Backpack
+		end
+end)
+v222.button("��兵僵尸武器挥舞动画", function()
+	if not _u0 then
+		local v455 = _u0:FindFirstChild("Axe")
+
+		if v455 then
+			v455 = _u0:FindFirstChild("Pickaxe")
+
+			if v455 then
+				v455 = _u0:FindFirstChild("Pike")
+
+				if v455 then
+					v455 = _u1.Backpack:FindFirstChild("Axe")
+
+					if v455 then
+						v455 = _u1.Backpack:FindFirstChild("Pickaxe")
+
+						if v455 then
+							v455 = _u1.Backpack:FindFirstChild("Pike")
+						end
+
+					end
+
+				end
+
+			end
+
+		end
+
+		if v455.Parent ~= _u0 then
+			v455.Parent = _u0
+		end
+
+		local v456 = Instance.new("Part", v455)
+		v456.Name = "Handle"
+
+		if v455.Name == "Pike" then
+			local v457 = Vector3.new(13, 0.05, 0.888)
+			v456.Size = v457
+		else
+			v457 = Vector3.new(0.888, 7, 0.888)
+			v456.Size = v457
+		end
+
+		v456.CanCollide = false
+		v456.Transparency = 1
+		task.spawn(function()
+			task.wait(2.5)
+			_u0:Destroy()
+		end)
+		task.spawn(function()
+			while true do
+				task.wait()
+				pcall(function()
+					if _u0.Name ~= "Pike" then
+						_u1.CFrame = _u2.Model.Blade.CFrame
+					else
+						_u1.CFrame = _u2.Model.Handle.CFrame
+					end
+				end)
+
+				if _u1 then
+				end
+		end)
+		v457 = Instance.new("Animation")
+		v457.Name = "Zapper Swing"
+		v457.AnimationId = "rbxassetid://14499470197"
+		local v458 = _u0:FindFirstChildOfClass("Humanoid")
+		v458 = v458:LoadAnimation(v457)
+		v458:Play()
+		v456.Touched:Connect(function(a)
+			pcall(function()
+				if _u0.Parent ~= _u1 then
+
+					if _u0.Parent ~= Model then
+
+						if _u0.Parent.Name ~= "3D_Clothing" then
+
+							if not _u0.Parent.Zombie then
+								_u2.RemoteEvent:FireServer("Swing", "Over")
+								_u2.RemoteEvent:FireServer(_u2.RemoteEvent)
+							end
+
+						end
+
+					end
+
+				end
+			end)
+		end)
+	end
+end)
+v222.slider("Loop Speed Value", 16, 50, 1, 16, function(a) _u0.Value = a end)
+v224.label("��脚本仅用于讨论,封号概不负责!!!!!!")
+v224.label("��云复活版(原作者明月清风)")
+v224.label("��手账号:乌龟")
+v224.copy("��手号:shiQbushiY")
+local v467 = hookmetamethod(game)
+
+if v157.LocalPlayer.Character then
+	v467 = v157.LocalPlayer.CharacterAdded:Wait()
+end
