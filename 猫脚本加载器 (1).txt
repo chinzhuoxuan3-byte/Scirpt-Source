@@ -1,0 +1,424 @@
+-- 你好我是Yes
+
+local v1 = loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/cdnUI/refs/heads/main/Mao%20ui%E4%BF%AE%E5%A4%8Dbug.lua"))()
+if game:GetService("Players").LocalPlayer:IsInGroup(309474883) then
+    print("猫脚本验证通过，欢迎使用！")
+else
+    local uDim2 = UDim2.fromOffset(390, 460)
+    local new = ColorSequence.new
+    local colorSequenceKeypoint = ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0))
+    local new2 = ColorSequenceKeypoint.new
+    local fromRGB = Color3.fromRGB
+    local CreateWindow = v1.CreateWindow
+    local v8 = new({
+		colorSequenceKeypoint,
+		new2(0.5, fromRGB(255, 165, 0)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 192, 203))
+	})
+    local t1 = {
+		Enabled = false
+	}
+    local v10 = CreateWindow(v1, {
+		Title = "<font color='#FFC0CB'><b>猫脚本 - 验证失败</b></font>",
+		Author = "<font color='#FFC0CB'><b>请先加入群组</b></font>",
+		Folder = "猫脚本",
+		Size = uDim2,
+		Transparent = false,
+		Theme = "Dark",
+		SideBarWidth = 150,
+		ScrollBarEnabled = true,
+		Background = "rbxassetid://115018839123076",
+		BackgroundlmageTransparency = 0,
+		Color = v8,
+		User = t1
+	}):Tab({
+		Title = "<font color='#FFC0CB'>验证失败</font>",
+		Icon = "alert-triangle"
+	})
+
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 为什么我在这里？</b></font>",
+		Desc = "<font color='#FFC0CB'>答: 因为你没加入猫脚本群组</font>"
+	})
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 什么是猫脚本群组？</b></font>",
+		Desc = "<font color='#FFC0CB'>答: 是Roblox里的一个名为猫脚本的群组</font>"
+	})
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 手机怎么加入群组</b></font>",
+		Desc = "<font color='#FFC0CB'>答: Roblox主界面→更多→社区→更多群组→搜索猫脚本→加入</font>"
+	})
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 电脑怎么加入群组</b></font>",
+		Desc = "<font color='#FFC0CB'>答: Roblox主界面→更多→社区→更多群组→搜索猫脚本→加入</font>"
+	})
+    v10:Paragraph({
+		Title = "<font color='#FFC0CB'><b>问: 我电脑是网页版的怎么办</b></font>",
+		Desc = "<font color='#FFC0CB'>答: 在你Roblox大厅有个叫(群组)的 点进去然后点击(更多群组)然后搜索(猫脚本)加入就行了</font>"
+	})
+    setclipboard("猫脚本QQ群569036702")
+    wait(999999999)
+end
+local PlaceId = game.PlaceId
+local s1
+if PlaceId == 3623096087 then
+    s1 = "https://raw.githubusercontent.com/kitten-maomao/jiaobeng/refs/heads/main/%E5%8A%9B%E9%87%8F%E4%BC%A0%E5%A5%87.lua"
+else
+    if PlaceId ~= 3956818381 then
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+			Title = "该服务器还为制作\n若需要请联系作者\n作者QQ:3931554043",
+			Text = "",
+			Duration = 1E+136
+		})
+
+        return
+    end
+
+    s1 = "https://raw.githubusercontent.com/kitten-maomao/jiaobeng/refs/heads/main/%E5%BF%8D%E8%80%85%E4%BC%A0%E5%A5%87.lua"
+end
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local PlayerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+local CurrentCamera = workspace.CurrentCamera
+local function v17(p1, p2, p3)
+    return Color3.fromRGB(p1, p2, p3)
+end
+local ViewportSize = CurrentCamera.ViewportSize
+local v19 = math.clamp(math.min(ViewportSize.X, ViewportSize.Y) / 390, 1, 1.6)
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "CatLoaderV2"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.DisplayOrder = 999
+ScreenGui.Parent = PlayerGui
+local v21 = math.max(math.min(ViewportSize.X * 0.82, 540), 400)
+local v22 = math.floor(v19 * 102)
+local _ = (ViewportSize.X - v21) / 2
+local _ = (ViewportSize.Y - v22) / 2
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(1, 0, 1, 0)
+Frame.Position = UDim2.new(0, 0, 0, 0)
+Frame.BackgroundTransparency = 1
+Frame.ZIndex = 1
+Frame.Parent = ScreenGui
+local t2 = {}
+local n1 = 1
+local v28 = utf8.char(10052)
+local n2 = 40
+local v30 = n1 < 0
+local v31 = 1 - n1
+while true do
+    v31 += n1
+
+    if (not v30 or not (n2 <= v31)) and (v30 or not (v31 <= n2)) then
+        break
+    end
+
+    local TextLabel = Instance.new("TextLabel")
+
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.Text = v28
+    TextLabel.TextColor3 = Color3.fromRGB(230, 240, 255)
+    TextLabel.TextTransparency = math.random(5, 35) / 100
+    TextLabel.TextSize = math.random(10, 18) * v19
+    TextLabel.Font = Enum.Font.GothamBold
+    TextLabel.TextXAlignment = Enum.TextXAlignment.Center
+    TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+    TextLabel.ZIndex = 1
+    TextLabel.Parent = Frame
+    TextLabel.Position = UDim2.new(math.random(), 0, math.random(), 0)
+
+    local insert = table.insert
+    local v34 = math.random(20, 60) * v19
+    local v35 = math.random(-15, 15) * v19
+    local v36 = math.random(0.2, 0.8)
+    local v37 = math.random(1, 3)
+    local timestamp = tick()
+
+    insert(t2, {
+		label = TextLabel,
+		speed = v34,
+		drift = v35,
+		wobbleAmp = v36,
+		wobbleSpeed = v37,
+		startTime = timestamp
+	})
+end
+local connection = RunService.Heartbeat:Connect(function(dt)
+    local timestamp = tick()
+    local ViewportSize2 = CurrentCamera.ViewportSize
+
+    for _, v in ipairs(t2) do
+        local label = v.label
+        local labelPosition = label.Position
+        local v71 = labelPosition.Y.Scale + v.speed * dt / ViewportSize2.Y
+
+        if v71 > 1.1 then
+            label.Position = UDim2.new(math.random(), 0, -0.05, 0)
+        else
+            local v72 = math.sin((timestamp - v.startTime) * v.wobbleSpeed) * v.wobbleAmp
+            local v73 = labelPosition.X.Scale + (v.drift * dt + v72 * dt * 0.5) / ViewportSize2.X
+
+            if v73 > 1.05 then
+                v73 = -0.05
+            elseif v73 < -0.05 then
+                v73 = 1.05
+            end
+
+            label.Position = UDim2.new(v73, 0, v71, 0)
+        end
+    end
+end)
+ScreenGui.Destroying:Connect(function()
+    if connection then
+        connection:Disconnect()
+    end
+end)
+local Frame2 = Instance.new("Frame")
+Frame2.Name = "SplashPanel"
+Frame2.Size = UDim2.new(0, 0, 0, v22)
+Frame2.Position = UDim2.new(0.5, 0, 0.5, 0)
+Frame2.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame2.BackgroundColor3 = v17(10, 8, 14)
+Frame2.BackgroundTransparency = 0
+Frame2.BorderSizePixel = 0
+Frame2.ZIndex = 10
+Frame2.ClipsDescendants = true
+Frame2.Parent = ScreenGui
+Instance.new("UICorner", Frame2).CornerRadius = UDim.new(0, 16)
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Thickness = 1.5
+UIStroke.Color = v17(210, 35, 35)
+UIStroke.Transparency = 0.35
+UIStroke.Parent = Frame2
+local Frame3 = Instance.new("Frame")
+Frame3.Size = UDim2.new(1, -32, 0, (math.floor(v19 * 3)))
+Frame3.Position = UDim2.new(0, 16, 0, 0)
+Frame3.BackgroundColor3 = v17(210, 35, 35)
+Frame3.BackgroundTransparency = 1
+Frame3.BorderSizePixel = 0
+Frame3.ZIndex = 13
+Frame3.Parent = Frame2
+Instance.new("UICorner", Frame3).CornerRadius = UDim.new(1, 0)
+local v43 = math.floor(v19 * 52)
+local Frame4 = Instance.new("Frame")
+Frame4.Size = UDim2.new(0, v43, 0, v43)
+Frame4.Position = UDim2.new(0, math.floor(v19 * 16), 0.5, -v43 / 2)
+Frame4.BackgroundColor3 = v17(8, 6, 12)
+Frame4.BackgroundTransparency = 0
+Frame4.BorderSizePixel = 0
+Frame4.ZIndex = 12
+Frame4.Parent = Frame2
+Instance.new("UICorner", Frame4).CornerRadius = UDim.new(0, 11)
+local UIStroke2 = Instance.new("UIStroke")
+UIStroke2.Thickness = 2
+UIStroke2.Color = v17(210, 35, 35)
+UIStroke2.Transparency = 0.3
+UIStroke2.Parent = Frame4
+local ImageLabel = Instance.new("ImageLabel")
+ImageLabel.Size = UDim2.new(1, -8, 1, -8)
+ImageLabel.Position = UDim2.new(0, 4, 0, 4)
+ImageLabel.BackgroundTransparency = 1
+ImageLabel.Image = "rbxassetid://124925027249193"
+ImageLabel.ScaleType = Enum.ScaleType.Fit
+ImageLabel.ZIndex = 13
+ImageLabel.Parent = Frame4
+local v47 = math.floor(v19 * 16) + v43 + math.floor(v19 * 14)
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, -(v47 + 18), 0, (math.floor(v19 * 18)))
+TextLabel.Position = UDim2.new(0, v47, 0, (math.floor(v19 * 16)))
+TextLabel.BackgroundTransparency = 1
+TextLabel.Text = "欢迎使用猫脚本"
+TextLabel.TextColor3 = v17(255, 255, 255)
+TextLabel.TextSize = math.floor(v19 * 13)
+TextLabel.Font = Enum.Font.GothamBold
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel.TextTransparency = 1
+TextLabel.ZIndex = 12
+TextLabel.Parent = Frame2
+local TextLabel2 = Instance.new("TextLabel")
+TextLabel2.Size = UDim2.new(1, -(v47 + 18), 0, (math.floor(v19 * 13)))
+TextLabel2.Position = UDim2.new(0, v47, 0, (math.floor(v19 * 37)))
+TextLabel2.BackgroundTransparency = 1
+TextLabel2.Text = "Initializing..."
+TextLabel2.TextColor3 = v17(140, 132, 158)
+TextLabel2.TextSize = math.floor(v19 * 9)
+TextLabel2.Font = Enum.Font.Gotham
+TextLabel2.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel2.TextTransparency = 1
+TextLabel2.ZIndex = 12
+TextLabel2.Parent = Frame2
+local v50 = math.floor(v19 * 18)
+local v51 = math.floor(v19 * 56)
+local v52 = math.floor(v19 * 28)
+local Frame5 = Instance.new("Frame")
+Frame5.Size = UDim2.new(1, -(v47 + v50 + v52 + math.floor(v19 * 8)), 0, (math.floor(v19 * 5)))
+Frame5.Position = UDim2.new(0, v47, 0, v51)
+Frame5.BackgroundColor3 = v17(28, 22, 38)
+Frame5.BorderSizePixel = 0
+Frame5.ZIndex = 12
+Frame5.Parent = Frame2
+Instance.new("UICorner", Frame5).CornerRadius = UDim.new(1, 0)
+local Frame6 = Instance.new("Frame")
+Frame6.Size = UDim2.new(0, 0, 1, 0)
+Frame6.BackgroundColor3 = v17(210, 35, 35)
+Frame6.BorderSizePixel = 0
+Frame6.ZIndex = 13
+Frame6.Parent = Frame5
+Instance.new("UICorner", Frame6).CornerRadius = UDim.new(1, 0)
+local UIStroke3 = Instance.new("UIStroke")
+UIStroke3.Thickness = 3
+UIStroke3.Color = v17(210, 35, 35)
+UIStroke3.Transparency = 0.6
+UIStroke3.Parent = Frame6
+local TextLabel3 = Instance.new("TextLabel")
+TextLabel3.Size = UDim2.new(0, v52, 0, (math.floor(v19 * 13)))
+TextLabel3.Position = UDim2.new(1, -(v52 + v50), 0, v51 - math.floor(v19 * 3))
+TextLabel3.BackgroundTransparency = 1
+TextLabel3.Text = "0%"
+TextLabel3.TextColor3 = v17(50, 255, 50)
+TextLabel3.TextSize = math.floor(v19 * 8)
+TextLabel3.Font = Enum.Font.GothamBold
+TextLabel3.TextXAlignment = Enum.TextXAlignment.Right
+TextLabel3.TextTransparency = 1
+TextLabel3.ZIndex = 12
+TextLabel3.Parent = Frame2
+local TextLabel4 = Instance.new("TextLabel")
+TextLabel4.Size = UDim2.new(1, 0, 0, (math.floor(v19 * 11)))
+TextLabel4.Position = UDim2.new(0, 0, 0, (math.floor(v19 * 78)))
+TextLabel4.BackgroundTransparency = 1
+TextLabel4.Text = "v2猫脚本加载器"
+TextLabel4.TextColor3 = v17(90, 82, 108)
+TextLabel4.TextSize = math.floor(v19 * 7)
+TextLabel4.Font = Enum.Font.Gotham
+TextLabel4.TextXAlignment = Enum.TextXAlignment.Center
+TextLabel4.TextTransparency = 1
+TextLabel4.ZIndex = 12
+TextLabel4.Parent = Frame2
+local new = TweenInfo.new
+local u59
+local v60 = s1
+if v60 then
+    v60 = s1 ~= ""
+end
+if v60 then
+    task.spawn(function()
+        local ok, result = pcall(function()
+            return game:HttpGet(s1)
+        end)
+
+        if ok then
+            u59 = result
+        end
+    end)
+end
+task.spawn(function()
+    task.wait(0.02)
+    TweenService:Create(Frame2, new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {
+		Size = UDim2.new(0, v21, 0, v22)
+	}):Play()
+    task.wait(0.2)
+    TweenService:Create(TextLabel, new(0.18), {
+		TextTransparency = 0
+	}):Play()
+    TweenService:Create(TextLabel2, new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, false, 0.04), {
+		TextTransparency = 0
+	}):Play()
+    TweenService:Create(TextLabel3, new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, false, 0.06), {
+		TextTransparency = 0
+	}):Play()
+    TweenService:Create(TextLabel4, new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out, 0, false, 0.08), {
+		TextTransparency = 0
+	}):Play()
+
+    local n3 = 0.01
+
+    while n3 < 1 do
+        n3 = math.min(n3 + 0.008, 1)
+        Frame6.Size = UDim2.new(n3, 0, 1, 0)
+        TextLabel3.Text = math.floor(n3 * 100) .. "%"
+
+        if n3 < 0.3 then
+            TextLabel2.Text = "加载UI中"
+            TextLabel2.TextColor3 = v17(140, 132, 158)
+        elseif n3 < 0.6 then
+            TextLabel2.Text = "UI加载成功"
+            TextLabel2.TextColor3 = v17(140, 132, 158)
+        elseif n3 < 0.85 then
+            TextLabel2.Text = "脚本功能加载中"
+            TextLabel2.TextColor3 = v17(251, 191, 36)
+        else
+            TextLabel2.Text = "欢迎使用猫脚本"
+            TextLabel2.TextColor3 = v17(50, 220, 100)
+            TextLabel3.TextColor3 = v17(50, 220, 100)
+        end
+
+        task.wait(0.025)
+    end
+
+    Frame6.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel3.Text = "100%"
+    task.wait(0.3)
+
+    local n4 = 0.15
+
+    TweenService:Create(TextLabel, new(n4), {
+		TextTransparency = 1
+	}):Play()
+    TweenService:Create(TextLabel2, new(n4), {
+		TextTransparency = 1
+	}):Play()
+    TweenService:Create(TextLabel3, new(n4), {
+		TextTransparency = 1
+	}):Play()
+    TweenService:Create(TextLabel4, new(n4), {
+		TextTransparency = 1
+	}):Play()
+    TweenService:Create(ImageLabel, new(n4), {
+		ImageTransparency = 1
+	}):Play()
+    TweenService:Create(UIStroke2, new(n4), {
+		Transparency = 1
+	}):Play()
+    TweenService:Create(Frame4, new(n4), {
+		BackgroundTransparency = 1
+	}):Play()
+    TweenService:Create(Frame5, new(n4), {
+		BackgroundTransparency = 1
+	}):Play()
+    TweenService:Create(Frame6, new(n4), {
+		BackgroundTransparency = 1
+	}):Play()
+    TweenService:Create(Frame3, new(n4), {
+		BackgroundTransparency = 1
+	}):Play()
+    TweenService:Create(UIStroke, new(n4), {
+		Transparency = 1
+	}):Play()
+    TweenService:Create(Frame2, new(n4 + 0.05), {
+		BackgroundTransparency = 1
+	}):Play()
+    task.wait(n4 + 0.1)
+    ScreenGui:Destroy()
+
+    if u59 then
+        pcall(function()
+            loadstring(u59)("猫脚本")
+        end)
+
+        return
+    end
+
+    local v78 = s1
+
+    if v78 then
+        v78 = s1 ~= ""
+    end
+
+    if v78 then
+        pcall(function()
+            loadstring(game:HttpGet(s1))("猫脚本")
+        end)
+    end
+end)
