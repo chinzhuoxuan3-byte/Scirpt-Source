@@ -1,0 +1,2240 @@
+-- 你好我是梅西奶奶
+
+local v1 = unpack or table.unpack
+local v2 = loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/cdnUI/refs/heads/main/Mao%20ui%E4%BF%AE%E5%A4%8Dbug.lua"))()
+local VirtualUser = game:GetService("VirtualUser")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+Players.LocalPlayer.Idled:Connect(function()
+    VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+end)
+
+local uDim2 = UDim2.fromOffset(390, 460)
+local colorSequence = ColorSequence.new({
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 0, 0)),
+	ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 165, 0)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 192, 203))
+})
+local CreateWindow = v2.CreateWindow
+local t1 = {
+	Enabled = true,
+	Anonymous = false,
+	Callback = function()
+end
+}
+local v11 = CreateWindow(v2, {
+	Title = "<font color='#FFC0CB'><b>猫脚本</b></font>",
+	Author = "<font color='#FFC0CB'><b>猫天帝制作</b></font>",
+	Folder = "猫脚本",
+	Size = uDim2,
+	Transparent = false,
+	Theme = "Dark",
+	SideBarWidth = 150,
+	ScrollBarEnabled = true,
+	Background = "rbxassetid://115018839123076",
+	BackgroundlmageTransparency = 0.5,
+	Color = colorSequence,
+	User = t1
+})
+local uDim = UDim.new(0, 10)
+local colorSequence2 = ColorSequence.new(Color3.fromRGB(255, 100, 100))
+
+v11:EditOpenButton({
+	Title = "<font color='#FFC0CB'><b>猫脚本</b></font>",
+	CornerRadius = uDim,
+	StrokeThickness = 2.5,
+	Color = colorSequence2,
+	Draggable = true
+})
+local fromRGB = Color3.fromRGB
+local Tag = v11.Tag
+local v16 = fromRGB(255, 255, 0)
+
+Tag(v11, {
+	Title = "忍者传奇",
+	Color = v16,
+	Radius = 12
+})
+local v17 = os.date("%H:%M")
+local color3 = Color3.fromRGB(0, 255, 0)
+local v19 = v11:Tag({
+	Title = v17,
+	Color = color3,
+	Radius = 12
+})
+local color3_2 = Color3.fromRGB(178, 34, 34)
+local v21 = v11:Tag({
+	Title = "00:00:00",
+	Color = color3_2,
+	Radius = 12
+})
+local color3_3 = Color3.fromRGB(0, 100, 255)
+local v23 = v11:Tag({
+	Title = "00:00:00",
+	Color = color3_3,
+	Radius = 12
+})
+local v24 = "猫脚本" .. "/total_time.json"
+local v25 = (function()
+    pcall(function()
+        if not isfolder("猫脚本") then
+            makefolder("猫脚本")
+        end
+    end)
+    local n1 = 0
+    pcall(function()
+        if isfile(v24) then
+            n1 = tonumber((readfile(v24))) or 0
+        end
+    end)
+
+    return n1
+end)()
+local timestamp = tick()
+local timestamp2 = tick()
+local function v28(p1)
+    local v63 = math.floor(p1 / 3600)
+    local v64 = math.floor(p1 % 3600 / 60)
+    local v65 = math.floor(p1 % 60)
+
+    return string.format("%02d:%02d:%02d", v63, v64, v65)
+end
+local v29 = v21
+if v29 then
+    v29 = v21.SetTitle
+end
+if v29 then
+    v21:SetTitle(v28(v25))
+end
+task.spawn(function()
+    while v21 do
+        task.wait(1)
+
+        local v66 = v19
+
+        if v66 then
+            v66 = v19.SetTitle
+        end
+
+        if v66 then
+            v19:SetTitle(os.date("%H:%M"))
+        end
+
+        local v67 = v21
+
+        if v67 then
+            v67 = v21.SetTitle
+        end
+
+        if v67 then
+            local v68 = tick() - timestamp
+            local v69 = v25 + v68
+
+            v21:SetTitle(v28(v69))
+
+            local v70 = v69
+
+            pcall(function()
+                if not isfolder("猫脚本") then
+                    makefolder("猫脚本")
+                end
+
+                writefile(v24, (tostring(v70)))
+            end)
+        end
+
+        local v71 = v23
+
+        if v71 then
+            v71 = v23.SetTitle
+        end
+
+        if v71 then
+            local v72 = tick() - timestamp2
+
+            v23:SetTitle(v28(v72))
+        end
+    end
+end)
+
+local t2 = {
+	Announce = v11:Tab({
+		Title = "<font color='#FFC0CB'>公告</font>",
+		Icon = "megaphone"
+	})
+}
+t2.Announce:Paragraph({
+	Title = "<font color='#FFC0CB'><b>猫脚本制作不易勿喷</b></font>",
+	Desc = "",
+	Image = "heart",
+	ImageSize = 26
+})
+t2.Announce:Paragraph({
+	Title = "<font color='#FFC0CB'><b>感谢支持</b></font>",
+	Desc = "",
+	Image = "heart",
+	ImageSize = 26
+})
+t2.Announce:Paragraph({
+	Title = "<font color='#FFC0CB'><b>猫脚本是免费的，可以倒卖，前提是要发脚本，拉他们进猫脚本的群\n猫脚本也支持为各大付费脚本服务，想要源码可以找我来领取源码</b></font>",
+	Desc = "",
+	Image = "heart",
+	ImageSize = 26
+})
+local v31 = t2.Announce:Paragraph({
+	Title = "<font color='#FFC0CB'><b>猫脚本：569036702\n猫脚本互赞群：1051220818</b></font>",
+	Desc = "",
+	Image = "heart",
+	ImageSize = 26
+})
+task.spawn(function()
+    task.wait(0.3)
+    pcall(function()
+        local Frame = v31.Frame
+
+        if not Frame then
+            Frame = v31.Instance
+
+            if not Frame then
+                Frame = v31.Main
+
+                if not Frame then
+                    Frame = v31.Container
+                end
+            end
+        end
+
+        if not Frame then
+            for _, v in pairs(v31) do
+                local v172 = typeof(v) == "Instance"
+
+                if v172 then
+                    v172 = v:IsA("GuiObject")
+                end
+
+                if v172 then
+                    Frame = v
+
+                    break
+                end
+            end
+        end
+
+        local v173 = Frame
+
+        if Frame then
+            v173 = Frame:IsA("GuiObject")
+        end
+
+        if v173 then
+            Frame.Active = true
+            Frame.InputBegan:Connect(function(input, gameProcessed)
+                if gameProcessed then
+                    return
+                end
+
+                local v253 = input.UserInputType == Enum.UserInputType.MouseButton1
+
+                if not v253 then
+                    v253 = input.UserInputType == Enum.UserInputType.Touch
+                end
+
+                if v253 then
+                    pcall(function()
+                        if setclipboard then
+                            setclipboard("猫脚本：569036702 | 猫脚本互赞群：1051220818")
+                        end
+
+                        game:GetService("StarterGui"):SetCore("SendNotification", {
+							Title = "猫脚本",
+							Text = "猫脚本QQ群号与互赞群号已复制到剪贴板！",
+							Duration = 3
+						})
+                    end)
+                end
+            end)
+        end
+    end)
+end)
+t2.Announce:Button({
+	Title = "<font color='#FFD700'><b>🏆 点击查看赞助榜 🏆</b></font>",
+	Callback = function()
+    local s1 = "https://raw.githubusercontent.com/kitten-maomao/Master-script/refs/heads/main/sponsor.txt"
+    pcall(function()
+        if setclipboard then
+            setclipboard(s1)
+        end
+    end)
+    if pcall(function()
+        game:GetService("GuiService"):OpenBrowserWindow(s1)
+    end) then
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+				Title = "猫脚本",
+				Text = "正在打开浏览器查看赞助榜...",
+				Duration = 3
+			})
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+				Title = "猫脚本",
+				Text = "链接已复制到剪贴板，请粘贴到浏览器查看",
+				Duration = 5
+			})
+    end
+end
+})
+t2.General = v11:Tab({
+	Title = "<font color='#FFC0CB'>通用</font>",
+	Icon = "zap"
+})
+local General = t2.General
+General:Button({
+	Title = "<font color='#FFC0CB'><b>猫飞行</b></font>",
+	Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E9%A3%9E%E8%A1%8C.lua"))("猫脚本")
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>穿墙</b></font>",
+	Default = false,
+	Callback = function(p2)
+    _G.CatNoclip_Enabled = p2
+
+    if p2 then
+        p2 = not _G.CatNoclip_Running
+    end
+
+    if p2 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%A9%BF%E5%A2%99.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>隐身</b></font>",
+	Desc = "<font color='#FFC0CB'><i>本功能原作者为蛙QWQ</i></font>",
+	Default = false,
+	Callback = function(p3)
+    _G.CatInvis_Enabled = p3
+
+    if p3 then
+        p3 = not _G.CatInvis_Running
+    end
+
+    if p3 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%8C%AB%E5%A4%A9%E5%B8%9D%E4%BA%8C%E6%94%B9%E9%9A%90%E8%BA%AB.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>透视</b></font>",
+	Default = false,
+	Callback = function(p4)
+    _G.CatESP_Enabled = p4
+
+    if p4 then
+        p4 = not _G.CatESP_Running
+    end
+
+    if p4 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E9%80%8F%E8%A7%86.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>无限跳</b></font>",
+	Default = false,
+	Callback = function(p5)
+    _G.CatInfJump_Enabled = p5
+
+    if p5 then
+        p5 = not _G.CatInfJump_Running
+    end
+
+    if p5 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E6%97%A0%E9%99%90%E8%B7%B3.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>美化无头</b></font>",
+	Default = false,
+	Callback = function(p6)
+    _G.CatHeadless_Enabled = p6
+
+    if p6 then
+        p6 = not _G.CatHeadless_Running
+    end
+
+    if p6 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%BE%8E%E5%8C%96%E6%97%A0%E5%A4%B4.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>美化断腿</b></font>",
+	Default = false,
+	Callback = function(p7)
+    _G.CatBrokenLeg_Enabled = p7
+
+    if p7 then
+        p7 = not _G.CatBrokenLeg_Running
+    end
+
+    if p7 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%BE%8E%E5%8C%96%E6%96%AD%E8%85%BF.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>删除帽子</b></font>",
+	Default = false,
+	Callback = function(p8)
+    _G.CatNoHat_Enabled = p8
+
+    if p8 then
+        p8 = not _G.CatNoHat_Running
+    end
+
+    if p8 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E5%88%A0%E9%99%A4%E5%B8%BD%E5%AD%90.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>删除全部衣服</b></font>",
+	Default = false,
+	Callback = function(p9)
+    _G.CatNoClothes_Enabled = p9
+
+    if p9 then
+        p9 = not _G.CatNoClothes_Running
+    end
+
+    if p9 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E5%88%A0%E9%99%A4%E5%85%A8%E9%83%A8%E8%A1%A3%E6%9C%8D.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>防甩飞</b></font>",
+	Default = false,
+	Callback = function(p10)
+    _G.CatAntiFling_Enabled = p10
+
+    if p10 then
+        p10 = not _G.CatAntiFling_Running
+    end
+
+    if p10 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E9%98%B2%E7%94%A9%E9%A3%9E.lua"))("猫脚本")
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>速度</b></font>",
+	Default = false,
+	Callback = function(p11)
+    changeSpeed = p11
+
+    if p11 then
+        task.spawn(function()
+            while changeSpeed do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+
+                    if Character and Character:FindFirstChild("Humanoid") then
+                        Character.Humanoid.WalkSpeed = speedValue
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+General:Input({
+	Title = "<font color='#FFC0CB'><b>速度值</b></font>",
+	Placeholder = "默认16",
+	Default = "",
+	Callback = function(p12)
+    local num = tonumber(p12)
+
+    if num then
+        speedValue = num
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>重力</b></font>",
+	Default = false,
+	Callback = function(p13)
+    changeGravity = p13
+
+    if p13 then
+        task.spawn(function()
+            while changeGravity do
+                pcall(function()
+                    workspace.Gravity = gravityValue
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+General:Input({
+	Title = "<font color='#FFC0CB'><b>重力值</b></font>",
+	Placeholder = "默认196.2",
+	Default = "",
+	Callback = function(p14)
+    local num = tonumber(p14)
+
+    if num then
+        gravityValue = num
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>跳跃</b></font>",
+	Default = false,
+	Callback = function(p15)
+    changeJump = p15
+
+    if p15 then
+        task.spawn(function()
+            while changeJump do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+
+                    if Character and Character:FindFirstChild("Humanoid") then
+                        Character.Humanoid.JumpPower = jumpValue
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+General:Input({
+	Title = "<font color='#FFC0CB'><b>跳跃值</b></font>",
+	Placeholder = "默认50",
+	Default = "",
+	Callback = function(p16)
+    local num = tonumber(p16)
+
+    if num then
+        jumpValue = num
+    end
+end
+})
+local v33 = General:Dropdown({
+	Title = "<font color='#FFC0CB'><b>选择玩家</b></font>",
+	Values = {},
+	Default = "",
+	Callback = function(p17)
+    selectedPlayer = p17
+    _G.CatSelectedPlayer = p17
+end
+})
+General:Button({
+	Title = "<font color='#FFC0CB'><b>传送到玩家</b></font>",
+	Callback = function()
+    pcall(function()
+        local Character = Players.LocalPlayer.Character
+        local v175 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+        if not v175 then
+            return
+        end
+
+        local selectedPlayer2 = Players:FindFirstChild(selectedPlayer)
+        local v177 = selectedPlayer2
+
+        if selectedPlayer2 then
+            v177 = selectedPlayer2.Character
+
+            if v177 then
+                v177 = selectedPlayer2.Character:FindFirstChild("HumanoidRootPart")
+            end
+        end
+
+        if v177 then
+            v175.CFrame = selectedPlayer2.Character.HumanoidRootPart.CFrame * CFrame.new(0, 3, 0)
+        end
+    end)
+end
+})
+General:Button({
+	Title = "<font color='#FFC0CB'><b>把玩家传送过来</b></font>",
+	Callback = function()
+    pcall(function()
+        local Character = Players.LocalPlayer.Character
+
+        if Character then
+            Character = Character:FindFirstChild("HumanoidRootPart")
+        end
+
+        if not Character then
+            return
+        end
+
+        local selectedPlayer3 = Players:FindFirstChild(selectedPlayer)
+        local v180 = selectedPlayer3
+
+        if selectedPlayer3 then
+            v180 = selectedPlayer3.Character
+
+            if v180 then
+                v180 = selectedPlayer3.Character:FindFirstChild("HumanoidRootPart")
+            end
+        end
+
+        if v180 then
+            selectedPlayer3.Character.HumanoidRootPart.CFrame = Character.CFrame * CFrame.new(0, 3, 0)
+        end
+    end)
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>循环传送玩家</b></font>",
+	Default = false,
+	Callback = function(p18)
+    loopTpToPlayer = p18
+
+    if p18 then
+        task.spawn(function()
+            while loopTpToPlayer do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+
+                    if Character then
+                        Character = Character:FindFirstChild("HumanoidRootPart")
+                    end
+
+                    if not Character then
+                        return
+                    end
+
+                    local selectedPlayer4 = Players:FindFirstChild(selectedPlayer)
+                    local v258 = selectedPlayer4
+
+                    if selectedPlayer4 then
+                        v258 = selectedPlayer4.Character
+
+                        if v258 then
+                            v258 = selectedPlayer4.Character:FindFirstChild("HumanoidRootPart")
+                        end
+                    end
+
+                    if v258 then
+                        Character.CFrame = selectedPlayer4.Character.HumanoidRootPart.CFrame * CFrame.new(0, 3, 0)
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>循环传送过来</b></font>",
+	Default = false,
+	Callback = function(p19)
+    loopTpToMe = p19
+
+    if p19 then
+        task.spawn(function()
+            while loopTpToMe do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+                    local v260 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+                    if not v260 then
+                        return
+                    end
+
+                    local selectedPlayer5 = Players:FindFirstChild(selectedPlayer)
+                    local v262 = selectedPlayer5
+
+                    if selectedPlayer5 then
+                        v262 = selectedPlayer5.Character
+
+                        if v262 then
+                            v262 = selectedPlayer5.Character:FindFirstChild("HumanoidRootPart")
+                        end
+                    end
+
+                    if v262 then
+                        selectedPlayer5.Character.HumanoidRootPart.CFrame = v260.CFrame * CFrame.new(0, 3, 0)
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+    end
+end
+})
+General:Toggle({
+	Title = "<font color='#FFC0CB'><b>循环甩飞玩家</b></font>",
+	Default = false,
+	Callback = function(p20)
+    _G.CatFling_Enabled = p20
+
+    if p20 then
+        p20 = not _G.CatFling_Running
+    end
+
+    if p20 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/kitten-maomao/tongyong/refs/heads/main/%E7%94%A9%E9%A3%9E.lua"))("猫脚本")
+    end
+end
+})
+_G.CatSelectedPlayer = ""
+local function v34()
+    local t3 = {}
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= Players.LocalPlayer then
+            table.insert(t3, player.Name)
+        end
+    end
+
+    if #t3 == 0 then
+        table.insert(t3, "无玩家")
+    end
+
+    return t3
+end
+local function v35()
+    local v99 = v34()
+
+    if v33 then
+        if v33.SetValues then
+            v33:SetValues(v99)
+
+            return
+        end
+
+        if v33.Refresh then
+            v33:Refresh(v99)
+
+            return
+        end
+
+        if v33.Update then
+            v33:Update({
+				Values = v99
+			})
+        end
+    end
+end
+v35()
+Players.PlayerAdded:Connect(v35)
+Players.PlayerRemoving:Connect(function(player)
+    if player.Name == "" then
+        _G.CatSelectedPlayer = ""
+    end
+
+    v35()
+end)
+t2.Train = v11:Tab({
+	Title = "<font color='#FFC0CB'>锻炼</font>",
+	Icon = "sword"
+})
+local Train = t2.Train
+local t4 = {
+	"Ground",
+	"Enchanted Island",
+	"Astral Island",
+	"Mystical Island",
+	"Space Island",
+	"Tundra Island",
+	"Eternal Island",
+	"Sandstorm",
+	"Thunderstorm",
+	"Ancient Inferno Island",
+	"Midnight Shadow Island",
+	"Mythical Souls Island",
+	"Winter Wonder Island",
+	"Golden Master Island",
+	"Dragon Legend Island",
+	"Cybernetic Legends Island",
+	"Skystorm Ultraus Island",
+	"Chaos Legends Island",
+	"Soul Fusion Island",
+	"Dark Elements Island",
+	"Inner Peace Island",
+	"Blazing Vortex Island"
+}
+Train:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动挥刀</b></font>",
+	Default = false,
+	Callback = function(p21)
+    autoSwing = p21
+
+    if p21 then
+        task.spawn(function()
+            while autoSwing do
+                pcall(function()
+                    Players.LocalPlayer.ninjaEvent:FireServer("swingKatana")
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Train:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动出售</b></font>",
+	Default = false,
+	Callback = function(p22)
+    autoSell = p22
+
+    if p22 then
+        task.spawn(function()
+            while autoSell do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+
+                    if Character then
+                        Character = Character:WaitForChild("HumanoidRootPart")
+                    end
+
+                    local v264 = workspace:WaitForChild("sellAreaCircles"):GetChildren()[20]
+                    local v265 = Character
+
+                    if Character then
+                        v265 = v264
+
+                        if v264 then
+                            v265 = v264:FindFirstChild("circleInner")
+                        end
+                    end
+
+                    if v265 then
+                        v264.circleInner.CFrame = Character.CFrame
+                        task.wait(0.1)
+                        v264.circleInner.CFrame = CFrame.new(0, -5000, 0)
+                    end
+                end)
+                task.wait(1)
+            end
+        end)
+    end
+end
+})
+Train:Toggle({
+	Title = "<font color='#FFC0CB'><b>存满自动出售</b></font>",
+	Default = false,
+	Callback = function(p23)
+    autoSellMax = p23
+
+    if p23 then
+        task.spawn(function()
+            while autoSellMax do
+                pcall(function()
+                    local LocalPlayer = Players.LocalPlayer
+                    local Character = LocalPlayer.Character
+                    local v268 = Character and Character:WaitForChild("HumanoidRootPart")
+                    local v269 = v268
+                    local v270 = workspace:WaitForChild("sellAreaCircles"):GetChildren()[20]
+                    if v268 then
+                        v269 = v270 and v270:FindFirstChild("circleInner")
+                    end
+                    if v269 then
+                        local gameGui = LocalPlayer.PlayerGui:FindFirstChild("gameGui")
+
+                        if gameGui then
+                            gameGui = LocalPlayer.PlayerGui.gameGui:FindFirstChild("maxNinjitsuMenu")
+
+                            if gameGui then
+                                gameGui = LocalPlayer.PlayerGui.gameGui.maxNinjitsuMenu.Visible
+                            end
+                        end
+
+                        if gameGui then
+                            v270.circleInner.CFrame = v268.CFrame
+                            task.wait(0.1)
+                            v270.circleInner.CFrame = CFrame.new(0, -5000, 0)
+                        end
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Train:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动买刀</b></font>",
+	Default = false,
+	Callback = function(p24)
+    autoBuySwords = p24
+
+    if p24 then
+        task.spawn(function()
+            while autoBuySwords do
+                pcall(function()
+                    for i = 1, #t4 do
+                        if not autoBuySwords then
+                            return
+                        end
+
+                        Players.LocalPlayer.ninjaEvent:FireServer("buyAllSwords", t4[i])
+                        task.wait(0.05)
+                    end
+                end)
+                task.wait(0.5)
+            end
+        end)
+    end
+end
+})
+Train:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动买腰带</b></font>",
+	Default = false,
+	Callback = function(p25)
+    autoBuyBelts = p25
+
+    if p25 then
+        task.spawn(function()
+            while autoBuyBelts do
+                pcall(function()
+                    for i = 1, #t4 do
+                        if not autoBuyBelts then
+                            return
+                        end
+
+                        Players.LocalPlayer.ninjaEvent:FireServer("buyAllBelts", t4[i])
+                        task.wait(0.05)
+                    end
+                end)
+                task.wait(0.5)
+            end
+        end)
+    end
+end
+})
+Train:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动买阶段</b></font>",
+	Default = false,
+	Callback = function(p26)
+    autoBuyRanks = p26
+
+    if p26 then
+        task.spawn(function()
+            while autoBuyRanks do
+                pcall(function()
+                    local v274 = ReplicatedStorage
+
+                    for _, child in ipairs(v274:WaitForChild("Ranks"):GetChildren()) do
+                        if not autoBuyRanks then
+                            return
+                        end
+
+                        for _, child2 in ipairs(child:GetChildren()) do
+                            if not autoBuyRanks then
+                                break
+                            end
+
+                            Players.LocalPlayer.ninjaEvent:FireServer("buyRank", child2.Name)
+                            task.wait(0.05)
+                        end
+                    end
+                end)
+                task.wait(0.5)
+            end
+        end)
+    end
+end
+})
+Train:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动买技能</b></font>",
+	Default = false,
+	Callback = function(p27)
+    autoBuySkills = p27
+
+    if p27 then
+        task.spawn(function()
+            while autoBuySkills do
+                pcall(function()
+                    for i = 1, #t4 do
+                        if not autoBuySkills then
+                            return
+                        end
+
+                        Players.LocalPlayer.ninjaEvent:FireServer("buyAllSkills", t4[i])
+                        task.wait(0.05)
+                    end
+                end)
+                task.wait(0.5)
+            end
+        end)
+    end
+end
+})
+Train:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动买手里剑</b></font>",
+	Default = false,
+	Callback = function(p28)
+    autoBuyShurikens = p28
+
+    if p28 then
+        task.spawn(function()
+            while autoBuyShurikens do
+                pcall(function()
+                    for i = 1, #t4 do
+                        if not autoBuyShurikens then
+                            return
+                        end
+
+                        Players.LocalPlayer.ninjaEvent:FireServer("buyAllShurikens", t4[i])
+                        task.wait(0.05)
+                    end
+                end)
+                task.wait(0.5)
+            end
+        end)
+    end
+end
+})
+t2.Auto = v11:Tab({
+	Title = "<font color='#FFC0CB'>自动</font>",
+	Icon = "bot"
+})
+local Auto = t2.Auto
+local t5 = {
+	autoRobotBoss = false,
+	autoEternalBoss = false,
+	autoAncientBoss = false,
+	autoAllBosses = false
+}
+local u40 = false
+local u41 = false
+local cFrame = CFrame.new(0, 0, 5)
+
+Auto:Button({
+	Title = "<font color='#FFC0CB'><b>解锁所有岛屿</b></font>",
+	Callback = function()
+    pcall(function()
+        for _, child in pairs(game:GetService("Workspace").islandUnlockParts:GetChildren()) do
+            firetouchinterest(game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), child, 0)
+            firetouchinterest(game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), child, 1)
+        end
+    end)
+end
+})
+Auto:Button({
+	Title = "<font color='#FFC0CB'><b>解锁所有元素</b></font>",
+	Callback = function()
+    pcall(function()
+        local t6 = {}
+        for v186, v187 in pairs(game:GetService("ReplicatedStorage").Elements:GetChildren()) do
+
+            table.insert(t6, v187.Name)
+        end
+        for _, v in pairs(t6) do
+            game.ReplicatedStorage.rEvents.elementMasteryEvent:FireServer(v)
+        end
+    end)
+end
+})
+Auto:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动吸环</b></font>",
+	Default = false,
+	Callback = function(p29)
+    u40 = p29
+
+    if p29 then
+        task.spawn(function()
+            while u40 do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+
+                    if Character then
+                        Character = Character:FindFirstChild("HumanoidRootPart")
+                    end
+
+                    if not Character then
+                        return
+                    end
+
+                    for _, descendant in pairs(workspace.Hoops:GetDescendants()) do
+                        if descendant.ClassName == "MeshPart" then
+                            descendant.touchPart.CFrame = Character.CFrame
+                        end
+                    end
+                end)
+                task.wait(0.00011)
+            end
+        end)
+    end
+end
+})
+Auto:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动刷金币</b></font>",
+	Default = false,
+	Callback = function(p30)
+    u41 = p30
+
+    if p30 then
+        task.spawn(function()
+            while u41 do
+                pcall(function()
+                    local zenMasterEvent = ReplicatedStorage:WaitForChild("rEvents"):FindFirstChild("zenMasterEvent")
+
+                    if zenMasterEvent then
+                        zenMasterEvent:FireServer("convertGems", 100000)
+                    end
+                end)
+                task.wait(0.5)
+            end
+        end)
+    end
+end
+})
+local t7 = {
+	{
+		Name = "机器人Boss",
+		BossName = "RobotBoss",
+		StateKey = "autoRobotBoss"
+	},
+	{
+		Name = "不朽Boss",
+		BossName = "EternalBoss",
+		StateKey = "autoEternalBoss"
+	},
+	{
+		Name = "古代Boss",
+		BossName = "AncientMagmaBoss",
+		StateKey = "autoAncientBoss"
+	}
+}
+local function v44(p31)
+    local bossFolder = workspace:FindFirstChild("bossFolder")
+
+    if not bossFolder then
+        return
+    end
+
+    local p31_2 = bossFolder:FindFirstChild(p31)
+    local v114 = not p31_2
+
+    if not v114 then
+        v114 = not p31_2:FindFirstChild("HumanoidRootPart")
+    end
+
+    if v114 then
+        return
+    end
+
+    local LocalPlayer = Players.LocalPlayer
+    local Character = LocalPlayer.Character
+
+    if Character then
+        Character = Character:FindFirstChild("HumanoidRootPart")
+    end
+
+    if not Character then
+        return
+    end
+
+    Character.CFrame = p31_2.HumanoidRootPart.CFrame * cFrame
+    pcall(function()
+        LocalPlayer.ninjaEvent:FireServer("swingKatana")
+    end)
+end
+for _, v in ipairs(t7) do
+    local v47 = v
+
+    Auto:Toggle({
+		Title = "<font color='#FFC0CB'><b>自动击杀" .. v47.Name .. "</b></font>",
+		Default = false,
+		Callback = function(p32)
+        t5[v47.StateKey] = p32
+
+        if p32 then
+            task.spawn(function()
+                while t5[v47.StateKey] do
+                    pcall(function()
+                        v44(v47.BossName)
+                    end)
+                    task.wait(0.1)
+                end
+            end)
+        end
+    end
+	})
+end
+Auto:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动击杀全部Boss</b></font>",
+	Default = false,
+	Callback = function(p33)
+    t5.autoAllBosses = p33
+
+    if p33 then
+        task.spawn(function()
+            while t5.autoAllBosses do
+                pcall(function()
+                    for _, v in ipairs({
+							"AncientMagmaBoss",
+							"EternalBoss",
+							"RobotBoss"
+						}) do
+                        local bossFolder = workspace:FindFirstChild("bossFolder")
+
+                        if not bossFolder then
+                            continue
+                        end
+
+                        local v3 = bossFolder:FindFirstChild(v)
+
+                        if v3 and v3:FindFirstChild("HumanoidRootPart") then
+                            v44(v)
+                            task.wait(0.5)
+
+                            return
+                        end
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+    end
+end
+})
+t2.Kill = v11:Tab({
+	Title = "<font color='#FFC0CB'>击杀</font>",
+	Icon = "crosshair"
+})
+local Kill = t2.Kill
+getgenv().HitboxSize = 15
+getgenv().HitboxTransparency = 0.9
+getgenv().HitboxStatus = false
+getgenv().TeamCheck = false
+getgenv().TPSpeed = 3
+getgenv().TPWalk = false
+Kill:Toggle({
+	Title = "<font color='#FFC0CB'><b>吸全部玩家</b></font>",
+	Default = false,
+	Callback = function(p34)
+    if p34 then
+        task.spawn(function()
+            while p34 do
+                local _next = next
+                local v191, v192 = Players:GetPlayers()
+
+                while true do
+                    local v193
+
+                    v192, v193 = _next(v191, v192)
+
+                    if not v192 then
+                        break
+                    end
+
+                    if v193.Name ~= Players.LocalPlayer.Name then
+                        local HumanoidRootPartPosition = Players.LocalPlayer.Character.HumanoidRootPart.Position
+                        local lookVector = Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector
+                        local v196 = HumanoidRootPartPosition + lookVector * 3
+
+                        v193.Character.HumanoidRootPart.CFrame = CFrame.new(v196, HumanoidRootPartPosition + lookVector * 4)
+                        task.wait()
+                    end
+                end
+            end
+        end)
+    end
+end
+})
+Kill:Toggle({
+	Title = "<font color='#FFC0CB'><b>靠近自动攻击(必开)</b></font>",
+	Default = false,
+	Callback = function(p35)
+    if p35 then
+        local configs = getgenv().configs
+
+        if configs then
+            configs = getgenv().configs.connections
+        end
+
+        if configs then
+            local Disable = getgenv().configs.Disable
+
+            for _, v in pairs(configs) do
+                v:Disconnect()
+            end
+
+            Disable:Fire()
+            Disable:Destroy()
+            table.clear(getgenv().configs)
+        end
+
+        local BindableEvent = Instance.new("BindableEvent")
+        local v126 = getgenv()
+        local vector3 = Vector3.new(10, 10, 10)
+
+        v126.configs = {
+				connections = {},
+				Disable = BindableEvent,
+				Size = vector3,
+				DeathCheck = true
+			}
+
+        local LocalPlayer = Players.LocalPlayer
+        local u129 = true
+        local overlapParams = OverlapParams.new()
+
+        overlapParams.FilterType = Enum.RaycastFilterType.Include
+
+        local function v131(p36)
+            local g199
+            if p36:IsA("Model") then
+                if p36 then
+                    g199 = true
+                end
+            end
+            if not g199 then
+                if not p36 then
+                    p36 = LocalPlayer
+                end
+
+                p36 = p36.Character
+            end
+            if p36 then
+                return p36:FindFirstChildWhichIsA("Humanoid")
+            end
+        end
+        local function v132(p37)
+            return p37 and p37.Health > 0
+        end
+        local function v133(p38, p39, p40)
+            if p38:IsDescendantOf(Workspace) then
+                p38:Activate()
+                firetouchinterest(p39, p40, 1)
+                firetouchinterest(p39, p40, 0)
+            end
+        end
+
+        table.insert(getgenv().configs.connections, BindableEvent.Event:Connect(function()
+            u129 = false
+        end))
+
+        while u129 do
+            local Character = LocalPlayer.Character
+
+            if v132(v131(Character)) then
+                local v135 = Character
+
+                if Character then
+                    v135 = Character:FindFirstChildWhichIsA("Tool")
+                end
+
+                local v136 = v135 and (function(p41)
+                    return p41 and p41:FindFirstChildWhichIsA("TouchTransmitter", true)
+                end)(v135)
+
+                if v136 then
+                    local Parent = v136.Parent
+                    local v138 = (function(p42)
+                        local t8 = {}
+                        for v206, v207 in pairs(Players:GetPlayers()) do
+
+                            if not v207 then
+                                v207 = LocalPlayer
+                            end
+
+                            table.insert(t8, v207.Character)
+                        end
+                        for k, v in pairs(t8) do
+                            if v == p42 then
+                                table.remove(t8, k)
+
+                                return t8
+                            end
+                        end
+
+                        return t8
+                    end)(Character)
+
+                    overlapParams.FilterDescendantsInstances = v138
+
+                    local PartBoundsInBox = Workspace:GetPartBoundsInBox(Parent.CFrame, Parent.Size + getgenv().configs.Size, overlapParams)
+
+                    for _, v in pairs(PartBoundsInBox) do
+                        local Model = v:FindFirstAncestorWhichIsA("Model")
+
+                        if table.find(v138, Model) then
+                            if getgenv().configs.DeathCheck and v132(v131(Model)) then
+                                v133(v135, Parent, v)
+                            elseif not getgenv().configs.DeathCheck then
+                                v133(v135, Parent, v)
+                            end
+                        end
+                    end
+                end
+            end
+
+            RunService.Heartbeat:Wait()
+        end
+
+        return
+    end
+
+    local configs = getgenv().configs
+
+    if configs then
+        configs = getgenv().configs.Disable
+    end
+
+    if configs then
+        configs:Fire()
+        configs:Destroy()
+    end
+
+    local configs2 = getgenv().configs
+
+    if configs2 then
+        configs2 = getgenv().configs.connections
+    end
+
+    if configs2 then
+        for _, v in pairs(getgenv().configs.connections) do
+            v:Disconnect()
+        end
+
+        table.clear(getgenv().configs.connections)
+    end
+end
+})
+t2.Other = v11:Tab({
+	Title = "<font color='#FFC0CB'>其他</font>",
+	Icon = "ellipsis"
+})
+local Other = t2.Other
+local u50 = false
+local u51 = false
+local u52 = false
+local u53 = false
+Other:Toggle({
+	Title = "<font color='#FFC0CB'><b>快速手里剑</b></font>",
+	Default = false,
+	Callback = function(p43)
+    u50 = p43
+
+    if p43 then
+        task.spawn(function()
+            while u50 do
+                pcall(function()
+                    local Mouse = Players.LocalPlayer:GetMouse()
+
+                    for _, child in pairs(workspace.shurikensFolder:GetChildren()) do
+                        if child.Name == "Handle" and child:FindFirstChild("BodyVelocity") then
+                            local BodyVelocity = child:FindFirstChildOfClass("BodyVelocity")
+
+                            BodyVelocity.MaxForce = Vector3.new(1e999, 1e999, 1e999)
+                            BodyVelocity.Velocity = Mouse.Hit.lookVector * 1000
+                        end
+                    end
+                end)
+                task.wait(0.001)
+            end
+        end)
+    end
+end
+})
+Other:Toggle({
+	Title = "<font color='#FFC0CB'><b>慢速手里剑</b></font>",
+	Default = false,
+	Callback = function(p44)
+    u51 = p44
+
+    if p44 then
+        task.spawn(function()
+            while u51 do
+                pcall(function()
+                    local Mouse = Players.LocalPlayer:GetMouse()
+
+                    for _, child in pairs(workspace.shurikensFolder:GetChildren()) do
+                        if child.Name == "Handle" and child:FindFirstChild("BodyVelocity") then
+                            local BodyVelocity = child:FindFirstChildOfClass("BodyVelocity")
+
+                            BodyVelocity.MaxForce = Vector3.new(1e999, 1e999, 1e999)
+                            BodyVelocity.Velocity = Mouse.Hit.lookVector * 35
+                        end
+                    end
+                end)
+                task.wait(0.001)
+            end
+        end)
+    end
+end
+})
+Other:Toggle({
+	Title = "<font color='#FFC0CB'><b>隐身</b></font>",
+	Default = false,
+	Callback = function(p45)
+    u52 = p45
+
+    if p45 then
+        task.spawn(function()
+            while u52 do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+
+                    if Character then
+                        for _, descendant in pairs(Character:GetDescendants()) do
+                            if descendant:IsA("BasePart") then
+                                descendant.Transparency = 1
+                            end
+                        end
+                    end
+                end)
+                task.wait()
+            end
+
+            pcall(function()
+                local Character = Players.LocalPlayer.Character
+
+                if Character then
+                    for _, descendant in pairs(Character:GetDescendants()) do
+                        if descendant:IsA("BasePart") then
+                            descendant.Transparency = 0
+                        end
+                    end
+                end
+            end)
+        end)
+
+        return
+    end
+
+    pcall(function()
+        local Character = Players.LocalPlayer.Character
+
+        if Character then
+            for _, descendant in pairs(Character:GetDescendants()) do
+                if descendant:IsA("BasePart") then
+                    descendant.Transparency = 0
+                end
+            end
+        end
+    end)
+end
+})
+Other:Button({
+	Title = "<font color='#FFC0CB'><b>最高跳</b></font>",
+	Callback = function()
+    pcall(function()
+        Players.LocalPlayer.multiJumpCount.Value = "50"
+    end)
+end
+})
+Other:Toggle({
+	Title = "<font color='#FFC0CB'><b>隐藏名称</b></font>",
+	Default = false,
+	Callback = function(p46)
+    local u151 = p46
+    pcall(function()
+        local LocalPlayerName = Players.LocalPlayer.Name
+        local v217 = workspace[LocalPlayerName]
+
+        if v217 then
+            v217 = workspace[LocalPlayerName].Head
+        end
+
+        if v217 then
+            local nameGui = workspace[LocalPlayerName].Head:FindFirstChild("nameGui")
+
+            if nameGui then
+                nameGui.Enabled = not u151
+            end
+        end
+    end)
+end
+})
+Other:Toggle({
+	Title = "<font color='#FFC0CB'><b>ESP</b></font>",
+	Default = false,
+	Callback = function(p47)
+    u53 = p47
+
+    if p47 then
+        task.spawn(function()
+            function isnil(p48)
+                return p48 == nil
+            end
+            function UpdatePlayerChams()
+                for _, child in pairs(game:GetService("Players"):GetChildren()) do
+                    local v307 = child
+
+                    pcall(function()
+                        if not isnil(v307.Character) then
+                            for _, child3 in pairs(v307.Character:GetChildren()) do
+                                if child3:IsA("BasePart") and not child3:FindFirstChild("Cham") then
+                                    local BoxHandleAdornment = Instance.new("BoxHandleAdornment", child3)
+
+                                    BoxHandleAdornment.ZIndex = 10
+                                    BoxHandleAdornment.Adornee = child3
+                                    BoxHandleAdornment.AlwaysOnTop = true
+                                    BoxHandleAdornment.Size = child3.Size
+                                    BoxHandleAdornment.Transparency = 0.8
+                                    BoxHandleAdornment.Color3 = Color3.new(0, 0, 1)
+                                    BoxHandleAdornment.Name = "Cham"
+                                end
+                            end
+
+                            local v322 = not isnil(v307.Character.Head)
+
+                            if v322 then
+                                v322 = not v307.Character.Head:FindFirstChild("NameEsp")
+                            end
+
+                            if v322 then
+                                local BillboardGui = Instance.new("BillboardGui", v307.Character.Head)
+
+                                BillboardGui.Name = "NameEsp"
+                                BillboardGui.Size = UDim2.new(1, 200, 1, 30)
+                                BillboardGui.Adornee = v307.Character.Head
+                                BillboardGui.AlwaysOnTop = true
+
+                                local TextLabel = Instance.new("TextLabel", BillboardGui)
+
+                                TextLabel.TextWrapped = true
+
+                                local Name = v307.Name
+                                local v326 = (Players.LocalPlayer.Character.Head.Position - v307.Character.Head.Position).Magnitude / 3
+
+                                TextLabel.Text = Name .. " " .. math.floor(tonumber(v326) + 0.5) .. "m"
+                                TextLabel.Size = UDim2.new(1, 0, 1, 0)
+                                TextLabel.TextYAlignment = "Top"
+                                TextLabel.TextColor3 = Color3.new(1, 1, 1)
+                                TextLabel.BackgroundTransparency = 1
+
+                                return
+                            end
+
+                            local TextLabel = v307.Character.Head.NameEsp.TextLabel
+                            local Name = v307.Name
+                            local v329 = (Players.LocalPlayer.Character.Head.Position - v307.Character.Head.Position).Magnitude / 3
+
+                            TextLabel.Text = Name .. " " .. math.floor(tonumber(v329) + 0.5) .. "m"
+                        end
+                    end)
+                end
+            end
+
+            while u53 do
+                UpdatePlayerChams()
+                task.wait()
+            end
+
+            for _, child in pairs(game:GetService("Players"):GetChildren()) do
+                local v221 = child
+
+                pcall(function()
+                    if v221.Character then
+                        for _, child4 in pairs(v221.Character:GetChildren()) do
+                            if child4:IsA("BasePart") then
+                                local Cham = child4:FindFirstChild("Cham")
+
+                                if Cham then
+                                    Cham:Destroy()
+                                end
+                            end
+                        end
+
+                        if v221.Character.Head then
+                            local NameEsp = v221.Character.Head:FindFirstChild("NameEsp")
+
+                            if NameEsp then
+                                NameEsp:Destroy()
+                            end
+                        end
+                    end
+                end)
+            end
+        end)
+
+        return
+    end
+
+    for _, child in pairs(game:GetService("Players"):GetChildren()) do
+        local v155 = child
+
+        pcall(function()
+            if v155.Character then
+                for _, child5 in pairs(v155.Character:GetChildren()) do
+                    if child5:IsA("BasePart") then
+                        local Cham = child5:FindFirstChild("Cham")
+
+                        if Cham then
+                            Cham:Destroy()
+                        end
+                    end
+                end
+
+                if v155.Character.Head then
+                    local NameEsp = v155.Character.Head:FindFirstChild("NameEsp")
+
+                    if NameEsp then
+                        NameEsp:Destroy()
+                    end
+                end
+            end
+        end)
+    end
+end
+})
+Other:Button({
+	Title = "<font color='#FFC0CB'><b>换服</b></font>",
+	Callback = function()
+    local PlaceId = game.PlaceId
+    local t9 = {}
+    local s2 = ""
+    local hour = os.date("!*t").hour
+
+    if not pcall(function()
+        t9 = game:GetService("HttpService"):JSONDecode(readfile("NotSameServers.json"))
+    end) then
+        table.insert(t9, hour)
+        writefile("NotSameServers.json", game:GetService("HttpService"):JSONEncode(t9))
+    end
+
+    function TPReturner()
+        local v226 = if s2 ~= "" then game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Asc&limit=100&cursor=" .. s2)) else game.HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
+        local s3 = ""
+        local nextPageCursor = v226.nextPageCursor
+
+        if nextPageCursor then
+            nextPageCursor = v226.nextPageCursor ~= "null" and v226.nextPageCursor ~= nil
+        end
+
+        if nextPageCursor then
+            s2 = v226.nextPageCursor
+        end
+
+        local n2 = 0
+
+        for _, v in pairs(v226.data) do
+            local v232 = true
+
+            s3 = tostring(v.id)
+
+            if tonumber(v.maxPlayers) > tonumber(v.playing) then
+
+                for v235, v236 in pairs(t9) do
+
+                    if n2 ~= 0 then
+                        if s3 == tostring(v236) then
+                            v232 = false
+                        end
+                    elseif tonumber(hour) ~= tonumber(v236) then
+                        pcall(function()
+                            delfile("NotSameServers.json")
+                            t9 = {}
+                            table.insert(t9, hour)
+                        end)
+                    end
+
+                    n2 += 1
+                end
+                if v232 == true then
+                    table.insert(t9, s3)
+                    task.wait()
+                    pcall(function()
+                        writefile("NotSameServers.json", game:GetService("HttpService"):JSONEncode(t9))
+                        task.wait()
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceId, s3, Players.LocalPlayer)
+                    end)
+                    task.wait(4)
+                end
+            end
+        end
+    end
+    function Teleport()
+        while task.wait() do
+            pcall(function()
+                TPReturner()
+
+                if s2 ~= "" then
+                    TPReturner()
+                end
+            end)
+        end
+    end
+
+    Teleport()
+end
+})
+t2.Teleport = v11:Tab({
+	Title = "<font color='#FFC0CB'>传送</font>",
+	Icon = "map-pin"
+})
+local Teleport2 = t2.Teleport
+for _, v in ipairs({
+	{
+		"出生点",
+		25.67,
+		3.42,
+		29.92
+	},
+	{
+		"山丘之王",
+		238.07,
+		89.76,
+		-288.52
+	},
+	{
+		"附魔之岛",
+		78.08,
+		765.95,
+		-128.56
+	},
+	{
+		"星界岛",
+		226.46,
+		2013.81,
+		260.13
+	},
+	{
+		"神秘岛",
+		146.39,
+		4047.15,
+		63.24
+	},
+	{
+		"太空岛",
+		141.25,
+		5656.96,
+		75.67
+	},
+	{
+		"冻土岛",
+		137.97,
+		9284.96,
+		71.61
+	},
+	{
+		"永恒岛",
+		137.55,
+		13679.81,
+		67.46
+	},
+	{
+		"沙暴",
+		140.34,
+		17686.1,
+		76.92
+	},
+	{
+		"雷暴",
+		142.76,
+		24069.8,
+		74.01
+	},
+	{
+		"远古炼狱岛",
+		139.71,
+		28256.07,
+		72.63
+	},
+	{
+		"午夜暗影岛",
+		137.47,
+		33206.76,
+		65.26
+	},
+	{
+		"神秘灵魂岛",
+		140.9,
+		39317.35,
+		73.46
+	},
+	{
+		"冬季奇迹岛",
+		136.36,
+		46010.33,
+		69.1
+	},
+	{
+		"黄金大师岛",
+		136.03,
+		52607.54,
+		61.92
+	},
+	{
+		"龙传奇岛",
+		141.79,
+		59594.46,
+		68.07
+	},
+	{
+		"赛博传奇岛",
+		138.91,
+		66668.95,
+		67.55
+	},
+	{
+		"天岚超能岛",
+		137.87,
+		70270.95,
+		67.44
+	},
+	{
+		"混沌传奇岛",
+		138.29,
+		74442.63,
+		67.38
+	},
+	{
+		"灵魂融合岛",
+		138.96,
+		79746.77,
+		69.09
+	},
+	{
+		"黑暗元素岛",
+		139.07,
+		83198.77,
+		68.85
+	},
+	{
+		"禅心岛",
+		137.56,
+		87050.86,
+		65.92
+	},
+	{
+		"炽热漩涡之岛",
+		136.74,
+		91245.86,
+		62.92
+	},
+	{
+		"光明业报[神秘水域]",
+		362.51,
+		8824.54,
+		65.97
+	},
+	{
+		"光明业报[元素龙卷风]",
+		304.31,
+		30383.1,
+		-71.6
+	},
+	{
+		"光明业报[禅师之刃]",
+		5025.37,
+		38.7,
+		1586.82
+	},
+	{
+		"光明业报[传奇之剑]",
+		1829.18,
+		38.7,
+		-165.65
+	},
+	{
+		"邪恶业报[岩浆坑]",
+		-101.83,
+		12952.54,
+		244.11
+	},
+	{
+		"邪恶业报[龙卷风]",
+		288.92,
+		16872.1,
+		-58.61
+	},
+	{
+		"邪恶业报[远古之剑]",
+		628.14,
+		38.7,
+		2399.02
+	},
+	{
+		"元素道场",
+		760.43,
+		130.65,
+		-6037.28
+	},
+	{
+		"无限属性道场",
+		-4188.16,
+		123.83,
+		-6116.38
+	},
+	{
+		"永恒头目",
+		1067.56,
+		122.94,
+		-343.86
+	},
+	{
+		"远古熔岩头目",
+		252.95,
+		122.94,
+		1671.46
+	},
+	{
+		"宠物克隆祭坛",
+		4524.25,
+		122.94,
+		1405.5
+	}
+}) do
+    local v57 = v
+
+    Teleport2:Button({
+		Title = "<font color='#FFC0CB'><b>" .. v57[1] .. "</b></font>",
+		Callback = function()
+        pcall(function()
+            local Character = Players.LocalPlayer.Character
+
+            if Character then
+                Character = Character:FindFirstChild("HumanoidRootPart")
+            end
+
+            if Character then
+                Character.CFrame = CFrame.new(v57[2], v57[3], v57[4])
+            end
+        end)
+    end
+	})
+end
+t2.Beautify = v11:Tab({
+	Title = "<font color='#FFC0CB'>美化</font>",
+	Icon = "sparkles"
+})
+local Beautify = t2.Beautify
+Beautify:Input({
+	Title = "<font color='#FFC0CB'><b>击杀数</b></font>",
+	Placeholder = "输入数值后回车",
+	Default = "",
+	Callback = function(p49)
+    local u161 = p49
+    pcall(function()
+        local leaderstats = Players.LocalPlayer:FindFirstChild("leaderstats")
+
+        if leaderstats then
+            local Kills = leaderstats:FindFirstChild("Kills")
+
+            if Kills then
+                if u161 == "" or u161 == nil then
+                    if originalKills then
+                        Kills.Value = originalKills
+
+                        return
+                    end
+                else
+                    if not originalKills then
+                        originalKills = Kills.Value
+                    end
+
+                    local num = tonumber(u161)
+
+                    if num then
+                        Kills.Value = num
+                    end
+                end
+            end
+        end
+    end)
+end
+})
+Beautify:Input({
+	Title = "<font color='#FFC0CB'><b>忍术</b></font>",
+	Placeholder = "输入数值后回车",
+	Default = "",
+	Callback = function(p50)
+    local u163 = p50
+    pcall(function()
+        local leaderstats = Players.LocalPlayer:FindFirstChild("leaderstats")
+
+        if leaderstats then
+            local Ninjitsu = leaderstats:FindFirstChild("Ninjitsu")
+
+            if Ninjitsu then
+                if u163 == "" or u163 == nil then
+                    if originalNinjitsu then
+                        Ninjitsu.Value = originalNinjitsu
+
+                        return
+                    end
+                else
+                    if not originalNinjitsu then
+                        originalNinjitsu = Ninjitsu.Value
+                    end
+
+                    local num = tonumber(u163)
+
+                    if num then
+                        Ninjitsu.Value = num
+                    end
+                end
+            end
+        end
+    end)
+end
+})
+Beautify:Input({
+	Title = "<font color='#FFC0CB'><b>连续击杀数</b></font>",
+	Placeholder = "输入数值后回车",
+	Default = "",
+	Callback = function(p51)
+    local u165 = p51
+    pcall(function()
+        local leaderstats = Players.LocalPlayer:FindFirstChild("leaderstats")
+
+        if leaderstats then
+            local Streak = leaderstats:FindFirstChild("Streak")
+
+            if Streak then
+                if u165 == "" or u165 == nil then
+                    if originalStreak then
+                        Streak.Value = originalStreak
+
+                        return
+                    end
+                else
+                    if not originalStreak then
+                        originalStreak = Streak.Value
+                    end
+
+                    local num = tonumber(u165)
+
+                    if num then
+                        Streak.Value = num
+                    end
+                end
+            end
+        end
+    end)
+end
+})
+t2.Collect = v11:Tab({
+	Title = "<font color='#FFC0CB'>收集</font>",
+	Icon = "gift"
+})
+local Collect = t2.Collect
+Collect:Button({
+	Title = "<font color='#FFC0CB'><b>自动抽奖</b></font>",
+	Callback = function()
+    pcall(function()
+        local v247 = workspace:FindFirstChild("Fortune Wheel")
+        local t10 = {
+				[1] = "openFortuneWheel",
+				[2] = v247
+			}
+        local openFortuneWheelRemote = ReplicatedStorage:WaitForChild("rEvents"):WaitForChild("openFortuneWheelRemote")
+        local t11 = { unpack(t10) }
+
+        openFortuneWheelRemote:InvokeServer(v1(t11))
+    end)
+end
+})
+Collect:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动收集宝箱</b></font>",
+	Default = false,
+	Callback = function(p52)
+    autoCollectChests = p52
+
+    if p52 then
+        task.spawn(function()
+            while autoCollectChests do
+                pcall(function()
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Golden Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Enchanted Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Magma Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Legends Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Eternal Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Eternal Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Sahara Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Thunder Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Ancient Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Midnight Shadow Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Light Karma Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Evil Karma Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Wonder Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Golden Zen Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Ultra Ninjitsu Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Skystorm Masters Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Chaos Legends Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Soul Fusion Chest")
+                    ReplicatedStorage.rEvents.checkChestRemote:InvokeServer("Soul Fusion Chest")
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+Collect:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动吸气</b></font>",
+	Default = false,
+	Callback = function(p53)
+    autoChiCollect = p53
+
+    if p53 then
+        task.spawn(function()
+            while autoChiCollect do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+                    local v313 = Character and Character:WaitForChild("HumanoidRootPart")
+
+                    if not v313 then
+                        return
+                    end
+
+                    for _, child in pairs(workspace.spawnedCoins.Valley:GetChildren()) do
+                        if child.Name == "Blue Chi Crate" then
+                            v313.CFrame = CFrame.new(child.Position)
+                            task.wait(0.16)
+                        end
+                    end
+                end)
+                task.wait(0.033)
+            end
+        end)
+    end
+end
+})
+Collect:Toggle({
+	Title = "<font color='#FFC0CB'><b>自动收集金币</b></font>",
+	Default = false,
+	Callback = function(p54)
+    autoCollectGold = p54
+
+    if p54 then
+        task.spawn(function()
+            while autoCollectGold do
+                pcall(function()
+                    local Character = Players.LocalPlayer.Character
+
+                    if Character then
+                        Character = Character:WaitForChild("HumanoidRootPart")
+                    end
+
+                    if not Character then
+                        return
+                    end
+
+                    for _, child in pairs(workspace.spawnedCoins.Valley:GetChildren()) do
+                        if child.Name == "Blue Coin" then
+                            Character.CFrame = CFrame.new(child.Position)
+                            task.wait()
+                        end
+                    end
+                end)
+                task.wait()
+            end
+        end)
+    end
+end
+})
+v11:SelectTab(1)
