@@ -1,0 +1,4483 @@
+--破解来自Astra 6 
+--Yeskid
+
+local userInputService = game:GetService("UserInputService")
+local players = game:GetService("Players")
+local runService = game:GetService("RunService")
+local lighting = game:GetService("Lighting")
+local virtualInputManager = game:GetService("VirtualInputManager")
+local workspace = game:GetService("Workspace")
+local virtualUser = game:GetService("VirtualUser")
+local starterGui = game:GetService("StarterGui")
+local textNumber = tick()
+
+local function handler(argument)
+	local success, result = pcall(function()
+		return game:HttpGet(argument)
+	end)
+
+	if success and result and #result > 0 then
+		local chunk = loadstring(result)
+
+		if chunk then
+			return chunk()
+		end
+
+		return
+	end
+end
+
+local httpsRawGithubusercontentComATLASTEAM01ObsidianMainLibraryLua =
+	handler("https://raw.githubusercontent.com/ATLASTEAM01/Obsidian/main/Library.lua")
+local httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsThemeManagerLua =
+	handler("https://raw.githubusercontent.com/ATLASTEAM01/Obsidian/main/addons/ThemeManager.lua")
+local httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsSaveManagerLua =
+	handler("https://raw.githubusercontent.com/ATLASTEAM01/Obsidian/main/addons/SaveManager.lua")
+
+local xjwWindow = httpsRawGithubusercontentComATLASTEAM01ObsidianMainLibraryLua:CreateWindow({
+	Title = "XJW中心",
+	Footer = "1.3",
+	Center = true,
+	AutoShow = true,
+})
+
+local iyData = {
+	Announcement = xjwWindow:AddTab("公告", "megaphone"),
+	Main = xjwWindow:AddTab("主页", "user"),
+	TP = xjwWindow:AddTab("传送和甩飞", "send"),
+	Visual = xjwWindow:AddTab("视觉", "eye"),
+}
+
+local addLeftGroupbox = iyData.Announcement:AddLeftGroupbox("公告")
+addLeftGroupbox:AddLabel("祝你天天开心,脚本禁止倒卖 ")
+addLeftGroupbox:AddLabel("作者B站UID: 3706985503525348")
+addLeftGroupbox:AddLabel("脚本会持续更新,永久免费")
+addLeftGroupbox:AddLabel("更新时间: 2026年9月12日12时26分")
+
+local secondaryAddLeftGroupbox = iyData.Announcement:AddLeftGroupbox("信息")
+local localPlayer = game.Players.LocalPlayer
+
+secondaryAddLeftGroupbox:AddLabel("用户名: " .. localPlayer.Name)
+secondaryAddLeftGroupbox:AddLabel("显示名称: " .. localPlayer.DisplayName)
+secondaryAddLeftGroupbox:AddLabel("用户ID: " .. localPlayer.UserId)
+secondaryAddLeftGroupbox:AddLabel("账户年龄(天): " .. localPlayer.AccountAge)
+secondaryAddLeftGroupbox:AddLabel("语言: " .. localPlayer.LocaleId)
+secondaryAddLeftGroupbox:AddLabel("注入器: 未知")
+secondaryAddLeftGroupbox:AddLabel("游戏ID: " .. tostring(game.PlaceId))
+secondaryAddLeftGroupbox:AddLabel("服务器ID: " .. tostring(game.JobId))
+secondaryAddLeftGroupbox:AddLabel("Roblox版本: " .. version())
+
+secondaryAddLeftGroupbox:AddLabel("设备: " .. (userInputService.TouchEnabled and "移动设备" or "电脑"))
+
+secondaryAddLeftGroupbox:AddButton("复制所有信息", function()
+	local texts = {}
+
+	table.insert(texts, "=== XJW中心 - 信息 ===")
+	table.insert(texts, "用户名: " .. localPlayer.Name)
+	table.insert(texts, "显示名称: " .. localPlayer.DisplayName)
+	table.insert(texts, "用户ID: " .. localPlayer.UserId)
+	table.insert(texts, "账户年龄(天): " .. localPlayer.AccountAge)
+	table.insert(texts, "注入器: 未知")
+	table.insert(texts, "游戏ID: " .. tostring(game.PlaceId))
+	table.insert(texts, "服务器ID: " .. tostring(game.JobId))
+	table.insert(texts, "Roblox版本: " .. version())
+	table.insert(texts, "=== " .. os.date("%Y-%m-%d %H:%M:%S") .. " ===")
+
+	pcall(function()
+		setclipboard(table.concat(texts, "\n"))
+	end)
+
+	pcall(function()
+		game.StarterGui:SetCore("SendNotification", {
+			Title = "成功",
+			Text = "信息已复制到剪贴板",
+			Duration = 3,
+		})
+	end)
+end)
+
+local addRightGroupbox = iyData.Main:AddRightGroupbox("功能")
+
+addRightGroupbox:AddButton("XJW飞行", function()
+	handler(
+		"https://raw.githubusercontent.com/jiuyijiuyijiuyi91/78789191/refs/heads/main/%E8%87%AA%E5%88%B6%E8%84%9A%E6%9C%AC%E9%A3%9E%E8%A1%8C.lua"
+	)
+end)
+
+addRightGroupbox:AddButton("静默甩飞", function()
+	handler(
+		"https://raw.githubusercontent.com/jiuyijiuyijiuyi91/78789191/refs/heads/main/%E9%9D%99%E9%BB%98%E7%94%A9%E9%A3%9E(%E5%BC%80%E6%BA%90).lua"
+	)
+end)
+
+addRightGroupbox:AddButton("祖国人汉化", function()
+	handler(
+		"https://raw.githubusercontent.com/kongbaNB/-/refs/heads/main/%E7%A5%96%E5%9B%BD%E4%BA%BA%E6%B1%89%E5%8C%96"
+	)
+end)
+
+addRightGroupbox:AddButton("无敌少侠飞行r15", function()
+	local success, result = pcall(function()
+		handler("https://raw.githubusercontent.com/396abc/Script/refs/heads/main/MobileFly.lua")
+	end)
+
+	if not success then
+		game.StarterGui:SetCore("SendNotification", {
+			Title = "加载失败",
+			Text = tostring(result):sub(1, 100),
+			Duration = 5,
+		})
+	end
+end)
+
+local localValuePlayer = players.LocalPlayer
+local secondaryGame = game
+
+local function getInstancePropertiesCharacter()
+	return localValuePlayer.Character
+end
+
+local secondaryRunService = secondaryGame:GetService("RunService")
+
+local function updateCanCollide(updateCanCollideFlag)
+	if not updateCanCollideFlag then
+		return
+	end
+
+	for index, value in ipairs(updateCanCollideFlag:GetDescendants()) do
+		if value:IsA("BasePart") then
+			value.CanCollide = false
+		end
+	end
+end
+
+local function handleFlag(flagText)
+	for index, item in ipairs(players:GetPlayers()) do
+		if item.Name == flagText or item.DisplayName == flagText then
+			return item
+		end
+	end
+
+	return nil
+end
+
+local function handleHeartbeatConnection(heartbeatConnectionArgument, secondaryArgument) end
+
+local function secondaryUpdateCanCollide(updateCanCollideFlag)
+	if not updateCanCollideFlag then
+		return
+	end
+
+	for index, item in ipairs(updateCanCollideFlag:GetDescendants()) do
+		if item:IsA("BasePart") then
+			item.CanCollide = true
+		end
+	end
+end
+
+local updateInstancePropertiesData = { conns = {}, threads = {} }
+
+local function secondaryHandler()
+	local data = {}
+
+	for index, item in ipairs(players:GetPlayers()) do
+		if item ~= localValuePlayer then
+			table.insert(data, item.Name)
+		end
+	end
+
+	table.sort(data)
+	return data
+end
+
+local alternateAddLeftGroupbox = iyData.TP:AddLeftGroupbox("传送功能")
+local text = ""
+
+local addDropdown = alternateAddLeftGroupbox:AddDropdown("TP2_Target", {
+	Text = "选择目标玩家",
+	Values = {},
+	Default = "",
+	Multi = false,
+})
+
+addDropdown:OnChanged(function(secondaryText)
+	text = secondaryText
+end)
+
+alternateAddLeftGroupbox:AddButton("刷新玩家列表", function()
+	addDropdown:SetValues(secondaryHandler())
+end)
+
+alternateAddLeftGroupbox:AddButton("传送到选定玩家", function()
+	if text == "" then
+		return
+	else
+		local secondaryPlayer = handleFlag(text)
+
+		if not secondaryPlayer or not secondaryPlayer.Character then
+			return
+		else
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			else
+				local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+				local secondaryHumanoidRootPart = secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+				if humanoidRootPart and secondaryHumanoidRootPart then
+					humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame
+					handleHeartbeatConnection("成功", "已传送到 " .. secondaryPlayer.Name)
+				end
+
+				return
+			end
+		end
+	end
+end)
+
+local flag = false
+
+alternateAddLeftGroupbox
+	:AddToggle("TP2_LoopSingle", { Text = "循环传送", Default = false })
+	:OnChanged(function(flagCondition)
+		flag = flagCondition
+
+		if flagCondition then
+			local thread = task.spawn(function()
+				while flag do
+					if text ~= "" then
+						local secondaryPlayer = handleFlag(text)
+
+						if secondaryPlayer and secondaryPlayer.Character then
+							local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+							if humanoidRootPartContainer then
+								local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+								local secondaryHumanoidRootPart =
+									secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+								if humanoidRootPart and secondaryHumanoidRootPart then
+									humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame
+								end
+							end
+						end
+					end
+
+					task.wait(0.3)
+				end
+			end)
+
+			table.insert(updateInstancePropertiesData.threads, thread)
+		end
+	end)
+
+local additionalAddLeftGroupbox = iyData.TP:AddLeftGroupbox("坐头功能")
+local updateHeartbeatConnectionText = ""
+
+local secondaryAddDropdown = additionalAddLeftGroupbox:AddDropdown("SitHead_Target", {
+	Text = "选择目标玩家",
+	Values = {},
+	Default = "",
+	Multi = false,
+})
+
+secondaryAddDropdown:OnChanged(function(text)
+	updateHeartbeatConnectionText = text
+end)
+
+additionalAddLeftGroupbox:AddButton("刷新玩家列表", function()
+	secondaryAddDropdown:SetValues(secondaryHandler())
+end)
+local updateInstancePropertiesFlag = false
+
+local function updateHeartbeatConnection()
+	updateInstancePropertiesFlag = false
+
+	if updateInstancePropertiesData.conns.headSit then
+		updateInstancePropertiesData.conns.headSit:Disconnect()
+		updateInstancePropertiesData.conns.headSit = nil
+	end
+
+	local updateHeartbeatConnectionCondition = getInstancePropertiesCharacter()
+
+	if updateHeartbeatConnectionCondition then
+		local humanoid = updateHeartbeatConnectionCondition:FindFirstChildOfClass("Humanoid")
+
+		if humanoid then
+			humanoid.Sit = false
+		end
+
+		secondaryUpdateCanCollide(updateHeartbeatConnectionCondition)
+	end
+end
+
+local updateHeartbeatConnectionFlag = false
+
+local function updateInstanceProperties(displayValue)
+	if updateInstancePropertiesData.conns.headSit then
+		updateInstancePropertiesData.conns.headSit:Disconnect()
+		updateInstancePropertiesData.conns.headSit = nil
+	end
+
+	updateInstancePropertiesFlag = true
+	local humanoidRootPartContainer = getInstancePropertiesCharacter()
+	local humanoidRootPart
+
+	if not humanoidRootPartContainer then
+		updateInstancePropertiesFlag = false
+		return
+	else
+		local humanoid = humanoidRootPartContainer:FindFirstChildOfClass("Humanoid")
+		local flag = not humanoid
+		humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+		if flag or not humanoidRootPart then
+			updateInstancePropertiesFlag = false
+			return
+		else
+			updateCanCollide(humanoidRootPartContainer)
+			humanoid.Sit = true
+			local heartbeat = secondaryRunService.Heartbeat
+
+			updateInstancePropertiesData.conns.headSit = heartbeat:Connect(function()
+				pcall(function()
+					if not updateInstancePropertiesFlag or not humanoidRootPartContainer.Parent then
+						if updateHeartbeatConnectionFlag and localValuePlayer.Character then
+							task.wait(1)
+
+							if updateHeartbeatConnectionFlag and updateHeartbeatConnectionText ~= "" then
+								updateInstanceProperties(updateHeartbeatConnectionText)
+							end
+						else
+							updateHeartbeatConnection()
+						end
+
+						return
+					else
+						local secondaryPlayer = handleFlag(displayValue)
+
+						if not secondaryPlayer or not secondaryPlayer.Character then
+							if updateHeartbeatConnectionFlag then
+								task.wait(1)
+
+								if updateHeartbeatConnectionFlag and updateHeartbeatConnectionText ~= "" then
+									updateInstanceProperties(updateHeartbeatConnectionText)
+								end
+							else
+								updateHeartbeatConnection()
+							end
+
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, 1.6, 0.4)
+							updateCanCollide(humanoidRootPartContainer)
+							return
+						end
+					end
+				end)
+			end)
+
+			handleHeartbeatConnection("坐头启动", "已开始坐 " .. tostring(displayValue) .. " 的头")
+			return
+		end
+	end
+end
+
+additionalAddLeftGroupbox:AddButton("坐选定玩家头上", function()
+	if updateHeartbeatConnectionText == "" then
+		return
+	end
+
+	updateHeartbeatConnection()
+	updateInstanceProperties(updateHeartbeatConnectionText)
+end)
+
+additionalAddLeftGroupbox
+	:AddToggle("SitHead_Loop", {
+		Text = "循环坐头(死亡后继续)",
+		Default = false,
+	})
+	:OnChanged(function(flag)
+		updateHeartbeatConnectionFlag = flag
+
+		if flag and updateHeartbeatConnectionText ~= "" then
+			updateHeartbeatConnection()
+			updateInstanceProperties(updateHeartbeatConnectionText)
+		else
+			updateHeartbeatConnection()
+		end
+	end)
+
+additionalAddLeftGroupbox:AddButton("停止坐头", updateHeartbeatConnection)
+
+local fallbackAddLeftGroupbox = iyData.TP:AddLeftGroupbox("甩飞功能")
+local capturedText = ""
+
+local alternateAddDropdown = fallbackAddLeftGroupbox:AddDropdown("Fling2_Target", {
+	Text = "选择目标玩家",
+	Values = {},
+	Default = "",
+	Multi = false,
+})
+
+alternateAddDropdown:OnChanged(function(text)
+	capturedText = text
+end)
+
+fallbackAddLeftGroupbox:AddButton("刷新玩家列表", function()
+	alternateAddDropdown:SetValues(secondaryHandler())
+end)
+
+local function createEpixVel(item)
+	local character = localValuePlayer.Character
+	local cameraSubject = character and character:FindFirstChildOfClass("Humanoid")
+	local rootPart = cameraSubject and cameraSubject.RootPart
+
+	if not rootPart then
+		return
+	end
+
+	local headContainer = item.Character
+	local createEpixVelCondition, humanoid, updateEpixVel
+
+	if not headContainer then
+		return
+	else
+		humanoid = headContainer:FindFirstChildOfClass("Humanoid")
+		createEpixVelCondition = humanoid and humanoid.RootPart
+		local head = headContainer:FindFirstChild("Head")
+		local accessory = headContainer:FindFirstChildOfClass("Accessory")
+		local handle = accessory and accessory:FindFirstChild("Handle")
+
+		if rootPart.Velocity.Magnitude < 50 then
+			getgenv().OldPos = rootPart.CFrame
+		end
+
+		if humanoid and humanoid.Sit then
+			return
+		else
+			if head then
+				workspace.CurrentCamera.CameraSubject = head
+			elseif handle then
+				workspace.CurrentCamera.CameraSubject = handle
+			elseif humanoid then
+				workspace.CurrentCamera.CameraSubject = humanoid
+			end
+
+			function updateEpixVel(input, createEpixVelNumber, updateEpixVelNumber)
+				rootPart.CFrame = CFrame.new(input.Position) * createEpixVelNumber * updateEpixVelNumber
+				character:SetPrimaryPartCFrame(CFrame.new(input.Position) * createEpixVelNumber * updateEpixVelNumber)
+
+				rootPart.Velocity = Vector3.new(90000000, 900000000, 90000000)
+				rootPart.RotVelocity = Vector3.new(900000000, 900000000, 900000000)
+			end
+
+			local function handleEpixVel(input)
+				local createEpixVelNumber = tick()
+				local total = 0
+				local sit
+
+				repeat
+					if rootPart and humanoid then
+						if input.Velocity.Magnitude < 50 then
+							total = total + 100
+
+							updateEpixVel(
+								input,
+								CFrame.new(0, 1.5, 0) + humanoid.MoveDirection * input.Velocity.Magnitude / 1.25,
+								CFrame.Angles(math.rad(total), 0, 0)
+							)
+
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(0, -1.5, 0) + humanoid.MoveDirection * input.Velocity.Magnitude / 1.25,
+								CFrame.Angles(math.rad(total), 0, 0)
+							)
+
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(2.25, 1.5, -2.25) + humanoid.MoveDirection * input.Velocity.Magnitude / 1.25,
+								CFrame.Angles(math.rad(total), 0, 0)
+							)
+
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(-2.25, -1.5, 2.25) + humanoid.MoveDirection * input.Velocity.Magnitude / 1.25,
+								CFrame.Angles(math.rad(total), 0, 0)
+							)
+
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(0, 1.5, 0) + humanoid.MoveDirection,
+								CFrame.Angles(math.rad(total), 0, 0)
+							)
+
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(0, -1.5, 0) + humanoid.MoveDirection,
+								CFrame.Angles(math.rad(total), 0, 0)
+							)
+
+							task.wait()
+						else
+							updateEpixVel(
+								input,
+								CFrame.new(0, 1.5, humanoid.WalkSpeed),
+								CFrame.Angles(math.rad(90), 0, 0)
+							)
+
+							task.wait()
+							updateEpixVel(input, CFrame.new(0, -1.5, -humanoid.WalkSpeed), CFrame.Angles(0, 0, 0))
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(0, 1.5, humanoid.WalkSpeed),
+								CFrame.Angles(math.rad(90), 0, 0)
+							)
+
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(0, 1.5, createEpixVelCondition.Velocity.Magnitude / 1.25),
+								CFrame.Angles(math.rad(90), 0, 0)
+							)
+
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(0, -1.5, -createEpixVelCondition.Velocity.Magnitude / 1.25),
+								CFrame.Angles(0, 0, 0)
+							)
+
+							task.wait()
+
+							updateEpixVel(
+								input,
+								CFrame.new(0, 1.5, createEpixVelCondition.Velocity.Magnitude / 1.25),
+								CFrame.Angles(math.rad(90), 0, 0)
+							)
+
+							task.wait()
+							updateEpixVel(input, CFrame.new(0, -1.5, 0), CFrame.Angles(math.rad(90), 0, 0))
+							task.wait()
+							updateEpixVel(input, CFrame.new(0, -1.5, 0), CFrame.Angles(0, 0, 0))
+							task.wait()
+							updateEpixVel(input, CFrame.new(0, -1.5, 0), CFrame.Angles(math.rad(-90), 0, 0))
+							task.wait()
+							updateEpixVel(input, CFrame.new(0, -1.5, 0), CFrame.Angles(0, 0, 0))
+							task.wait()
+						end
+
+						local isVelocityMagnitude = input.Velocity.Magnitude > 500
+
+						sit = isVelocityMagnitude
+
+						sit = isVelocityMagnitude
+							or input.Parent ~= item.Character
+							or item.Parent ~= players
+							or not item.Character == headContainer
+							or humanoid and humanoid.Sit
+							or cameraSubject.Health <= 0
+							or tick() > createEpixVelNumber + 2
+					else
+						break
+					end
+				until sit
+			end
+
+			workspace.FallenPartsDestroyHeight = (0 / 0)
+
+			local epixVel = Instance.new("BodyVelocity")
+			epixVel.Name = "EpixVel"
+			epixVel.Parent = rootPart
+			epixVel.Velocity = Vector3.new(900000000, 900000000, 900000000)
+			epixVel.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+
+			cameraSubject:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+
+			if createEpixVelCondition and head then
+				if (createEpixVelCondition.CFrame.p - head.CFrame.p).Magnitude > 5 then
+					handleEpixVel(head)
+				else
+					handleEpixVel(createEpixVelCondition)
+				end
+			elseif createEpixVelCondition then
+				handleEpixVel(createEpixVelCondition)
+			elseif head then
+				handleEpixVel(head)
+			elseif handle then
+				handleEpixVel(handle)
+			else
+				return
+			end
+
+			epixVel:Destroy()
+			cameraSubject:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+			workspace.CurrentCamera.CameraSubject = cameraSubject
+
+			while true do
+				rootPart.CFrame = getgenv().OldPos * CFrame.new(0, 0.5, 0)
+				character:SetPrimaryPartCFrame(getgenv().OldPos * CFrame.new(0, 0.5, 0))
+				cameraSubject:ChangeState("GettingUp")
+
+				table.foreach(character:GetChildren(), function(createEpixVelArgument, secondaryArgument)
+					if secondaryArgument:IsA("BasePart") then
+						local vector = Vector3.new()
+						local rotVelocity = Vector3.new()
+
+						secondaryArgument.Velocity = vector
+						secondaryArgument.RotVelocity = rotVelocity
+					end
+				end)
+
+				task.wait()
+
+				if (rootPart.Position - getgenv().OldPos.p).Magnitude < 25 then
+					break
+				end
+			end
+
+			workspace.FallenPartsDestroyHeight = getgenv().FPDH
+			return
+		end
+	end
+end
+
+local allData = { single = false, all = false }
+
+fallbackAddLeftGroupbox:AddButton("甩飞选定玩家", function()
+	if capturedText == "" then
+		return
+	end
+
+	local item = handleFlag(capturedText)
+
+	if not item then
+		return
+	end
+
+	pcall(function()
+		createEpixVel(item)
+	end)
+end)
+
+fallbackAddLeftGroupbox
+	:AddToggle("Fling2_LoopSingle", {
+		Text = "循环甩飞选定玩家",
+		Default = false,
+	})
+	:OnChanged(function(single)
+		allData.single = single
+
+		if single then
+			local thread = task.spawn(function()
+				while allData.single do
+					if capturedText ~= "" then
+						local condition = handleFlag(capturedText)
+
+						if condition then
+							pcall(function()
+								createEpixVel(condition)
+							end)
+						end
+					end
+
+					task.wait(0.1)
+				end
+			end)
+
+			table.insert(updateInstancePropertiesData.threads, thread)
+		end
+	end)
+
+fallbackAddLeftGroupbox:AddButton("甩飞所有玩家", function()
+	for index, item in ipairs(players:GetPlayers()) do
+		local capturedItem = item
+
+		if capturedItem ~= localValuePlayer and capturedItem.Character then
+			pcall(function()
+				createEpixVel(capturedItem)
+			end)
+			task.wait(0.1)
+		end
+	end
+end)
+
+fallbackAddLeftGroupbox
+	:AddToggle("Fling2_LoopAll", {
+		Text = "循环甩飞所有玩家",
+		Default = false,
+	})
+	:OnChanged(function(all)
+		allData.all = all
+
+		if all then
+			local thread = task.spawn(function()
+				while allData.all do
+					for index, item in ipairs(players:GetPlayers()) do
+						local capturedItem = item
+
+						if capturedItem ~= localValuePlayer and capturedItem.Character then
+							pcall(function()
+								createEpixVel(capturedItem)
+							end)
+						end
+
+						task.wait(0.05)
+					end
+
+					task.wait(0.1)
+				end
+			end)
+
+			table.insert(updateInstancePropertiesData.threads, thread)
+		end
+	end)
+
+fallbackAddLeftGroupbox:AddButton("停止所有甩飞", function()
+	allData.single = false
+	allData.all = false
+end)
+
+local secondaryAddRightGroupbox = iyData.TP:AddRightGroupbox("视角监视")
+local secondaryText = ""
+
+local additionalAddDropdown = secondaryAddRightGroupbox:AddDropdown("Monitor2_Target", {
+	Text = "选择目标玩家",
+	Values = {},
+	Default = "",
+	Multi = false,
+})
+
+additionalAddDropdown:OnChanged(function(text)
+	secondaryText = text
+end)
+
+secondaryAddRightGroupbox:AddButton("刷新玩家列表", function()
+	additionalAddDropdown:SetValues(secondaryHandler())
+end)
+
+local function secondaryUpdateHeartbeatConnection()
+	if updateInstancePropertiesData.conns.monitor then
+		updateInstancePropertiesData.conns.monitor:Disconnect()
+		updateInstancePropertiesData.conns.monitor = nil
+	end
+
+	local updateHeartbeatConnectionCondition = getInstancePropertiesCharacter()
+
+	if updateHeartbeatConnectionCondition then
+		local cameraSubject = updateHeartbeatConnectionCondition:FindFirstChildOfClass("Humanoid")
+
+		if cameraSubject then
+			workspace.CurrentCamera.CameraSubject = cameraSubject
+		end
+	end
+end
+
+local function alternateUpdateHeartbeatConnection(updateHeartbeatConnectionText)
+	if updateInstancePropertiesData.conns.monitor then
+		updateInstancePropertiesData.conns.monitor:Disconnect()
+		updateInstancePropertiesData.conns.monitor = nil
+	end
+
+	local currentCamera = workspace.CurrentCamera
+
+	if not currentCamera then
+		return
+	else
+		local heartbeat = secondaryRunService.Heartbeat
+
+		updateInstancePropertiesData.conns.monitor = heartbeat:Connect(function()
+			pcall(function()
+				local updateHeartbeatConnectionFlag = handleFlag(updateHeartbeatConnectionText)
+
+				if not updateHeartbeatConnectionFlag or not updateHeartbeatConnectionFlag.Character then
+					secondaryUpdateHeartbeatConnection()
+					return
+				else
+					local cameraSubject = updateHeartbeatConnectionFlag.Character:FindFirstChildOfClass("Humanoid")
+
+					if not cameraSubject then
+						cameraSubject = updateHeartbeatConnectionFlag.Character:FindFirstChild("Head")
+							or updateHeartbeatConnectionFlag.Character:FindFirstChild("HumanoidRootPart")
+					end
+
+					if cameraSubject then
+						currentCamera.CameraSubject = cameraSubject
+					end
+
+					return
+				end
+			end)
+		end)
+
+		handleHeartbeatConnection("监视启动", "已开始监视 " .. updateHeartbeatConnectionText)
+		return
+	end
+end
+
+secondaryAddRightGroupbox:AddButton("开始监视选定玩家", function()
+	if secondaryText == "" then
+		return
+	end
+
+	secondaryUpdateHeartbeatConnection()
+	alternateUpdateHeartbeatConnection(secondaryText)
+end)
+
+secondaryAddRightGroupbox:AddButton("停止监视", secondaryUpdateHeartbeatConnection)
+
+local alternateAddRightGroupbox = iyData.TP:AddRightGroupbox("恶搞跟随")
+local alternateText = ""
+
+local fallbackAddDropdown = alternateAddRightGroupbox:AddDropdown("Follow2_Target", {
+	Text = "选择目标玩家",
+	Values = {},
+	Default = "",
+	Multi = false,
+})
+
+fallbackAddDropdown:OnChanged(function(text)
+	alternateText = text
+end)
+
+alternateAddRightGroupbox:AddButton("刷新玩家列表", function()
+	fallbackAddDropdown:SetValues(secondaryHandler())
+end)
+local keyData = {}
+
+local function alternateHandler()
+	for key, item in pairs(keyData) do
+		keyData[key] = false
+	end
+
+	for secondaryKey, item in pairs(updateInstancePropertiesData.conns) do
+		if secondaryKey:find("follow2_") then
+			item:Disconnect()
+			updateInstancePropertiesData.conns[secondaryKey] = nil
+		end
+	end
+
+	local condition = getInstancePropertiesCharacter()
+
+	if condition then
+		secondaryUpdateCanCollide(condition)
+	end
+end
+
+for index, item in ipairs({
+	{
+		id = "orbit",
+		text = "旋转环绕",
+		fn = function(secondaryPlayer)
+			keyData.orbit = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+			local sum
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				sum = 0
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_orbit = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.orbit or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							sum = sum + 0.05
+
+							if sum > 360 then
+								sum = 0
+							end
+
+							humanoidRootPart.CFrame = CFrame.new(
+								secondaryHumanoidRootPart.Position
+									+ Vector3.new(math.cos(sum) * 5, 2, math.sin(sum) * 5),
+								secondaryHumanoidRootPart.Position
+							)
+
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "mirror",
+		text = "镜像",
+		fn = function(secondaryPlayer)
+			keyData.mirror = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_mirror = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.mirror or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							else
+								local cframe = CFrame.new(4, 0, 0)
+
+								humanoidRootPart.CFrame = CFrame.new(
+									(secondaryHumanoidRootPart.CFrame * cframe).Position
+								) * CFrame.Angles(0, math.pi, 0)
+
+								return
+							end
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "float",
+		text = "漂浮",
+		fn = function(secondaryPlayer)
+			keyData.float = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_float = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.float or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame =
+								CFrame.new(secondaryHumanoidRootPart.Position + Vector3.new(0, 3, 0))
+
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "shadow",
+		text = "影子",
+		fn = function(secondaryPlayer)
+			keyData.shadow = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_shadow = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.shadow or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, -2.8, 0)
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "anti",
+		text = "反向跟随",
+		fn = function(secondaryPlayer)
+			keyData.anti = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_anti = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.anti or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							if (humanoidRootPart.Position - secondaryHumanoidRootPart.Position).Magnitude < 8 then
+								humanoidRootPart.CFrame = CFrame.new(
+									secondaryHumanoidRootPart.Position
+										+ (humanoidRootPart.Position - secondaryHumanoidRootPart.Position).Unit * 8
+								)
+							end
+
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "spin",
+		text = "旋转",
+		fn = function(secondaryPlayer)
+			keyData.spin = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+			local sum
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				sum = 0
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_spin = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.spin or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							sum = sum + 5
+
+							humanoidRootPart.CFrame = CFrame.new(
+								secondaryHumanoidRootPart.Position + Vector3.new(0, 2, 0)
+							) * CFrame.Angles(0, math.rad(sum), 0)
+
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "shake",
+		text = "抖动",
+		fn = function(secondaryPlayer)
+			keyData.shake = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_shake = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.shake or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							else
+								local randomResult = math.random(-2, 2)
+								local secondaryRandomResult = math.random(0, 3)
+								local cFrameNumber =
+									Vector3.new(randomResult, secondaryRandomResult, math.random(-2, 2))
+								humanoidRootPart.CFrame = CFrame.new(secondaryHumanoidRootPart.Position + cFrameNumber)
+								return
+							end
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "face",
+		text = "站头后",
+		fn = function(secondaryPlayer)
+			keyData.face = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_face = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.face or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, 3.5, 0)
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "back",
+		text = "坐前面",
+		fn = function(secondaryPlayer)
+			keyData.back = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+			local humanoid
+
+			if not humanoidRootPart then
+				return
+			else
+				humanoid = humanoidRootPartContainer:FindFirstChildOfClass("Humanoid")
+
+				if humanoid then
+					humanoid.Sit = true
+				end
+
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_back = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.back or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, 0, 2)
+
+							if humanoid then
+								humanoid.Sit = true
+							end
+
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "auto",
+		text = "动画跟随",
+		fn = function(secondaryPlayer)
+			keyData.auto = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_auto = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.auto or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, 0, -3)
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "suck",
+		text = "口交",
+		fn = function(secondaryPlayer)
+			keyData.suck = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+			local humanoid
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				humanoid = humanoidRootPartContainer:FindFirstChildOfClass("Humanoid")
+
+				if humanoid then
+					humanoid.Sit = true
+				end
+
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_suck = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.suck or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, -1, 1)
+
+							if humanoid then
+								humanoid.Sit = true
+							end
+
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "sus",
+		text = "被超",
+		fn = function(secondaryPlayer)
+			keyData.sus = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_sus = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.sus or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, 0, -1)
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "modern",
+		text = "超别人",
+		fn = function(secondaryPlayer)
+			keyData.modern = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_modern = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.modern or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, 0, 1)
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+	{
+		id = "enhanced",
+		text = "给别人口",
+		fn = function(secondaryPlayer)
+			keyData.enhanced = true
+			local humanoidRootPartContainer = getInstancePropertiesCharacter()
+
+			if not humanoidRootPartContainer then
+				return
+			end
+
+			local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+			local humanoid
+
+			if not humanoidRootPart then
+				return
+			else
+				updateCanCollide(humanoidRootPartContainer)
+				humanoid = humanoidRootPartContainer:FindFirstChildOfClass("Humanoid")
+
+				if humanoid then
+					humanoid.Sit = true
+				end
+
+				local heartbeat = secondaryRunService.Heartbeat
+
+				updateInstancePropertiesData.conns.follow2_enhanced = heartbeat:Connect(function()
+					pcall(function()
+						if not keyData.enhanced or not humanoidRootPartContainer.Parent then
+							return
+						elseif not secondaryPlayer.Character then
+							alternateHandler()
+							return
+						else
+							local secondaryHumanoidRootPart =
+								secondaryPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+							if not secondaryHumanoidRootPart then
+								return
+							end
+
+							humanoidRootPart.CFrame = secondaryHumanoidRootPart.CFrame * CFrame.new(0, -1, -0.5)
+
+							if humanoid then
+								humanoid.Sit = true
+							end
+
+							return
+						end
+					end)
+				end)
+
+				return
+			end
+		end,
+	},
+}) do
+	local capturedItem = item
+
+	alternateAddRightGroupbox
+		:AddToggle("F2_" .. capturedItem.id, { Text = capturedItem.text, Default = false })
+		:OnChanged(function(condition)
+			if condition then
+				alternateHandler()
+
+				if alternateText == "" then
+					return
+				end
+
+				local condition = handleFlag(alternateText)
+
+				if condition then
+					capturedItem.fn(condition)
+					handleHeartbeatConnection("跟随", "已开启: " .. capturedItem.text)
+				end
+
+				return
+			end
+
+			alternateHandler()
+		end)
+end
+
+alternateAddRightGroupbox:AddButton("停止所有跟随", function()
+	alternateHandler()
+end)
+local secondaryLocalValuePlayer = players.LocalPlayer
+local humanoidRootPart = nil
+local capturedHumanoidContainer, humanoid
+
+local function additionalHandler()
+	capturedHumanoidContainer = secondaryLocalValuePlayer.Character
+
+	if capturedHumanoidContainer then
+		humanoid = capturedHumanoidContainer:FindFirstChildOfClass("Humanoid")
+		humanoidRootPart = capturedHumanoidContainer:FindFirstChild("HumanoidRootPart")
+	end
+end
+
+additionalHandler()
+
+local valueData = {
+	WalkSpeed = { Enabled = false, Value = 100, Default = 16 },
+	Noclip = { Enabled = false },
+	BunnyHop = { Enabled = false, Value = 5 },
+	SuperJump = { Enabled = false, Value = 200 },
+	WallClimb = { Enabled = false, Value = 50 },
+	NightVision = { Enabled = false },
+	AntiAfk = { Enabled = false },
+}
+
+local function updateWalkSpeed()
+	if not humanoid then
+		return
+	end
+
+	if valueData.WalkSpeed.Enabled then
+		humanoid.WalkSpeed = valueData.WalkSpeed.Value
+	else
+		humanoid.WalkSpeed = valueData.WalkSpeed.Default
+	end
+end
+
+local data = {}
+
+local function fallbackHandler(argument, secondaryArgument)
+	if data[argument] then
+		data[argument]:Disconnect()
+	end
+
+	data[argument] = secondaryArgument
+end
+
+local updateCanCollideFlag = false
+local updateCanCollideData = {}
+local value10Data = {}
+
+local function alternateUpdateCanCollide(updateCanCollideFlag)
+	if not updateCanCollideFlag then
+		return
+	end
+
+	for key, item in pairs(updateCanCollideFlag:GetDescendants()) do
+		if item:IsA("BasePart") then
+			if not value10Data[item] then
+				value10Data[item] = item.CanCollide
+			end
+
+			item.CanCollide = false
+		end
+	end
+
+	updateCanCollideData[updateCanCollideFlag] = updateCanCollideFlag.DescendantAdded:Connect(function(descendant)
+		if descendant:IsA("BasePart") then
+			if not value10Data[descendant] then
+				value10Data[descendant] = descendant.CanCollide
+			end
+
+			descendant.CanCollide = false
+		end
+	end)
+end
+
+local connect, connection
+
+local function additionalUpdateCanCollide()
+	updateCanCollideFlag = false
+
+	if connect then
+		connect:Disconnect()
+		connect = nil
+	end
+
+	if connection then
+		connection:Disconnect()
+		connection = nil
+	end
+
+	for key, canCollide in pairs(value10Data) do
+		if key and key.Parent then
+			key.CanCollide = canCollide
+		end
+	end
+
+	for key, item in pairs(updateCanCollideData) do
+		if item then
+			item:Disconnect()
+		end
+	end
+
+	updateCanCollideData = {}
+	value10Data = {}
+end
+
+local function updateSteppedConnection()
+	updateCanCollideFlag = true
+
+	if connect then
+		return
+	else
+		local character = secondaryLocalValuePlayer.Character
+
+		if character then
+			alternateUpdateCanCollide(character)
+		end
+
+		connect = runService.Stepped:Connect(function()
+			if not updateCanCollideFlag then
+				return
+			else
+				local character = secondaryLocalValuePlayer.Character
+
+				if not character then
+					return
+				end
+
+				for key, item in pairs(character:GetDescendants()) do
+					if item:IsA("BasePart") then
+						item.CanCollide = false
+					end
+				end
+
+				return
+			end
+		end)
+
+		if connection then
+			connection:Disconnect()
+		end
+
+		connection = secondaryLocalValuePlayer.CharacterAdded:Connect(function(updateSteppedConnectionFlag)
+			if updateCanCollideFlag then
+				task.wait()
+				alternateUpdateCanCollide(updateSteppedConnectionFlag)
+			end
+		end)
+
+		return
+	end
+end
+
+fallbackHandler(
+	"BunnyHop",
+	userInputService.JumpRequest:Connect(function()
+		if valueData.BunnyHop.Enabled and humanoid then
+			humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+		end
+	end)
+)
+
+fallbackHandler(
+	"SuperJump",
+	userInputService.JumpRequest:Connect(function()
+		if valueData.SuperJump.Enabled and humanoid then
+			pcall(function()
+				humanoid.UseJumpPower = true
+				humanoid.JumpPower = valueData.SuperJump.Value
+				humanoid.JumpHeight = valueData.SuperJump.Value
+			end)
+		end
+	end)
+)
+
+fallbackHandler(
+	"WallClimb",
+	runService.Heartbeat:Connect(function()
+		if not valueData.WallClimb.Enabled then
+			return
+		end
+
+		if not capturedHumanoidContainer or not humanoidRootPart or not humanoid then
+			return
+		end
+
+		if not capturedHumanoidContainer.Parent then
+			return
+		end
+
+		pcall(function()
+			local raycastParams = RaycastParams.new()
+			raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+			raycastParams.FilterDescendantsInstances = { capturedHumanoidContainer }
+
+			local raycast =
+				workspace:Raycast(humanoidRootPart.Position, humanoidRootPart.CFrame.LookVector * 3, raycastParams)
+
+			if raycast then
+				if math.abs(raycast.Normal.Y) < 0.5 then
+					humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+
+					humanoidRootPart.Velocity =
+						Vector3.new(humanoidRootPart.Velocity.X, valueData.WallClimb.Value, humanoidRootPart.Velocity.Z)
+				end
+			end
+		end)
+	end)
+)
+
+local secondaryConnection
+
+local function nestedHandler()
+	if secondaryConnection then
+		return
+	end
+
+	secondaryConnection = secondaryLocalValuePlayer.Idled:Connect(function()
+		pcall(function()
+			virtualUser:CaptureController()
+			virtualUser:ClickButton2(Vector2.new())
+		end)
+	end)
+end
+
+local function taskCallback()
+	additionalHandler()
+
+	if not capturedHumanoidContainer or not humanoid then
+		return
+	end
+
+	if valueData.WalkSpeed.Enabled then
+		updateWalkSpeed()
+	end
+
+	if valueData.Noclip.Enabled then
+		updateSteppedConnection()
+	end
+end
+
+local function innerHandler()
+	if secondaryConnection then
+		secondaryConnection:Disconnect()
+		secondaryConnection = nil
+	end
+end
+
+secondaryLocalValuePlayer.CharacterAdded:Connect(function(humanoidContainer)
+	capturedHumanoidContainer = humanoidContainer
+	humanoid = humanoidContainer:FindFirstChildOfClass("Humanoid")
+	humanoidRootPart = humanoidContainer:FindFirstChild("HumanoidRootPart")
+
+	task.spawn(function()
+		humanoid = humanoidContainer:WaitForChild("Humanoid")
+		humanoidRootPart = humanoidContainer:WaitForChild("HumanoidRootPart")
+		taskCallback()
+	end)
+
+	task.delay(1, taskCallback)
+	task.delay(3, taskCallback)
+end)
+
+local nestedAddLeftGroupbox = iyData.Main:AddLeftGroupbox("角色修改")
+
+nestedAddLeftGroupbox
+	:AddToggle("Char_WalkSpeed", { Text = "修改移速", Default = false })
+	:OnChanged(function(enabled)
+		valueData.WalkSpeed.Enabled = enabled
+		updateWalkSpeed()
+	end)
+
+nestedAddLeftGroupbox
+	:AddSlider("Char_WalkSpeedVal", {
+		Text = "移速值",
+		Default = 100,
+		Min = 1,
+		Max = 500,
+		Rounding = 0,
+	})
+	:OnChanged(function(value)
+		valueData.WalkSpeed.Value = value
+
+		if valueData.WalkSpeed.Enabled then
+			updateWalkSpeed()
+		end
+	end)
+
+nestedAddLeftGroupbox
+	:AddToggle("Char_Noclip", { Text = "穿墙模式", Default = false })
+	:OnChanged(function(secondaryEnabled)
+		valueData.Noclip.Enabled = secondaryEnabled
+
+		if secondaryEnabled then
+			updateSteppedConnection()
+		else
+			additionalUpdateCanCollide()
+		end
+	end)
+
+nestedAddLeftGroupbox
+	:AddToggle("Char_BunnyHop", { Text = "无限跳", Default = false })
+	:OnChanged(function(secondaryEnabled)
+		valueData.BunnyHop.Enabled = secondaryEnabled
+	end)
+
+nestedAddLeftGroupbox
+	:AddToggle("Char_SuperJump", { Text = "超级跳跃", Default = false })
+	:OnChanged(function(secondaryEnabled)
+		valueData.SuperJump.Enabled = secondaryEnabled
+	end)
+
+nestedAddLeftGroupbox
+	:AddSlider("Char_SuperJumpVal", {
+		Text = "跳跃高度",
+		Default = 200,
+		Min = 1,
+		Max = 500,
+		Rounding = 0,
+	})
+	:OnChanged(function(value)
+		valueData.SuperJump.Value = value
+	end)
+
+nestedAddLeftGroupbox
+	:AddToggle("Char_WallClimb", { Text = "爬墙模式", Default = false })
+	:OnChanged(function(secondaryEnabled)
+		valueData.WallClimb.Enabled = secondaryEnabled
+	end)
+
+nestedAddLeftGroupbox
+	:AddSlider("Char_WallClimbVal", {
+		Text = "爬墙速度",
+		Default = 50,
+		Min = 1,
+		Max = 200,
+		Rounding = 0,
+	})
+	:OnChanged(function(value)
+		valueData.WallClimb.Value = value
+	end)
+
+local innerAddLeftGroupbox = iyData.Main:AddLeftGroupbox("脚本区")
+
+innerAddLeftGroupbox:AddButton("ROBv4", function()
+	handler("https://raw.githubusercontent.com/idrobsc/rob_script/refs/heads/main/rob.v4")
+end)
+
+innerAddLeftGroupbox:AddButton("AF HUB", function()
+	getgenv().SCRIPT_KEY = ""
+	handler(
+		"https://api.jnkie.com/api/v1/luascripts/public/4e025c3c0ccda1554634165acb8f8ee2c1de5f0f8d7f60e7b396c622d7e6e9b0/download"
+	)
+end)
+
+innerAddLeftGroupbox:AddButton("叶脚本", function()
+	handler("https://raw.githubusercontent.com/roblox-ye/QQ515966991/refs/heads/main/ROBLOX-CNVIP-XIAOYE.lua")
+end)
+
+innerAddLeftGroupbox:AddButton("恐脚本", function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/kongbaNB/9178/refs/heads/main/恐脚本加载器"))()
+end)
+
+local outerAddLeftGroupbox = iyData.Main:AddLeftGroupbox("杂项")
+
+outerAddLeftGroupbox
+	:AddToggle("Char_AntiAfk", { Text = "反挂机", Default = false })
+	:OnChanged(function(secondaryEnabled)
+		valueData.AntiAfk.Enabled = secondaryEnabled
+
+		if secondaryEnabled then
+			nestedHandler()
+		else
+			innerHandler()
+		end
+	end)
+
+local numberData = {
+	Enabled = false,
+	Interval = 0.07,
+	AnchoredDuration = 0.4,
+	TeleportEnabled = false,
+	TeleportDistance = 10,
+}
+
+local function updateCFrame()
+	local humanoidContainer = game.Players.LocalPlayer.Character
+
+	if humanoidContainer then
+		local humanoidRootPart = humanoidContainer:FindFirstChild("HumanoidRootPart")
+		local humanoid = humanoidContainer:FindFirstChild("Humanoid")
+
+		if humanoidRootPart and humanoid then
+			local moveDirection = humanoid.MoveDirection
+
+			if moveDirection.Magnitude > 0 then
+				local updateCFrameNumber = math.random(numberData.TeleportDistance * 100)
+				local cFrame = humanoidRootPart.CFrame
+				local sum = cFrame.Position + moveDirection.Unit * (updateCFrameNumber / 100)
+				humanoidRootPart.CFrame = CFrame.new(sum, sum + cFrame.LookVector)
+			end
+		end
+	end
+end
+
+local secondaryFlag = false
+
+outerAddLeftGroupbox
+	:AddToggle("FakeLag_Enabled", { Text = "假延迟", Default = false })
+	:OnChanged(function(secondaryEnabled)
+		numberData.Enabled = secondaryEnabled
+
+		if secondaryEnabled and not secondaryFlag then
+			secondaryFlag = true
+
+			task.spawn(function()
+				while secondaryFlag do
+					if numberData.Enabled then
+						local humanoidRootPartContainer = game.Players.LocalPlayer.Character
+
+						if humanoidRootPartContainer then
+							local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+							if humanoidRootPart then
+								humanoidRootPart.Anchored = true
+								task.wait(numberData.AnchoredDuration)
+								humanoidRootPart.Anchored = false
+
+								if numberData.TeleportEnabled then
+									updateCFrame()
+								end
+							end
+						end
+					end
+
+					task.wait(numberData.Interval)
+				end
+			end)
+		end
+	end)
+
+outerAddLeftGroupbox
+	:AddSlider("FakeLag_Interval", {
+		Text = "假延迟间隔",
+		Default = 0.07,
+		Min = 0.07,
+		Max = 1,
+		Rounding = 2,
+	})
+	:OnChanged(function(interval)
+		numberData.Interval = interval
+	end)
+
+outerAddLeftGroupbox
+	:AddSlider("FakeLag_Anchored", {
+		Text = "锚定时长",
+		Default = 0.4,
+		Min = 0.1,
+		Max = 10,
+		Rounding = 2,
+	})
+	:OnChanged(function(anchoredDuration)
+		numberData.AnchoredDuration = anchoredDuration
+	end)
+
+outerAddLeftGroupbox
+	:AddToggle("FakeLag_Teleport", { Text = "假wifi瞬移", Default = false })
+	:OnChanged(function(teleportEnabled)
+		numberData.TeleportEnabled = teleportEnabled
+	end)
+
+outerAddLeftGroupbox
+	:AddSlider("FakeLag_TeleportDist", {
+		Text = "瞬移距离",
+		Default = 10,
+		Min = 5,
+		Max = 50,
+		Rounding = 0,
+	})
+	:OnChanged(function(teleportDistance)
+		numberData.TeleportDistance = teleportDistance
+	end)
+
+local additionalAddRightGroupbox = iyData.Main:AddRightGroupbox("旋转")
+local alternateFlag = false
+local cFrameNumber = 10
+
+additionalAddRightGroupbox
+	:AddInput("Spin_Speed", {
+		Text = "旋转速度",
+		Default = "10",
+		Numeric = true,
+	})
+	:OnChanged(function(numberText)
+		cFrameNumber = tonumber(numberText) or 10
+	end)
+
+additionalAddRightGroupbox
+	:AddToggle("Spin_Enabled", { Text = "旋转开关", Default = false })
+	:OnChanged(function(condition)
+		if condition then
+			alternateFlag = true
+
+			task.spawn(function()
+				local localValuePlayer = game.Players.LocalPlayer
+
+				while alternateFlag do
+					task.wait()
+					local humanoidRootPartContainer = localValuePlayer.Character
+
+					if humanoidRootPartContainer then
+						local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+						if humanoidRootPart then
+							humanoidRootPart.CFrame = humanoidRootPart.CFrame
+								* CFrame.Angles(0, math.rad(cFrameNumber), 0)
+						end
+					end
+				end
+			end)
+		else
+			alternateFlag = false
+		end
+	end)
+
+local additionalFlag = false
+
+outerAddLeftGroupbox
+	:AddToggle("Antifling_Enabled", { Text = "防甩飞", Default = false })
+	:OnChanged(function(condition)
+		if condition then
+			additionalFlag = true
+
+			task.spawn(function()
+				local localValuePlayer = players.LocalPlayer
+
+				while additionalFlag do
+					task.wait(0.3)
+
+					for index, item in ipairs(players:GetPlayers()) do
+						if item ~= localValuePlayer and item.Character then
+							for index, item in ipairs(item.Character:GetDescendants()) do
+								if item:IsA("BasePart") then
+									item.CanCollide = false
+								end
+							end
+						end
+					end
+				end
+			end)
+		else
+			additionalFlag = false
+
+			for index, item in ipairs(players:GetPlayers()) do
+				if item.Character then
+					for index, item in ipairs(item.Character:GetDescendants()) do
+						if item:IsA("BasePart") then
+							item.CanCollide = true
+						end
+					end
+				end
+			end
+		end
+	end)
+
+local fallbackAddRightGroupbox = iyData.TP:AddRightGroupbox("跟随功能")
+local number = 5
+local capturedCFrameNumber = 0
+local capturedNumber = 0
+local capturedFlag = false
+local fallbackFlag = false
+
+local nestedAddDropdown = fallbackAddRightGroupbox:AddDropdown("Follow_Target", {
+	Text = "选择跟随目标",
+	Values = {},
+	Default = "",
+	Multi = false,
+})
+
+local findFirstChildFlag
+nestedAddDropdown:OnChanged(function(flag)
+	findFirstChildFlag = flag
+end)
+
+fallbackAddRightGroupbox:AddButton("刷新玩家列表", function()
+	local value21Names = {}
+
+	for index, item in ipairs(game.Players:GetPlayers()) do
+		if item ~= game.Players.LocalPlayer then
+			table.insert(value21Names, item.Name)
+		end
+	end
+
+	nestedAddDropdown:SetValues(value21Names)
+end)
+
+fallbackAddRightGroupbox
+	:AddSlider("Follow_Forward", {
+		Text = "前后距离",
+		Default = 5,
+		Min = -20,
+		Max = 20,
+		Rounding = 0,
+	})
+	:OnChanged(function(cFrameNumber)
+		number = cFrameNumber
+	end)
+
+fallbackAddRightGroupbox
+	:AddSlider("Follow_Side", {
+		Text = "左右距离",
+		Default = 0,
+		Min = -20,
+		Max = 20,
+		Rounding = 0,
+	})
+	:OnChanged(function(cFrameNumber)
+		capturedCFrameNumber = cFrameNumber
+	end)
+
+fallbackAddRightGroupbox
+	:AddSlider("Follow_Height", {
+		Text = "上下高度",
+		Default = 0,
+		Min = -20,
+		Max = 20,
+		Rounding = 0,
+	})
+	:OnChanged(function(number)
+		capturedNumber = number
+	end)
+
+fallbackAddRightGroupbox
+	:AddToggle("Follow_Enabled", { Text = "跟随玩家", Default = false })
+	:OnChanged(function(flag)
+		capturedFlag = flag
+
+		if flag then
+			fallbackFlag = true
+
+			task.spawn(function()
+				local localValuePlayer = game.Players.LocalPlayer
+
+				while capturedFlag and fallbackFlag do
+					if not findFirstChildFlag then
+						task.wait(0.1)
+					else
+						local findFirstChild = game.Players:FindFirstChild(findFirstChildFlag)
+						local humanoidRootPartContainer = localValuePlayer.Character
+
+						if not findFirstChild or not findFirstChild.Character or not humanoidRootPartContainer then
+							task.wait(0.1)
+						else
+							local humanoidRootPart = findFirstChild.Character:FindFirstChild("HumanoidRootPart")
+							local secondaryHumanoidRootPart =
+								humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+							if not humanoidRootPart or not secondaryHumanoidRootPart then
+								task.wait(0.1)
+							else
+								local cFrameNumber = Vector3.new(0, capturedNumber, 0)
+
+								secondaryHumanoidRootPart.CFrame = CFrame.new(
+									humanoidRootPart.CFrame.Position
+										+ humanoidRootPart.CFrame.LookVector * -number
+										+ humanoidRootPart.CFrame.RightVector * capturedCFrameNumber
+										+ cFrameNumber
+								) * CFrame.Angles(0, humanoidRootPart.CFrame.LookVector.Y, 0)
+
+								runService.RenderStepped:Wait()
+							end
+						end
+					end
+				end
+			end)
+		else
+			fallbackFlag = false
+		end
+	end)
+
+local nestedFlag = false
+
+outerAddLeftGroupbox
+	:AddToggle("JoinNotify_Enabled", {
+		Text = "玩家进入通知",
+		Default = false,
+	})
+	:OnChanged(function(flag)
+		nestedFlag = flag
+	end)
+
+game.Players.PlayerAdded:Connect(function(player)
+	local screenGui
+
+	if not nestedFlag then
+		return
+	else
+		local success, image = pcall(function()
+			return players:GetUserThumbnailAsync(
+				player.UserId,
+				Enum.ThumbnailType.HeadShot,
+				Enum.ThumbnailSize.Size420x420
+			)
+		end)
+
+		screenGui = Instance.new("ScreenGui")
+		screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+		local frame = Instance.new("Frame")
+		frame.Parent = screenGui
+		frame.Size = UDim2.new(0, 250, 0, 50)
+		frame.Position = UDim2.new(0.1, -125, 0.15, 0)
+		frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+		frame.BorderSizePixel = 0
+
+		local uiCorner = Instance.new("UICorner")
+		uiCorner.CornerRadius = UDim.new(0, 10)
+		uiCorner.Parent = frame
+
+		if success then
+			local imageLabel = Instance.new("ImageLabel")
+			imageLabel.Parent = frame
+			imageLabel.Size = UDim2.new(0, 35, 0, 35)
+			imageLabel.Position = UDim2.new(0, 8, 0.5, -17)
+			imageLabel.Image = image
+		end
+
+		local textLabel = Instance.new("TextLabel")
+		textLabel.Parent = frame
+		textLabel.Size = UDim2.new(1, -50, 0, 20)
+		textLabel.Position = UDim2.new(0, 50, 0, 5)
+		textLabel.BackgroundTransparency = 1
+		textLabel.Text = "玩家进入"
+		textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		textLabel.Font = Enum.Font.SourceSansBold
+		textLabel.TextSize = 14
+		textLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+		local secondaryTextLabel = Instance.new("TextLabel")
+		secondaryTextLabel.Parent = frame
+		secondaryTextLabel.Size = UDim2.new(1, -50, 0, 20)
+		secondaryTextLabel.Position = UDim2.new(0, 50, 0, 27)
+		secondaryTextLabel.BackgroundTransparency = 1
+		secondaryTextLabel.Text = player.DisplayName .. " (@" .. player.Name .. ")"
+		secondaryTextLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+		secondaryTextLabel.Font = Enum.Font.SourceSans
+		secondaryTextLabel.TextSize = 13
+		secondaryTextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+		task.delay(5, function()
+			screenGui:Destroy()
+		end)
+		return
+	end
+end)
+
+local nestedAddRightGroupbox = iyData.Main:AddRightGroupbox("动作脚本")
+
+nestedAddRightGroupbox:AddButton("动作脚本", function()
+	handler("https://raw.githubusercontent.com/7yd7/Hub/refs/heads/Branch/GUIS/Emotes.lua")
+end)
+
+nestedAddRightGroupbox:AddButton("r6动作脚本", function()
+	handler("https://rawscripts.net/raw/Universal-Script-R6-Animations-Menu-By-Me-19427")
+end)
+
+local iy = iyData.Main:AddRightGroupbox("IY指令")
+
+iy:AddButton("执行Dex", function()
+	handler("https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua")
+end)
+
+iy:AddButton("执行rspy", function()
+	handler("https://raw.githubusercontent.com/infyiff/backup/main/SimpleSpyV3/main.lua")
+end)
+
+iy:AddButton("执行Cspy", function()
+	handler("https://gitlab.com/upio/cobalt/-/releases/permalink/latest/downloads/Cobalt.luau")
+end)
+
+iy:AddButton("执行mdex", function()
+	handler("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua")
+end)
+
+pcall(function()
+	local esp = iyData.Visual:AddLeftGroupbox("ESP设置")
+
+	local secondaryGetgenv = getgenv()
+
+	secondaryGetgenv.BSESPConfig = getgenv().BSESPConfig
+		or {
+			ESPEnabled = false,
+			ShowBox = false,
+			Show3DBox = false,
+			ShowHealth = false,
+			ShowName = false,
+			ShowDistance = false,
+			ShowTracer = false,
+			TeamCheck = false,
+			ShowSkeleton = false,
+			ShowRadar = false,
+			ShowPlayerCount = false,
+			ShowWeapon = false,
+			RainbowMode = false,
+			HighlightPlayers = false,
+			TracerColor = Color3.new(1, 0, 0),
+			SkeletonColor = Color3.new(0.2, 0.8, 1),
+			BoxColor = Color3.new(1, 1, 1),
+			Box3DColor = Color3.new(0, 1, 1),
+			HealthBarColor = Color3.new(0, 1, 0),
+			HealthTextColor = Color3.new(1, 1, 1),
+			NameColor = Color3.new(1, 1, 1),
+			DistanceColor = Color3.new(1, 1, 0),
+			WeaponColor = Color3.new(1, 0.5, 0),
+			ArrowColor = Color3.new(1, 0, 0),
+			FOVColor = Color3.new(1, 1, 1),
+			HighlightColor = Color3.new(1, 0, 0),
+			BoxThickness = 1,
+			TracerThickness = 1,
+			SkeletonThickness = 2,
+			FOVRadius = 100,
+			ArrowSize = 15,
+		}
+
+	local currentCamera = workspace.CurrentCamera
+	local localValuePlayer = players.LocalPlayer
+	local updateInstancePropertiesData = {}
+	local key11Data = {}
+	local toData = {}
+
+	local function new(alternateNewNumber)
+		local newNumber = math.sin(alternateNewNumber * 2)
+		local number = math.sin(alternateNewNumber * 3)
+		local secondaryNewNumber = math.sin(alternateNewNumber * 4)
+		return Color3.new(newNumber * 0.5 + 0.5, number * 0.5 + 0.5, secondaryNewNumber * 0.5 + 0.5)
+	end
+
+	local function handleColor(colorArgument)
+		if getgenv().BSESPConfig.RainbowMode then
+			return new(tick())
+		end
+
+		return colorArgument
+	end
+
+	local input
+
+	if input then
+		input.Visible = false
+		input.Size = 20
+		input.Font = Drawing.Fonts.Monospace
+		input.Outline = true
+		input.OutlineColor = Color3.new(0, 0, 0)
+	end
+
+	input.Visible = false
+	input.Size = 20
+	input.Font = Drawing.Fonts.Monospace
+	input.Outline = true
+	input.OutlineColor = Color3.new(0, 0, 0)
+
+	local circle
+
+	pcall(function()
+		circle = Drawing.new("Circle")
+		circle.Thickness = 2
+		circle.Filled = false
+		circle.NumSides = 64
+	end)
+
+	local function onRenderStepped()
+		if not getgenv().BSESPConfig.ShowRadar or not getgenv().BSESPConfig.ESPEnabled then
+			for key, item in pairs(toData) do
+				if typeof(item) == "table" and item.Visible ~= nil then
+					item.Visible = false
+				elseif typeof(item) == "table" then
+					for key, item in pairs(item) do
+						if item.Visible ~= nil then
+							item.Visible = false
+						end
+					end
+				end
+			end
+
+			return
+		else
+			local position = Vector2.new(currentCamera.ViewportSize.X - 220, 20)
+			local sum = position + Vector2.new(100, 100)
+
+			toData.frame.Position = position
+			toData.frame.Visible = true
+			toData.border.Position = position
+			toData.border.Visible = true
+
+			if getgenv().BSESPConfig.RainbowMode then
+				local color = new(tick())
+				toData.frame.Color = color
+				toData.border.Color = color
+			end
+
+			toData.crosshairV.From = Vector2.new(sum.X, position.Y)
+			toData.crosshairV.To = Vector2.new(sum.X, position.Y + 200)
+			toData.crosshairV.Visible = true
+			toData.crosshairH.From = Vector2.new(position.X, sum.Y)
+			toData.crosshairH.To = Vector2.new(position.X + 200, sum.Y)
+			toData.crosshairH.Visible = true
+			toData.localPlayer.Position = sum
+			toData.localPlayer.Visible = true
+
+			if getgenv().BSESPConfig.RainbowMode then
+				toData.localPlayer.Color = new(tick())
+			end
+
+			for key, item in pairs(toData.players) do
+				if not players:FindFirstChild(key.Name) or key == localValuePlayer then
+					item:Remove()
+					toData.players[key] = nil
+				end
+			end
+
+			if localValuePlayer.Character and localValuePlayer.Character:FindFirstChild("HumanoidRootPart") then
+				local position = localValuePlayer.Character.HumanoidRootPart.Position
+				local lookVector = localValuePlayer.Character.HumanoidRootPart.CFrame.LookVector
+				local result = math.atan2(lookVector.X, lookVector.Z)
+
+				for key, item in pairs(players:GetPlayers()) do
+					if
+						item ~= localValuePlayer
+						and item.Character
+						and item.Character:FindFirstChild("HumanoidRootPart")
+					then
+						local difference = item.Character.HumanoidRootPart.Position - position
+						local product = (difference.X * math.cos(-result) - difference.Z * math.sin(-result)) * 0.5
+						local number = -(difference.X * math.sin(-result) + difference.Z * math.cos(-result)) * 0.5
+						local quotientNumber = math.sqrt(product ^ 2 + number ^ 2)
+						local radiusFlag = false
+
+						if quotientNumber > 95 then
+							local quotient = 95 / quotientNumber
+							product = product * quotient
+							radiusFlag = true
+							number = number * quotient
+						end
+
+						if not toData.players[item] then
+							local secondaryCircle = Drawing.new("Circle")
+							secondaryCircle.Radius = radiusFlag and 2 or 3
+							secondaryCircle.Filled = true
+							secondaryCircle.Thickness = 1
+
+							toData.players[item] = secondaryCircle
+						end
+
+						local input = toData.players[item]
+						input.Position = sum + Vector2.new(product, number)
+						input.Visible = true
+
+						if getgenv().BSESPConfig.TeamCheck and item.Team == localValuePlayer.Team then
+							input.Color = Color3.new(0, 1, 0)
+							input.Radius = 3
+						else
+							input.Color = handleColor(Color3.new(1, 0, 0))
+							input.Radius = radiusFlag and 2 or 3
+						end
+					elseif toData.players[item] then
+						toData.players[item].Visible = false
+					end
+				end
+			end
+
+			return
+		end
+	end
+
+	local function createHighlight()
+		for key, item in pairs(key11Data) do
+			if not players:FindFirstChild(key.Name) then
+				item:Destroy()
+				key11Data[key] = nil
+			end
+		end
+
+		if not getgenv().BSESPConfig.HighlightPlayers or not getgenv().BSESPConfig.ESPEnabled then
+			for key, item in pairs(key11Data) do
+				item:Destroy()
+			end
+
+			key11Data = {}
+			return
+		end
+
+		for key, item in pairs(players:GetPlayers()) do
+			if item ~= localValuePlayer and item.Character then
+				local flag = true
+
+				if getgenv().BSESPConfig.TeamCheck and item.Team == localValuePlayer.Team then
+					flag = false
+				end
+
+				if flag then
+					if not key11Data[item] then
+						local highlight = Instance.new("Highlight")
+						highlight.FillTransparency = 0.3
+						highlight.OutlineTransparency = 0
+						highlight.Parent = item.Character
+
+						key11Data[item] = highlight
+					end
+
+					local instance = key11Data[item]
+					local fillColor = handleColor(getgenv().BSESPConfig.HighlightColor)
+
+					instance.FillColor = fillColor
+					instance.OutlineColor = fillColor
+
+					if instance.Parent ~= item.Character then
+						instance.Parent = item.Character
+					end
+				elseif key11Data[item] then
+					key11Data[item]:Destroy()
+					key11Data[item] = nil
+				end
+			end
+		end
+	end
+
+	local function updateInstanceProperties()
+		if getgenv().BSESPConfig.ESPEnabled and getgenv().BSESPConfig.ShowPlayerCount then
+			input.Text = "在线玩家: " .. #players:GetPlayers()
+			input.Position = Vector2.new(currentCamera.ViewportSize.X / 2, 10)
+			input.Visible = true
+			input.Color = handleColor(Color3.new(1, 1, 1))
+		else
+			input.Visible = false
+		end
+
+		if getgenv().BSESPConfig.ESPEnabled and getgenv().BSESPConfig.ShowFOV then
+			circle.Radius = getgenv().BSESPConfig.FOVRadius
+
+			circle.Position = Vector2.new(currentCamera.ViewportSize.X / 2, currentCamera.ViewportSize.Y / 2)
+
+			circle.Visible = true
+			circle.Color = handleColor(getgenv().BSESPConfig.FOVColor)
+		else
+			circle.Visible = false
+		end
+	end
+
+	local function secondaryUpdateInstanceProperties(item)
+		if not Drawing then
+			return
+		end
+
+		local square = Drawing.new("Square")
+		square.Visible = false
+		square.Color = getgenv().BSESPConfig.BoxColor
+		square.Thickness = getgenv().BSESPConfig.BoxThickness
+		square.Filled = false
+
+		local iData = {}
+
+		for i = 1, 12 do
+			iData[i] = Drawing.new("Line")
+			iData[i].Visible = false
+			iData[i].Thickness = getgenv().BSESPConfig.BoxThickness
+		end
+
+		local secondarySquare = Drawing.new("Square")
+		secondarySquare.Visible = false
+		secondarySquare.Filled = true
+
+		local alternateSquare = Drawing.new("Square")
+		alternateSquare.Visible = false
+		alternateSquare.Color = Color3.new(0, 0, 0)
+		alternateSquare.Transparency = 0.5
+		alternateSquare.Filled = true
+
+		local text = Drawing.new("Text")
+		text.Visible = false
+		text.Color = getgenv().BSESPConfig.HealthTextColor
+		text.Size = 14
+		text.Font = Drawing.Fonts.Monospace
+		text.Outline = true
+		text.OutlineColor = Color3.new(0, 0, 0)
+
+		local updateInstancePropertiesText = Drawing.new("Text")
+		updateInstancePropertiesText.Visible = false
+		updateInstancePropertiesText.Size = 16
+		updateInstancePropertiesText.Font = Drawing.Fonts.Monospace
+		updateInstancePropertiesText.Outline = true
+		updateInstancePropertiesText.OutlineColor = Color3.new(0, 0, 0)
+
+		local fontText = Drawing.new("Text")
+		fontText.Visible = false
+		fontText.Size = 14
+		fontText.Font = Drawing.Fonts.Monospace
+		fontText.Outline = true
+		fontText.OutlineColor = Color3.new(0, 0, 0)
+
+		local sizeText = Drawing.new("Text")
+		sizeText.Visible = false
+		sizeText.Size = 14
+		sizeText.Font = Drawing.Fonts.Monospace
+		sizeText.Outline = true
+		sizeText.OutlineColor = Color3.new(0, 0, 0)
+
+		local line = Drawing.new("Line")
+		line.Visible = false
+		line.Color = getgenv().BSESPConfig.TracerColor
+		line.Thickness = getgenv().BSESPConfig.TracerThickness
+
+		local triangle = Drawing.new("Triangle")
+		triangle.Visible = false
+		triangle.Filled = true
+		triangle.Thickness = 1
+
+		local skeletonLines = {}
+
+		for j = 1, 15 do
+			skeletonLines[j] = Drawing.new("Line")
+			skeletonLines[j].Visible = false
+			skeletonLines[j].Color = getgenv().BSESPConfig.SkeletonColor
+			skeletonLines[j].Thickness = getgenv().BSESPConfig.SkeletonThickness
+		end
+
+		local updateInstancePropertiesNumber = 100
+
+		updateInstancePropertiesData[item] = {
+			box = square,
+			box3D = iData,
+			healthBar = secondarySquare,
+			healthBarBackground = alternateSquare,
+			healthText = text,
+			nameText = updateInstancePropertiesText,
+			distanceText = fontText,
+			weaponText = sizeText,
+			tracer = line,
+			arrow = triangle,
+			skeletonLines = skeletonLines,
+		}
+
+		runService.RenderStepped:Connect(function()
+			if
+				not getgenv().BSESPConfig.ESPEnabled
+				or not item.Character
+				or not item.Character:FindFirstChild("HumanoidRootPart")
+				or not item.Character:FindFirstChild("Humanoid")
+				or item == localValuePlayer
+			then
+				square.Visible = false
+				local count = 0
+
+				while true do
+					count = 1 + count
+
+					if not (count <= 12) then
+						break
+					end
+
+					iData[count].Visible = false
+				end
+
+				secondarySquare.Visible = false
+				alternateSquare.Visible = false
+				text.Visible = false
+				updateInstancePropertiesText.Visible = false
+				fontText.Visible = false
+				sizeText.Visible = false
+				line.Visible = false
+				triangle.Visible = false
+
+				for key, item in pairs(skeletonLines) do
+					item.Visible = false
+				end
+
+				return
+			end
+
+			if getgenv().BSESPConfig.TeamCheck and item.Team == localValuePlayer.Team then
+				square.Visible = false
+				local updateInstancePropertiesNumber = 0
+
+				while true do
+					updateInstancePropertiesNumber = 1 + updateInstancePropertiesNumber
+
+					if not (12 >= updateInstancePropertiesNumber) then
+						break
+					end
+
+					iData[updateInstancePropertiesNumber].Visible = false
+				end
+
+				secondarySquare.Visible = false
+				alternateSquare.Visible = false
+				text.Visible = false
+				updateInstancePropertiesText.Visible = false
+				fontText.Visible = false
+				sizeText.Visible = false
+				line.Visible = false
+				triangle.Visible = false
+
+				for key, item in pairs(skeletonLines) do
+					item.Visible = false
+				end
+
+				return
+			else
+				local headContainer = item.Character
+				local humanoidRootPart = headContainer:FindFirstChild("HumanoidRootPart")
+				local humanoid = headContainer:FindFirstChild("Humanoid")
+
+				if humanoidRootPart and humanoid and humanoid.Health > 0 then
+					local vector, updateInstancePropertiesFlag =
+						currentCamera:WorldToViewportPoint(humanoidRootPart.Position)
+
+					local worldToViewportPoint =
+						currentCamera:WorldToViewportPoint(humanoidRootPart.Position + Vector3.new(0, 3, 0))
+
+					local secondaryVector =
+						currentCamera:WorldToViewportPoint(humanoidRootPart.Position - Vector3.new(0, 3, 0))
+
+					local name = "无武器"
+
+					for index, item in ipairs(headContainer:GetChildren()) do
+						if item:IsA("Tool") then
+							name = item.Name
+							break
+						end
+					end
+
+					if getgenv().BSESPConfig.ShowBox and updateInstancePropertiesFlag then
+						square.Size = Vector2.new(1000 / vector.Z, worldToViewportPoint.Y - secondaryVector.Y)
+
+						square.Position = Vector2.new(vector.X - square.Size.X / 2, vector.Y - square.Size.Y / 2)
+
+						square.Visible = true
+						square.Color = handleColor(getgenv().BSESPConfig.BoxColor)
+						square.Thickness = getgenv().BSESPConfig.BoxThickness
+					else
+						square.Visible = false
+					end
+
+					if getgenv().BSESPConfig.Show3DBox then
+						local vector = Vector3.new(4, 6, 2)
+						local cFrame = humanoidRootPart.CFrame
+						local updateInstancePropertiesData = {}
+
+						for index, item in ipairs({
+							cFrame * CFrame.new(-vector.X / 2, -vector.Y / 2, -vector.Z / 2),
+							cFrame * CFrame.new(vector.X / 2, -vector.Y / 2, -vector.Z / 2),
+							cFrame * CFrame.new(vector.X / 2, vector.Y / 2, -vector.Z / 2),
+							cFrame * CFrame.new(-vector.X / 2, vector.Y / 2, -vector.Z / 2),
+							cFrame * CFrame.new(-vector.X / 2, -vector.Y / 2, vector.Z / 2),
+							cFrame * CFrame.new(vector.X / 2, -vector.Y / 2, vector.Z / 2),
+							cFrame * CFrame.new(vector.X / 2, vector.Y / 2, vector.Z / 2),
+							cFrame * CFrame.new(-vector.X / 2, vector.Y / 2, vector.Z / 2),
+						}) do
+							local vector, secondaryWorldToViewportPoint =
+								currentCamera:WorldToViewportPoint(item.Position)
+							updateInstancePropertiesData[index] = Vector2.new(vector.X, vector.Y)
+						end
+
+						local index15Color = handleColor(getgenv().BSESPConfig.Box3DColor)
+
+						for index, item in ipairs({
+							{ 1, 2 },
+							{ 2, 3 },
+							{ 3, 4 },
+							{ 4, 1 },
+							{ 5, 6 },
+							{ 6, 7 },
+							{ 7, 8 },
+							{ 8, 5 },
+							{ 1, 5 },
+							{ 2, 6 },
+							{ 3, 7 },
+							{ 4, 8 },
+						}) do
+							iData[index].From = updateInstancePropertiesData[item[1]]
+							iData[index].To = updateInstancePropertiesData[item[2]]
+							iData[index].Color = index15Color
+							iData[index].Thickness = getgenv().BSESPConfig.BoxThickness
+							iData[index].Visible = true
+						end
+					else
+						for k = 1, 12 do
+							iData[k].Visible = false
+						end
+					end
+
+					if getgenv().BSESPConfig.ShowHealth and updateInstancePropertiesFlag then
+						local difference = worldToViewportPoint.X - 25
+						local number = worldToViewportPoint.Y - 20
+
+						alternateSquare.Size = Vector2.new(50, 5)
+						alternateSquare.Position = Vector2.new(difference, number)
+						alternateSquare.Visible = true
+
+						updateInstancePropertiesNumber = updateInstancePropertiesNumber
+							+ (humanoid.Health - updateInstancePropertiesNumber) * 0.1
+						local quotient = updateInstancePropertiesNumber / humanoid.MaxHealth
+
+						secondarySquare.Size = Vector2.new(50 * quotient, 5)
+						secondarySquare.Position = Vector2.new(difference, number)
+
+						if quotient >= 0.8 then
+							secondarySquare.Color = Color3.new(0, 1, 0)
+						elseif quotient >= 0.5 then
+							secondarySquare.Color = Color3.new(1, 1, 0)
+						elseif quotient >= 0.2 then
+							secondarySquare.Color = Color3.new(1, 0.5, 0)
+						else
+							secondarySquare.Color = Color3.new(1, 0, 0)
+						end
+
+						secondarySquare.Visible = true
+
+						text.Position = Vector2.new(difference + 50 + 5, number - 5)
+						text.Text = math.floor(humanoid.Health) .. "/" .. math.floor(humanoid.MaxHealth)
+						text.Visible = true
+						text.Color = handleColor(getgenv().BSESPConfig.HealthTextColor)
+					else
+						secondarySquare.Visible = false
+						alternateSquare.Visible = false
+						text.Visible = false
+					end
+
+					if getgenv().BSESPConfig.ShowName and updateInstancePropertiesFlag then
+						updateInstancePropertiesText.Position =
+							Vector2.new(worldToViewportPoint.X, worldToViewportPoint.Y - 35)
+						updateInstancePropertiesText.Text = item.Name
+						updateInstancePropertiesText.Visible = true
+						updateInstancePropertiesText.Color = handleColor(getgenv().BSESPConfig.NameColor)
+
+						if getgenv().BSESPConfig.ShowDistance then
+							local magnitude = (
+								localValuePlayer.Character.HumanoidRootPart.Position
+								- humanoidRootPart.Position
+							).Magnitude
+
+							fontText.Position = Vector2.new(worldToViewportPoint.X, worldToViewportPoint.Y + 10)
+							fontText.Text = math.floor(magnitude) .. "m"
+							fontText.Visible = true
+							fontText.Color = handleColor(getgenv().BSESPConfig.DistanceColor)
+						else
+							fontText.Visible = false
+						end
+
+						if getgenv().BSESPConfig.ShowWeapon then
+							sizeText.Position = Vector2.new(worldToViewportPoint.X, worldToViewportPoint.Y - 50)
+							sizeText.Text = name
+							sizeText.Visible = true
+							sizeText.Color = handleColor(getgenv().BSESPConfig.WeaponColor)
+						else
+							sizeText.Visible = false
+						end
+					else
+						updateInstancePropertiesText.Visible = false
+						fontText.Visible = false
+						sizeText.Visible = false
+					end
+
+					if getgenv().BSESPConfig.ShowTracer then
+						local head = headContainer:FindFirstChild("Head")
+
+						if head then
+							local vector, updateInstancePropertiesCondition =
+								currentCamera:WorldToViewportPoint(head.Position)
+
+							if updateInstancePropertiesCondition then
+								line.From = Vector2.new(currentCamera.ViewportSize.X / 2, currentCamera.ViewportSize.Y)
+
+								line.To = Vector2.new(vector.X, vector.Y)
+								line.Visible = true
+								line.Color = handleColor(getgenv().BSESPConfig.TracerColor)
+								line.Thickness = getgenv().BSESPConfig.TracerThickness
+							else
+								line.Visible = false
+							end
+						else
+							line.Visible = false
+						end
+					else
+						line.Visible = false
+					end
+
+					if getgenv().BSESPConfig.OutOfViewArrows and not updateInstancePropertiesFlag then
+						local unit = (humanoidRootPart.Position - currentCamera.CFrame.Position).Unit
+						local dot = currentCamera.CFrame.RightVector:Dot(unit)
+						local cross = currentCamera.CFrame.RightVector:Cross(unit)
+
+						local vector = Vector2.new(
+							currentCamera.ViewportSize.X / 2 + dot * currentCamera.ViewportSize.X / 3,
+							currentCamera.ViewportSize.Y / 2 - cross.Y * currentCamera.ViewportSize.Y / 3
+						)
+
+						local pointA = Vector2.new(
+							math.clamp(
+								vector.X,
+								getgenv().BSESPConfig.ArrowSize,
+								currentCamera.ViewportSize.X - getgenv().BSESPConfig.ArrowSize
+							),
+							math.clamp(
+								vector.Y,
+								getgenv().BSESPConfig.ArrowSize,
+								currentCamera.ViewportSize.Y - getgenv().BSESPConfig.ArrowSize
+							)
+						)
+
+						local updateInstancePropertiesNumber = math.atan2(
+							pointA.Y - currentCamera.ViewportSize.Y / 2,
+							pointA.X - currentCamera.ViewportSize.X / 2
+						)
+
+						triangle.PointA = pointA
+
+						triangle.PointB = Vector2.new(
+							pointA.X - getgenv().BSESPConfig.ArrowSize * math.cos(updateInstancePropertiesNumber - 0.5),
+							pointA.Y - getgenv().BSESPConfig.ArrowSize * math.sin(updateInstancePropertiesNumber - 0.5)
+						)
+
+						triangle.PointC = Vector2.new(
+							pointA.X - getgenv().BSESPConfig.ArrowSize * math.cos(updateInstancePropertiesNumber + 0.5),
+							pointA.Y - getgenv().BSESPConfig.ArrowSize * math.sin(updateInstancePropertiesNumber + 0.5)
+						)
+
+						triangle.Color = handleColor(getgenv().BSESPConfig.ArrowColor)
+						triangle.Visible = true
+					else
+						triangle.Visible = false
+					end
+
+					if getgenv().BSESPConfig.ShowSkeleton and updateInstancePropertiesFlag then
+						local head = headContainer:FindFirstChild("Head")
+						local torso = headContainer:FindFirstChild("Torso")
+
+						local upperTorso = torso
+						upperTorso = torso or headContainer:FindFirstChild("UpperTorso")
+
+						local leftArm = headContainer:FindFirstChild("Left Arm")
+
+						local leftUpperArm = leftArm
+						leftUpperArm = leftArm or headContainer:FindFirstChild("LeftUpperArm")
+
+						local rightArm = headContainer:FindFirstChild("Right Arm")
+
+						local rightUpperArm = rightArm
+						rightUpperArm = rightArm or headContainer:FindFirstChild("RightUpperArm")
+
+						local leftLeg = headContainer:FindFirstChild("Left Leg")
+
+						local leftUpperLeg = leftLeg
+						leftUpperLeg = leftLeg or headContainer:FindFirstChild("LeftUpperLeg")
+
+						local rightLeg = headContainer:FindFirstChild("Right Leg")
+
+						local rightUpperLeg = rightLeg
+						rightUpperLeg = rightLeg or headContainer:FindFirstChild("RightUpperLeg")
+
+						local index16Color = handleColor(getgenv().BSESPConfig.SkeletonColor)
+
+						if
+							head
+							and upperTorso
+							and leftUpperArm
+							and rightUpperArm
+							and leftUpperLeg
+							and rightUpperLeg
+						then
+							local updateInstancePropertiesData = {
+								{ head, upperTorso },
+								{ upperTorso, leftUpperArm },
+								{ upperTorso, rightUpperArm },
+								{ upperTorso, leftUpperLeg },
+								{ upperTorso, rightUpperLeg },
+							}
+
+							for index, item in ipairs(updateInstancePropertiesData) do
+								local vector = currentCamera:WorldToViewportPoint(item[1].Position)
+								local secondaryVector = currentCamera:WorldToViewportPoint(item[2].Position)
+
+								skeletonLines[index].From = Vector2.new(vector.X, vector.Y)
+
+								skeletonLines[index].To = Vector2.new(secondaryVector.X, secondaryVector.Y)
+								skeletonLines[index].Color = index16Color
+								skeletonLines[index].Visible = true
+							end
+
+							for m = #updateInstancePropertiesData + 1, 15 do
+								skeletonLines[m].Visible = false
+							end
+						else
+							for key, item in pairs(skeletonLines) do
+								item.Visible = false
+							end
+						end
+					else
+						for key, item in pairs(skeletonLines) do
+							item.Visible = false
+						end
+					end
+				end
+
+				return
+			end
+		end)
+	end
+
+	for key, item in pairs(players:GetPlayers()) do
+		if item ~= localValuePlayer then
+			secondaryUpdateInstanceProperties(item)
+		end
+	end
+
+	players.PlayerAdded:Connect(function(item)
+		secondaryUpdateInstanceProperties(item)
+	end)
+
+	pcall(function()
+		runService.RenderStepped:Connect(updateInstanceProperties)
+		runService.RenderStepped:Connect(onRenderStepped)
+		runService.RenderStepped:Connect(createHighlight)
+	end)
+
+	esp:AddToggle("BS_ESP_Enabled", { Text = "ESP总开关", Default = false }):OnChanged(function(espEnabled)
+		getgenv().BSESPConfig.ESPEnabled = espEnabled
+	end)
+
+	esp:AddToggle("BS_ShowBox", { Text = "显示方框", Default = false }):OnChanged(function(showBox)
+		getgenv().BSESPConfig.ShowBox = showBox
+	end)
+
+	esp:AddToggle("BS_Show3DBox", { Text = "显示3D方框", Default = false }):OnChanged(function(argument)
+		getgenv().BSESPConfig.Show3DBox = argument
+	end)
+
+	esp:AddToggle("BS_ShowHealth", { Text = "显示血量", Default = false }):OnChanged(function(showHealth)
+		getgenv().BSESPConfig.ShowHealth = showHealth
+	end)
+
+	esp:AddToggle("BS_ShowName", { Text = "显示名称", Default = false }):OnChanged(function(showName)
+		getgenv().BSESPConfig.ShowName = showName
+	end)
+
+	esp:AddToggle("BS_ShowDistance", { Text = "显示距离", Default = false }):OnChanged(function(showDistance)
+		getgenv().BSESPConfig.ShowDistance = showDistance
+	end)
+
+	esp:AddToggle("BS_ShowTracer", { Text = "显示射线", Default = false }):OnChanged(function(showTracer)
+		getgenv().BSESPConfig.ShowTracer = showTracer
+	end)
+
+	esp:AddToggle("BS_TeamCheck", { Text = "队伍检查", Default = false }):OnChanged(function(teamCheck)
+		getgenv().BSESPConfig.TeamCheck = teamCheck
+	end)
+
+	local secondaryAddRightGroupbox = iyData.Visual:AddRightGroupbox("其他设置")
+
+	secondaryAddRightGroupbox
+		:AddToggle("BS_ShowSkeleton", { Text = "显示骨骼", Default = false })
+		:OnChanged(function(showSkeleton)
+			getgenv().BSESPConfig.ShowSkeleton = showSkeleton
+		end)
+
+	secondaryAddRightGroupbox
+		:AddToggle("BS_ShowRadar", { Text = "显示雷达", Default = false })
+		:OnChanged(function(showRadar)
+			getgenv().BSESPConfig.ShowRadar = showRadar
+		end)
+
+	secondaryAddRightGroupbox
+		:AddToggle("BS_ShowPlayerCount", {
+			Text = "显示玩家计数",
+			Default = false,
+		})
+		:OnChanged(function(showPlayerCount)
+			getgenv().BSESPConfig.ShowPlayerCount = showPlayerCount
+		end)
+
+	secondaryAddRightGroupbox
+		:AddToggle("BS_ShowWeapon", { Text = "显示武器", Default = false })
+		:OnChanged(function(showWeapon)
+			getgenv().BSESPConfig.ShowWeapon = showWeapon
+		end)
+
+	secondaryAddRightGroupbox
+		:AddToggle("BS_RainbowMode", { Text = "彩虹色模式", Default = false })
+		:OnChanged(function(rainbowMode)
+			getgenv().BSESPConfig.RainbowMode = rainbowMode
+		end)
+
+	secondaryAddRightGroupbox
+		:AddToggle("BS_HighlightPlayers", { Text = "高亮玩家", Default = false })
+		:OnChanged(function(highlightPlayers)
+			getgenv().BSESPConfig.HighlightPlayers = highlightPlayers
+		end)
+end)
+
+local alternateLocalValuePlayer = players.LocalPlayer
+local callback = newcclosure or function(argument)
+	return argument
+end
+local hookmetamethodFunction = hookmetamethod
+local hookfunctionFunction = hookfunction
+local getnamecallmethodFunction = getnamecallmethod
+local checkcallerFunction = checkcaller
+
+local function handleCondition()
+	local torsoContainer = alternateLocalValuePlayer.Character
+
+	if not torsoContainer then
+		return nil, nil
+	end
+
+	return torsoContainer,
+		torsoContainer:FindFirstChild("HumanoidRootPart")
+			or torsoContainer:FindFirstChild("Torso")
+			or torsoContainer:FindFirstChild("UpperTorso")
+end
+
+local function outerHandler(argument, secondaryArgument, tertiaryArgument) end
+
+local getgcFunction = getgc
+local previousAddLeftGroupbox = iyData.Main:AddLeftGroupbox("夜视功能")
+local alternateConnection
+
+previousAddLeftGroupbox
+	:AddToggle("NightVisionToggle", { Text = "夜视模式", Default = false })
+	:OnChanged(function(condition)
+		if condition then
+			if alternateConnection then
+				alternateConnection:Disconnect()
+			end
+
+			alternateConnection = runService.RenderStepped:Connect(function()
+				lighting.ClockTime = 15
+				lighting.Brightness = 2
+				lighting.ExposureCompensation = 0.5
+				lighting.Ambient = Color3.fromRGB(255, 255, 255)
+				lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+			end)
+		elseif alternateConnection then
+			alternateConnection:Disconnect()
+			alternateConnection = nil
+		end
+	end)
+
+addRightGroupbox:AddButton("踏空行走", function()
+	pcall(function()
+		handler("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Float")
+	end)
+end)
+
+local key19Data = {}
+local swimBodyVelocity, swimBodyGyro
+
+addRightGroupbox:AddToggle("AirSwimToggle", { Text = "空中游泳", Default = false }):OnChanged(function(condition)
+	local localValuePlayer = players.LocalPlayer
+	local parent, data, upData
+
+	if condition then
+		local humanoidRootPartContainer = localValuePlayer.Character
+
+		if not humanoidRootPartContainer then
+			return
+		else
+			local humanoid = humanoidRootPartContainer:FindFirstChildOfClass("Humanoid")
+			local flag = not humanoid
+			parent = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+
+			if flag or not parent then
+				return
+			end
+
+			data = {
+				Enum.HumanoidStateType.Climbing,
+				Enum.HumanoidStateType.FallingDown,
+				Enum.HumanoidStateType.Flying,
+				Enum.HumanoidStateType.Freefall,
+				Enum.HumanoidStateType.GettingUp,
+				Enum.HumanoidStateType.Jumping,
+				Enum.HumanoidStateType.Landed,
+				Enum.HumanoidStateType.Physics,
+				Enum.HumanoidStateType.PlatformStanding,
+				Enum.HumanoidStateType.Ragdoll,
+				Enum.HumanoidStateType.Running,
+				Enum.HumanoidStateType.RunningNoPhysics,
+				Enum.HumanoidStateType.Seated,
+				Enum.HumanoidStateType.StrafingNoPhysics,
+				Enum.HumanoidStateType.Swimming,
+			}
+
+			for index, item in ipairs(data) do
+				humanoid:SetStateEnabled(item, false)
+			end
+
+			humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
+
+			upData = {
+				enabled = true,
+				speed = 25,
+				moving = {
+					forward = false,
+					backward = false,
+					left = false,
+					right = false,
+					up = false,
+					down = false,
+				},
+			}
+
+			swimBodyVelocity = Instance.new("BodyVelocity")
+			swimBodyVelocity.Name = "SwimBodyVelocity"
+			swimBodyVelocity.Parent = parent
+			swimBodyVelocity.MaxForce = Vector3.new(4000, 4000, 4000)
+			swimBodyVelocity.Velocity = Vector3.new(0, 0, 0)
+
+			swimBodyGyro = Instance.new("BodyGyro")
+			swimBodyGyro.Name = "SwimBodyGyro"
+			swimBodyGyro.Parent = parent
+			swimBodyGyro.MaxTorque = Vector3.new(2000, 2000, 2000)
+			swimBodyGyro.D = 500
+			swimBodyGyro.P = 8000
+
+			key19Data.inputBegin = userInputService.InputBegan:Connect(function(input, condition)
+				if condition then
+					return
+				end
+
+				if input.KeyCode == Enum.KeyCode.W then
+					upData.moving.forward = true
+				elseif input.KeyCode == Enum.KeyCode.S then
+					upData.moving.backward = true
+				elseif input.KeyCode == Enum.KeyCode.A then
+					upData.moving.left = true
+				elseif input.KeyCode == Enum.KeyCode.D then
+					upData.moving.right = true
+				elseif input.KeyCode == Enum.KeyCode.Space then
+					upData.moving.up = true
+				elseif input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.LeftShift then
+					upData.moving.down = true
+				end
+			end)
+
+			key19Data.inputEnd = userInputService.InputEnded:Connect(function(secondaryInput, condition)
+				if condition then
+					return
+				end
+
+				if secondaryInput.KeyCode == Enum.KeyCode.W then
+					upData.moving.forward = false
+				elseif secondaryInput.KeyCode == Enum.KeyCode.S then
+					upData.moving.backward = false
+				elseif secondaryInput.KeyCode == Enum.KeyCode.A then
+					upData.moving.left = false
+				elseif secondaryInput.KeyCode == Enum.KeyCode.D then
+					upData.moving.right = false
+				elseif secondaryInput.KeyCode == Enum.KeyCode.Space then
+					upData.moving.up = false
+				elseif
+					secondaryInput.KeyCode == Enum.KeyCode.LeftControl
+					or secondaryInput.KeyCode == Enum.KeyCode.LeftShift
+				then
+					upData.moving.down = false
+				end
+			end)
+
+			key19Data.heartbeat = runService.Heartbeat:Connect(function()
+				if not upData.enabled then
+					return
+				else
+					local sum = Vector3.new(0, 0, 0)
+
+					if upData.moving.forward then
+						sum = sum + workspace.CurrentCamera.CFrame.LookVector
+					end
+
+					if upData.moving.backward then
+						sum = sum - workspace.CurrentCamera.CFrame.LookVector
+					end
+
+					if upData.moving.left then
+						sum = sum - workspace.CurrentCamera.CFrame.RightVector
+					end
+
+					if upData.moving.right then
+						sum = sum + workspace.CurrentCamera.CFrame.RightVector
+					end
+
+					if upData.moving.up then
+						sum = sum + Vector3.new(0, 1, 0)
+					end
+
+					if upData.moving.down then
+						sum = sum + Vector3.new(0, -1, 0)
+					end
+
+					if sum.Magnitude > 0 then
+						swimBodyVelocity.Velocity = sum.Unit * upData.speed
+					else
+						swimBodyVelocity.Velocity = Vector3.new(0, 0, 0)
+					end
+
+					swimBodyGyro.CFrame =
+						CFrame.new(parent.Position, parent.Position + workspace.CurrentCamera.CFrame.LookVector)
+
+					return
+				end
+			end)
+
+			key19Data.charAdded = localValuePlayer.CharacterAdded:Connect(function(humanoidRootPartContainer)
+				task.wait(0.7)
+				local humanoid = humanoidRootPartContainer:FindFirstChildOfClass("Humanoid")
+
+				if humanoid then
+					for index, item in ipairs(data) do
+						humanoid:SetStateEnabled(item, false)
+					end
+
+					humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
+				end
+
+				if upData.enabled then
+					local parent = humanoidRootPartContainer:WaitForChild("HumanoidRootPart")
+
+					if swimBodyVelocity then
+						swimBodyVelocity:Destroy()
+					end
+
+					if swimBodyGyro then
+						swimBodyGyro:Destroy()
+					end
+
+					swimBodyVelocity = Instance.new("BodyVelocity")
+					swimBodyVelocity.Name = "SwimBodyVelocity"
+					swimBodyVelocity.Parent = parent
+					swimBodyVelocity.MaxForce = Vector3.new(4000, 4000, 4000)
+					swimBodyVelocity.Velocity = Vector3.new(0, 0, 0)
+
+					swimBodyGyro = Instance.new("BodyGyro")
+					swimBodyGyro.Name = "SwimBodyGyro"
+					swimBodyGyro.Parent = parent
+					swimBodyGyro.MaxTorque = Vector3.new(2000, 2000, 2000)
+					swimBodyGyro.D = 500
+					swimBodyGyro.P = 8000
+				end
+			end)
+
+			return
+		end
+	else
+		local character = localValuePlayer.Character
+
+		if character then
+			local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+			if humanoid then
+				for index, item in ipairs({
+					Enum.HumanoidStateType.Climbing,
+					Enum.HumanoidStateType.FallingDown,
+					Enum.HumanoidStateType.Flying,
+					Enum.HumanoidStateType.Freefall,
+					Enum.HumanoidStateType.GettingUp,
+					Enum.HumanoidStateType.Jumping,
+					Enum.HumanoidStateType.Landed,
+					Enum.HumanoidStateType.Physics,
+					Enum.HumanoidStateType.PlatformStanding,
+					Enum.HumanoidStateType.Ragdoll,
+					Enum.HumanoidStateType.Running,
+					Enum.HumanoidStateType.RunningNoPhysics,
+					Enum.HumanoidStateType.Seated,
+					Enum.HumanoidStateType.StrafingNoPhysics,
+					Enum.HumanoidStateType.Swimming,
+				}) do
+					humanoid:SetStateEnabled(item, true)
+				end
+
+				humanoid:ChangeState(Enum.HumanoidStateType.RunningNoPhysics)
+			end
+		end
+
+		for key, item in pairs(key19Data) do
+			if typeof(item) == "RBXScriptConnection" then
+				item:Disconnect()
+				key19Data[key] = nil
+			end
+		end
+
+		if swimBodyVelocity then
+			swimBodyVelocity:Destroy()
+			swimBodyVelocity = nil
+		end
+
+		if swimBodyGyro then
+			swimBodyGyro:Destroy()
+			swimBodyGyro = nil
+		end
+
+		return
+	end
+end)
+
+local currentAddLeftGroupbox = iyData.Main:AddLeftGroupbox("防虚空")
+local voidY = -100
+
+currentAddLeftGroupbox
+	:AddSlider("AntiVoid_Threshold", {
+		Text = "触发高度(Y轴)",
+		Default = -100,
+		Min = -1000,
+		Max = 0,
+		Rounding = 0,
+	})
+	:OnChanged(function(secondaryVoidY)
+		voidY = secondaryVoidY
+	end)
+
+local secondaryData = {
+	_enabled = false,
+	_loop = nil,
+	_voidY = -100,
+	_platform = nil,
+}
+
+function secondaryData:_createPlatform()
+	if self._platform then
+		self._platform:Destroy()
+	end
+
+	self._platform = Instance.new("Part")
+	self._platform.Name = "AntiVoidPlatform"
+	self._platform.Size = Vector3.new(50, 2, 50)
+	self._platform.Anchored = true
+	self._platform.CanCollide = true
+	self._platform.Material = Enum.Material.Plastic
+	self._platform.Transparency = 0.9
+	self._platform.BrickColor = BrickColor.new("Institutional white")
+	self._platform.Parent = workspace
+end
+
+function secondaryData:_core()
+	self._voidY = voidY
+	local humanoidRootPartContainer = alternateLocalValuePlayer.Character
+
+	if not humanoidRootPartContainer then
+		return
+	else
+		local humanoidRootPart = humanoidRootPartContainer:FindFirstChild("HumanoidRootPart")
+		local humanoid = humanoidRootPartContainer:FindFirstChildOfClass("Humanoid")
+
+		if humanoidRootPart and humanoid and humanoid.Health > 0 then
+			if humanoidRootPart.Position.Y < self._voidY then
+				if not self._platform then
+					self:_createPlatform()
+				end
+
+				self._platform.Position =
+					Vector3.new(humanoidRootPart.Position.X, self._voidY - 5, humanoidRootPart.Position.Z)
+
+				humanoidRootPart.CFrame =
+					CFrame.new(humanoidRootPart.Position.X, self._voidY + 3, humanoidRootPart.Position.Z)
+
+				humanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+			elseif self._platform then
+				self._platform:Destroy()
+				self._platform = nil
+			end
+		elseif self._platform then
+			self._platform:Destroy()
+			self._platform = nil
+		end
+
+		return
+	end
+end
+
+function secondaryData:enable()
+	self._enabled = true
+
+	if self._loop then
+		self._loop:Disconnect()
+	end
+
+	self._loop = runService.RenderStepped:Connect(function()
+		self:_core()
+	end)
+
+	alternateLocalValuePlayer.CharacterAdded:Connect(function(humanoidRootPartContainer)
+		humanoidRootPartContainer:WaitForChild("HumanoidRootPart")
+
+		if self._enabled and not self._loop then
+			self:enable()
+		end
+	end)
+
+	outerHandler("防虚空", "防虚空已开启, 触发高度: " .. self._voidY, 3)
+end
+
+function secondaryData:disable()
+	self._enabled = false
+
+	if self._loop then
+		self._loop:Disconnect()
+		self._loop = nil
+	end
+
+	if self._platform then
+		self._platform:Destroy()
+		self._platform = nil
+	end
+end
+
+currentAddLeftGroupbox
+	:AddToggle("AntiVoidToggle", { Text = "防虚空掉落", Default = false })
+	:OnChanged(function(p67)
+		if condition then
+			secondaryData:enable()
+		else
+			secondaryData:disable()
+		end
+	end)
+
+local nextAddLeftGroupbox = iyData.Main:AddLeftGroupbox("防卡顿优化")
+local postEffectsData = {}
+local value43S = {}
+
+local function secondaryUpdateInstanceProperties()
+	postEffectsData.GlobalShadows = lighting.GlobalShadows
+	lighting.GlobalShadows = false
+	postEffectsData.PostEffects = {}
+
+	for index, item in ipairs(lighting:GetChildren()) do
+		if
+			item:IsA("PostEffect")
+			or item:IsA("BloomEffect")
+			or item:IsA("ColorCorrectionEffect")
+			or item:IsA("SunRaysEffect")
+			or item:IsA("BlurEffect")
+			or item:IsA("DepthOfFieldEffect")
+		then
+			table.insert(postEffectsData.PostEffects, { obj = item, enabled = item.Enabled })
+			item.Enabled = false
+		end
+	end
+
+	pcall(function()
+		if workspace.StreamingEnabled then
+			postEffectsData.StreamingTargetRadius = workspace.StreamingTargetRadius
+			workspace.StreamingTargetRadius = 50
+			postEffectsData.StreamingMinRadius = workspace.StreamingMinRadius
+			workspace.StreamingMinRadius = 50
+		end
+	end)
+
+	value43S = {}
+
+	for index, item in ipairs(workspace:GetDescendants()) do
+		if item:IsA("ParticleEmitter") or item:IsA("Trail") or item:IsA("Beam") then
+			if item.Enabled then
+				table.insert(value43S, item)
+				item.Enabled = false
+			end
+		end
+	end
+end
+
+local function alternateUpdateInstanceProperties()
+	pcall(function()
+		lighting.GlobalShadows = postEffectsData.GlobalShadows
+	end)
+
+	if postEffectsData.PostEffects then
+		for index, item in ipairs(postEffectsData.PostEffects) do
+			local capturedItem = item
+			pcall(function()
+				capturedItem.obj.Enabled = capturedItem.enabled
+			end)
+		end
+
+		postEffectsData.PostEffects = {}
+	end
+
+	pcall(function()
+		if workspace.StreamingEnabled then
+			if postEffectsData.StreamingTargetRadius then
+				workspace.StreamingTargetRadius = postEffectsData.StreamingTargetRadius
+			end
+
+			if postEffectsData.StreamingMinRadius then
+				workspace.StreamingMinRadius = postEffectsData.StreamingMinRadius
+			end
+		end
+	end)
+
+	for index, item in ipairs(value43S) do
+		local capturedItem = item
+		pcall(function()
+			capturedItem.Enabled = true
+		end)
+	end
+
+	value43S = {}
+end
+
+nextAddLeftGroupbox
+	:AddToggle("OptimizeToggle", { Text = "性能优化", Default = false })
+	:OnChanged(function(condition)
+		if condition then
+			secondaryUpdateInstanceProperties()
+		else
+			alternateUpdateInstanceProperties()
+		end
+	end)
+
+local innerAddRightGroupbox = iyData.Main:AddRightGroupbox("防踢功能")
+local innerFlag = false
+
+local function previousHandler()
+	if innerFlag then
+		return
+	else
+		local flag = false
+
+		if hookmetamethodFunction then
+			flag = pcall(function()
+				local secondaryCallback
+
+				secondaryCallback = hookmetamethodFunction(
+					game,
+					"__namecall",
+					callback(function(argument, ...)
+						if (getnamecallmethodFunction and getnamecallmethodFunction() or "") == "Kick" then
+							if not (checkcallerFunction and checkcallerFunction()) then
+								return nil
+							end
+
+							return secondaryCallback(argument, ...)
+						end
+
+						return secondaryCallback(argument, ...)
+					end)
+				)
+			end)
+		end
+
+		local secondaryFlag = false
+
+		if hookfunctionFunction then
+			secondaryFlag = pcall(function()
+				hookfunctionFunction(
+					alternateLocalValuePlayer.Kick,
+					callback(function(...)
+						return nil
+					end)
+				)
+			end)
+		end
+
+		if flag or secondaryFlag then
+			innerFlag = true
+		end
+
+		return
+	end
+end
+
+innerAddRightGroupbox:AddButton("启用防踢", function()
+	previousHandler()
+end)
+
+local outerAddRightGroupbox = iyData.Main:AddRightGroupbox("绕过功能")
+outerAddRightGroupbox:AddButton("绕过反作弊(Adonis)", function() end)
+
+local outerFlag = false
+
+outerAddRightGroupbox:AddButton("绕过移动检测", function()
+	if getgcFunction then
+		pcall(function()
+			for index, item in ipairs(getgcFunction()) do
+			end
+		end)
+	end
+
+	if not outerFlag then
+		outerFlag = true
+
+		task.spawn(function()
+			while outerFlag do
+				pcall(function()
+					local humanoidCondition, f32Result = handleCondition()
+
+					if humanoidCondition then
+						local humanoid = humanoidCondition:FindFirstChildOfClass("Humanoid")
+
+						if humanoid and humanoid.WalkSpeed < 16 then
+							humanoid.WalkSpeed = 16
+						end
+					end
+				end)
+
+				task.wait(0.5)
+			end
+		end)
+	end
+end)
+
+local addTab = xjwWindow:AddTab("工具", "wrench")
+local additionalLocalValuePlayer = players.LocalPlayer
+
+local function getSpecialMeshCharacter()
+	return additionalLocalValuePlayer.Character
+end
+
+local function currentHandler(argument, secondaryArgument, tertiaryArgument) end
+
+local additionalText = ""
+local cFrameData = {}
+local condition
+
+local function nextHandler()
+	local keys = {}
+
+	for key in pairs(cFrameData) do
+		table.insert(keys, key)
+	end
+
+	table.sort(keys)
+
+	if condition then
+		condition:SetValues(keys)
+	end
+end
+
+local sum = 0
+
+local function findFirstChildOfClass()
+	local condition = getSpecialMeshCharacter()
+
+	if condition then
+		return condition:FindFirstChildOfClass("Humanoid")
+	end
+end
+
+local function isInputValid()
+	local humanoidRootPartContainer = getSpecialMeshCharacter()
+
+	if humanoidRootPartContainer then
+		return humanoidRootPartContainer:FindFirstChild("HumanoidRootPart") or humanoidRootPartContainer.PrimaryPart
+	end
+end
+
+local sourceAddLeftGroupbox = addTab:AddLeftGroupbox("坐标管理")
+
+sourceAddLeftGroupbox:AddButton("保存当前坐标", function()
+	local input = isInputValid()
+
+	if not input then
+		return
+	else
+		sum = sum + 1
+		local text = "coord" .. sum
+		cFrameData[text] = input.Position
+		currentHandler("坐标保存", text .. " 已保存: " .. tostring(input.Position), 3)
+		nextHandler()
+		return
+	end
+end)
+
+local addInput = sourceAddLeftGroupbox:AddInput("CustomCoordName", {
+	Text = "自定义坐标名",
+	Default = "",
+	Numeric = false,
+})
+
+local fallbackText = ""
+addInput:OnChanged(function(textFlag)
+	fallbackText = textFlag or ""
+end)
+
+sourceAddLeftGroupbox:AddButton("保存自定义坐标", function()
+	local input = isInputValid()
+
+	if not input then
+		return
+	else
+		local text = fallbackText
+
+		if not text or text == "" then
+			return
+		end
+
+		cFrameData[text] = input.Position
+		currentHandler("坐标保存", text .. " 已保存", 3)
+		nextHandler()
+		return
+	end
+end)
+
+sourceAddLeftGroupbox:AddLabel("已保存坐标列表")
+
+condition = sourceAddLeftGroupbox:AddDropdown("CoordList", {
+	Text = "坐标列表",
+	Values = {},
+	Default = "",
+	Multi = false,
+})
+
+condition:OnChanged(function(text)
+	additionalText = text
+end)
+
+sourceAddLeftGroupbox:AddButton("传送到选中坐标", function()
+	if additionalText == "" or not cFrameData[additionalText] then
+		return
+	else
+		local instance = isInputValid()
+
+		if not instance then
+			return
+		end
+
+		instance.CFrame = CFrame.new(cFrameData[additionalText])
+		currentHandler("传送", "已传送到 " .. additionalText, 3)
+		return
+	end
+end)
+
+local capturedFlagCondition = false
+local additionalConnection
+
+sourceAddLeftGroupbox
+	:AddToggle("LoopTeleport", {
+		Text = "循环传送选中坐标",
+		Default = false,
+	})
+	:OnChanged(function(flag)
+		capturedFlagCondition = flag
+
+		if flag then
+			pcall(function()
+				if additionalConnection then
+					additionalConnection:Disconnect()
+				end
+
+				additionalConnection = runService.Heartbeat:Connect(function()
+					if capturedFlagCondition and additionalText ~= "" and cFrameData[additionalText] then
+						local cFrameCondition = isInputValid()
+
+						if cFrameCondition then
+							cFrameCondition.CFrame = CFrame.new(cFrameData[additionalText])
+						end
+					end
+				end)
+			end)
+		elseif additionalConnection then
+			additionalConnection:Disconnect()
+			additionalConnection = nil
+		end
+	end)
+
+addTab:AddLeftGroupbox("传送工具"):AddButton("点击传送", function()
+	pcall(function()
+		for index, item in ipairs(additionalLocalValuePlayer.Backpack:GetChildren()) do
+			if item:IsA("Tool") and item.Name == "[XJW]传送工具" then
+				item:Destroy()
+			end
+		end
+
+		local xjw = Instance.new("Tool")
+		xjw.Name = "[XJW]传送工具"
+		xjw.RequiresHandle = false
+		xjw.ToolTip = "点击任意位置传送"
+		xjw.Parent = additionalLocalValuePlayer.Backpack
+
+		xjw.Activated:Connect(function()
+			local instance = isInputValid()
+			local filterDescendantsInstancesFlag = getSpecialMeshCharacter()
+
+			if not instance or not filterDescendantsInstancesFlag then
+				return
+			else
+				local getMouse = additionalLocalValuePlayer:GetMouse()
+
+				local raycastParams = RaycastParams.new()
+				raycastParams.FilterDescendantsInstances = { filterDescendantsInstancesFlag }
+				raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+
+				local input =
+					workspace:Raycast(getMouse.UnitRay.Origin, getMouse.UnitRay.Direction * 1000, raycastParams)
+
+				if input then
+					instance.CFrame = CFrame.new(input.Position + Vector3.new(0, 3, 0))
+				else
+					instance.CFrame = getMouse.Hit
+				end
+
+				return
+			end
+		end)
+	end)
+end)
+
+local previousAddRightGroupbox = addTab:AddRightGroupbox("坐标工具")
+
+previousAddRightGroupbox:AddButton("保存坐标到文件", function()
+	pcall(function()
+		local formats = {}
+
+		for key, item in pairs(cFrameData) do
+			table.insert(formats, string.format('["%s"] = Vector3.new(%f, %f, %f)', key, item.X, item.Y, item.Z))
+		end
+
+		local text = [[
+return {
+  ]] .. table.concat(
+			formats,
+			[[
+,
+  ]]
+		) .. "\n}"
+
+		writefile("SavedCoords.txt", text)
+		setclipboard(text)
+	end)
+end)
+
+previousAddRightGroupbox:AddButton("删除选中坐标", function()
+	if additionalText == "" or not cFrameData[additionalText] then
+		return
+	end
+
+	cFrameData[additionalText] = nil
+	currentHandler("坐标", "已删除 " .. additionalText, 3)
+	nextHandler()
+end)
+
+previousAddRightGroupbox:AddButton("删除全部坐标", function()
+	cFrameData = {}
+	sum = 0
+	additionalText = ""
+	nextHandler()
+end)
+
+previousAddRightGroupbox:AddButton("复制当前坐标", function()
+	local input = isInputValid()
+
+	if not input then
+		return
+	else
+		local position = input.Position
+		local text = string.format("%f, %f, %f", position.X, position.Y, position.Z)
+		setclipboard(text)
+		currentHandler("坐标", "当前坐标已复制: " .. text, 4)
+		return
+	end
+end)
+
+local function sourceHandler(optionFlag)
+	local option = optionFlag or getSpecialMeshCharacter()
+
+	if not option then
+		return
+	end
+
+	for index, item in ipairs(option:GetChildren()) do
+		local capturedItem = item
+
+		if capturedItem:IsA("Accessory") then
+			pcall(function()
+				capturedItem:Destroy()
+			end)
+		end
+	end
+end
+
+local function targetHandler(optionFlag)
+	local option = optionFlag or getSpecialMeshCharacter()
+
+	if not option then
+		return
+	end
+
+	for index, item in ipairs(option:GetChildren()) do
+		local capturedItem = item
+
+		if
+			capturedItem:IsA("Accessory")
+			or capturedItem:IsA("Shirt")
+			or capturedItem:IsA("Pants")
+			or capturedItem:IsA("ShirtGraphic")
+			or capturedItem:IsA("BodyColors")
+		then
+			pcall(function()
+				capturedItem:Destroy()
+			end)
+		end
+	end
+
+	for index, item in ipairs(option:GetDescendants()) do
+		local capturedItem = item
+
+		if capturedItem:IsA("Decal") or capturedItem:IsA("Texture") then
+			pcall(function()
+				capturedItem:Destroy()
+			end)
+		end
+	end
+end
+
+local currentAddRightGroupbox = addTab:AddRightGroupbox("美化包")
+
+local function additionalUpdateInstanceProperties(updateInstancePropertiesFlag)
+	local updateInstancePropertiesOption = updateInstancePropertiesFlag or getSpecialMeshCharacter()
+
+	if not updateInstancePropertiesOption then
+		return
+	end
+
+	for index, item in ipairs(updateInstancePropertiesOption:GetChildren()) do
+		local capturedItem = item
+
+		if capturedItem:IsA("BasePart") then
+			pcall(function()
+				capturedItem.BrickColor = BrickColor.Random()
+				capturedItem.Color = Color3.new(math.random(), math.random(), math.random())
+			end)
+		end
+	end
+end
+
+currentAddRightGroupbox:AddButton("删除所有饰品", function()
+	sourceHandler()
+end)
+local previousFlag = false
+
+currentAddRightGroupbox
+	:AddToggle("AutoDeleteOnRespawn", {
+		Text = "重生自动删除饰品和衣服",
+		Default = false,
+	})
+	:OnChanged(function(flag)
+		previousFlag = flag
+	end)
+
+currentAddRightGroupbox:AddButton("删除所有饰品和衣服", function()
+	targetHandler()
+end)
+currentAddRightGroupbox:AddButton("角色随机颜色", function()
+	additionalUpdateInstanceProperties()
+end)
+
+local currentFlag = false
+
+currentAddRightGroupbox
+	:AddToggle("AutoColorOnRespawn", {
+		Text = "重生自动应用随机颜色",
+		Default = false,
+	})
+	:OnChanged(function(flag)
+		currentFlag = flag
+	end)
+
+local nextFlag = false
+local fallbackConnection
+
+currentAddRightGroupbox
+	:AddToggle("RainbowCharacter", {
+		Text = "彩虹角色 (Neon循环变色)",
+		Default = false,
+	})
+	:OnChanged(function(flag)
+		nextFlag = flag
+		local sum
+
+		if flag then
+			sum = 0
+
+			pcall(function()
+				if fallbackConnection then
+					fallbackConnection:Disconnect()
+				end
+
+				fallbackConnection = runService.Heartbeat:Connect(function()
+					local color
+
+					if not nextFlag then
+						return
+					else
+						sum = sum + 0.005
+
+						if sum > 1 then
+							sum = 0
+						end
+
+						color = Color3.fromHSV(sum, 1, 1)
+						local condition = getSpecialMeshCharacter()
+
+						if condition then
+							for index, item in ipairs(condition:GetChildren()) do
+								local capturedItem = item
+
+								if capturedItem:IsA("BasePart") then
+									pcall(function()
+										capturedItem.Color = color
+										capturedItem.Material = Enum.Material.Neon
+									end)
+								end
+							end
+						end
+
+						return
+					end
+				end)
+			end)
+		else
+			if fallbackConnection then
+				fallbackConnection:Disconnect()
+				fallbackConnection = nil
+			end
+
+			local condition = getSpecialMeshCharacter()
+
+			if condition then
+				for index, item in ipairs(condition:GetChildren()) do
+					local capturedItem = item
+
+					if capturedItem:IsA("BasePart") then
+						pcall(function()
+							capturedItem.Material = Enum.Material.Plastic
+						end)
+					end
+				end
+			end
+		end
+	end)
+
+local function handlerVariantA(rightLegContainerFlag)
+	local rightLegContainer = rightLegContainerFlag or getSpecialMeshCharacter()
+
+	if not rightLegContainer then
+		return
+	else
+		local rightLeg = rightLegContainer:FindFirstChild("Right Leg")
+
+		local secondaryRightLeg = rightLeg
+		secondaryRightLeg = rightLeg or rightLegContainer:FindFirstChild("RightLeg")
+
+		if not secondaryRightLeg then
+			return
+		else
+			local specialMesh = secondaryRightLeg:FindFirstChildOfClass("SpecialMesh")
+
+			if specialMesh then
+				specialMesh:Destroy()
+			end
+
+			return
+		end
+	end
+end
+
+local function createSpecialMesh(createSpecialMeshFlag)
+	local rightLegContainer = createSpecialMeshFlag or getSpecialMeshCharacter()
+
+	if not rightLegContainer then
+		return
+	else
+		local rightLeg = rightLegContainer:FindFirstChild("Right Leg")
+
+		local parent = rightLeg
+		parent = rightLeg or rightLegContainer:FindFirstChild("RightLeg")
+
+		if not parent then
+			return
+		else
+			local specialMesh = parent:FindFirstChildOfClass("SpecialMesh")
+
+			if specialMesh then
+				specialMesh:Destroy()
+			end
+
+			local secondarySpecialMesh = Instance.new("SpecialMesh")
+			secondarySpecialMesh.MeshId = "rbxassetid://6658418826"
+			secondarySpecialMesh.TextureId = "rbxassetid://6658420819"
+			secondarySpecialMesh.Scale = Vector3.new(1, 1, 1)
+			secondarySpecialMesh.VertexColor = Vector3.new(1, 1, 1)
+			secondarySpecialMesh.Parent = parent
+
+			return
+		end
+	end
+end
+
+local sourceFlag = false
+
+currentAddRightGroupbox
+	:AddToggle("BrokenLeg", { Text = "断腿 (Korblox右腿)", Default = false })
+	:OnChanged(function(flag)
+		sourceFlag = flag
+
+		if flag then
+			createSpecialMesh()
+		else
+			handlerVariantA()
+		end
+	end)
+
+local targetFlag = false
+local transparency = 0
+
+currentAddRightGroupbox
+	:AddToggle("Headless", { Text = "无头 (头部透明)", Default = false })
+	:OnChanged(function(p85)
+		targetFlag = flag
+		local headContainer = getSpecialMeshCharacter()
+
+		if not headContainer then
+			return
+		end
+
+		local head = headContainer:FindFirstChild("Head")
+
+		if not head then
+			return
+		end
+
+		if flag then
+			transparency = head.Transparency
+
+			pcall(function()
+				head.Transparency = 1
+
+				for index, item in ipairs(head:GetChildren()) do
+					if item:IsA("Decal") or item:IsA("Texture") then
+						item:Destroy()
+					end
+				end
+			end)
+		else
+			pcall(function()
+				head.Transparency = transparency
+			end)
+		end
+	end)
+
+additionalLocalValuePlayer.CharacterAdded:Connect(function(headContainer)
+	task.wait(0.5)
+
+	if previousFlag then
+		targetHandler(headContainer)
+	end
+
+	if currentFlag then
+		additionalUpdateInstanceProperties(headContainer)
+	end
+
+	if sourceFlag then
+		createSpecialMesh(headContainer)
+	end
+
+	if targetFlag then
+		pcall(function()
+			local head = headContainer:FindFirstChild("Head")
+
+			if head then
+				transparency = head.Transparency
+				local getChildren = head.GetChildren
+				head.Transparency = 1
+
+				for index, item in ipairs(getChildren(head)) do
+					if item:IsA("Decal") or item:IsA("Texture") then
+						item:Destroy()
+					end
+				end
+			end
+		end)
+	end
+end)
+
+local targetAddLeftGroupbox = addTab:AddLeftGroupbox("动作功能")
+
+targetAddLeftGroupbox:AddButton("R6动作包", function()
+	pcall(function()
+		handler("https://raw.githubusercontent.com/GreenNumber42/Roblox-Scripts/main/R6Animations.lua")
+	end)
+end)
+
+targetAddLeftGroupbox:AddButton("动作V2", function()
+	pcall(function()
+		handler("https://raw.githubusercontent.com/GreenNumber42/Roblox-Scripts/main/EmotesV2.lua")
+	end)
+end)
+
+targetAddLeftGroupbox:AddLabel("播放自定义动画")
+
+local secondaryAddInput = targetAddLeftGroupbox:AddInput("PlayAnimID", {
+	Text = "动画ID",
+	Default = "",
+	Numeric = true,
+})
+
+local nestedText = ""
+secondaryAddInput:OnChanged(function(textFlag)
+	nestedText = textFlag or ""
+end)
+
+targetAddLeftGroupbox:AddButton("播放动画", function()
+	local animationIdNumber = tonumber(nestedText)
+
+	if not animationIdNumber then
+		return
+	end
+
+	pcall(function()
+		local parent = findFirstChildOfClass()
+		local animatorFlag = getSpecialMeshCharacter()
+
+		if not parent or not animatorFlag then
+			return
+		else
+			local animator = parent:FindFirstChildOfClass("Animator")
+
+			if not animator then
+				animator = animatorFlag:FindFirstChildOfClass("Animator")
+			end
+
+			if not animator then
+				animator = parent:FindFirstChild("Animator")
+			end
+
+			if not animator then
+				animator = Instance.new("Animator")
+				animator.Parent = parent
+			end
+
+			local animation = Instance.new("Animation")
+			animation.AnimationId = "rbxassetid://" .. tostring(animationIdNumber)
+
+			animator:LoadAnimation(animation):Play()
+			currentHandler("动画", "正在播放动画 " .. animationIdNumber, 3)
+			return
+		end
+	end)
+end)
+
+iyData["UI Settings"] = xjwWindow:AddTab("UI设置", "settings")
+httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsThemeManagerLua:SetLibrary(
+	httpsRawGithubusercontentComATLASTEAM01ObsidianMainLibraryLua
+)
+
+httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsSaveManagerLua:SetLibrary(
+	httpsRawGithubusercontentComATLASTEAM01ObsidianMainLibraryLua
+)
+httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsSaveManagerLua:IgnoreThemeSettings()
+
+httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsSaveManagerLua:SetIgnoreIndexes({
+	"MenuKeybind",
+})
+
+httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsSaveManagerLua:SetFolder("UniversalSilentAim/Configs")
+httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsSaveManagerLua:BuildConfigSection(iyData["UI Settings"])
+
+httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsThemeManagerLua:ApplyToTab(iyData["UI Settings"])
+httpsRawGithubusercontentComATLASTEAM01ObsidianMainAddonsSaveManagerLua:LoadAutoloadConfig()
+local secondaryTextNumber = tick()
+local innerText = string.format("耗时 %.2f 秒", secondaryTextNumber - textNumber)
+
+pcall(function()
+	game.StarterGui:SetCore("SendNotification", {
+		Title = "XJW中心加载成功",
+		Text = innerText,
+		Duration = 5,
+	})
+end)
