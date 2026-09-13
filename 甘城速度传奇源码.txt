@@ -1,0 +1,1296 @@
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/refs/heads/main/dist/main.lua"))()
+local Confirmed = false
+
+local gradientColors = {
+    "rgb(240, 248, 255)",
+    "rgb(224, 240, 255)",
+    "rgb(209, 232, 255)",
+    "rgb(193, 224, 255)",
+    "rgb(178, 216, 255)",
+    "rgb(162, 208, 255)",
+    "rgb(147, 200, 255)",
+    "rgb(131, 192, 255)",
+    "rgb(116, 184, 255)",
+    "rgb(100, 176, 255)"
+}
+
+local username = game.Players.LocalPlayer.Name
+local coloredUsername = ""
+for i = 1, #username do
+    local colorIndex = (i - 1) % #gradientColors + 1
+    coloredUsername = coloredUsername .. '<font color="' .. gradientColors[colorIndex] .. '">' .. username:sub(i, i) .. '</font>'
+end
+
+local version = "v1.2.4"
+local coloredVersion = ""
+for i = 1, #version do
+    local colorIndex = (i - 1) % #gradientColors + 1
+    coloredVersion = coloredVersion .. '<font color="' .. gradientColors[colorIndex] .. '">' .. version:sub(i, i) .. '</font>'
+end
+
+WindUI:Popup({
+    Title = '<font color="' .. gradientColors[1] .. '">甘</font><font color="' .. gradientColors[5] .. '">城</font>',
+    IconThemed = true,
+    Content = "尊敬的用户 " .. coloredUsername .. " \n此脚本完全免费\n源码获取访问脚本链接",
+    Buttons = {
+        {
+            Title = "取消",
+            Callback = function() end,
+            Variant = "Secondary",
+        },
+        {
+            Title = "执行",
+            Icon = "arrow-right",
+            Callback = function() 
+                Confirmed = true
+                createUI()
+            end,
+            Variant = "Primary",
+        }
+    }
+})
+
+function createUI()
+    local Window = WindUI:CreateWindow({
+        Title = '甘城',
+        Icon = "crown",
+        IconThemed = true,
+        Author = "v2.0.0",
+        Folder = "CloudHub",
+        Size = UDim2.fromOffset(580, 440),
+        Transparent = true,
+        Theme = "Dark",
+        HideSearchBar = false,
+        Resizable = true,
+        Background = "https://raw.githubusercontent.com/XxwanhexxX/UN/main/%E7%94%98%E5%9F%8E.png",
+        BackgroundImageTransparency = 0.5,
+        Search = {
+            Enabled = true,
+            Placeholder = "搜索...",
+            Callback = function(searchText)
+                print("搜索功能:", searchText)
+            end
+        },
+        User = {
+            Enabled = true,
+            Callback = function()
+                WindUI:Notify({
+                    Title = "玩家信息",
+                    Content = "玩家名称：" .. game.Players.LocalPlayer.Name,
+                    Duration = 2,
+                    Icon = "user"
+                })
+            end
+        },
+        SideBarWidth = 180
+    })
+Window:CreateTopbarButton("ThemeToggle", "moon", function()
+    local currentTheme = WindUI:GetCurrentTheme()
+    if currentTheme == "Light" then
+        WindUI:SetTheme("Dark")
+        WindUI:Notify({
+            Title = "已切换为光亮黑暗主题",
+            Content = "",
+            Duration = 3,
+            Icon = "geist:moon"
+        })
+    else
+        WindUI:SetTheme("Light")
+        WindUI:Notify({
+            Title = "已切换为光亮主题",
+            Content = "",
+            Duration = 3,
+            Icon = "geist:sun"
+        })
+    end
+end, 990)
+
+WindUI:SetNotificationLower(true)
+
+Window:Tag({
+        Title = "极速传奇",
+        Color = Color3.fromHex("#00ffff") 
+    })
+    
+local tag = Window:Tag({
+    Title = os.date("%H:%M:%S"),
+    Color = Color3.fromHex("#00ffff")
+})
+
+spawn(function()
+    while Window do
+        task.wait(1)
+        tag:SetTitle(os.date("%H:%M:%S"))
+    end
+end)
+
+Window:EditOpenButton({
+    Title = "甘城",
+    Icon = "crown",
+    CornerRadius = UDim.new(0,26),
+    StrokeThickness = 4,
+    Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromHex("ADD8E6")),
+        ColorSequenceKeypoint.new(0.5, Color3.fromHex("4169E1")),
+        ColorSequenceKeypoint.new(1, Color3.fromHex("ADD8E6"))
+    }),
+    Draggable = true,
+})
+
+local LockSection = Window:Section({
+    Title = "主功能",
+    Opened = true,
+})
+
+local function AddTab(section, title, icon)
+    return section:Tab({Title = title, Icon = icon, Opened = true})
+end
+
+local A = AddTab(LockSection, "主要", "house")
+local B = AddTab(LockSection, "卡宠", "paw-print")  
+local C = AddTab(LockSection, "宝石", "gem")
+local D = AddTab(LockSection, "比赛", "flag")
+local E = AddTab(LockSection, "传送", "send")
+local F = AddTab(LockSection, "重生", "rotate-ccw")
+local G = AddTab(LockSection, "修改", "pencil")
+local H = AddTab(LockSection, "宠物", "dog")
+local I = AddTab(LockSection, "说明", "info")
+local J = AddTab(LockSection, "通用", "settings")
+local K = AddTab(LockSection, "服务器", "server")
+
+A:Select()
+
+local extraSection = A:Section({Title = "主要", Opened = true})
+
+extraSection:Button({
+    Title = "收集全部宝箱",
+    Callback = function()
+        for _, v in pairs(game.ReplicatedStorage.chestRewards:GetChildren()) do
+            game.ReplicatedStorage.rEvents.checkChestRemote:InvokeServer(v.Name)
+        end
+        WindUI:Notify({
+            Title = "提示",
+            Content = "已收集全部宝箱",
+            Duration = 3,
+            Icon = "gift"
+        })
+    end
+})
+
+extraSection:Button({
+    Title = "解锁全部通行证",
+    Callback = function()
+        for i, v in ipairs(game:GetService("ReplicatedStorage").gamepassIds:GetChildren()) do
+            v.Parent = game.Players.LocalPlayer.ownedGamepasses
+        end
+        WindUI:Notify({
+            Title = "提示",
+            Content = "走几步即可",
+            Duration = 3,
+            Icon = "crown"
+        })
+    end
+})
+
+extraSection:Toggle({
+    Title = "吸全部环",
+    Default = false,
+    Callback = function(state)
+        getgenv().HoopEnabled = state
+        
+        if state then
+            spawn(function()
+                while getgenv().HoopEnabled and task.wait() do
+                    pcall(function()
+                        local character = game.Players.LocalPlayer.Character
+                        if character and character:FindFirstChild("HumanoidRootPart") then
+                            local hrp = character.HumanoidRootPart
+                            for _, hoop in ipairs(workspace.Hoops:GetChildren()) do
+                                if hoop.Name == "Hoop" then
+                                    hoop.CFrame = hrp.CFrame
+                                end
+                            end
+                        end
+                    end)
+                end
+            end)
+        end
+    end
+})
+
+extraSection:Toggle({
+    Title = "自动抽奖",
+    Default = false,
+    Callback = function(state)
+        Interstellar.autoSpin = state
+        if state then
+            spawn(function()
+                while Interstellar.autoSpin do
+                    pcall(function()
+                        game:GetService("ReplicatedStorage").rEvents.openFortuneWheelRemote:InvokeServer("openFortuneWheel", game:GetService("ReplicatedStorage").fortuneWheelChances["Fortune Wheel"])
+                    end)
+                    task.wait(1)
+                end
+            end)
+        end
+    end
+})
+
+extraSection:Toggle({
+    Title = "自动收集奖励",
+    Default = false,
+    Callback = function(state)
+        getgenv().AutoCollectReward = state
+        if state then
+            spawn(function()
+                while getgenv().AutoCollectReward do
+                    pcall(function()
+                        for i = 1, 8 do
+                            local args = {
+                                "claimGift",
+                                i
+                            }
+                            game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("freeGiftClaimRemote"):InvokeServer(unpack(args))
+                        end
+                    end)
+                    task.wait()
+                end
+            end)
+        end
+    end
+})
+
+local cardPetSection1 = B:Section({Title = "模式一", Opened = true})
+
+local Interstellar = {
+    area = "City",
+    getorb = false
+}
+
+local areaOptions = {"City","Snow City","Magma City","Legends Highway","Speed Jungle","Desert","Space"}
+local areaDisplayNames = {"城市","雪城","熔岩城","传奇公路","丛林","沙漠","太空"}
+cardPetSection1:Dropdown({
+    Title = "选择地区",
+    Values = areaDisplayNames,
+    Value = "城市",
+    Callback = function(Value)
+        Interstellar.area = areaOptions[table.find(areaDisplayNames, Value)]
+    end
+})
+
+local function checkMaxLevel()
+local player = game.Players.LocalPlayer
+Interstellar.isMaxLevel = player:GetAttribute("IsMaxLevel") == true
+end
+
+game:GetService("RunService").Heartbeat:Connect(function()
+checkMaxLevel()
+end)
+
+cardPetSection1:Toggle({
+    Title = "紫球",
+    Default = false,
+    Callback = function(state)
+        Interstellar.getorb = state
+        if state then
+            spawn(function()
+                while Interstellar.getorb do
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Ethereal Orb", Interstellar.area)
+                    wait(0.03)
+                end
+            end)
+        end
+    end
+})
+
+cardPetSection1:Toggle({
+    Title = "红球",
+    Default = false,
+    Callback = function(state)
+        Interstellar.getorb = state
+        if state then
+            spawn(function()
+                while Interstellar.getorb do
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Red Orb", Interstellar.area)
+                    wait(0.03)
+                end
+            end)
+        end
+    end
+})
+
+cardPetSection1:Toggle({
+    Title = "蓝球",
+    Default = false,
+    Callback = function(state)
+        Interstellar.getorb = state
+        if state then
+            spawn(function()
+                while Interstellar.getorb do
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Blue Orb", Interstellar.area)
+                    wait(0.03)
+                end
+            end)
+        end
+    end
+})
+
+cardPetSection1:Toggle({
+    Title = "橙球",
+    Default = false,
+    Callback = function(state)
+        Interstellar.getorb = state
+        if state then
+            spawn(function()
+                while Interstellar.getorb do
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Orange Orb", Interstellar.area)
+                    wait(0.03)
+                end
+            end)
+        end
+    end
+})
+
+cardPetSection1:Toggle({
+    Title = "经验球",
+    Default = false,
+    Callback = function(state)
+        Interstellar.getorb = state
+        if state then
+            spawn(function()
+                while Interstellar.getorb do
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    game.ReplicatedStorage.rEvents.orbEvent:FireServer("collectOrb", "Yellow Orb", Interstellar.area)
+                    wait(0.07)
+                end
+            end)
+        end
+    end
+})
+
+local cardPetSection2 = B:Section({Title = "模式二", Opened = true})
+
+local Interstellar2 = {
+    area = "City",
+    orbType = "Yellow Orb",
+    rateEnabled = false,
+    multiplier = 1,
+    validAreas = {"City","Snow City","Magma City","Legends Highway","Speed Jungle","Desert","Space"},
+    currentArea = "City",
+    isMaxLevel = false
+}
+
+local function updateCurrentArea()
+    Interstellar2.currentArea = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:GetAttribute("CurrentArea") or "City"
+end
+
+local function checkMaxLevel2()
+    local player = game.Players.LocalPlayer
+    Interstellar2.isMaxLevel = player:GetAttribute("IsMaxLevel") == true
+end
+
+game:GetService("RunService").Heartbeat:Connect(function()
+    updateCurrentArea()
+    checkMaxLevel2()
+end)
+
+local areaOptions = {"City","Snow City","Magma City","Legends Highway","Speed Jungle","Desert","Space"}
+local areaDisplayNames = {"城市","雪城","熔岩城","传奇公路","丛林","沙漠","太空"}
+local orbDisplayNames = {"紫球", "红球", "蓝球", "橙球", "经验球"}
+local orbTypes = {"Ethereal Orb", "Red Orb", "Blue Orb", "Orange Orb", "Yellow Orb"}
+
+cardPetSection2:Dropdown({
+    Title = "选择地区",
+    Values = areaDisplayNames,
+    Value = "城市",
+    Callback = function(Value)
+        local idx = table.find(areaDisplayNames, Value)
+        if idx then
+            Interstellar2.area = areaOptions[idx]
+        else
+            Interstellar2.area = "City"
+        end
+    end
+})
+
+cardPetSection2:Dropdown({
+    Title = "选择球类型",
+    Values = orbDisplayNames,
+    Value = "",
+    Callback = function(Value)
+        local idx = table.find(orbDisplayNames, Value)
+        if idx then
+            Interstellar2.orbType = orbTypes[idx]
+        else
+            Interstellar2.orbType = ""
+        end
+    end
+})
+
+cardPetSection2:Input({
+    Title = "输入倍速",
+    Desc = "默认为1",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        Interstellar2.multiplier = math.clamp(tonumber(value) or 1, 1, 10000)
+    end
+})
+
+cardPetSection2:Toggle({
+    Title = "倍速卡宠总开关",
+    Default = false,
+    Callback = function(state)
+        Interstellar2.rateEnabled = state
+        if state then
+            spawn(function()
+                local e = game:GetService("ReplicatedStorage").rEvents.orbEvent
+                while Interstellar2.rateEnabled do
+                    if Interstellar2.isMaxLevel then
+                        Interstellar2.rateEnabled = false
+                        break
+                    end
+                    local total = 1 * Interstellar2.multiplier
+                    for i = 1, total do
+                        e:FireServer("collectOrb", Interstellar2.orbType, Interstellar2.area)
+                    end
+                    task.wait()
+                end
+            end)
+        end
+    end
+})
+
+local gemSection = C:Section({Title = "宝石收集", Opened = true})
+
+gemSection:Toggle({
+    Title = "城市宝石",
+    Default = false,
+    Callback = function(state)
+        getgenv().sbsA = state
+        if state then
+            spawn(function()
+                while getgenv().sbsA do
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "City")
+                    wait()
+                end
+            end)
+        end
+    end
+})
+
+gemSection:Toggle({
+    Title = "雪城宝石",
+    Default = false,
+    Callback = function(state)
+        getgenv().sbsB = state
+        if state then
+            spawn(function()
+                while getgenv().sbsB do
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Snow City")
+                    wait()
+                end
+            end)
+        end
+    end
+})
+
+gemSection:Toggle({
+    Title = "熔岩城宝石",
+    Default = false,
+    Callback = function(state)
+        getgenv().sbsC = state
+        if state then
+            spawn(function()
+                while getgenv().sbsC do
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Magma City")
+                    wait()
+                end
+            end)
+        end
+    end
+})
+
+gemSection:Toggle({
+    Title = "传奇公路宝石",
+    Default = false,
+    Callback = function(state)
+        getgenv().sbsD = state
+        if state then
+            spawn(function()
+                while getgenv().sbsD do
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Legends Highway")
+                    wait()
+                end
+            end)
+        end
+    end
+})
+
+gemSection:Toggle({
+    Title = "丛林宝石",
+    Default = false,
+    Callback = function(state)
+        getgenv().sbsE = state
+        if state then
+            spawn(function()
+                while getgenv().sbsE do
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    game:GetService("ReplicatedStorage").rEvents.orbEvent:FireServer("collectOrb", "Gem", "Speed Jungle")
+                    wait()
+                end
+            end)
+        end
+    end
+})
+
+local raceSection = D:Section({Title = "比赛", Opened = true})
+
+local Maps = {}
+for _,v in pairs(game.workspace.raceMaps:GetChildren()) do
+    table.insert(Maps, v.Name)
+end
+
+local selectedMap = ""
+
+raceSection:Toggle({
+    Title = "自动比赛",
+    Default = false,
+    Callback = function(state)
+        autoRace = state
+        if state then
+            spawn(function()
+                while autoRace do
+                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    wait()
+                end
+            end)
+        end
+    end
+})
+
+raceSection:Dropdown({
+    Title = "比赛终点传送",
+    Values = Maps,
+    Value = "",
+    Callback = function(value)
+        selectedMap = value
+    end
+})
+
+raceSection:Button({
+    Title = "点击传送",
+    Callback = function()
+        if selectedMap and game.workspace.raceMaps:FindFirstChild(selectedMap) then
+            local char = game.Players.LocalPlayer.Character
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                char.HumanoidRootPart.CFrame = game.workspace.raceMaps[selectedMap].finishPart.CFrame
+            end
+        end
+    end
+})
+
+raceSection:Toggle({
+    Title = "自动胜利",
+    Default = false,
+    Callback = function(state)
+        Interstellar.mainexe = state
+        if Interstellar.mainexe then
+            if game.PlaceId == 3101667897 then
+                while Interstellar.mainexe do
+                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.raceMaps.Grassland.finishPart.CFrame
+                    task.wait(0.1)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.raceMaps.Magma.finishPart.CFrame
+                    task.wait(0.1)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.raceMaps.Desert.finishPart.CFrame
+                    task.wait(0.3)
+                end
+            elseif game.PlaceId == 3276265788 then
+                while Interstellar.mainexe do
+                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.raceMaps.Speedway.finishPart.CFrame
+                    task.wait(0.2)
+                end
+            elseif game.PlaceId == 3232996272 then
+                while Interstellar.mainexe do
+                    game:GetService("ReplicatedStorage").rEvents.raceEvent:FireServer("joinRace")
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.raceMaps.Starway.finishPart.CFrame
+                    task.wait(0.2)
+                end
+            end
+        end
+    end
+})
+
+local teleportSection = E:Section({Title = "传送点", Opened = true})
+
+teleportSection:Button({
+    Title = "城市",
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2002.0133056640625, 1.2624330520629883, 985.2265625)
+    end
+})
+
+teleportSection:Button({
+    Title = "雪城",
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-9675.25, 59.63568115234375, 3783.50146484375)
+    end
+})
+
+teleportSection:Button({
+    Title = "熔岩城",
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-11052.4189453125, 217.59571838378906, 4898.76416015625)
+    end
+})
+
+teleportSection:Button({
+    Title = "传奇公路",
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13095.255859375, 217.59567260742188, 5905.240234375)
+    end
+})
+
+teleportSection:Button({
+    Title = "丛林",
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-15267.9,399.0,5575.7)
+    end
+})
+
+local rebirthSection1 = F:Section({Title = "模式一", Opened = true})
+
+rebirthSection1:Toggle({
+    Title = "自动重生",
+    Default = false,
+    Callback = function(state)
+        Interstellar.mainexe = state
+        if Interstellar.mainexe then
+            spawn(function()
+                while Interstellar.mainexe do
+                    pcall(function()
+                        game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer("rebirthRequest")
+                    end)
+                    wait()
+                end
+            end)
+        end
+    end
+})
+
+local rebirthSection2 = F:Section({Title = "模式二", Opened = true})
+
+rebirthSection2:Input({
+    Title = "自定义重生",
+    Desc = "次数",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        Interstellar.birth = tonumber(value) or 0
+    end
+})
+
+rebirthSection2:Toggle({
+    Title = "重生到指定的次数",
+    Default = false,
+    Callback = function(state)
+        Interstellar.autobirth = state
+        if Interstellar.autobirth then
+            spawn(function()
+                local player = game:GetService("Players").LocalPlayer
+                local targetRebirths = Interstellar.birth
+                while Interstellar.autobirth do
+                    if player.leaderstats.Rebirths.Value >= targetRebirths then
+                        Interstellar.autobirth = false
+                        break
+                    else
+                        local success = pcall(function()
+                            game:GetService("ReplicatedStorage").rEvents.rebirthEvent:FireServer("rebirthRequest")
+                        end)
+                        if not success then warn("重生请求失败") end
+                    end
+                    wait(0.1)
+                end
+            end)
+        end
+    end
+})
+
+local modifySection = G:Section({Title = "美化", Opened = true})
+
+modifySection:Input({
+    Title = "修改经验值",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        if value and value ~= "" and tonumber(value) then
+            game:GetService("Players").LocalPlayer.exp.Value = tonumber(value)
+        end
+    end
+})
+
+modifySection:Input({
+    Title = "修改等级",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        if value and value ~= "" and tonumber(value) then
+            game:GetService("Players").LocalPlayer.level.Value = tonumber(value)
+        end
+    end
+})
+
+modifySection:Input({
+    Title = "修改比赛数",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        if value and value ~= "" and tonumber(value) then
+            game:GetService("Players").LocalPlayer.leaderstats.Races.Value = tonumber(value)
+        end
+    end
+})
+
+modifySection:Input({
+    Title = "修改环数",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        if value and value ~= "" and tonumber(value) then
+            game:GetService("Players").LocalPlayer.leaderstats.Hoops.Value = tonumber(value)
+        end
+    end
+})
+
+modifySection:Input({
+    Title = "修改重生",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        if value and value ~= "" and tonumber(value) then
+            game:GetService("Players").LocalPlayer.leaderstats.Rebirths.Value = tonumber(value)
+        end
+    end
+})
+
+modifySection:Input({
+    Title = "修改步数",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        if value and value ~= "" and tonumber(value) then
+            game:GetService("Players").LocalPlayer.leaderstats.Steps.Value = tonumber(value)
+        end
+    end
+})
+
+modifySection:Input({
+    Title = "修改宝石",
+    Placeholder = "输入数值",
+    Callback = function(value)
+        if value and value ~= "" and tonumber(value) then
+            game:GetService("Players").LocalPlayer.Gems.Value = tonumber(value)
+        end
+    end
+})
+
+local petShopSection = H:Section({Title = "购买水晶", Opened = true})
+
+local crystalDisplayNames = {"300水晶 [城市]", "600水晶 [城市]", "1.2K水晶 [城市]", "2.5K水晶 [城市]", "4K水晶 [雪城]", "8K水晶 [熔岩城]", "8K水晶 [熔岩城]", "40K水晶 [沙漠]", "50K水晶 [沙漠]", "100K水晶 [传奇公路]", "150K水晶 [太空]", "1M水晶 [丛林]"}
+local crystalMap = {
+    ["300水晶 [城市]"] = "Red Crystal",
+    ["600水晶 [城市]"] = "Blue Crystal",
+    ["1.2K水晶 [城市]"] = "Yellow Crystal",
+    ["2.5K水晶 [城市]"] = "Lightning Crystal",
+    ["4K水晶 [雪城]"] = "Snow Crystal",
+    ["8K水晶 [熔岩城]"] = "Lava Crystal",
+    ["8K水晶 [熔岩城]"] = "Lightning Crystal",
+    ["40K水晶 [沙漠]"] = "Desert Crystal",
+    ["50K水晶 [沙漠]"] = "Electro Crystal",
+    ["100K水晶 [传奇公路]"] = "Electro Legends Crystal",
+    ["150K水晶 [太空]"] = "Alien Crystal",
+    ["1M水晶 [丛林]"] = "Jungle Crystal"
+}
+
+local selectedCrystal = ""
+
+petShopSection:Dropdown({
+    Title = "选择水晶",
+    Values = crystalDisplayNames,
+    Value = "",
+    Callback = function(value)
+        selectedCrystal = crystalMap[value]
+    end
+})
+
+petShopSection:Button({
+    Title = "购买一次",
+    Callback = function()
+        game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal", selectedCrystal)
+    end
+})
+
+petShopSection:Toggle({
+    Title = "自动购买",
+    Default = false,
+    Callback = function(state)
+        getgenv().autoCrystal = state
+        if state then
+            spawn(function()
+                while getgenv().autoCrystal do
+                    game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal", selectedCrystal)
+                    task.wait(0.1)
+                end
+            end)
+        end
+    end
+})
+
+local petShopSection = H:Section({Title = "购买宠物", Opened = true})
+
+local petMap = {
+    ["斯威夫特武士"] = "Swift Samurai",
+    ["终极超速小兔"] = "Ultimate Overdrive Bunny",
+    ["金色轨迹"] = "Hyperblast",
+    ["彩虹轨迹"] = "Rainbow Steps",
+    ["龙火轨迹"] = "Dragonfire",
+    ["火焰刺猬"] = "Flaming Hedgehog",
+    ["电光雷宠"] = "Electro Golem"
+}
+local petDisplayNames = {"斯威夫特武士", "终极超速小兔", "金色轨迹", "彩虹轨迹", "龙火轨迹", "火焰刺猬", "电光雷宠"}
+
+local BuyPetShop = ""
+
+petShopSection:Dropdown({
+    Title = "选择宠物",
+    Values = petDisplayNames,
+    Value = "",
+    Callback = function(Value)
+        BuyPetShop = petMap[Value]
+    end
+})
+
+petShopSection:Button({
+    Title = "购买一次",
+    Callback = function()
+        if not BuyPetShop then return end
+        local pet = game:GetService("ReplicatedStorage").cPetShopFolder:FindFirstChild(BuyPetShop)
+        if pet then
+            game:GetService("ReplicatedStorage").cPetShopRemote:InvokeServer(pet)
+        end
+    end
+})
+
+petShopSection:Toggle({
+    Title = "自动购买",
+    Default = false,
+    Callback = function(state)
+        Interstellar.petshop = state
+        if Interstellar.petshop and BuyPetShop then
+            spawn(function()
+                while Interstellar.petshop do
+                    pcall(function()
+                        local pet = game:GetService("ReplicatedStorage").cPetShopFolder:FindFirstChild(BuyPetShop)
+                        if pet then
+                            game:GetService("ReplicatedStorage").cPetShopRemote:InvokeServer(pet)
+                        end
+                    end)
+                    wait(0.1)
+                end
+            end)
+        end
+    end
+})
+
+local evolveSection = H:Section({Title = "进化", Opened = true})
+
+local petEvolveMap = {
+    ["斯威夫特武士"] = "Swift Samurai",
+    ["火焰刺猬"] = "Flaming Hedgehog",
+    ["电光雷宠"] = "Electro Golem",
+    ["终极超速小兔"] = "Ultimate Overdrive Bunny"
+}
+local petEvolveList = {"斯威夫特武士", "火焰刺猬", "电光雷宠", "终极超速小兔"}
+local EvolvePet = ""
+
+evolveSection:Dropdown({
+    Title = "选择进化的宠物",
+    Values = petEvolveList,
+    Value = "",
+    Callback = function(Value)
+        EvolvePet = petEvolveMap[Value]
+    end
+})
+
+evolveSection:Toggle({
+    Title = "自动进化",
+    Default = false,
+    Callback = function(state)
+        getgenv().autoEvolve = state
+        if state then
+            spawn(function()
+                while getgenv().autoEvolve do
+                    if EvolvePet and EvolvePet ~= "" then
+                        local args = {"evolvePet", EvolvePet}
+                        game:GetService("ReplicatedStorage").rEvents.petEvolveEvent:FireServer(unpack(args))
+                    end
+                    task.wait(0.1)
+                end
+            end)
+        end
+    end
+})
+
+local infoSection = I:Section({Title = "卡宠和重生", Opened = true})
+
+infoSection:Paragraph({
+    Title = "适合卡宠的重生次数",
+    Desc = "末尾有个奇数9的\n买个无限等级\n用任何球卡都行\n卡前先适配宠物\n\n重生：9\n重生：19\n重生：29\n重生：39\n重生：49\n重生：59\n重生：69\n重生：79\n重生：89\n重生：99\n重生：109-199\n重生：209-299\n重生：309-399\n重生：409-599\n重生：609-699\n重生：709-799\n重生：809-899\n重生：909-999\n\n后续也就那样",
+    ThumbnailSize = 190,
+})
+
+local settingsSection = J:Section({Title = "画质", Opened = true})
+
+settingsSection:Button({
+    Title = "去雾",
+    Callback = function()
+        local Lighting = game:GetService("Lighting")
+        Lighting.FogStart = 3276634343
+        Lighting.FogEnd = 3276734343
+    end
+})
+
+local otherSection = J:Section({Title = "常用", Opened = true})
+
+otherSection:Toggle({
+    Title = "穿墙",
+    Default = false,
+    Callback = function(state)
+        if state then
+            getgenv().noclipConnection = game:GetService("RunService").Stepped:Connect(function()
+                local LocalPlayer = game:GetService("Players").LocalPlayer
+                if LocalPlayer.Character then
+                    for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            part.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        else
+            if getgenv().noclipConnection then
+                getgenv().noclipConnection:Disconnect()
+                getgenv().noclipConnection = nil
+            end
+            
+            local LocalPlayer = game:GetService("Players").LocalPlayer
+            if LocalPlayer.Character then
+                for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = true
+                    end
+                end
+            end
+        end
+    end
+})
+
+local flySpeed = 150
+local flyMultiplier = 5
+
+otherSection:Slider({
+    Title = "飞行速度",
+    Step = 0.1,
+    Value = {Min = 1, Max = 20, Default = 5},
+    Callback = function(multiplier)
+        flyMultiplier = multiplier
+    end
+})
+
+otherSection:Toggle({
+    Title = "开关",
+    Default = false,
+    Callback = function(bak)
+        getgenv().fly = bak
+        if bak then
+            local controlModule = require(game.Players.LocalPlayer.PlayerScripts:WaitForChild('PlayerModule'):WaitForChild("ControlModule"))
+            local character = game.Players.LocalPlayer.Character
+            if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+            
+            local function setupFlight(character)
+                local hrp = character:FindFirstChild("HumanoidRootPart")
+                if not hrp then return end
+                
+                if hrp:FindFirstChild("VelocityHandler") then hrp.VelocityHandler:Destroy() end
+                if hrp:FindFirstChild("GyroHandler") then hrp.GyroHandler:Destroy() end
+                
+                local bv = Instance.new("BodyVelocity")
+                bv.Name = "VelocityHandler"
+                bv.Parent = hrp
+                bv.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+                bv.Velocity = Vector3.new(0, 0, 0)
+                
+                local bg = Instance.new("BodyGyro")
+                bg.Name = "GyroHandler"
+                bg.Parent = hrp
+                bg.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
+                bg.P = 1000
+                bg.D = 50
+                
+                return bv, bg
+            end
+            
+            local bv, bg = setupFlight(character)
+            
+            local camera = game.Workspace.CurrentCamera
+            getgenv().FlyLoop = game:GetService("RunService").RenderStepped:Connect(function()
+                local currentCharacter = game.Players.LocalPlayer.Character
+                local hrp = currentCharacter and currentCharacter:FindFirstChild("HumanoidRootPart")
+                if currentCharacter and hrp and hrp:FindFirstChild("VelocityHandler") and hrp:FindFirstChild("GyroHandler") and getgenv().fly then
+                    currentCharacter.Humanoid.PlatformStand = true
+                    hrp.GyroHandler.CFrame = camera.CFrame
+                    
+                    local direction = controlModule:GetMoveVector()
+                    local actualSpeed = flySpeed * flyMultiplier
+                    
+                    hrp.VelocityHandler.Velocity = Vector3.new()
+                    if direction.X ~= 0 then
+                        hrp.VelocityHandler.Velocity = hrp.VelocityHandler.Velocity + camera.CFrame.RightVector * (direction.X * actualSpeed)
+                    end
+                    if direction.Z ~= 0 then
+                        hrp.VelocityHandler.Velocity = hrp.VelocityHandler.Velocity - camera.CFrame.LookVector * (direction.Z * actualSpeed)
+                    end
+                    if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) then
+                        hrp.VelocityHandler.Velocity = hrp.VelocityHandler.Velocity + Vector3.new(0, actualSpeed/2, 0)
+                    end
+                    if game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftShift) then
+                        hrp.VelocityHandler.Velocity = hrp.VelocityHandler.Velocity - Vector3.new(0, actualSpeed/2, 0)
+                    end
+                end
+            end)
+        else
+            if getgenv().FlyLoop then
+                getgenv().FlyLoop:Disconnect()
+            end
+            local character = game.Players.LocalPlayer.Character
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                local hrp = character.HumanoidRootPart
+                if hrp:FindFirstChild("VelocityHandler") then hrp.VelocityHandler:Destroy() end
+                if hrp:FindFirstChild("GyroHandler") then hrp.GyroHandler:Destroy() end
+                character.Humanoid.PlatformStand = false
+            end
+        end
+    end
+})
+
+local serverSection = K:Section({Title = "服务器", Opened = true})
+
+serverSection:Button({
+    Title = "重进当前服务器",
+    Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+    end
+})
+
+serverSection:Button({
+    Title = "切换服务器",
+    Callback = function()
+        local HttpService = game:GetService("HttpService")
+        local TeleportService = game:GetService("TeleportService")
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        
+        local request = syn and syn.request or http and http.request or http_request or request or httprequest
+        
+        local success, result = pcall(function()
+            local response = request({
+                Url = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?limit=100&excludeFullGames=true",
+                Method = "GET"
+            })
+            return HttpService:JSONDecode(response.Body)
+        end)
+        
+        if success and result and result.data and #result.data > 0 then
+            local target = result.data[math.random(1, #result.data)]
+            if target and target.id then
+                TeleportService:TeleportToPlaceInstance(game.PlaceId, target.id, LocalPlayer)
+            else
+                TeleportService:Teleport(game.PlaceId, LocalPlayer)
+            end
+        else
+            TeleportService:Teleport(game.PlaceId, LocalPlayer)
+        end
+    end
+})
+
+print("Anti Afk On")
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:Connect(function() 
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame); 
+    wait(1); 
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame) 
+end)
+
+end
