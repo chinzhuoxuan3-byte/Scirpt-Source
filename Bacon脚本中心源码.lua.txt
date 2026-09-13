@@ -1,0 +1,788 @@
+--Hi
+local starterGui = game:GetService("StarterGui")
+local runService = game:GetService("RunService")
+local userInputService = game:GetService("UserInputService")
+local players = game:GetService("Players")
+
+starterGui:SetCore("SendNotification", {
+  Title = "通知",
+  Text = "依旧培根头制作",
+  Duration = 3,
+  Icon = "rbxassetid://104348365371258",
+})
+
+task.wait(3)
+
+starterGui:SetCore("SendNotification", {
+  Title = "通知",
+  Text = "帮助者:守村人",
+  Duration = 3,
+  Icon = "rbxassetid://104348365371258",
+})
+
+task.wait(3)
+
+starterGui:SetCore("SendNotification", {
+  Title = "通知",
+  Text = "持续会更新的还有窗脚本和窗脚本中心",
+  Duration = 3,
+  Icon = "rbxassetid://104348365371258",
+})
+
+task.wait(3)
+
+local new = loadstring((game:HttpGet(
+  "https://raw.githubusercontent.com/3345179204-sudo/-/refs/heads/main/UI%E5%BA%93", true
+):gsub(
+  "rbxassetid://87681306222781", "rbxassetid://104348365371258"
+):gsub(
+  "rbxassetid://113414340919669", "rbxassetid://104348365371258"
+)))():new(
+  "制作脚本", "dark"
+)
+
+local section = new:Tab("公告", "104348365371258"):section("公告信息", true)
+section:Label("欢迎使用我制作的脚本！")
+section:Label("制作者：依旧培根头")
+section:Label("帮助者：守村人")
+section:Label("脚本完全免费，禁止倒卖！")
+section:Button("复制QQ群号", function() setclipboard("1107181697") end)
+
+local tab = new:Tab("通用", "104348365371258")
+
+local section2 = tab:section("基础功能", true)
+
+section2:Slider("移动速度", "walkspeed", 16, 0, 350, false, function(walkSpeed)
+  local localPlayer = game.Players.LocalPlayer
+  local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+  character:WaitForChild("Humanoid").WalkSpeed = walkSpeed
+end)
+
+section2:Slider("快速跑步", "runspeed", 16, 0, 500, false, function(runSpeed)
+  getgenv().RunSpeed = runSpeed
+end)
+
+section2:Toggle("快速跑步开关", "speedrun", false, function(speedRun)
+  getgenv().SpeedRun = speedRun
+end)
+
+runService.Heartbeat:Connect(function()
+  if getgenv().SpeedRun then
+    local character2 = game.Players.LocalPlayer.Character
+    local runSpeed2 = getgenv().RunSpeed or 50
+
+    if character2 and character2:FindFirstChild("Humanoid")
+      and character2.Humanoid.MoveDirection.Magnitude > 0 then
+      character2:TranslateBy(character2.Humanoid.MoveDirection * runSpeed2 / 0.5)
+    end
+  end
+end)
+
+section2:Slider("跳跃高度", "jumppower", 50, 50, 500, false, function(jumpPower)
+  local localPlayer2 = game.Players.LocalPlayer
+
+  local humanoid = (localPlayer2.Character or localPlayer2.CharacterAdded:Wait()):WaitForChild("Humanoid")
+  humanoid.UseJumpPower = true
+  humanoid.JumpPower = jumpPower
+end)
+
+section2:Toggle("无限跳跃", "infinitejump", false, function(p1)
+  getgenv().InfiniteJump = p1
+
+  if p1 then
+    local v1 = getgenv()
+
+    v1.JumpConnection = userInputService.JumpRequest:Connect(function()
+      if getgenv().InfiniteJump then
+        local character3 = game.Players.LocalPlayer.Character
+
+        if character3 then
+          local humanoid2 = character3:FindFirstChild("Humanoid")
+
+          if humanoid2 then
+            humanoid2:ChangeState(Enum.HumanoidStateType.Jumping)
+          end
+        end
+      end
+    end)
+
+    task.spawn(function()
+      local localPlayer3 = game.Players.LocalPlayer
+
+      while getgenv().InfiniteJump do
+        task.wait(0.1)
+        local character4 = localPlayer3.Character
+
+        if character4 then
+          local humanoid3 = character4:FindFirstChild("Humanoid")
+
+          if humanoid3 and humanoid3.FloorMaterial == Enum.Material.Air then
+            humanoid3:ChangeState(Enum.HumanoidStateType.Jumping)
+          end
+        end
+      end
+    end)
+  elseif getgenv().JumpConnection then
+    getgenv().JumpConnection:Disconnect()
+    getgenv().JumpConnection = nil
+  end
+end)
+
+section2:Toggle("穿墙", "noclip", false, function(p2)
+  getgenv().Noclip = p2
+
+  if p2 then
+    task.spawn(function()
+      local localPlayer4 = game.Players.LocalPlayer
+
+      while getgenv().Noclip do
+        task.wait(0.1)
+        local character5 = localPlayer4.Character
+
+        if character5 then
+          for index, value in ipairs(character5:GetDescendants()) do
+            if value:IsA("BasePart") then
+              value.CanCollide = false
+            end
+          end
+        end
+      end
+    end)
+  else
+    local character6 = game.Players.LocalPlayer.Character
+
+    if character6 then
+      for index2, value2 in ipairs(character6:GetDescendants()) do
+        if value2:IsA("BasePart") then
+          value2.CanCollide = true
+        end
+      end
+    end
+  end
+end)
+
+section2:Button("飞行V3", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/FlyUI/refs/heads/main/FlyV3"))()
+end)
+
+section2:Toggle("防甩飞", "antifling", false, function(p3)
+  getgenv().CollisionLoop = p3
+
+  if p3 then
+    task.spawn(function()
+      local localPlayer5 = players.LocalPlayer
+
+      while getgenv().CollisionLoop do
+        task.wait(0.3)
+
+        for index3, value3 in ipairs(players:GetPlayers()) do
+          if value3 ~= localPlayer5 and value3.Character then
+            for index4, value4 in ipairs(value3.Character:GetDescendants()) do
+              if value4:IsA("BasePart") then
+                value4.CanCollide = false
+              end
+            end
+          end
+        end
+      end
+    end)
+  else
+    for index5, value5 in ipairs(players:GetPlayers()) do
+      if value5.Character then
+        for index6, value6 in ipairs(value5.Character:GetDescendants()) do
+          if value6:IsA("BasePart") then
+            value6.CanCollide = true
+          end
+        end
+      end
+    end
+  end
+end)
+
+section2:Textbox("重力设置", "gravity", "196.2", function(p4)
+  local v2 = tonumber(p4)
+
+  if v2 then
+    workspace.Gravity = v2
+  end
+end)
+
+section2:Textbox("旋转速度", "spinspeed", "10", function(p5)
+  getgenv().SpinSpeed = tonumber(p5) or 10
+end)
+
+section2:Toggle("旋转开关", "spinenabled", false, function(p6)
+  getgenv().SpinEnabled = p6
+
+  if p6 then
+    task.spawn(function()
+      local localPlayer6 = game.Players.LocalPlayer
+
+      while getgenv().SpinEnabled do
+        task.wait()
+        local character7 = localPlayer6.Character
+
+        if character7 then
+          local humanoidRootPart = character7:FindFirstChild("HumanoidRootPart")
+
+          if humanoidRootPart then
+            local v3 = getgenv()
+
+            humanoidRootPart.CFrame = humanoidRootPart.CFrame
+              * CFrame.Angles(0, math.rad(v3.SpinSpeed or 10), 0)
+          end
+        end
+      end
+    end)
+  end
+end)
+
+section2:Slider("血量上限", "maxhealth", 100, 100, 10000, false, function(p7)
+  local localPlayer7 = game.Players.LocalPlayer
+
+  local humanoid4 = (localPlayer7.Character or localPlayer7.CharacterAdded:Wait()):WaitForChild("Humanoid")
+  humanoid4.MaxHealth = p7
+  humanoid4.Health = p7
+end)
+
+section2:Slider("修改血量", "health", 100, 1, 10000, false, function(health)
+  local localPlayer8 = game.Players.LocalPlayer
+  local character8 = localPlayer8.Character or localPlayer8.CharacterAdded:Wait()
+  character8:WaitForChild("Humanoid").Health = health
+end)
+
+local section3 = tab:section("视觉", true)
+
+section3:Toggle("隐身(开启后需要重生才恢复)", "invisible", false, function(p8)
+  getgenv().Invisible = p8
+  local localPlayer9 = game.Players.LocalPlayer
+  local v4 = {}
+
+  local function f1(p9, p10)
+    if not p9 then
+      return
+    end
+
+    for index7, value7 in ipairs(p9:GetDescendants()) do
+      if value7:IsA("BasePart") then
+        if p10 == 1 and not v4[value7] then
+          v4[value7] = value7.Transparency
+        end
+
+        value7.Transparency = p10
+      end
+    end
+
+    for index8, value8 in ipairs(p9:GetDescendants()) do
+      if value8:IsA("Decal") or value8:IsA("Texture") then
+        if p10 == 1 and not v4[value8] then
+          v4[value8] = value8.Transparency
+        end
+
+        value8.Transparency = p10
+      end
+    end
+
+    for index9, value9 in ipairs(p9:GetDescendants()) do
+      if value9:IsA("SpecialMesh") or value9:IsA("BlockMesh") or value9:IsA("CylinderMesh") then
+        if p10 == 1 and not v4[value9] then
+          v4[value9] = value9.Transparency
+        end
+
+        value9.Transparency = p10
+      end
+    end
+  end
+
+  local function f2(p11)
+    if not p11 then
+      return
+    end
+
+    for index10, value10 in ipairs(p11:GetDescendants()) do
+      if value10:IsA("BasePart") and v4[value10] then
+        value10.Transparency = v4[value10]
+      end
+    end
+
+    for index11, value11 in ipairs(p11:GetDescendants()) do
+      if (value11:IsA("Decal") or value11:IsA("Texture")) and v4[value11] then
+        value11.Transparency = v4[value11]
+      end
+    end
+
+    for index12, value12 in ipairs(p11:GetDescendants()) do
+      if (value12:IsA("SpecialMesh") or value12:IsA("BlockMesh") or value12:IsA("CylinderMesh"))
+        and v4[value12] then
+        value12.Transparency = v4[value12]
+      end
+    end
+
+    v4 = {}
+  end
+
+  local invisibleLoop
+
+  if p8 then
+    if localPlayer9.Character then
+      f1(localPlayer9.Character, 1)
+    end
+
+    getgenv().InvisibleLoop = true
+    invisibleLoop = getgenv().InvisibleLoop
+
+    task.spawn(function()
+      while getgenv().Invisible and getgenv().InvisibleLoop == invisibleLoop do
+        task.wait(0.1)
+
+        if localPlayer9.Character then
+          f1(localPlayer9.Character, 1)
+        end
+      end
+    end)
+
+    if getgenv().InvisibleCharConnection then
+      getgenv().InvisibleCharConnection:Disconnect()
+    end
+
+    local v5 = getgenv()
+
+    v5.InvisibleCharConnection = localPlayer9.CharacterAdded:Connect(function(character9)
+      task.wait(0.1)
+
+      if getgenv().Invisible then
+        f1(character9, 1)
+      end
+    end)
+  else
+    getgenv().InvisibleLoop = false
+
+    if getgenv().InvisibleCharConnection then
+      getgenv().InvisibleCharConnection:Disconnect()
+      getgenv().InvisibleCharConnection = nil
+    end
+
+    if localPlayer9.Character then
+      f2(localPlayer9.Character)
+    end
+
+    v4 = {}
+  end
+end)
+
+section3:Toggle("断腿开关", "korblox", false, function(p12)
+  getgenv().KorbloxEnabled = p12
+  local localPlayer10
+
+  if p12 then
+    localPlayer10 = game.Players.LocalPlayer
+
+    task.spawn(function()
+      while getgenv().KorbloxEnabled do
+        task.wait(0.5)
+        local character10 = localPlayer10.Character
+
+        if character10 then
+          local humanoid5 = character10:FindFirstChildOfClass("Humanoid")
+
+          if humanoid5 then
+            if humanoid5.RigType == Enum.HumanoidRigType.R15 then
+              local rightFoot = character10:FindFirstChild("RightFoot")
+              local rightLowerLeg = character10:FindFirstChild("RightLowerLeg")
+              local rightUpperLeg = character10:FindFirstChild("RightUpperLeg")
+
+              if rightUpperLeg and rightLowerLeg and rightFoot then
+                rightFoot.Transparency = 1
+                rightLowerLeg.Transparency = 1
+
+                rightUpperLeg.MeshId = "http://www.roblox.com/asset/?id=902942096"
+                rightUpperLeg.TextureID = "http://roblox.com/asset/?id=902843398"
+              end
+            else
+              local rightLeg = character10:FindFirstChild("Right Leg")
+
+              if rightLeg then
+                local specialMesh = rightLeg:FindFirstChildOfClass("SpecialMesh")
+
+                if not specialMesh then
+                  specialMesh = Instance.new("SpecialMesh")
+                  specialMesh.Parent = rightLeg
+                end
+
+                rightLeg.Color = Color3.fromRGB(64, 64, 64)
+                rightLeg.Transparency = 0
+
+                specialMesh.MeshType = Enum.MeshType.FileMesh
+                specialMesh.MeshId = "rbxassetid://101851696"
+                specialMesh.TextureId = "rbxassetid://101851254"
+                specialMesh.Scale = Vector3.new(1, 1, 1)
+              end
+            end
+          end
+        end
+      end
+    end)
+  end
+end)
+
+section3:Toggle("无头开关", "headless", false, function(p13)
+  getgenv().HeadlessEnabled = p13
+
+  if p13 then
+    local character11 = game.Players.LocalPlayer.Character
+
+    if character11 then
+      local head = character11:FindFirstChild("Head")
+
+      if head then
+        head.Transparency = 1
+
+        for index13, value13 in ipairs(head:GetChildren()) do
+          if value13:IsA("Decal") or value13:IsA("Texture") then
+            value13.Transparency = 1
+          end
+        end
+      end
+    end
+  else
+    local character12 = game.Players.LocalPlayer.Character
+
+    if character12 then
+      local head2 = character12:FindFirstChild("Head")
+
+      if head2 then
+        head2.Transparency = 0
+
+        for index14, value14 in ipairs(head2:GetChildren()) do
+          if value14:IsA("Decal") or value14:IsA("Texture") then
+            value14.Transparency = 0
+          end
+        end
+      end
+    end
+  end
+end)
+
+section3:Toggle("夜视", "nightvision", false, function(p14)
+  if p14 then
+    local v6 = game
+    v6:GetService("Lighting").Brightness = 2
+
+    local v7 = game
+    v7:GetService("Lighting").ClockTime = 14
+
+    local v8 = game
+    v8:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+  else
+    local v9 = game
+    v9:GetService("Lighting").Brightness = 1
+
+    local v10 = game
+    v10:GetService("Lighting").ClockTime = 14
+
+    local v11 = game
+    v11:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+  end
+end)
+
+section3:Toggle("无敌", "godmode", false, function(p15)
+  getgenv().GodMode = p15
+
+  if p15 then
+    task.spawn(function()
+      local localPlayer11 = game.Players.LocalPlayer
+
+      while getgenv().GodMode do
+        task.wait()
+        local character13 = localPlayer11.Character
+
+        if character13 then
+          local humanoid6 = character13:FindFirstChild("Humanoid")
+
+          if humanoid6 then
+            humanoid6.Health = humanoid6.MaxHealth
+          end
+        end
+      end
+    end)
+  end
+end)
+
+local section4 = tab:section("跟随功能", true)
+
+local dropdown = section4:Dropdown("选择跟随目标", "followtarget", {}, function(followTarget)
+  getgenv().FollowTarget = followTarget
+end)
+
+section4:Button("刷新玩家列表", function()
+  local v12 = {}
+
+  for index15, value15 in ipairs(game.Players:GetPlayers()) do
+    if value15 ~= game.Players.LocalPlayer then
+      table.insert(v12, value15.Name)
+    end
+  end
+
+  dropdown:SetOptions(v12)
+end)
+
+section4:Slider("前后距离", "followforward", 5, -20, 20, false, function(followForward)
+  getgenv().FollowForward = followForward
+end)
+
+section4:Slider("左右距离", "followside", 0, -20, 20, false, function(followSide)
+  getgenv().FollowSide = followSide
+end)
+
+section4:Slider("上下高度", "followheight", 0, -20, 20, false, function(followHeight)
+  getgenv().FollowHeight = followHeight
+end)
+
+section4:Toggle("跟随玩家", "followenabled", false, function(p16)
+  getgenv().FollowEnabled = p16
+  local followLoop
+
+  if p16 then
+    if getgenv().FollowLoop then
+      getgenv().FollowLoop = false
+      task.wait(0.2)
+    end
+
+    getgenv().FollowLoop = true
+    followLoop = getgenv().FollowLoop
+
+    task.spawn(function()
+      local localPlayer12 = game.Players.LocalPlayer
+
+      while getgenv().FollowEnabled and getgenv().FollowLoop == followLoop do
+        task.wait(0.05)
+        local followTarget2 = getgenv().FollowTarget
+
+        if not followTarget2 then
+        else
+          local findFirstChild = game.Players:FindFirstChild(followTarget2)
+          local character14 = localPlayer12.Character
+
+          if findFirstChild and findFirstChild.Character and character14 then
+            local humanoidRootPart2 = findFirstChild.Character:FindFirstChild("HumanoidRootPart")
+            local humanoidRootPart3 = character14:FindFirstChild("HumanoidRootPart")
+            local v13 = humanoidRootPart2
+            local humanoid7 = character14:FindFirstChild("Humanoid")
+
+            if humanoidRootPart2 then
+              v13 = humanoidRootPart3 and humanoid7 and humanoid7.Health > 0
+            end
+
+            if v13 then
+              local v14 = getgenv()
+              local v15 = getgenv()
+              local v16 = getgenv()
+              local cframe = humanoidRootPart2.CFrame
+              local vector = Vector3.new(0, v16.FollowHeight or 0, 0)
+
+              humanoidRootPart3.CFrame = CFrame.new(cframe.Position
+                + cframe.LookVector * -(v14.FollowForward or 5)
+                + cframe.RightVector * (v15.FollowSide or 0) + vector, humanoidRootPart2.Position)
+
+              if humanoidRootPart3:FindFirstChild("Velocity") then
+                humanoidRootPart3.Velocity = Vector3.new(0, 0, 0)
+              end
+            end
+          end
+        end
+      end
+    end)
+  else
+    getgenv().FollowLoop = false
+  end
+end)
+
+section4:Toggle("玩家进入通知", "joinnotify", false, function(playerJoinNotify)
+  getgenv().PlayerJoinNotify = playerJoinNotify
+end)
+
+game.Players.PlayerAdded:Connect(function(player)
+  if getgenv().PlayerJoinNotify then
+    local v17 = {
+      pcall(function()
+        return players:GetUserThumbnailAsync(
+          player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420
+        )
+      end),
+    }
+
+    starterGui:SetCore("SendNotification", {
+      Title = "玩家进入",
+      Text = player.DisplayName .. " (@" .. player.Name .. ")",
+      Duration = 5,
+      Icon = v17[2],
+    })
+  end
+end)
+
+game.Players.PlayerRemoving:Connect(function(player2)
+  if getgenv().PlayerJoinNotify then
+    local v18 = {
+      pcall(function()
+        return players:GetUserThumbnailAsync(
+          player2.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420
+        )
+      end),
+    }
+
+    starterGui:SetCore("SendNotification", {
+      Title = "玩家退出",
+      Text = player2.DisplayName .. " (@" .. player2.Name .. ")",
+      Duration = 5,
+      Icon = v18[2],
+    })
+  end
+end)
+
+local section5 = tab:section("无敌少侠飞行", true)
+
+section5:Button("无敌少侠飞行r15", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/396abc/Script/refs/heads/main/MobileFly.lua"))()
+end)
+
+section5:Button("r6无敌少侠", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/ke9460394-dot/ugik/refs/heads/main/%E6%97%A0%E6%95%8C%E5%B0%91%E4%BE%A0%E9%A3%9E%E8%A1%8Cr6.txt"))()
+end)
+
+local section6 = tab:section("导管", true)
+
+section6:Button("r15导管", function()
+  loadstring(game:HttpGet("https://pastefy.app/YZoglOyJ/raw"))()
+end)
+
+section6:Button("r6导管", function()
+  loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))()
+end)
+
+local section7 = tab:section("动作脚本", true)
+
+section7:Button("动作脚本", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/7yd7/Hub/refs/heads/Branch/GUIS/Emotes.lua"))()
+end)
+
+section7:Button("r6动作脚本", function()
+  loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-R6-Animations-Menu-By-Me-19427"))()
+end)
+
+local section8 = tab:section("其他", true)
+
+section8:Button("F3X gui", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/XvPxOL/refs/heads/main/F3X%20gui.lua"))()
+end)
+
+section8:Button("假延迟脚本", function()
+  loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Egor-simple-ui-91106"))()
+end)
+
+section8:Button("飞车", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/pro/refs/heads/main/Flying%20car"))()
+end)
+
+section8:Button("甩飞所有人", function()
+  loadstring(game:HttpGet("https://pastebin.com/raw/zqyDSUWX"))()
+end)
+
+section8:Button("祖国人", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/kongbaNB/-/refs/heads/main/%E7%A5%96%E5%9B%BD%E4%BA%BA%E6%B1%89%E5%8C%96"))()
+end)
+
+section8:Button("火车头", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/giobolqv1/A-Train-by-GioBolqv1-/refs/heads/main/train.lua"))()
+end)
+
+local section9 = tab:section("IY指令", true)
+
+section9:Button("执行Dex", function()
+  loadstring(game:HttpGet("https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua"))()
+end)
+
+section9:Button("执行rspy", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/SimpleSpyV3/script"))()
+end)
+
+section9:Button("执行Cspy", function()
+  loadstring(game:HttpGet("https://gitlab.com/upio/cobalt/-/releases/permalink/latest/downloads/Cobalt.luau"))()
+end)
+
+section9:Button("执行mdex", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
+end)
+
+tab:section("娱乐脚本", true):Button("获得AK47", function()
+  loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-EPIC-FE-AK47-5040"))()
+end)
+
+tab:section("甩飞碰人", true):Button("雷欧飞踢", function()
+  loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-THE-REAL-dropkick-177199"))()
+end)
+
+local section10 = new:Tab("FE", "104348365371258"):section("FE功能", true)
+
+section10:Button("096脚本(仅限r6)", function()
+  loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FE-SCP-096-36948"))()
+end)
+
+section10:Button("海绵宝宝(需要饰品)", function()
+  loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Fe-Emote-Player-51936"))()
+end)
+
+local section11 = new:Tab("脚本", "104348365371258"):section("脚本加载", true)
+
+section11:Button("皮脚本", function()
+  getgenv().XiaoPi = "皮脚本QQ群1002100032"
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaopi77/xiaopi77/main/QQ1002100032-Roblox-Pi-script.lua"))()
+end)
+
+section11:Button("XK", function()
+  loadstring(game:HttpGet("https://github.com/devslopo/DVES/raw/main/XK%20Hub"))()
+end)
+
+section11:Button("窗脚本中心", function()
+  loadstring(game:HttpGet("https://github.com/pl11451481mvcxz/chuangjiaobenzhongxin/raw/refs/heads/main/Script.lua"))()
+end)
+
+section11:Button("窗脚本", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/nb/refs/heads/main/%E7%AA%97%E8%84%9A%E6%9C%AC%E5%8A%A0%E8%BD%BD%E5%99%A8.lua"))()
+end)
+
+section11:Button("vexonhub", function()
+  loadstring(game:HttpGet("https://rawscripts.net/raw/The-Strongest-Battlegrounds-TSB-SCRIPT-VexonHub-146385"))()
+end)
+
+section11:Button("tsb2", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/ke9460394-dot/ugik/refs/heads/main/phantasm.lua"))()
+end)
+
+section11:Button("叶脚本", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/roblox-ye/QQ515966991/refs/heads/main/ROBLOX-CNVIP-XIAOYE.lua"))()
+end)
+
+section11:Button("夜脚本", function()
+  loadstring(game:HttpGet(
+    "https://raw.githubusercontent.com/61646764343/ye-script/refs/heads/main/ye%20script.lua",
+    true
+  ))()
+end)
+
+section11:Button("情云脚本中心", function() end)
+
+section11:Button("监狱人玍删掉门", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/pl11451481mvcxz/Q1107181697/refs/heads/main/Roor.lua"))()
+end)
+
+section11:Button("最强战场1v1", function()
+  loadstring(game:HttpGet("https://pastefy.app/HxjXAU2d/raw"))()
+end)
+
+section11:Button("ROB", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Zyb150933/ROB/refs/heads/main/ROB.V2"))()
+end)
+
+section11:Button("黑白脚本", function()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/tfcygvunbind/Apple/main/黑白脚本加载器"))()
+end)
