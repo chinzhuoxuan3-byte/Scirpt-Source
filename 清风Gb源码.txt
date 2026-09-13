@@ -1,7 +1,4 @@
--- deobfuscated by SL | Source Leak | https://discord.gg/btRTQhgmm
-
--- Thiѕ Fіle Wаs Dеobfusсаtеԁ By LeakD
--- 
+--Yeskid
 
 if setclipboard then
 
