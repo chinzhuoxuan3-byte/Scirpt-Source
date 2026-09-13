@@ -1,0 +1,6033 @@
+-- 开源国内改字脚本狗-停止使用Ai改字缝合别人的脚本装自己的-Yes
+
+local t1 = {}
+local t2 = {}
+local v3 = unpack or table.unpack
+game:GetService("StarterGui"):SetCore("SendNotification", {
+	Title = "Chain BK",
+	Text = "脚本正在加载中",
+	Duration = 3
+})
+t2.value1 = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+if not t2.value1 then
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+		Title = "Chain BK",
+		Text = "github拉取失败请检查网络环境或加速器",
+		Duration = 5
+	})
+
+    return
+end
+local t3 = {}
+t1.value2 = game:GetService("Players")
+t3.value1 = t1.value2
+t1.value1 = game:GetService("RunService")
+t3.value2 = t1.value1
+t1.value4 = game:GetService("Lighting")
+t3.value3 = t1.value4
+t1.value6 = game:GetService("UserInputService")
+t3.value4 = t1.value6
+t1.value3 = game:GetService("Workspace")
+t3.value5 = t1.value3
+t1.value5 = game:GetService("HttpService")
+t3.value6 = t1.value5
+t1.value11 = game:GetService("TeleportService")
+t3.value7 = t1.value11
+t1.value7 = game:GetService("CoreGui")
+t3.value8 = t1.value7
+t1.value8 = game:GetService("VirtualInputManager")
+t3.value9 = t1.value8
+t1.value8 = t3.value1.LocalPlayer
+t1.value9 = t3.value5.CurrentCamera
+t3.value10 = t1.value9
+t1.value9 = t3.value5:WaitForChild("Misc"):WaitForChild("AI")
+t3.value11 = t1.value9
+t1.value9 = t3.value5:WaitForChild("Misc"):WaitForChild("Zones")
+t1.value9 = t1.value9:WaitForChild("LootingItems"):WaitForChild("Scrap")
+t3.value12 = t1.value9
+t1.value9 = t1.value8:WaitForChild("PlayerGui"):WaitForChild("Ingame"):WaitForChild("MechanicsFrame")
+t3.value13 = t1.value9
+t1.value9 = t3.value5:WaitForChild("GameStuff"):WaitForChild("GameSections")
+t3.value14 = t1.value9
+t1.value9 = t3.value5:WaitForChild("GameStuff"):WaitForChild("Values")
+t3.value15 = t1.value9
+t1.value9 = game.Players.LocalPlayer
+t3.value16 = t1.value9
+t1.value10 = t3.value16
+t1.value9 = t1.value10.Character
+t3.value17 = false
+t3.value18 = nil
+t3.value19 = nil
+function t1.value16(p1)
+    pcall(function()
+        local Character = game.Players.LocalPlayer.Character
+
+        if Character then
+            for _, descendant in ipairs(Character:GetDescendants()) do
+                if descendant:IsA("BasePart") then
+                    descendant.CanCollide = p1
+                end
+            end
+        end
+    end)
+end
+t3.value20 = nil
+t3.value21 = t1.value16
+t3.value22 = false
+t3.value23 = {}
+t3.value24 = nil
+t1.value16 = {
+	"QTE",
+	"QTEXSaw",
+	"QTEToma"
+}
+function t1.value17(p2)
+    local u65 = p2
+    pcall(function()
+        t3.value9:SendKeyEvent(true, u65, false, game)
+        task.wait(0.02)
+        t3.value9:SendKeyEvent(false, u65, false, game)
+    end)
+end
+t3.value25 = t1.value16
+t3.value26 = t1.value17
+function t1.value18(p3)
+    local u67 = p3
+    pcall(function()
+        local v708 = u67.AbsolutePosition + u67.AbsoluteSize / 2
+
+        t3.value9:SendMouseButtonEvent(v708.X, v708.Y, 0, true, game, 1)
+        task.wait(0.02)
+        t3.value9:SendMouseButtonEvent(v708.X, v708.Y, 0, false, game, 1)
+    end)
+end
+t3.value27 = t1.value18
+t3.value28 = nil
+function t1.value19(p4)
+    local ImageButton = p4:FindFirstChild("ImageButton")
+
+    if not ImageButton then
+        return
+    end
+
+    pcall(function()
+        for _, v in pairs(getconnections(ImageButton.Activated)) do
+            v:Fire()
+        end
+    end)
+    t3.value27(ImageButton)
+
+    local PC = ImageButton:FindFirstChild("PC")
+    local v71 = PC and PC.Text or ""
+    local v72 = Enum.KeyCode[v71]
+
+    if v72 then
+        t3.value26(v72)
+    end
+end
+function t1.value15()
+    if t3.value24 then
+        t3.value24:Disconnect()
+        t3.value24 = nil
+    end
+end
+function t1.value14(p5)
+    if not p5 then
+        return
+    end
+
+    local connection = p5:GetPropertyChangedSignal("Visible"):Connect(function()
+        local value22 = t3.value22
+
+        if value22 then
+            value22 = p5.Visible
+        end
+
+        if value22 then
+            local v712 = p5
+
+            t3.value28(v712)
+        end
+    end)
+
+    table.insert(t3.value23, connection)
+
+    if p5.Visible and t3.value22 then
+        t3.value28(p5)
+    end
+end
+t3.value28 = t1.value19
+function t1.value12()
+    if t3.value24 then
+        t3.value24:Disconnect()
+    end
+
+    t3.value2.Heartbeat:Connect(function()
+        if not t3.value22 then
+            return
+        end
+
+        for _, v in ipairs(t3.value25) do
+            local v2 = t3.value13:FindFirstChild(v)
+
+            if v2 and v2.Visible then
+                t3.value28(v2)
+            end
+        end
+    end)
+end
+t3.value29 = t1.value14
+t3.value30 = t1.value12
+t3.value31 = nil
+function t1.value13()
+
+    for v77, v78 in ipairs(t3.value23) do
+
+        v78:Disconnect()
+    end
+    if t3.value22 then
+        for _, v in ipairs(t3.value25) do
+            local value13 = t3.value13
+            local FindFirstChild = value13.FindFirstChild
+
+            t3.value29(FindFirstChild(value13, v))
+        end
+
+        t3.value30()
+
+        return
+    end
+    t3.value31()
+end
+t3.value31 = t1.value15
+t3.value32 = t1.value13
+t3.value16.CharacterAdded:Connect(function()
+    task.wait(1)
+    t3.value32()
+end)
+
+function t1.value20()
+    if t3.value18 then
+        t3.value18:Disconnect()
+        t3.value18 = nil
+    end
+
+    t3.value21(false)
+    t3.value18 = game:GetService("RunService").RenderStepped:Connect(function()
+        if t3.value17 then
+            t3.value21(false)
+        end
+    end)
+end
+t3.value33 = t1.value20
+t3.value34 = nil
+function t1.value21(p6)
+    t3.value17 = p6
+
+    if p6 then
+        t3.value33()
+
+        return
+    end
+
+    t3.value34()
+end
+function t3.value34()
+    if t3.value18 then
+        t3.value18:Disconnect()
+    end
+
+    t3.value21(true)
+end
+t3.value35 = t1.value21
+t1.value21 = game.Players.LocalPlayer.CharacterAdded
+function t1.value22(p7)
+    p7:WaitForChild("Humanoid")
+    task.wait(0.5)
+
+    if t3.value17 then
+        t3.value33()
+    end
+end
+t1.value21:Connect(t1.value22)
+task.spawn(function()
+    local Blueprints = t3.value16:WaitForChild("PlayerStats"):WaitForChild("Blueprints")
+    local t4 = {
+		CombatKnife = "战斗小刀",
+		DoubleBarrel = "双管霰弹枪",
+		M1911 = "M1911手枪",
+		Machete = "砍刀",
+		Deagle = "沙漠之鹰"
+	}
+
+    for _, v in ipairs({
+		"CombatKnife",
+		"DoubleBarrel",
+		"M1911",
+		"Machete",
+		"Deagle"
+	}) do
+        local v90 = v
+
+        pcall(function()
+            if Blueprints:GetAttribute(v90) ~= nil then
+                Blueprints:SetAttribute(v90, true)
+
+                local value1 = t2.value1
+                local v717 = (t4[v90] or v90) .. " 已解锁"
+
+                value1:Notify({
+					Title = "蓝图解锁",
+					Content = v717,
+					Duration = 10,
+					Icon = "check-circle"
+				})
+                task.wait(0.3)
+            end
+        end)
+    end
+
+    local Blueprints2 = t3.value16:WaitForChild("PlayerGui"):WaitForChild("Ingame"):WaitForChild("Workbench"):WaitForChild("MainFrame"):WaitForChild("Frame"):WaitForChild("Menu"):WaitForChild("Blueprints")
+    local t5 = {
+		"Deagle",
+		"CombatKnife",
+		"DoubleBarrel",
+		"M1911",
+		"Machete"
+	}
+
+    local function v93()
+        for _, v in ipairs(t5) do
+            local v720 = v
+
+            pcall(function()
+                local v929 = Blueprints2:FindFirstChild(v720)
+
+                if v929 then
+                    v929.Visible = true
+
+                    local LockGradient = v929:FindFirstChild("LockGradient")
+
+                    if LockGradient then
+                        LockGradient.Visible = false
+                    end
+                end
+            end)
+        end
+    end
+
+    v93()
+    Blueprints2.DescendantAdded:Connect(function(_)
+        task.wait(0.1)
+        v93()
+    end)
+end)
+t3.value36 = nil
+t3.value36 = false
+if not pcall(function()
+    local value1 = t2.value1
+    local t6 = {
+		Title = "关闭脚本",
+		Variant = "Secondary",
+		Callback = function()
+    end
+	}
+    local t7 = {
+		Title = "启动",
+		Icon = "check",
+		Variant = "Primary",
+		Callback = function()
+        t3.value36 = true
+    end
+	}
+
+    value1:Popup({
+		Title = "ChainBK",
+		IconThemed = true,
+		Content = " 脚本免费开源 电脑端K打开/关闭UI 脚本作者:恋恋 如遇卡顿加载不出来尝试切换加速器或将控制台报错截图发至群内",
+		Buttons = {
+			t6,
+			t7
+		}
+	})
+end) then
+    warn("Popup 拉取错误，已跳过")
+    t3.value36 = true
+end
+local _ = t3.value36
+repeat
+    task.wait()
+until t3.value36
+local value1 = t2.value1
+t1.value23 = UDim2.fromOffset(800, 700)
+
+local CreateWindow = value1.CreateWindow
+function t1.value32()
+end
+t1.value30 = {
+	Enabled = true,
+	Callback = t1.value32,
+	Anonymous = false
+}
+t3.value37 = CreateWindow(value1, {
+	Title = "Chain BK",
+	Icon = "rbxassetid://138875166317938",
+	IconThemed = false,
+	Author = "V3.0 作者:恋恋",
+	Folder = "ChainBK",
+	Size = t1.value23,
+	Transparent = true,
+	Theme = "Dark",
+	Background = "rbxassetid://138875166317938",
+	BackgroundImageTransparency = 0.5,
+	User = t1.value30,
+	SideBarWidth = 200,
+	ScrollBarEnabled = true
+})
+t3.value37:SetToggleKey(Enum.KeyCode.K)
+t3.value38 = {}
+t3.value38.FuncTab = t3.value37:Tab({
+	Title = "主要功能",
+	Icon = "zap"
+})
+t3.value38.VisualTab = t3.value37:Tab({
+	Title = "视觉效果",
+	Icon = "eye"
+})
+t3.value38.RemoteTab = t3.value37:Tab({
+	Title = "杂项功能",
+	Icon = "monitor"
+})
+t3.value38.TeleportTab = t3.value37:Tab({
+	Title = "传送",
+	Icon = "map-pin"
+})
+t3.value38.ServerTab = t3.value37:Tab({
+	Title = "转服务器",
+	Icon = "server"
+})
+local v8 = t3.value38.TeleportTab:Section({
+	Title = "点击传送",
+	Opened = true
+})
+local vector3 = Vector3.new(41.977924346924, -97.968765258789, 353.27160644531)
+local t8 = {
+	Name = "排行榜",
+	Pos = vector3
+}
+local vector3_2 = Vector3.new(-312.85406494141, -89.674842834473, 274.70983886719)
+local t9 = {
+	Name = "偏远房子",
+	Pos = vector3_2
+}
+local vector3_3 = Vector3.new(316.26736450195, -117.1593170166, -216.89208984375)
+local t10 = {
+	Name = "仓库",
+	Pos = vector3_3
+}
+local vector3_4 = Vector3.new(158.31149291992, -94.230567932129, 206.02104187012)
+local t11 = {
+	Name = "小屋",
+	Pos = vector3_4
+}
+local vector3_5 = Vector3.new(-34.744682312012, -106.63446807861, -182.37461853027)
+local t12 = {
+	Name = "祭坛",
+	Pos = vector3_5
+}
+local vector3_6 = Vector3.new(-196.43980407715, -97.050804138184, -230.55708312988)
+local t13 = {
+	Name = "帐篷",
+	Pos = vector3_6
+}
+t1.value23 = Vector3.new(-209.98725891113, -110.89064788818, -106.05029296875)
+
+local t14 = {
+	Name = "发电站",
+	Pos = t1.value23
+}
+t1.value24 = Vector3.new(-376.64971923828, -115.0693359375, 37.893844604492)
+
+local t15 = {
+	Name = "无线电塔",
+	Pos = t1.value24
+}
+t1.value25 = Vector3.new(-108.72883605957, -86.329093933105, 212.69923400879)
+
+local t16 = {
+	Name = "商店",
+	Pos = t1.value25
+}
+t1.value26 = Vector3.new(161.29835510254, -103.65132904053, -19.295833587646)
+
+local t17 = {
+	Name = "工作间",
+	Pos = t1.value26
+}
+t1.value27 = Vector3.new(510.2, -112.9, 23.1)
+
+local t18 = {
+	Name = "维修隧道",
+	Pos = t1.value27
+}
+for _, v in ipairs({
+	t8,
+	t9,
+	t10,
+	t11,
+	t12,
+	t13,
+	t14,
+	t15,
+	t16,
+	t17,
+	t18
+}) do
+    local v28 = v
+
+    v8:Button({
+		Title = v28.Name,
+		Callback = function()
+        pcall(function()
+            local Character = t3.value16.Character
+
+            if not Character then
+                Character = t3.value16.CharacterAdded:Wait()
+            end
+
+            Character:WaitForChild("HumanoidRootPart").CFrame = CFrame.new(v28.Pos)
+
+            local value1_2 = t2.value1
+            local v724 = "已传送到 " .. v28.Name
+
+            value1_2:Notify({
+					Title = "传送完成",
+					Content = v724,
+					Duration = 3,
+					Icon = "check-circle"
+				})
+        end)
+    end
+	})
+end
+t3.value38.SettingsTab = t3.value37:Tab({
+	Title = "设置",
+	Icon = "settings"
+})
+t3.value37:SelectTab(1)
+
+local color3 = Color3.fromRGB(0, 120, 255)
+local color3_2 = Color3.fromRGB(255, 21, 21)
+local color3_3 = Color3.fromRGB(255, 255, 0)
+local color3_4 = Color3.fromRGB(255, 200, 0)
+
+t1.value57 = Color3.fromRGB(170, 0, 255)
+t1.value60 = Color3.fromRGB(255, 105, 180)
+t3.value39 = {
+	AutoQTE = false,
+	WinClash = false,
+	InfGas = false,
+	InfAmmo = false,
+	BulletTrack = false,
+	BulletTrail = false,
+	NoRecoil = false,
+	InfStamina = false,
+	InfCombatStamina = false,
+	InfWinchester = false,
+	PseudoGod = false,
+	PseudoGodReturnPos = nil,
+	Fullbright = false,
+	FaceChain = false,
+	AutoScrap = false,
+	ScrapRange = 50,
+	ScrapInterval = 6,
+	AutoPower = false,
+	ChainAlert = false,
+	ChainDodge = false,
+	ChainRing = true,
+	ChainRotate = true,
+	ChainRingRadius = 55,
+	SpeedBoost = false,
+	SpeedValue = 5,
+	ThirdPerson = false,
+	ThirdPersonCamLock = false,
+	NoFog = false,
+	Noclip = false,
+	Fly = false,
+	FlySpeed = 1,
+	PlayerESP_Text = true,
+	PlayerESP_Box = true,
+	PlayerESP_Color = color3,
+	ChainESP_Text = true,
+	ChainESP_Box = true,
+	ChainESP_Color = color3_2,
+	BuildingESP_Text = true,
+	BuildingESP_Box = true,
+	BuildingESP_Color = color3_3,
+	ScrapESP_Text = true,
+	ScrapESP_Box = true,
+	ScrapESP_Color = color3_4,
+	AirDropESP_Text = true,
+	AirDropESP_Box = true,
+	AirDropESP_Color = t1.value57,
+	ArtifactESP_Text = true,
+	ArtifactESP_Box = true,
+	ArtifactESP_Color = t1.value60,
+	ServerMonitor = false,
+	ServerMonitor_Interval = 30,
+	ServerMonitor_MaxServers = 20,
+	ServerMonitor_SortBy = "ping",
+	ServerMonitor_ShowEmpty = false,
+	ServerMonitor_ShowFull = false,
+	ServerMonitor_AutoRefresh = true,
+	HUD_Display = true,
+	TeleportDelay = 0.2,
+	BypassBearTrap = false,
+	CancelMomentum = false,
+	AdminCheck = false,
+	AutoDodge = false,
+	AutoSwing = false,
+	AutoDodgeChoke = false,
+	AutoDodgeScream = false,
+	GodmodeQTE = false,
+	SlowChain = false,
+	AutoSeal = false,
+	GunAura = false,
+	AutoCrucifix = false
+}
+t3.value40 = {
+	Shop = false,
+	Deconstructor = false,
+	Workbench = false
+}
+t3.value41 = t3.value16:GetMouse()
+local function v33()
+    local Shop = t3.value40.Shop
+
+    if not Shop then
+        Shop = t3.value40.Deconstructor
+
+        if not Shop then
+            Shop = t3.value40.Workbench
+        end
+    end
+
+    local value37 = t3.value37
+
+    if value37 then
+        value37 = t3.value37.Signal
+
+        if value37 then
+            value37 = t3.value37.Signal:GetValue()
+        end
+    end
+
+    if Shop or value37 then
+        t3.value4.MouseBehavior = Enum.MouseBehavior.Default
+        t3.value4.MouseIconEnabled = true
+        t3.value41.Icon = ""
+    end
+end
+function t3.value42(p9, p10)
+    local v101 = p10
+
+    if p10 then
+        v101 = false
+
+        if p9 == "Shop" then
+            local RoundTime = t3.value15:GetAttribute("RoundTime")
+
+            v101 = not not (type(RoundTime) == "number" and RoundTime > 0)
+        end
+    end
+
+    if v101 then
+        t2.value1:Notify({
+			Title = "无法开启",
+			Content = "商店只能在白天打开",
+			Duration = 3,
+			Icon = "xmark"
+		})
+
+        return false
+    end
+
+    t3.value40[p9] = p10
+
+    local Ingame = t3.value16.PlayerGui:FindFirstChild("Ingame")
+
+    if Ingame then
+        local p9_2 = Ingame:FindFirstChild(p9)
+
+        if p9_2 then
+            p9_2.Visible = p10
+        end
+    end
+
+    v33()
+
+    return true
+end
+t3.value43 = {
+	Enabled = false,
+	SavedPosition = nil,
+	Seat = nil
+}
+t1.value25 = Color3.fromRGB(0, 120, 255)
+t3.value44 = {
+	TrackActive = false,
+	TrailActive = false,
+	TrailColor = t1.value25,
+	TrailLinger = 0.5
+}
+function t3.value45()
+    local Character = t3.value16.Character
+    if Character then
+        Character = Character:FindFirstChild("HumanoidRootPart")
+    end
+    if not Character then
+        return nil
+    end
+    local n1 = 1e999
+    local HumanoidRootPartPosition
+    for _, child in ipairs(t3.value11:GetChildren()) do
+        if child:IsA("Model") then
+            local HumanoidRootPart = child:FindFirstChild("HumanoidRootPart")
+            local Humanoid = child:FindFirstChild("Humanoid")
+            local v112 = HumanoidRootPart
+
+            if HumanoidRootPart then
+                v112 = Humanoid and Humanoid.Health > 0
+            end
+
+            if v112 then
+                local Magnitude = (Character.Position - HumanoidRootPart.Position).Magnitude
+
+                if Magnitude < n1 then
+                    n1 = Magnitude
+                    HumanoidRootPartPosition = HumanoidRootPart.Position
+                end
+            end
+        end
+    end
+
+    return HumanoidRootPartPosition
+end
+local function v34(p11, p12)
+    local v116 = t3.value44.TrailLinger or 0.5
+    local Part = Instance.new("Part")
+
+    Part.Anchored = true
+    Part.CanCollide = false
+    Part.Material = Enum.Material.Neon
+    Part.Color = t3.value44.TrailColor
+    Part.Size = Vector3.new(0.05, 0.05, (p12 - p11).Magnitude)
+    Part.CFrame = CFrame.new(p11, p12) * CFrame.new(0, 0, -Part.Size.Z / 2)
+    Part.Transparency = 0
+    Part.Parent = t3.value5
+    task.spawn(function()
+        local v725 = v116 / 20
+        local n2 = 0
+
+        while true do
+            n2 += 1
+
+            if not (n2 <= 20) then
+                break
+            end
+
+            task.wait(v725)
+            Part.Transparency = n2 / 20
+        end
+
+        Part:Destroy()
+    end)
+end
+local function v35()
+    local ok, result = pcall(function()
+        return require(game:GetService("ReplicatedStorage").GameStuff.Modules.ProjectileHandler)
+    end)
+    local v120 = not ok
+
+    if not v120 then
+        v120 = not result or not result.SimulateProjectile
+    end
+
+    if v120 then
+        t2.value1:Notify({
+			Title = "子弹追踪",
+			Content = "无法找到ProjectileHandler模块",
+			Duration = 3,
+			Icon = "xmark"
+		})
+
+        return false
+    end
+
+    local SimulateProjectile = result.SimulateProjectile
+
+    local function v122(p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25)
+        if t3.value44.TrackActive and (p17 and p18) then
+            local v740 = t3.value45()
+
+            if v740 then
+                local WorldPosition = p18.WorldPosition
+
+                if t3.value44.TrailActive then
+                    v34(WorldPosition, v740)
+                end
+
+                local Unit = (v740 - WorldPosition).Unit
+                local t19 = {}
+
+                for i = 1, #p17 do
+                    t19[i] = Unit
+                end
+
+                p17 = t19
+            end
+        end
+
+        return SimulateProjectile(p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25)
+    end
+
+    if newcclosure then
+        result.SimulateProjectile = newcclosure(v122)
+    else
+        result.SimulateProjectile = v122
+    end
+
+    return true
+end
+t1.value26 = {}
+t3.value46 = {
+	Hooked = false,
+	OriginalFunctions = t1.value26,
+	TableRef = nil
+}
+t1.value26 = Instance.new("Folder")
+t3.value47 = t1.value26
+t1.value26 = t3.value47
+t1.value27 = "Name"
+t1.value26[t1.value27] = "ESP"
+t1.value26 = t3.value47
+t1.value27 = "Parent"
+t1.value28 = t3.value8
+t1.value26[t1.value27] = t1.value28
+t3.value48 = {}
+t3.value49 = {}
+function t1.value26(_, p27)
+    local Entity = p27.Entity
+
+    if not Entity then
+        return nil
+    end
+
+    local Part = p27.Part
+
+    if not Part then
+        if Entity:IsA("Player") then
+            local Character = Entity.Character
+
+            Part = Character and Character:FindFirstChild("HumanoidRootPart")
+        elseif Entity:IsA("Model") then
+            Part = Entity:FindFirstChild("HumanoidRootPart") or Entity.PrimaryPart or Entity:FindFirstChildWhichIsA("BasePart", true)
+        elseif Entity:IsA("BasePart") then
+            Part = Entity
+        end
+    end
+
+    if not Part then
+        return nil
+    end
+
+    local v128 = p27.Name or Entity.Name
+    local p27Color = p27.Color
+
+    if not p27Color then
+        p27Color = Color3.fromRGB(255, 255, 255)
+    end
+
+    local v130 = p27.Highlight ~= false
+    local v131 = p27.Box == true
+    local v132 = p27.Text ~= false
+    local v133 = p27.Distance ~= false
+    local v134 = p27.Info or nil
+    local v135 = p27.TextSize or 14
+    local v136 = p27.AlwaysOnTop ~= false
+    local StudsOffset = p27.StudsOffset
+
+    if not StudsOffset then
+        StudsOffset = Vector3.new(0, 3, 0)
+    end
+
+    local BillboardSize = p27.BillboardSize
+
+    if not BillboardSize then
+        BillboardSize = UDim2.new(0, 200, 0, 40)
+    end
+
+    local t20 = {
+		Name = v128,
+		Color = p27Color,
+		Highlight = v130,
+		Box = v131,
+		Text = v132,
+		Distance = v133,
+		Info = v134,
+		TextSize = v135,
+		AlwaysOnTop = v136,
+		StudsOffset = StudsOffset,
+		BillboardSize = BillboardSize
+	}
+    local t21 = {
+		Entity = Entity,
+		Part = Part,
+		Config = t20,
+		Enabled = true,
+		HL = nil,
+		Box = nil,
+		Gui = nil,
+		NL = nil,
+		DL = nil,
+		IL = nil
+	}
+
+    if t20.Highlight then
+        local IsA = Entity.IsA
+        local u142 = Entity
+
+        if IsA(Entity, "Player") and Entity.Character then
+            u142 = Entity.Character
+        end
+
+        pcall(function()
+            local Highlight = u142:FindFirstChildOfClass("Highlight")
+
+            if Highlight then
+                Highlight:Destroy()
+            end
+        end)
+
+        local Highlight = Instance.new("Highlight")
+
+        Highlight.FillColor = t20.Color
+        Highlight.OutlineColor = t20.Color
+        Highlight.FillTransparency = 0.6
+        Highlight.OutlineTransparency = 0.1
+
+        if t20.AlwaysOnTop then
+            Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+        end
+
+        Highlight.Parent = u142
+        t21.HL = Highlight
+    end
+
+    if Drawing then
+        t21.Box = Drawing.new("Square")
+        t21.Box.Thickness = 1
+        t21.Box.Filled = false
+        t21.Box.Visible = false
+    end
+
+    if Entity:IsA("Player") and Entity.Character then
+        local Head = Entity.Character:FindFirstChild("Head")
+
+        if Head then
+            Part = Head
+        end
+    end
+
+    local BillboardGui = Instance.new("BillboardGui")
+
+    BillboardGui.Size = t20.BillboardSize
+    BillboardGui.StudsOffset = t20.StudsOffset
+    BillboardGui.AlwaysOnTop = true
+    BillboardGui.Adornee = Part
+    BillboardGui.Parent = t3.value47
+
+    local TextLabel = Instance.new("TextLabel")
+
+    TextLabel.Size = UDim2.new(1, 0, 0, t20.TextSize + 4)
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.Text = t20.Name
+    TextLabel.TextColor3 = t20.Color
+    TextLabel.TextStrokeTransparency = 0
+    TextLabel.TextSize = t20.TextSize
+    TextLabel.Font = Enum.Font.SourceSansBold
+    TextLabel.Parent = BillboardGui
+
+    local TextLabel2 = Instance.new("TextLabel")
+
+    TextLabel2.Size = UDim2.new(1, 0, 0, t20.TextSize)
+    TextLabel2.Position = UDim2.new(0, 0, 0, t20.TextSize + 2)
+    TextLabel2.BackgroundTransparency = 1
+    TextLabel2.Text = "0m"
+    TextLabel2.TextColor3 = t20.Color
+    TextLabel2.TextStrokeTransparency = 0
+    TextLabel2.TextSize = t20.TextSize - 2
+    TextLabel2.Font = Enum.Font.SourceSans
+    TextLabel2.Parent = BillboardGui
+
+    local TextLabel3 = Instance.new("TextLabel")
+
+    TextLabel3.Size = UDim2.new(1, 0, 0, t20.TextSize)
+    TextLabel3.Position = UDim2.new(0, 0, 0, t20.TextSize * 2 + 2)
+    TextLabel3.BackgroundTransparency = 1
+    TextLabel3.Text = ""
+    TextLabel3.TextColor3 = Color3.new(1, 1, 1)
+    TextLabel3.TextStrokeTransparency = 0
+    TextLabel3.TextSize = t20.TextSize - 2
+    TextLabel3.Font = Enum.Font.SourceSans
+    TextLabel3.Visible = false
+    TextLabel3.Parent = BillboardGui
+    t21.Gui = BillboardGui
+    t21.NL = TextLabel
+    t21.DL = TextLabel2
+    t21.IL = TextLabel3
+
+    function t21.SetText(_, p29)
+        t20.Name = p29
+
+        if t21.NL then
+            t21.NL.Text = p29
+        end
+    end
+    function t21.SetColor(_, p31)
+        t20.Color = p31
+
+        if t21.HL then
+            t21.HL.FillColor = p31
+            t21.HL.OutlineColor = p31
+        end
+
+        if t21.NL then
+            t21.NL.TextColor3 = p31
+        end
+
+        if t21.DL then
+            t21.DL.TextColor3 = p31
+        end
+
+        if t21.Box then
+            t21.Box.Color = p31
+        end
+    end
+    function t21.SetEnabled(_, p33)
+        t21.Enabled = p33
+
+        if not p33 then
+            if t21.HL then
+                t21.HL.Enabled = false
+            end
+
+            if t21.Gui then
+                t21.Gui.Enabled = false
+            end
+
+            if t21.Box then
+                t21.Box.Visible = false
+            end
+        end
+    end
+    function t21.SetInfo(_, p35)
+        t20.Info = p35
+
+        if t21.IL then
+            if p35 and p35 ~= "" then
+                t21.IL.Text = p35
+                t21.IL.Visible = true
+
+                return
+            end
+
+            t21.IL.Visible = false
+        end
+    end
+    function t21.SetPart(_, p37)
+        t21.Part = p37
+    end
+    function t21.SetConfig(_, p39, p40)
+        t20[p39] = p40
+    end
+    function t21.Remove(_)
+        if t21.HL then
+            pcall(function()
+                t21.HL:Destroy()
+            end)
+        end
+
+        if t21.Gui then
+            pcall(function()
+                t21.Gui:Destroy()
+            end)
+        end
+
+        if t21.Box then
+            pcall(function()
+                t21.Box:Remove()
+            end)
+        end
+
+        t3.value48[t21] = nil
+    end
+
+    t3.value48[t21] = true
+
+    return t21
+end
+t3.value49.Add = t1.value26
+function t1.value26(_)
+    for k in pairs(t3.value48) do
+        local v151 = k
+
+        if v151.HL then
+            pcall(function()
+                v151.HL:Destroy()
+            end)
+        end
+
+        if v151.Gui then
+            pcall(function()
+                v151.Gui:Destroy()
+            end)
+        end
+
+        if v151.Box then
+            pcall(function()
+                v151.Box:Remove()
+            end)
+        end
+
+        t3.value48[v151] = nil
+    end
+end
+t3.value49.RemoveAll = t1.value26
+function t1.value26(_, p44)
+    for k in pairs(t3.value48) do
+        local v155 = k
+
+        if v155.Config then
+            v155.Config.Color = p44
+        end
+
+        if v155.HL then
+            v155.HL.FillColor = p44
+            v155.HL.OutlineColor = p44
+        end
+
+        if v155.NL then
+            v155.NL.TextColor3 = p44
+        end
+
+        if v155.DL then
+            v155.DL.TextColor3 = p44
+        end
+
+        if v155.Box then
+            v155.Box.Color = p44
+        end
+    end
+end
+t3.value49.SetColor = t1.value26
+t1.value29 = {}
+t1.value31 = {}
+t1.value30 = {}
+t1.value32 = {}
+t1.value26 = {
+	Players = t1.value29,
+	Chains = t1.value30,
+	Buildings = t1.value31,
+	Scraps = t1.value32,
+	AirDrops = {},
+	Artifacts = {}
+}
+function t1.value29()
+    local t22 = {}
+
+    for _, descendant in ipairs(t3.value5:GetDescendants()) do
+        if descendant:IsA("BasePart") or descendant:IsA("Model") then
+            local v159 = string.lower(descendant.Name)
+            local v160 = string.find(v159, "神器")
+
+            if not v160 then
+                v160 = string.find(v159, "文物")
+
+                if not v160 then
+                    v160 = string.find(v159, "artifact")
+
+                    if not v160 then
+                        v160 = string.find(v159, "relic")
+                    end
+                end
+            end
+
+            if v160 then
+                table.insert(t22, descendant)
+            end
+        end
+    end
+
+    return t22
+end
+t3.value50 = t1.value26
+t3.value51 = t1.value29
+t1.value39 = Color3.fromRGB(255, 50, 50)
+t3.value52 = {
+	Active = false,
+	Notify = true,
+	Dodge = false,
+	ShowRing = true,
+	RingRotating = true,
+	RingColor = t1.value39,
+	RingRadius = 55
+}
+t3.value53 = {
+	["rbxassetid://11545349261"] = "连击1",
+	["rbxassetid://14123467583"] = "连击2",
+	["rbxassetid://14101304975"] = "连击3",
+	["rbxassetid://14101956641"] = "背后攻击",
+	["rbxassetid://15943264089"] = "蓄力斩击",
+	["rbxassetid://14401168075"] = "蓄力冲锋",
+	["rbxassetid://14875631059"] = "范围攻击",
+	["rbxassetid://11987922371"] = "闪避",
+	["rbxassetid://14255769487"] = "破门",
+	["rbxassetid://15408077041"] = "倒地处决1",
+	["rbxassetid://15409393739"] = "倒地处决2",
+	["rbxassetid://11442109170"] = "警觉",
+	["rbxassetid://123029648649398"] = "空洞警觉",
+	["rbxassetid://78440647847406"] = "蓄力",
+	["rbxassetid://88813113168837"] = "蓄力跳斩",
+	["rbxassetid://135099305543293"] = "暴怒",
+	["rbxassetid://140464711815827"] = "暴怒反击",
+	["rbxassetid://16214202640"] = "突刺"
+}
+t3.value54 = {
+	["rbxassetid://11442109170"] = true,
+	["rbxassetid://123029648649398"] = true,
+	["rbxassetid://135099305543293"] = true
+}
+t3.value55 = {
+	CurbStomp1 = "踩踏反击",
+	CurbStomp2 = "踩踏反击",
+	Charging = "蓄力",
+	ChainsawSwing = "电锯挥砍",
+	ChainsawCharge = "电锯蓄力",
+	ChainsawSpot = "电锯突刺",
+	ChokeSwing = "突刺"
+}
+t3.value56 = nil
+t3.value57 = nil
+t3.value58 = {}
+t3.value59 = nil
+t3.value60 = nil
+t3.value61 = nil
+function t1.value34()
+    for _, v in ipairs(t3.value58) do
+
+        for v165, v166 in ipairs(v.Parts.Balls) do
+
+            local v167 = v166
+
+            pcall(function()
+                v167:Destroy()
+            end)
+        end
+        for _, v4 in ipairs(v.Parts.Walls) do
+            local v170 = v4
+
+            pcall(function()
+                v170:Destroy()
+            end)
+        end
+    end
+
+    t3.value58 = {}
+    t3.value59 = {}
+
+    if t3.value61 then
+        t3.value61:Disconnect()
+    end
+end
+t3.value62 = nil
+function t1.value38(p45, p46, p47)
+    local HumanoidRootPart = p46:FindFirstChild("HumanoidRootPart")
+    if not HumanoidRootPart then
+        return
+    end
+    local HumanoidRootPartPosition = HumanoidRootPart.Position
+    for v178, v179 in ipairs(p45.Balls) do
+
+        local v180 = v178 / t3.value60 * 3.141592653589793 * 2 + t3.value56
+
+        v179.Position = Vector3.new(HumanoidRootPartPosition.X + math.cos(v180) * p47, HumanoidRootPartPosition.Y - 2.5, HumanoidRootPartPosition.Z + math.sin(v180) * p47)
+    end
+    for i, v in ipairs(p45.Walls) do
+        local v183 = i / t3.value60 * 3.141592653589793 * 2 + t3.value56
+
+        v.Position = Vector3.new(HumanoidRootPartPosition.X + math.cos(v183) * p47, HumanoidRootPartPosition.Y + t3.value62 / 2 - 15, HumanoidRootPartPosition.Z + math.sin(v183) * p47)
+        v.CFrame = CFrame.new(v.Position, HumanoidRootPartPosition)
+    end
+end
+function t1.value39(p48)
+    for i = #t3.value58, 1, -1 do
+        local v186 = i
+        local v187 = t3.value58[v186]
+
+        if p48 == v187.Chain then
+
+            for v190, v191 in ipairs(v187.Parts.Balls) do
+
+                local v192 = v191
+
+                pcall(function()
+                    v192:Destroy()
+                end)
+            end
+            for _, v in ipairs(v187.Parts.Walls) do
+                local v195 = v
+
+                pcall(function()
+                    v195:Destroy()
+                end)
+            end
+            table.remove(t3.value58, v186)
+            t3.value59[p48] = nil
+
+            return
+        end
+    end
+end
+t3.value60 = 36
+t3.value62 = 50
+t3.value56 = 0
+t1.value29 = {}
+function t1.value37(_)
+    local t23 = {
+		Balls = {},
+		Walls = {}
+	}
+
+    for _ = 1, t3.value60 do
+        local Part = Instance.new("Part")
+
+        Part.Shape = Enum.PartType.Ball
+        Part.Size = Vector3.new(0.5, 0.5, 0.5)
+        Part.Anchored = true
+        Part.CanCollide = false
+        Part.Material = Enum.Material.Neon
+        Part.Color = t3.value52.RingColor
+        Part.Transparency = not t3.value52.ShowRing and 1 or 0.3
+        Part.Parent = t3.value5
+        table.insert(t23.Balls, Part)
+    end
+
+    for _ = 1, t3.value60 do
+        local Part = Instance.new("Part")
+
+        Part.Size = Vector3.new(2, t3.value62, 1)
+        Part.Anchored = true
+        Part.CanCollide = false
+        Part.Material = Enum.Material.ForceField
+        Part.Color = t3.value52.RingColor
+        Part.Transparency = not t3.value52.ShowRing and 1 or 0.85
+        Part.Parent = t3.value5
+        table.insert(t23.Walls, Part)
+    end
+
+    return t23
+end
+t3.value59 = t1.value29
+t3.value63 = t1.value37
+t3.value64 = t1.value38
+t3.value65 = t1.value39
+function t1.value40(p50, p51)
+    if t3.value52.Notify then
+        local value1_3 = t2.value1
+        local v205 = p50.Name .. " 使用 " .. p51
+
+        value1_3:Notify({
+			Title = "Chain 预警",
+			Content = v205,
+			Duration = 2,
+			Icon = "alert-triangle"
+		})
+    end
+
+    t3.value59[p50] = tick()
+
+    if t3.value52.Dodge then
+        local Character = t3.value16.Character
+
+        if Character then
+            Character = t3.value16.Character:FindFirstChild("HumanoidRootPart")
+        end
+
+        local HumanoidRootPart = p50:FindFirstChild("HumanoidRootPart")
+
+        if Character and HumanoidRootPart then
+            local Unit = (Character.Position - HumanoidRootPart.Position).Unit
+
+            Character.CFrame = CFrame.new(HumanoidRootPart.Position + Unit * (t3.value52.RingRadius + 10))
+        end
+    end
+end
+t3.value66 = t1.value34
+local function v36()
+    t3.value66()
+
+    for _, child in ipairs(t3.value11:GetChildren()) do
+        if child:IsA("Model") then
+            local insert = table.insert
+            local value58 = t3.value58
+            local v213 = t3.value63(t3.value52.RingRadius)
+
+            insert(value58, {
+				Chain = child,
+				Parts = v213
+			})
+        end
+    end
+
+    t3.value56 = 0
+    t3.value2.RenderStepped:Connect(function(dt)
+        if t3.value52.RingRotating then
+            t3.value56 = t3.value56 + dt * 0.5
+        end
+        local t24 = {}
+        for v772, v773 in ipairs(t3.value58) do
+
+            local Chain = v773.Chain
+
+            if not Chain or not Chain.Parent then
+                table.insert(t24, v772)
+            else
+                t3.value64(v773.Parts, Chain, t3.value52.RingRadius)
+
+                local HumanoidRootPart = Chain:FindFirstChild("HumanoidRootPart")
+                local v776 = HumanoidRootPart
+
+                if HumanoidRootPart then
+                    v776 = t3.value52.Dodge
+                end
+
+                if v776 then
+                    local Character = t3.value16.Character
+
+                    if Character then
+                        Character = t3.value16.Character:FindFirstChild("HumanoidRootPart")
+                    end
+
+                    if Character and (Character.Position - HumanoidRootPart.Position).Magnitude < t3.value52.RingRadius then
+                        local Unit = (Character.Position - HumanoidRootPart.Position).Unit
+
+                        Character.CFrame = CFrame.new(HumanoidRootPart.Position + Unit * (t3.value52.RingRadius + 10))
+                    end
+                end
+            end
+        end
+        for i = #t24, 1, -1 do
+            local v780 = i
+            local v781 = t24[v780]
+            local v782 = t3.value58[v781]
+            for v785, v786 in ipairs(v782.Parts.Balls) do
+
+                local v787 = v786
+
+                pcall(function()
+                    v787:Destroy()
+                end)
+            end
+            for _, v in ipairs(v782.Parts.Walls) do
+                local v790 = v
+
+                pcall(function()
+                    v790:Destroy()
+                end)
+            end
+            table.remove(t3.value58, t24[v780])
+        end
+    end)
+end
+t3.value67 = nil
+function t1.value43()
+    task.spawn(function()
+        while t3.value67 do
+            pcall(function()
+                local dt = t3.value2.Heartbeat:Wait()
+                local Character = t3.value16.Character
+
+                if not Character then
+                    return
+                end
+
+                local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+                local v934 = HumanoidRootPart
+                local Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+
+                if HumanoidRootPart then
+                    v934 = Humanoid
+
+                    if Humanoid then
+                        v934 = Humanoid.MoveDirection.Magnitude > 0
+                    end
+                end
+
+                if v934 then
+                    HumanoidRootPart.CFrame = HumanoidRootPart.CFrame + Humanoid.MoveDirection * t3.value57 * dt
+                end
+            end)
+        end
+    end)
+end
+t3.value68 = t1.value40
+t3.value69 = {}
+function t1.value41(p52)
+    if not p52:IsA("Model") then
+        return
+    end
+
+    local u215 = false
+    local Humanoid = p52:FindFirstChild("Humanoid")
+
+    if Humanoid then
+        Humanoid = Humanoid:FindFirstChild("Animator")
+    end
+
+    if Humanoid then
+        table.insert(t3.value69, Humanoid.AnimationPlayed:Connect(function(animation)
+            local Animation = animation.Animation
+
+            if Animation then
+                Animation = animation.Animation.AnimationId
+            end
+
+            local v793 = "rbxassetid://" .. (Animation or ""):match("%d+") or ""
+            local v794 = t3.value53[v793]
+
+            if v794 then
+                if t3.value54[v793] then
+                    u215 = true
+                    animation.Stopped:Connect(function()
+                        u215 = false
+                    end)
+
+                    return
+                end
+
+                t3.value68(p52, v794)
+                animation.Stopped:Connect(function()
+                    t3.value59[p52] = nil
+                end)
+            end
+        end))
+    end
+
+    for _, descendant in ipairs(p52:GetDescendants()) do
+        local v219 = descendant
+        local v220 = v219:IsA("Sound")
+
+        if v220 then
+            v220 = t3.value55[v219.Name]
+        end
+
+        if v220 then
+            table.insert(t3.value69, v219.Played:Connect(function()
+                if not u215 then
+                    t3.value68(p52, t3.value55[v219.Name])
+                end
+            end))
+        end
+    end
+end
+t3.value70 = nil
+function t1.value42()
+
+    for v223, v224 in ipairs(t3.value69) do
+
+        v224:Disconnect()
+    end
+    t3.value69 = {}
+    t3.value66()
+    if t3.value52.Active then
+        v36()
+
+        for _, child in ipairs(t3.value11:GetChildren()) do
+            t3.value70(child)
+        end
+
+        table.insert(t3.value69, t3.value11.ChildAdded:Connect(function(child)
+            t3.value70(child)
+
+            if child:IsA("Model") then
+                local insert = table.insert
+                local value58 = t3.value58
+                local v798 = t3.value63(t3.value52.RingRadius)
+
+                insert(value58, {
+					Chain = child,
+					Parts = v798
+				})
+            end
+        end))
+        table.insert(t3.value69, t3.value11.ChildRemoved:Connect(function(child)
+            t3.value65(child)
+        end))
+    end
+end
+t3.value70 = t1.value41
+t3.value71 = t1.value42
+t3.value67 = false
+t3.value57 = 5
+t3.value72 = t1.value43
+t1.value43 = {
+	Active = false,
+	CamLock = false,
+	CamLockConn = nil,
+	Conn = nil,
+	CharConn = nil,
+	SavedMax = nil,
+	SavedMin = nil
+}
+t3.value73 = t1.value43
+local function v37()
+    if t3.value73.Conn then
+        t3.value73.Conn:Disconnect()
+    end
+
+    t3.value73.Conn = t3.value2.RenderStepped:Connect(function()
+        if not t3.value73.Active then
+            return
+        end
+
+        pcall(function()
+            if t3.value16.CameraMode ~= Enum.CameraMode.Classic then
+                t3.value16.CameraMode = Enum.CameraMode.Classic
+            end
+
+            if t3.value16.CameraMaxZoomDistance ~= 20 then
+                t3.value16.CameraMaxZoomDistance = 20
+            end
+
+            if t3.value16.CameraMinZoomDistance ~= 5 then
+                t3.value16.CameraMinZoomDistance = 5
+            end
+        end)
+    end)
+
+    if t3.value73.CharConn then
+        t3.value73.CharConn:Disconnect()
+    end
+
+    t3.value73.CharConn = t3.value16.CharacterAdded:Connect(function(_)
+        task.wait(0.5)
+
+        if t3.value73.Active then
+            pcall(function()
+                t3.value16.CameraMode = Enum.CameraMode.Classic
+                t3.value16.CameraMaxZoomDistance = 20
+                t3.value16.CameraMinZoomDistance = 5
+            end)
+        end
+    end)
+end
+t3.value74 = nil
+t3.value75 = {}
+function t1.value44()
+    if t3.value73.CamLockConn then
+        t3.value73.CamLockConn:Disconnect()
+        t3.value73.CamLockConn = nil
+    end
+
+    local value73Active = t3.value73.Active
+
+    if value73Active then
+        value73Active = t3.value73.CamLock
+    end
+
+    if value73Active then
+        t3.value73.CamLockConn = t3.value2.RenderStepped:Connect(function()
+            local Character = t3.value16.Character
+
+            if Character then
+                Character = Character:FindFirstChild("HumanoidRootPart")
+            end
+
+            if Character then
+                local LookVector = t3.value10.CFrame.LookVector
+
+                Character.CFrame = CFrame.new(Character.Position, Character.Position + Vector3.new(LookVector.X, 0, LookVector.Z))
+            end
+        end)
+    end
+end
+function t1.value46()
+    for _, v in pairs(t3.value74) do
+        local v230 = v
+
+        pcall(function()
+            v230:Destroy()
+        end)
+    end
+
+    t3.value74 = {}
+
+    local ScreenGui = Instance.new("ScreenGui")
+
+    ScreenGui.Name = "ChainXK_HUD"
+    ScreenGui.Parent = t3.value8
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+    local Frame = Instance.new("Frame")
+
+    Frame.Size = UDim2.new(0, 220, 0, 160)
+    Frame.Position = UDim2.new(0, 10, 0, 10)
+    Frame.BackgroundTransparency = 1
+    Frame.Parent = ScreenGui
+
+    local TextLabel = Instance.new("TextLabel")
+
+    TextLabel.Size = UDim2.new(1, 0, 0, 24)
+    TextLabel.Position = UDim2.new(0, 0, 0, 0)
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.Text = "Chain BK V3.0"
+    TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.TextStrokeTransparency = 0
+    TextLabel.Font = Enum.Font.GothamBold
+    TextLabel.TextSize = 18
+    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel.Parent = Frame
+    t3.value74.Title = TextLabel
+
+    local TextLabel4 = Instance.new("TextLabel")
+
+    TextLabel4.Size = UDim2.new(1, 0, 0, 20)
+    TextLabel4.Position = UDim2.new(0, 0, 0, 28)
+    TextLabel4.BackgroundTransparency = 1
+    TextLabel4.Text = "FPS: --"
+    TextLabel4.TextColor3 = Color3.fromRGB(0, 255, 0)
+    TextLabel4.TextStrokeTransparency = 0
+    TextLabel4.Font = Enum.Font.Gotham
+    TextLabel4.TextSize = 14
+    TextLabel4.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel4.Parent = Frame
+    t3.value74.FPS = TextLabel4
+
+    local TextLabel5 = Instance.new("TextLabel")
+
+    TextLabel5.Size = UDim2.new(1, 0, 0, 20)
+    TextLabel5.Position = UDim2.new(0, 0, 0, 48)
+    TextLabel5.BackgroundTransparency = 1
+    TextLabel5.Text = "Ping: --"
+    TextLabel5.TextColor3 = Color3.fromRGB(0, 200, 255)
+    TextLabel5.TextStrokeTransparency = 0
+    TextLabel5.Font = Enum.Font.Gotham
+    TextLabel5.TextSize = 14
+    TextLabel5.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel5.Parent = Frame
+    t3.value74.Ping = TextLabel5
+
+    local TextLabel6 = Instance.new("TextLabel")
+
+    TextLabel6.Size = UDim2.new(1, 0, 0, 20)
+    TextLabel6.Position = UDim2.new(0, 0, 0, 68)
+    TextLabel6.BackgroundTransparency = 1
+    TextLabel6.Text = "时间: --:--"
+    TextLabel6.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel6.TextStrokeTransparency = 0
+    TextLabel6.Font = Enum.Font.Gotham
+    TextLabel6.TextSize = 14
+    TextLabel6.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel6.Parent = Frame
+    t3.value74.Time = TextLabel6
+
+    local TextLabel7 = Instance.new("TextLabel")
+
+    TextLabel7.Size = UDim2.new(1, 0, 0, 20)
+    TextLabel7.Position = UDim2.new(0, 0, 0, 88)
+    TextLabel7.BackgroundTransparency = 1
+    TextLabel7.Text = "电力: --"
+    TextLabel7.TextColor3 = Color3.fromRGB(255, 255, 0)
+    TextLabel7.TextStrokeTransparency = 0
+    TextLabel7.Font = Enum.Font.Gotham
+    TextLabel7.TextSize = 14
+    TextLabel7.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel7.Parent = Frame
+    t3.value74.Power = TextLabel7
+
+    local TextLabel8 = Instance.new("TextLabel")
+
+    TextLabel8.Size = UDim2.new(1, 0, 0, 20)
+    TextLabel8.Position = UDim2.new(0, 0, 0, 108)
+    TextLabel8.BackgroundTransparency = 1
+    TextLabel8.Text = "玩家: --/--"
+    TextLabel8.TextColor3 = Color3.fromRGB(200, 200, 200)
+    TextLabel8.TextStrokeTransparency = 0
+    TextLabel8.Font = Enum.Font.Gotham
+    TextLabel8.TextSize = 14
+    TextLabel8.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel8.Parent = Frame
+    t3.value74.Players = TextLabel8
+
+    local TextLabel9 = Instance.new("TextLabel")
+
+    TextLabel9.Size = UDim2.new(1, 0, 0, 20)
+    TextLabel9.Position = UDim2.new(0, 0, 0, 128)
+    TextLabel9.BackgroundTransparency = 1
+    TextLabel9.Text = "Chain: --"
+    TextLabel9.TextColor3 = Color3.fromRGB(255, 50, 50)
+    TextLabel9.TextStrokeTransparency = 0
+    TextLabel9.Font = Enum.Font.Gotham
+    TextLabel9.TextSize = 14
+    TextLabel9.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel9.Parent = Frame
+    t3.value74.Chains = TextLabel9
+end
+t3.value76 = {}
+t3.value77 = nil
+t3.value78 = nil
+t3.value79 = true
+t1.value45 = {}
+t3.value74 = t1.value45
+t3.value80 = t1.value46
+t3.value80()
+t1.value47 = tick()
+t3.value81 = t1.value47
+t3.value82 = 0
+t3.value83 = 0
+t3.value2.RenderStepped:Connect(function()
+    t3.value82 = t3.value82 + 1
+
+    if tick() - t3.value81 >= 1 then
+        t3.value83 = t3.value82
+    end
+
+    local value79 = t3.value79
+
+    if value79 then
+        value79 = t3.value74.FPS
+    end
+
+    if value79 then
+        t3.value74.FPS.Text = "FPS: " .. tostring(t3.value83)
+    end
+
+    local value79_2 = t3.value79
+
+    if value79_2 then
+        value79_2 = t3.value74.Ping
+    end
+
+    if value79_2 then
+        local n3 = 0
+
+        pcall(function()
+            n3 = math.floor(t3.value16:GetNetworkPing() * 1000)
+        end)
+        t3.value74.Ping.Text = "Ping: " .. tostring(n3) .. "ms"
+    end
+
+    local value79_3 = t3.value79
+
+    if value79_3 then
+        value79_3 = t3.value74.Time
+    end
+
+    if value79_3 then
+        local RoundTime = t3.value15:GetAttribute("RoundTime")
+
+        if type(RoundTime) == "number" and RoundTime > 0 then
+            local v245 = math.floor(RoundTime / 60)
+            local v246 = math.floor(RoundTime % 60)
+
+            t3.value74.Time.Text = string.format("时间: %02d:%02d", v245, v246)
+        else
+            t3.value74.Time.Text = "时间: 白天"
+        end
+    end
+
+    local value79_4 = t3.value79
+
+    if value79_4 then
+        value79_4 = t3.value74.Power
+    end
+
+    if value79_4 then
+        local Power = t3.value15:GetAttribute("Power")
+
+        if type(Power) == "number" then
+            t3.value74.Power.Text = "电力: " .. tostring((math.floor(Power)))
+        else
+            t3.value74.Power.Text = "电力: --"
+        end
+    end
+
+    local value79_5 = t3.value79
+
+    if value79_5 then
+        value79_5 = t3.value74.Players
+    end
+
+    if value79_5 then
+        local n4 = 0
+
+        for _, _ in ipairs(t3.value1:GetPlayers()) do
+            n4 += 1
+        end
+
+        t3.value74.Players.Text = "玩家: " .. tostring(n4) .. "/" .. tostring(t3.value1.MaxPlayers)
+    end
+
+    local value79_6 = t3.value79
+
+    if value79_6 then
+        value79_6 = t3.value74.Chains
+    end
+
+    if value79_6 then
+        local n5 = 0
+
+        for _, child in ipairs(t3.value11:GetChildren()) do
+            local v257 = child:IsA("Model")
+
+            if v257 then
+                v257 = child:FindFirstChild("Humanoid")
+            end
+
+            if v257 then
+                n5 += 1
+            end
+        end
+
+        t3.value74.Chains.Text = "Chain: " .. tostring(n5)
+    end
+end)
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Toggle
+function t1.value53(p54)
+
+    for v261, v262 in ipairs(t3.value75) do
+
+        local v263 = v262
+
+        pcall(function()
+            v263:Disconnect()
+        end)
+    end
+    t3.value75 = {}
+    if p54 then
+        t3.value76.FogEnd = t3.value3.FogEnd
+        t3.value76.Atmospheres = {}
+        t3.value3.FogEnd = 100000
+        table.insert(t3.value75, t3.value3:GetPropertyChangedSignal("FogEnd"):Connect(function()
+            t3.value3.FogEnd = 100000
+        end))
+
+        for _, descendant in ipairs(t3.value3:GetDescendants()) do
+            local v266 = descendant
+
+            if v266:IsA("Atmosphere") then
+                t3.value76.Atmospheres[v266] = v266.Density
+                v266.Density = 0
+                table.insert(t3.value75, v266:GetPropertyChangedSignal("Density"):Connect(function()
+                    v266.Density = 0
+                end))
+            end
+        end
+
+        table.insert(t3.value75, t3.value3.DescendantAdded:Connect(function(descendant)
+            if descendant:IsA("Atmosphere") then
+                t3.value76.Atmospheres[descendant] = descendant.Density
+                descendant.Density = 0
+                table.insert(t3.value75, descendant:GetPropertyChangedSignal("Density"):Connect(function()
+                    descendant.Density = 0
+                end))
+            end
+        end))
+
+        return
+    end
+    if t3.value76.FogEnd then
+        t3.value3.FogEnd = t3.value76.FogEnd
+    end
+    for k, v in pairs(t3.value76.Atmospheres or {}) do
+        local v269 = v
+
+        pcall(function()
+            k.Density = v269
+        end)
+    end
+end
+t1.value48(t1.value47, {
+	Title = "除雾",
+	Value = false,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Toggle
+function t1.value53(p55)
+    if t3.value77 then
+        pcall(function()
+            t3.value77:Disconnect()
+        end)
+        t3.value77 = nil
+    end
+
+    if p55 then
+        local value3Brightness = t3.value3.Brightness
+        local ClockTime = t3.value3.ClockTime
+        local FogEnd = t3.value3.FogEnd
+        local GlobalShadows = t3.value3.GlobalShadows
+        local OutdoorAmbient = t3.value3.OutdoorAmbient
+
+        local function v276()
+            t3.value3.Brightness = 2
+            t3.value3.ClockTime = 14
+            t3.value3.FogEnd = 100000
+            t3.value3.GlobalShadows = false
+            t3.value3.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+        end
+
+        t3.value78 = {
+			Brightness = value3Brightness,
+			ClockTime = ClockTime,
+			FogEnd = FogEnd,
+			GlobalShadows = GlobalShadows,
+			OutdoorAmbient = OutdoorAmbient
+		}
+        v276()
+        t3.value2.RenderStepped:Connect(v276)
+
+        return
+    end
+
+    if t3.value78 then
+        t3.value3.Brightness = t3.value78.Brightness
+        t3.value3.ClockTime = t3.value78.ClockTime
+        t3.value3.FogEnd = t3.value78.FogEnd
+        t3.value3.GlobalShadows = t3.value78.GlobalShadows
+        t3.value3.OutdoorAmbient = t3.value78.OutdoorAmbient
+    end
+end
+t1.value48(t1.value47, {
+	Title = "高亮",
+	Value = false,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Toggle
+function t1.value55(p56)
+    t3.value39.ForceChat = p56
+
+    if p56 then
+        pcall(function()
+            local TextChatService = game:GetService("TextChatService")
+            local ok, result = pcall(function()
+                return TextChatService.ChatWindowConfiguration
+            end)
+
+            if ok and result then
+                result.Enabled = true
+                t2.value1:Notify({
+					Title = "聊天框已启用",
+					Content = "聊天窗口已强制显示",
+					Duration = 3,
+					Icon = "check-circle"
+				})
+
+                return
+            end
+
+            t2.value1:Notify({
+				Title = "聊天框启用失败",
+				Content = "请确保聊天类型是 TextChatService",
+				Duration = 3,
+				Icon = "alert-triangle"
+			})
+        end)
+    end
+end
+t1.value48(t1.value47, {
+	Title = "显示聊天框",
+	Desc = "已失效",
+	Value = false,
+	Callback = t1.value55
+})
+t3.value38.VisualTab:Section({
+	Title = "ESP 颜色设置"
+})
+t1.value47 = t3.value38.VisualTab
+t1.value51 = t3.value39.PlayerESP_Color
+function t1.value53(p57)
+    t3.value39.PlayerESP_Color = p57
+
+    for _, v in pairs(t3.value50.Players) do
+        if v.SetColor then
+            v:SetColor(p57)
+        end
+    end
+end
+t1.value47:Colorpicker({
+	Title = "玩家ESP颜色",
+	Default = t1.value51,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value51 = t3.value39.ChainESP_Color
+function t1.value53(p58)
+    t3.value39.ChainESP_Color = p58
+
+    for _, v in pairs(t3.value50.Chains) do
+        if v.SetColor then
+            v:SetColor(p58)
+        end
+    end
+end
+t1.value47:Colorpicker({
+	Title = "ChainESP颜色",
+	Default = t1.value51,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Colorpicker
+t1.value51 = t3.value39.BuildingESP_Color
+function t1.value53(p59)
+    t3.value39.BuildingESP_Color = p59
+
+    for _, v in pairs(t3.value50.Buildings) do
+        local Obj = v.Obj
+
+        if Obj then
+            Obj = v.Obj.SetColor
+        end
+
+        if Obj then
+            v.Obj:SetColor(p59)
+        end
+    end
+end
+t1.value48(t1.value47, {
+	Title = "建筑ESP颜色",
+	Default = t1.value51,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value51 = t3.value39.ScrapESP_Color
+function t1.value53(p60)
+    t3.value39.ScrapESP_Color = p60
+
+    for _, v in pairs(t3.value50.Scraps) do
+        local Obj = v.Obj
+
+        if Obj then
+            Obj = v.Obj.SetColor
+        end
+
+        if Obj then
+            v.Obj:SetColor(p60)
+        end
+    end
+end
+t1.value47:Colorpicker({
+	Title = "废料ESP颜色",
+	Default = t1.value51,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value51 = t3.value39.AirDropESP_Color
+function t1.value53(p61)
+    t3.value39.AirDropESP_Color = p61
+
+    for _, v in pairs(t3.value50.AirDrops) do
+        if v.SetColor then
+            v:SetColor(p61)
+        end
+    end
+end
+t1.value47:Colorpicker({
+	Title = "空投ESP颜色",
+	Default = t1.value51,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Colorpicker
+t1.value51 = t3.value39.ArtifactESP_Color
+function t1.value53(p62)
+    t3.value39.ArtifactESP_Color = p62
+
+    for _, v in pairs(t3.value50.Artifacts) do
+        if v.SetColor then
+            v:SetColor(p62)
+        end
+    end
+end
+t1.value48(t1.value47, {
+	Title = "神器ESP颜色",
+	Default = t1.value51,
+	Callback = t1.value53
+})
+t3.value38.VisualTab:Section({
+	Title = "ESP 透视"
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Toggle
+function t1.value53(p63)
+    t3.value39.PlayerESP = p63
+
+    if not p63 then
+        for _, v in pairs(t3.value50.Players) do
+            if v.Remove then
+                v:Remove()
+            end
+        end
+
+        t3.value50.Players = {}
+
+        return
+    end
+
+    task.spawn(function()
+        while t3.value39.PlayerESP do
+            pcall(function()
+                for _, player in ipairs(t3.value1:GetPlayers()) do
+                    if player ~= t3.value16 then
+                        local v938 = t3.value50.Players[player]
+                        local Character = player.Character
+                        local v940 = Character and Character:FindFirstChild("HumanoidRootPart")
+                        local v941 = not v938
+
+                        if not v941 then
+                            v941 = v938
+
+                            if v938 then
+                                v941 = not v938.Part
+
+                                if not v941 then
+                                    v941 = not v938.Part.Parent
+                                end
+                            end
+                        end
+
+                        if v941 and v940 then
+                            if v938 then
+                                v938:Remove()
+                            end
+
+                            local Players = t3.value50.Players
+                            local value49 = t3.value49
+                            local playerName = player.Name
+                            local PlayerESP_Color = t3.value39.PlayerESP_Color
+
+                            Players[player] = value49:Add({
+								Entity = player,
+								Part = v940,
+								Name = playerName,
+								Color = PlayerESP_Color,
+								Highlight = true,
+								Box = true,
+								Text = true,
+								Distance = true,
+								AlwaysOnTop = false
+							})
+                        end
+                    end
+                end
+            end)
+            task.wait(0.5)
+        end
+    end)
+end
+t1.value48(t1.value47, {
+	Title = "玩家 ESP",
+	Value = false,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Toggle
+function t1.value53(p64)
+    t3.value39.ChainESP = p64
+
+    if not p64 then
+        for _, v in pairs(t3.value50.Chains) do
+            if v.Remove then
+                v:Remove()
+            end
+        end
+
+        t3.value50.Chains = {}
+
+        return
+    end
+
+    for _, child in ipairs(t3.value11:GetChildren()) do
+        local v306 = child:IsA("Model")
+
+        if v306 then
+            v306 = child:FindFirstChild("Humanoid")
+        end
+
+        if v306 then
+            local HumanoidRootPart = child:FindFirstChild("HumanoidRootPart")
+
+            if HumanoidRootPart then
+                local Chains = t3.value50.Chains
+                local value49 = t3.value49
+                local childName = child.Name
+                local ChainESP_Color = t3.value39.ChainESP_Color
+                local Add = value49.Add
+                local vector3_7 = Vector3.new(0, 3.5, 0)
+                local uDim2 = UDim2.new(0, 300, 0, 60)
+
+                Chains[child] = Add(value49, {
+					Entity = child,
+					Part = HumanoidRootPart,
+					Name = childName,
+					Color = ChainESP_Color,
+					Highlight = true,
+					Box = true,
+					Text = true,
+					Distance = true,
+					AlwaysOnTop = true,
+					StudsOffset = vector3_7,
+					BillboardSize = uDim2
+				})
+            end
+        end
+    end
+end
+t1.value48(t1.value47, {
+	Title = "Chain ESP",
+	Value = false,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Toggle
+function t1.value53(p65)
+    t3.value39.BuildingESP = p65
+
+    if not p65 then
+        for _, v in pairs(t3.value50.Buildings) do
+            if v.Obj then
+                v.Obj:Remove()
+            end
+
+            if v.Part then
+                v.Part:Destroy()
+            end
+        end
+
+        t3.value50.Buildings = {}
+
+        return
+    end
+
+    local POWERSTATION = t3.value14:FindFirstChild("POWERSTATION")
+    local t25 = {
+		Name = "发电站",
+		Model = POWERSTATION
+	}
+    local WAREHOUSE = t3.value14:FindFirstChild("WAREHOUSE")
+    local t26 = {
+		Name = "仓库",
+		Model = WAREHOUSE
+	}
+    local WORKSHOP = t3.value14:FindFirstChild("WORKSHOP")
+    local t27 = {
+		t25,
+		t26,
+		{
+			Name = "工作区",
+			Model = WORKSHOP
+		}
+	}
+
+    for _, v in ipairs(t27) do
+        local Model = v.Model
+
+        if Model then
+            Model = not t3.value50.Buildings[v.Model]
+        end
+
+        if Model then
+            local Pivot = v.Model:GetPivot()
+            local _, v329 = v.Model:GetBoundingBox()
+            local Part = Instance.new("Part")
+
+            Part.Anchored = true
+            Part.CanCollide = false
+            Part.CanTouch = false
+            Part.CanQuery = false
+            Part.Transparency = 1
+            Part.Size = v329
+            Part.CFrame = Pivot
+            Part.Parent = t3.value5
+
+            local Buildings = t3.value50.Buildings
+            local Model2 = v.Model
+            local value49 = t3.value49
+            local Model3 = v.Model
+            local vName = v.Name
+            local BuildingESP_Color = t3.value39.BuildingESP_Color
+            local new = Vector3.new
+            local Add = value49.Add
+            local v339 = new(0, 5, 0)
+            local uDim2 = UDim2.new(0, 300, 0, 50)
+
+            Buildings[Model2] = {
+				Obj = Add(value49, {
+					Entity = Model3,
+					Part = Part,
+					Name = vName,
+					Color = BuildingESP_Color,
+					Highlight = true,
+					Box = true,
+					Text = true,
+					Distance = true,
+					AlwaysOnTop = true,
+					StudsOffset = v339,
+					BillboardSize = uDim2
+				}),
+				Part = Part
+			}
+        end
+    end
+end
+t1.value48(t1.value47, {
+	Title = "建筑 ESP",
+	Value = false,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+function t1.value53(p66)
+    t3.value39.ScrapESP = p66
+
+    if not p66 then
+        for _, v in pairs(t3.value50.Scraps) do
+            if v.Obj then
+                v.Obj:Remove()
+            end
+
+            if v.Part then
+                v.Part:Destroy()
+            end
+        end
+
+        t3.value50.Scraps = {}
+
+        return
+    end
+
+    for _, child in ipairs(t3.value12:GetChildren()) do
+        local v346 = child:IsA("Model")
+        if v346 then
+            v346 = child:GetAttribute("Scrap")
+        end
+        if not v346 then
+            continue
+        end
+        local GetDescendants = child.GetDescendants
+        local v348 = false
+        for v351, v352 in ipairs(GetDescendants(child)) do
+
+            if v352:IsA("BasePart") then
+                v348 = true
+
+                break
+            end
+        end
+        if v348 then
+            v348 = not t3.value50.Scraps[child]
+        end
+        if v348 then
+            local GetBoundingBox = child.GetBoundingBox
+            local Pivot = child:GetPivot()
+            local _, v356 = GetBoundingBox(child)
+            local Part = Instance.new("Part")
+
+            Part.Anchored = true
+            Part.CanCollide = false
+            Part.CanTouch = false
+            Part.CanQuery = false
+            Part.Transparency = 1
+            Part.Size = v356
+            Part.CFrame = Pivot
+            Part.Parent = t3.value5
+
+            local Scraps = t3.value50.Scraps
+            local value49 = t3.value49
+            local ScrapESP_Color = t3.value39.ScrapESP_Color
+            local Add = value49.Add
+            local vector3_8 = Vector3.new(0, 2.5, 0)
+
+            Scraps[child] = {
+				Obj = Add(value49, {
+					Entity = child,
+					Part = Part,
+					Name = "废料",
+					Color = ScrapESP_Color,
+					Highlight = true,
+					Box = true,
+					Text = true,
+					Distance = true,
+					AlwaysOnTop = true,
+					StudsOffset = vector3_8
+				}),
+				Part = Part
+			}
+        end
+    end
+end
+t1.value47:Toggle({
+	Title = "废料 ESP",
+	Value = false,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Toggle
+function t1.value53(p67)
+    t3.value39.AirDropESP = p67
+
+    if not p67 then
+        for _, v in pairs(t3.value50.AirDrops) do
+            if v.Remove then
+                v:Remove()
+            end
+        end
+
+        t3.value50.AirDrops = {}
+
+        return
+    end
+
+    local AirDrops = t3.value14:FindFirstChild("AirDrops")
+
+    if AirDrops then
+        for _, child in ipairs(AirDrops:GetChildren()) do
+            if child.Name == "AirDropHeli" then
+                local v369 = child:FindFirstChildWhichIsA("Model", true) or child
+
+                if not t3.value50.AirDrops[v369] then
+                    local v370 = v369:FindFirstChild("HumanoidRootPart") or v369.PrimaryPart
+
+                    if v370 then
+                        local AirDrops2 = t3.value50.AirDrops
+                        local value49 = t3.value49
+                        local AirDropESP_Color = t3.value39.AirDropESP_Color
+                        local _Vector3 = Vector3
+                        local Add = value49.Add
+                        local v376 = _Vector3.new(0, 5, 0)
+
+                        AirDrops2[v369] = Add(value49, {
+							Entity = v369,
+							Part = v370,
+							Name = "空投",
+							Color = AirDropESP_Color,
+							Highlight = true,
+							Box = true,
+							Text = true,
+							Distance = true,
+							AlwaysOnTop = true,
+							StudsOffset = v376
+						})
+                    end
+                end
+            end
+        end
+    end
+end
+t1.value48(t1.value47, {
+	Title = "空投 ESP",
+	Value = false,
+	Callback = t1.value53
+})
+t1.value47 = t3.value38.VisualTab
+t1.value48 = t1.value47.Toggle
+function t1.value55(p68)
+    t3.value39.ArtifactESP = p68
+
+    if p68 then
+        for _, v in pairs(t3.value50.Artifacts) do
+            if v.Remove then
+                v:Remove()
+            end
+        end
+        t3.value50.Artifacts = {}
+        local v380 = t3.value51()
+        for v383, v384 in ipairs(v380) do
+
+            if t3.value50.Artifacts[v384] then
+                continue
+            end
+
+            local v385 = v384
+
+            if v384:IsA("Model") then
+                v385 = v384:FindFirstChildWhichIsA("BasePart", true) or v384.PrimaryPart
+
+                if not v385 then
+                    continue
+                end
+            end
+
+            local Artifacts = t3.value50.Artifacts
+            local value49 = t3.value49
+            local ArtifactESP_Color = t3.value39.ArtifactESP_Color
+            local Add = value49.Add
+            local vector3_9 = Vector3.new(0, 3, 0)
+            local uDim2 = UDim2.new(0, 200, 0, 50)
+
+            Artifacts[v384] = Add(value49, {
+				Entity = v384,
+				Part = v385,
+				Name = "神器",
+				Color = ArtifactESP_Color,
+				Highlight = true,
+				Box = true,
+				Text = true,
+				Distance = true,
+				AlwaysOnTop = true,
+				StudsOffset = vector3_9,
+				BillboardSize = uDim2
+			})
+        end
+        if not t3.value50.Artifacts.Connection then
+            t3.value50.Artifacts.Connection = t3.value5.DescendantAdded:Connect(function(descendant)
+                local v808 = descendant:IsA("BasePart")
+
+                if not v808 then
+                    v808 = descendant:IsA("Model")
+                end
+
+                if v808 then
+                    local v809 = string.lower(descendant.Name)
+                    local v810 = string.find(v809, "神器")
+
+                    if not v810 then
+                        v810 = string.find(v809, "文物")
+
+                        if not v810 then
+                            v810 = string.find(v809, "artifact")
+
+                            if not v810 then
+                                v810 = string.find(v809, "relic")
+                            end
+                        end
+                    end
+
+                    if v810 and not t3.value50.Artifacts[descendant] then
+                        local v811 = descendant
+
+                        if descendant:IsA("Model") then
+                            v811 = descendant:FindFirstChildWhichIsA("BasePart", true) or descendant.PrimaryPart
+
+                            if not v811 then
+                                return
+                            end
+                        end
+
+                        local Artifacts = t3.value50.Artifacts
+                        local value49 = t3.value49
+                        local ArtifactESP_Color = t3.value39.ArtifactESP_Color
+                        local Add = value49.Add
+                        local vector3_10 = Vector3.new(0, 3, 0)
+                        local uDim2 = UDim2.new(0, 200, 0, 50)
+
+                        Artifacts[descendant] = Add(value49, {
+							Entity = descendant,
+							Part = v811,
+							Name = "神器",
+							Color = ArtifactESP_Color,
+							Highlight = true,
+							Box = true,
+							Text = true,
+							Distance = true,
+							AlwaysOnTop = true,
+							StudsOffset = vector3_10,
+							BillboardSize = uDim2
+						})
+                    end
+                end
+            end)
+        end
+        local value1_4 = t2.value1
+        local v393 = "神器 (" .. #v380 .. " 个)"
+        value1_4:Notify({
+			Title = "神器ESP",
+			Content = v393,
+			Duration = 2,
+			Icon = "check-circle"
+		})
+
+        return
+    end
+
+    if t3.value50.Artifacts.Connection then
+        t3.value50.Artifacts.Connection:Disconnect()
+        t3.value50.Artifacts.Connection = nil
+    end
+
+    for _, v in pairs(t3.value50.Artifacts) do
+        if v.Remove then
+            v:Remove()
+        end
+    end
+
+    t3.value50.Artifacts = {}
+end
+t1.value48(t1.value47, {
+	Title = "神器 ESP",
+	Desc = "容易掉帧",
+	Value = false,
+	Callback = t1.value55
+})
+t1.value48 = t3.value38.VisualTab:Section({
+	Title = "状态显示器",
+	Opened = true
+})
+t1.value47 = t1.value48.Toggle
+function t1.value53(p69)
+    t3.value39.HUD_Display = p69
+
+    if p69 then
+        t3.value80()
+        t2.value1:Notify({
+			Title = "状态HUD",
+			Content = "已开启",
+			Duration = 2,
+			Icon = "check-circle"
+		})
+
+        return
+    end
+
+    local value74Title = t3.value74.Title
+
+    if value74Title then
+        value74Title = t3.value74.Title.Parent
+    end
+
+    if value74Title then
+        t3.value74.Title.Parent:Destroy()
+    end
+
+    t2.value1:Notify({
+		Title = "状态HUD",
+		Content = "已关闭",
+		Duration = 2,
+		Icon = "xmark"
+	})
+end
+t1.value47(t1.value48, {
+	Title = "显示游戏状态",
+	Value = true,
+	Callback = t1.value53
+})
+t1.value49 = t3.value38.ServerTab:Section({
+	Title = "转服务器",
+	Opened = true
+})
+t1.value35 = {}
+t1.value47 = {
+	servers = t1.value35,
+	lastUpdate = 0,
+	isUpdating = false,
+	serverListSection = nil,
+	refreshConnection = nil
+}
+function t1.value35()
+    local PlaceId = game.PlaceId
+    local t28 = {}
+    local s1 = ""
+    local n6 = 0
+    local v402 = math.ceil(t3.value39.ServerMonitor_MaxServers / 100)
+    local u404
+    if s1 and not (v402 <= n6) then
+        if not (#t28 >= t3.value39.ServerMonitor_MaxServers) then
+        end
+    end
+    while true do
+        local v403 = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Asc&limit=100&cursor=%s", PlaceId, s1)
+
+        u404 = nil
+        u404 = v403
+
+        local ok, result = pcall(function()
+            local value6 = t3.value6
+            local t29 = { game:HttpGet(u404) }
+
+            return value6:JSONDecode(v3(t29))
+        end)
+
+        if ok then
+            ok = result and result.data
+        end
+
+        if not ok then
+            break
+        end
+
+        for _, v in ipairs(result.data) do
+            local v409 = v.playing >= 0
+
+            if v409 then
+                v409 = v.playing <= v.maxPlayers
+
+                if v409 then
+                    v409 = t3.value39.ServerMonitor_ShowEmpty or v.playing > 0
+
+                    if v409 then
+                        v409 = t3.value39.ServerMonitor_ShowFull
+
+                        if not v409 then
+                            v409 = v.playing < v.maxPlayers
+                        end
+                    end
+                end
+            end
+
+            if v409 then
+                local insert = table.insert
+                local id = v.id
+                local playing = v.playing
+                local maxPlayers = v.maxPlayers
+                local v414 = v.ping or 0
+                local v415 = v.fps or 0
+                local v416 = v.voteData or {}
+                local v417 = v.name or "Unknown"
+
+                insert(t28, {
+					id = id,
+					playing = playing,
+					maxPlayers = maxPlayers,
+					ping = v414,
+					fps = v415,
+					voteData = v416,
+					name = v417
+				})
+            end
+        end
+
+        s1 = result.nextPageCursor
+        n6 += 1
+
+        local v418 = not s1
+
+        if not v418 then
+            v418 = v402 <= n6
+
+            if not v418 then
+                v418 = #t28 >= t3.value39.ServerMonitor_MaxServers
+            end
+        end
+
+        if v418 then
+            break
+        end
+    end
+    if t3.value39.ServerMonitor_SortBy == "ping" then
+        table.sort(t28, function(p70, p71)
+            return p70.ping < p71.ping
+        end)
+
+        return t28
+    end
+    if t3.value39.ServerMonitor_SortBy == "players" then
+        table.sort(t28, function(p72, p73)
+            return p72.playing > p73.playing
+        end)
+
+        return t28
+    end
+    if t3.value39.ServerMonitor_SortBy == "fps" then
+        table.sort(t28, function(p74, p75)
+            return p74.fps > p75.fps
+        end)
+    end
+
+    return t28
+end
+t3.value84 = t1.value47
+t3.value85 = t1.value35
+function t1.value50()
+    if t3.value84.isUpdating then
+        return
+    end
+
+    t3.value84.isUpdating = true
+    t2.value1:Notify({
+		Title = "服务器监测",
+		Content = "正在刷新服务器列表...",
+		Duration = 2,
+		Icon = "refresh"
+	})
+    t3.value84.servers = t3.value85()
+    t3.value84.lastUpdate = tick()
+
+    if t3.value84.serverListSection then
+        t3.value84.serverListSection:Destroy()
+    end
+
+    t3.value84.serverListSection = t3.value38.ServerTab:Section({
+		Title = "服务器列表 (" .. #t3.value84.servers .. " 个)",
+		Opened = true
+	})
+
+    for i, v in ipairs(t3.value84.servers) do
+        local v421 = i
+        local v422 = v
+        local s2 = "Green"
+
+        if v422.ping > 150 then
+            s2 = "Red"
+        elseif v422.ping > 80 then
+            s2 = "Yellow"
+        end
+
+        local serverListSection = t3.value84.serverListSection
+        local v425 = string.format("服务器 #%d", v421)
+        local Paragraph = serverListSection.Paragraph
+        local v427 = string.format("延迟: %dms | 玩家: %d/%d | FPS: %d", v422.ping, v422.playing, v422.maxPlayers, v422.fps)
+
+        Paragraph(serverListSection, {
+			Title = v425,
+			Desc = v427,
+			Color = s2,
+			Icon = "server"
+		})
+        t3.value84.serverListSection:Button({
+			Title = string.format("加入服务器 #%d", v421),
+			Callback = function()
+            local value1_5 = t2.value1
+            local v827 = string.format("延迟: %dms | 玩家: %d/%d", v422.ping, v422.playing, v422.maxPlayers)
+
+            value1_5:Notify({
+					Title = "正在加入",
+					Content = v827,
+					Duration = 3,
+					Icon = "server"
+				})
+            t3.value7:TeleportToPlaceInstance(game.PlaceId, v422.id, t3.value16)
+        end
+		})
+        t3.value84.serverListSection:Divider()
+    end
+
+    t3.value84.isUpdating = false
+
+    local value1_6 = t2.value1
+    local v429 = "刷新完成，找到 " .. #t3.value84.servers .. " 个服务器"
+
+    value1_6:Notify({
+		Title = "服务器监测",
+		Content = v429,
+		Duration = 2,
+		Icon = "check-circle"
+	})
+end
+t3.value86 = nil
+function t1.value51()
+    if t3.value84.refreshConnection then
+        t3.value84.refreshConnection:Disconnect()
+    end
+
+    t3.value84.refreshConnection = t3.value2.Heartbeat:Connect(function()
+        if not t3.value39.ServerMonitor then
+            return
+        end
+
+        if not t3.value39.ServerMonitor_AutoRefresh then
+            return
+        end
+
+        if tick() - t3.value84.lastUpdate >= t3.value39.ServerMonitor_Interval then
+            t3.value86()
+        end
+    end)
+end
+t3.value86 = t1.value50
+t3.value87 = t1.value51
+t1.value51 = t1.value49.Toggle
+t1.value51(t1.value49, {
+	Title = "实时服务器监测",
+	Value = false,
+	Callback = function(p76)
+    t3.value39.ServerMonitor = p76
+
+    if p76 then
+        t3.value86()
+        t3.value87()
+        t2.value1:Notify({
+				Title = "服务器监测",
+				Content = "已开始实时监测服务器状态",
+				Duration = 3,
+				Icon = "check-circle"
+			})
+
+        return
+    end
+
+    if t3.value84.serverListSection then
+        t3.value84.serverListSection:Destroy()
+        t3.value84.serverListSection = nil
+    end
+
+    if t3.value84.refreshConnection then
+        t3.value84.refreshConnection:Disconnect()
+        t3.value84.refreshConnection = nil
+    end
+
+    t2.value1:Notify({
+			Title = "服务器监测",
+			Content = "已停止实时监测",
+			Duration = 3,
+			Icon = "xmark"
+		})
+end
+})
+t1.value49:Toggle({
+	Title = "自动刷新服务器列表",
+	Value = true,
+	Callback = function(p77)
+    t3.value39.ServerMonitor_AutoRefresh = p77
+
+    if p77 then
+        p77 = t3.value39.ServerMonitor
+    end
+
+    if p77 then
+        t3.value87()
+    end
+end
+})
+local t30 = {
+	Min = 10,
+	Max = 120,
+	Default = 30
+}
+t1.value49:Slider({
+	Title = "刷新间隔 (秒)",
+	Value = t30,
+	Callback = function(p78)
+    t3.value39.ServerMonitor_Interval = p78
+end
+})
+t1.value51 = t1.value49.Slider
+local t31 = {
+	Min = 5,
+	Max = 50,
+	Default = 20
+}
+t1.value51(t1.value49, {
+	Title = "显示服务器数量",
+	Value = t31,
+	Callback = function(p79)
+    t3.value39.ServerMonitor_MaxServers = p79
+end
+})
+t1.value51 = t1.value49.Dropdown
+t1.value51(t1.value49, {
+	Title = "排序方式",
+	Multi = false,
+	AllowNone = false,
+	Value = "ping",
+	Values = {
+		"ping",
+		"players",
+		"fps"
+	},
+	Callback = function(p80)
+    t3.value39.ServerMonitor_SortBy = p80
+
+    if t3.value39.ServerMonitor then
+        t3.value86()
+    end
+end
+})
+t1.value51 = t1.value49.Toggle
+t1.value51(t1.value49, {
+	Title = "显示空服务器",
+	Value = false,
+	Callback = function(p81)
+    t3.value39.ServerMonitor_ShowEmpty = p81
+
+    if t3.value39.ServerMonitor then
+        t3.value86()
+    end
+end
+})
+t1.value51 = t1.value49.Toggle
+t1.value51(t1.value49, {
+	Title = "显示满服务器",
+	Value = false,
+	Callback = function(p82)
+    t3.value39.ServerMonitor_ShowFull = p82
+
+    if t3.value39.ServerMonitor then
+        t3.value86()
+    end
+end
+})
+t1.value51 = t1.value49.Button
+t1.value51(t1.value49, {
+	Title = "立即刷新服务器列表",
+	Callback = function()
+    t3.value86()
+end
+})
+t1.value52 = t3.value38.FuncTab:Section({
+	Title = "自动发电机",
+	Opened = true
+})
+t1.value52:Toggle({
+	Title = "自动发电机",
+	Value = false,
+	Desc = "低FPS容易被电",
+	Callback = function(p83)
+    t3.value39.AutoPower = p83
+
+    if p83 then
+        task.spawn(function()
+            while t3.value39.AutoPower do
+                pcall(function()
+                    local Power = t3.value15:GetAttribute("Power")
+
+                    if type(Power) == "number" and Power <= 0 then
+                        local Character = t3.value16.Character
+
+                        if Character then
+                            Character = Character:FindFirstChild("HumanoidRootPart")
+                        end
+
+                        local POWERSTATION = t3.value14:FindFirstChild("POWERSTATION")
+
+                        if Character and POWERSTATION then
+                            local CharacterCFrame = Character.CFrame
+
+                            Character.CFrame = CFrame.new(-306.6, -107.3, -232.5)
+                            task.wait(0.2)
+
+                            local timestamp = tick()
+
+                            while true do
+                                local AutoPower = t3.value39.AutoPower
+
+                                if AutoPower then
+                                    AutoPower = tick() - timestamp < 60
+                                end
+
+                                if not AutoPower then
+                                    break
+                                end
+
+                                local Power2 = t3.value15:GetAttribute("Power")
+
+                                if type(Power2) == "number" and Power2 > 0 then
+                                    break
+                                end
+
+                                if isStationElectrified(POWERSTATION) then
+                                    task.wait(0.5)
+                                else
+                                    local AlertUI = POWERSTATION:FindFirstChild("AlertUI")
+
+                                    if AlertUI then
+                                        local GUI = AlertUI:FindFirstChild("GUI")
+
+                                        if GUI and not GUI.Enabled then
+                                            local ProximityPrompt = POWERSTATION:FindFirstChildWhichIsA("ProximityPrompt", true)
+
+                                            if ProximityPrompt then
+                                                fireproximityprompt(ProximityPrompt)
+                                            end
+                                        end
+                                    end
+
+                                    task.wait(0.1)
+                                end
+                            end
+
+                            if Character then
+                                Character.CFrame = CharacterCFrame
+                            end
+                        end
+                    end
+                end)
+                task.wait(1)
+            end
+        end)
+    end
+
+    local value1_7 = t2.value1
+    local v439 = not p83 and "已关闭" or "已开启"
+    local v440 = not p83 and "xmark" or "check"
+
+    value1_7:Notify({
+			Title = "自动发电机",
+			Content = v439,
+			Duration = 2,
+			Icon = v440
+		})
+end
+})
+t1.value53 = t3.value38.FuncTab:Section({
+	Title = "自动捡废料",
+	Opened = true
+})
+t1.value53:Toggle({
+	Title = "自动捡废料",
+	Value = false,
+	Callback = function(p84)
+    t3.value39.AutoScrap = p84
+
+    if p84 then
+        task.spawn(function()
+            while t3.value39.AutoScrap do
+                pcall(function()
+                    local Character = t3.value16.Character
+                    local v957 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+                    if v957 then
+                        for _, child in ipairs(t3.value12:GetChildren()) do
+                            local v960 = child:IsA("Model")
+                            if v960 then
+                                v960 = child:GetAttribute("Scrap")
+                            end
+                            if not v960 then
+                                continue
+                            end
+                            local Values = child:FindFirstChild("Values")
+                            if Values then
+                                Values = Values:GetAttribute("Available") == true
+                            end
+                            if not Values then
+                                continue
+                            end
+                            local v962 = false
+                            local GetDescendants = child.GetDescendants
+                            for v966, v967 in ipairs(GetDescendants(child)) do
+
+                                if v967:IsA("BasePart") then
+                                    v962 = true
+
+                                    break
+                                end
+                            end
+                            if v962 then
+                                local GetPivot = child.GetPivot
+
+                                if (v957.Position - GetPivot(child).Position).Magnitude <= t3.value39.ScrapRange then
+                                    local ProximityPrompt = child:FindFirstChildWhichIsA("ProximityPrompt", true)
+
+                                    if ProximityPrompt then
+                                        fireproximityprompt(ProximityPrompt)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end)
+                task.wait(t3.value39.ScrapInterval)
+            end
+        end)
+    end
+
+    local value1_8 = t2.value1
+    local v443 = not p84 and "已关闭" or "已开启"
+    local v444 = not p84 and "xmark" or "check"
+
+    value1_8:Notify({
+			Title = "自动捡废料",
+			Content = v443,
+			Duration = 2,
+			Icon = v444
+		})
+end
+})
+t1.value51 = t1.value53.Slider
+local t32 = {
+	Min = 10,
+	Max = 200,
+	Default = 50
+}
+t1.value51(t1.value53, {
+	Title = "收集范围",
+	Desc = "六秒内不要拾取太多否则会踢",
+	Value = t32,
+	Callback = function(p85)
+    t3.value39.ScrapRange = p85
+end
+})
+t1.value51 = t1.value53.Slider
+local t33 = {
+	Min = 1,
+	Max = 6,
+	Default = 6
+}
+t1.value51(t1.value53, {
+	Title = "收集间隔(秒)",
+	Value = t33,
+	Callback = function(p86)
+    t3.value39.ScrapInterval = p86
+end
+})
+t3.value38.FuncTab:Section({
+	Title = "战斗功能"
+})
+t1.value51 = t3.value38.FuncTab
+t1.value36 = t1.value51.Toggle
+t1.value36(t1.value51, {
+	Title = "自动 QTE",
+	Desc = "失效了点击屏幕中间按钮完成",
+	Value = false,
+	Callback = function(p87)
+    t3.value32()
+
+    local value1_9 = t2.value1
+    local v449 = not p87 and "已关闭" or "已开启"
+    local v450 = not p87 and "xmark" or "alert-triangle"
+
+    value1_9:Notify({
+			Title = "自动 QTE",
+			Content = v449,
+			Duration = 3,
+			Icon = v450
+		})
+end
+})
+t1.value51 = t3.value38.FuncTab
+t1.value36 = t1.value51.Toggle
+t1.value36(t1.value51, {
+	Title = "拼刀必胜",
+	Value = false,
+	Callback = function(p88)
+    t3.value39.WinClash = p88
+end
+})
+t1.value51 = t3.value38.FuncTab
+t1.value51:Toggle({
+	Title = "X锯无限燃油",
+	Value = false,
+	Callback = function(p89)
+    t3.value39.InfGas = p89
+end
+})
+t1.value51 = t3.value38.FuncTab
+t1.value36 = t1.value51.Toggle
+t1.value36 = t1.value36(t1.value51, {
+	Title = "无限弹药",
+	Value = false,
+	Callback = function(p90)
+    t3.value39.InfAmmo = p90
+    toggleInfAmmo()
+end
+})
+t3.value88 = t1.value36
+t3.value38.FuncTab:Section({
+	Title = "子弹"
+})
+t1.value36 = t3.value38.FuncTab
+t1.value36:Toggle({
+	Title = "子弹追踪",
+	Value = false,
+	Callback = function(p91)
+    t3.value39.BulletTrack = p91
+    t3.value44.TrackActive = p91
+
+    if p91 then
+        v35()
+        t2.value1:Notify({
+				Title = "子弹追踪",
+				Content = "已开启",
+				Duration = 2
+			})
+
+        return
+    end
+
+    t2.value1:Notify({
+			Title = "子弹追踪",
+			Content = "已关闭",
+			Duration = 2
+		})
+end
+})
+t1.value36 = t3.value38.FuncTab
+t1.value55 = t1.value36.Toggle
+t1.value55(t1.value36, {
+	Title = "子弹轨迹",
+	Value = false,
+	Callback = function(p92)
+    t3.value39.BulletTrail = p92
+    t3.value44.TrailActive = p92
+
+    local value1_10 = t2.value1
+
+    if p92 then
+        p92 = "已开启"
+    end
+
+    local v457 = p92 or "已关闭"
+
+    value1_10:Notify({
+			Title = "子弹轨迹",
+			Content = v457,
+			Duration = 2
+		})
+end
+})
+t3.value38.FuncTab:Section({
+	Title = "枪械"
+})
+t1.value36 = t3.value38.FuncTab
+t1.value55 = t1.value36.Toggle
+t1.value55(t1.value36, {
+	Title = "无后坐力",
+	Value = false,
+	Callback = function(p93)
+    t3.value39.NoRecoil = p93
+
+    if p93 then
+        t3.value46.Hooked = false
+
+        if not t3.value46.Hooked then
+            pcall(function()
+                for _, v in pairs(getgc(true)) do
+                    local v830 = type(v) == "table"
+
+                    if v830 then
+                        v830 = rawget(v, "AKRecoil")
+                    end
+
+                    if v830 then
+                        t3.value46.TableRef = v
+
+                        for _, v5 in ipairs({
+								"AKRecoil",
+								"DeagleRecoil",
+								"M1911Recoil",
+								"DBRecoil",
+								"CamShake1",
+								"Shake"
+							}) do
+                            local v833 = rawget(v, v5)
+
+                            if v833 then
+                                v833 = type((rawget(v, v5))) == "function"
+                            end
+
+                            if v833 then
+                                t3.value46.OriginalFunctions[v5] = rawget(v, v5)
+                                rawset(v, v5, function()
+                                end)
+                            end
+                        end
+
+                        t3.value46.Hooked = true
+
+                        return
+                    end
+                end
+            end)
+        end
+
+        t2.value1:Notify({
+				Title = "无后坐力",
+				Content = "已开启",
+				Duration = 2
+			})
+
+        return
+    end
+
+    if t3.value46.TableRef then
+        pcall(function()
+            for k, v in pairs(t3.value46.OriginalFunctions) do
+                rawset(t3.value46.TableRef, k, v)
+            end
+
+            t3.value46.OriginalFunctions = {}
+            t3.value46.Hooked = false
+            t3.value46.TableRef = nil
+        end)
+    end
+
+    t2.value1:Notify({
+			Title = "无后坐力",
+			Content = "已关闭",
+			Duration = 2
+		})
+end
+})
+t3.value38.FuncTab:Section({
+	Title = "生存"
+})
+t1.value36 = t3.value38.FuncTab
+t1.value36:Toggle({
+	Title = "无限体力",
+	Value = false,
+	Callback = function(p94)
+    t3.value39.InfStamina = p94
+end
+})
+t1.value36 = t3.value38.FuncTab
+t1.value55 = t1.value36.Toggle
+t1.value55(t1.value36, {
+	Title = "无限战斗体力",
+	Value = false,
+	Callback = function(p95)
+    t3.value39.InfCombatStamina = p95
+end
+})
+t1.value36 = t3.value38.FuncTab
+t1.value36:Toggle({
+	Title = "无限刺刀QTE条",
+	Value = false,
+	Callback = function(p96)
+    t3.value39.InfWinchester = p96
+
+    if p96 then
+        task.spawn(function()
+            while t3.value39.InfWinchester do
+                pcall(function()
+                    local Character = t3.value16.Character
+
+                    if not Character then
+                        return
+                    end
+
+                    local Stats = Character:FindFirstChild("Stats")
+
+                    if not Stats then
+                        return
+                    end
+
+                    local WinchesterBar = Stats:FindFirstChild("WinchesterBar")
+
+                    if WinchesterBar then
+                        WinchesterBar.Value = 100
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+        t2.value1:Notify({
+				Title = "无限刺刀QTE蓄力",
+				Content = "已开启",
+				Duration = 2,
+				Icon = "check-circle"
+			})
+
+        return
+    end
+
+    t2.value1:Notify({
+			Title = "无限刺刀QTE蓄力",
+			Content = "已关闭",
+			Duration = 2,
+			Icon = "xmark"
+		})
+end
+})
+t1.value36 = t3.value38.FuncTab
+t1.value55 = t1.value36.Toggle
+t1.value55 = t1.value55(t1.value36, {
+	Title = "伪无敌",
+	Desc = "开启前请将本体藏在安全的地方",
+	Value = false,
+	Callback = function(p97)
+    t3.value39.PseudoGod = p97
+
+    if p97 then
+        t3.value39.ChainDodge = false
+        t3.value52.Dodge = false
+
+        local Character = t3.value16.Character
+        local v464 = Character
+
+        if Character then
+            v464 = Character:FindFirstChild("HumanoidRootPart")
+        end
+
+        if Character then
+            local Torso = Character:FindFirstChild("Torso")
+
+            if not Torso then
+                Torso = Character:FindFirstChild("UpperTorso")
+            end
+
+            Character = Torso
+        end
+
+        if v464 and Character then
+            t3.value39.PseudoGodReturnPos = v464.CFrame
+
+            local ScreenGui = Instance.new("ScreenGui")
+
+            ScreenGui.Name = "_BlackScreen"
+            ScreenGui.IgnoreGuiInset = true
+            ScreenGui.DisplayOrder = 999
+            ScreenGui.Parent = t3.value16.PlayerGui
+
+            local Frame = Instance.new("Frame")
+
+            Frame.BackgroundColor3 = Color3.new(0, 0, 0)
+            Frame.Size = UDim2.new(1, 0, 1, 0)
+            Frame.BorderSizePixel = 0
+            Frame.Parent = ScreenGui
+            v464.CFrame = CFrame.new(507.35491943359, -112.24140930176, -89.923637390137)
+            task.wait(0.15)
+
+            local Seat = Instance.new("Seat")
+
+            Seat.Name = ""
+            Seat.Anchored = false
+            Seat.CanCollide = false
+            Seat.Transparency = 1
+            Seat.Position = Vector3.new(95, 84, 37.55)
+            Seat.Parent = workspace
+
+            local Weld = Instance.new("Weld")
+
+            Weld.Part0 = Seat
+            Weld.Part1 = Character
+            Weld.Parent = Seat
+            task.wait()
+            Seat.CFrame = t3.value39.PseudoGodReturnPos
+            t3.value43.Seat = Seat
+            task.wait(0.5)
+            ScreenGui:Destroy()
+            t2.value1:Notify({
+					Title = "伪无敌",
+					Content = "已开启",
+					Duration = 4,
+					Icon = "alert-triangle"
+				})
+        end
+    else
+        if t3.value43.Seat then
+            local Character = t3.value16.Character
+
+            if Character then
+                local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+                local v472 = HumanoidRootPart
+
+                if HumanoidRootPart then
+                    v472 = t3.value39.PseudoGodReturnPos
+                end
+
+                if v472 then
+                    local ScreenGui = Instance.new("ScreenGui")
+
+                    ScreenGui.Name = "_BlackScreen"
+                    ScreenGui.IgnoreGuiInset = true
+                    ScreenGui.DisplayOrder = 999
+                    ScreenGui.Parent = t3.value16.PlayerGui
+
+                    local Frame = Instance.new("Frame")
+
+                    Frame.BackgroundColor3 = Color3.new(0, 0, 0)
+                    Frame.Size = UDim2.new(1, 0, 1, 0)
+                    Frame.BorderSizePixel = 0
+                    Frame.Parent = ScreenGui
+                    HumanoidRootPart.CFrame = t3.value39.PseudoGodReturnPos
+                    task.wait(0.5)
+                    ScreenGui:Destroy()
+                end
+            end
+
+            t3.value43.Seat:Destroy()
+            t3.value43.Seat = nil
+        end
+
+        t2.value1:Notify({
+				Title = "伪无敌",
+				Content = "已关闭",
+				Duration = 2,
+				Icon = "xmark"
+			})
+    end
+
+    PseudoGodToggle:SetValue(p97)
+end
+})
+t3.value89 = t1.value55
+t1.value55 = t3.value38.FuncTab
+t1.value55.Toggle(t1.value55, {
+	Title = "自瞄Chain",
+	Value = false,
+	Callback = function(p98)
+    t3.value39.FaceChain = p98
+end
+})
+t3.value38.FuncTab:Section({
+	Title = "速度"
+})
+t1.value55 = t3.value38.FuncTab
+t1.value55.Toggle(t1.value55, {
+	Title = "速度启用",
+	Value = false,
+	Callback = function(p99)
+    t3.value39.SpeedBoost = p99
+
+    if p99 then
+        t3.value72()
+        t2.value1:Notify({
+				Title = "速度",
+				Content = "已开启",
+				Duration = 2
+			})
+
+        return
+    end
+
+    t2.value1:Notify({
+			Title = "速度",
+			Content = "已关闭",
+			Duration = 2
+		})
+end
+})
+t1.value55 = t3.value38.FuncTab
+local Slider = t1.value55.Slider
+local t34 = {
+	Min = 0,
+	Max = 50,
+	Default = 5
+}
+Slider(t1.value55, {
+	Title = "移速",
+	Value = t34,
+	Callback = function(p100)
+    t3.value39.SpeedValue = p100
+end
+})
+t1.value55 = t3.value38.FuncTab
+t1.value55.Toggle(t1.value55, {
+	Title = "第三人称",
+	Value = false,
+	Callback = function(p101)
+    t3.value39.ThirdPerson = p101
+    t3.value73.Active = p101
+
+    if p101 then
+        v37()
+
+        return
+    end
+
+    pcall(function()
+        t3.value16.CameraMode = Enum.CameraMode.LockFirstPerson
+    end)
+
+    if t3.value73.Conn then
+        t3.value73.Conn:Disconnect()
+    end
+end
+})
+t1.value55 = t3.value38.FuncTab
+t1.value55.Toggle(t1.value55, {
+	Title = "穿墙",
+	Value = false,
+	Callback = function(p102)
+    t3.value35(p102)
+
+    local value1_11 = t2.value1
+    local v481 = not p102 and "已关闭" or "已开启"
+    local v482 = not p102 and "xmark" or "check-circle"
+
+    value1_11:Notify({
+			Title = "穿墙",
+			Content = v481,
+			Duration = 3,
+			Icon = v482
+		})
+end
+})
+t3.value38.FuncTab:Section({
+	Title = "其他功能"
+})
+t1.value55 = t3.value38.FuncTab
+t1.value55:Toggle({
+	Title = "启用 Chain 预警",
+	Value = false,
+	Callback = function(p103)
+    t3.value39.ChainAlert = p103
+    t3.value52.Active = p103
+    t3.value71()
+end
+})
+t1.value55 = t3.value38.FuncTab
+t1.value55:Toggle({
+	Title = "远离Chain",
+	Desc = "可以永远避免被chain伤害放技能时会传送到他身边",
+	Value = false,
+	Callback = function(p104)
+    if t3.value39.PseudoGod and p104 then
+        t2.value1:Notify({
+				Title = "无法开启",
+				Content = "伪无敌期间无法使用自动躲避",
+				Duration = 3,
+				Icon = "alert-triangle"
+			})
+
+        return
+    end
+
+    t3.value39.ChainDodge = p104
+    t3.value52.Dodge = p104
+
+    local value1_12 = t2.value1
+    local v486 = not p104 and "已关闭" or "已开启"
+    local v487 = not p104 and "xmark" or "alert-triangle"
+
+    value1_12:Notify({
+			Title = "自动躲避",
+			Content = v486,
+			Duration = 4,
+			Icon = v487
+		})
+end
+})
+t1.value55 = t3.value38.FuncTab
+t1.value55.Toggle(t1.value55, {
+	Title = "显示光环",
+	Value = true,
+	Callback = function(p105)
+    t3.value39.ChainRing = p105
+    t3.value52.ShowRing = p105
+    t3.value71()
+end
+})
+t1.value55 = t3.value38.FuncTab
+t1.value55.Toggle(t1.value55, {
+	Title = "旋转光环",
+	Value = true,
+	Callback = function(p106)
+    t3.value39.ChainRotate = p106
+    t3.value52.RingRotating = p106
+end
+})
+t1.value55 = t3.value38.FuncTab
+local Slider2 = t1.value55.Slider
+local t35 = {
+	Min = 30,
+	Max = 100,
+	Default = 55
+}
+Slider2(t1.value55, {
+	Title = "预警范围大小",
+	Value = t35,
+	Callback = function(p107)
+    t3.value39.ChainRingRadius = p107
+    t3.value52.RingRadius = p107
+    t3.value71()
+end
+})
+local v46 = t3.value38.RemoteTab:Section({
+	Title = "远程UI & 快捷键",
+	Opened = true
+})
+t1.value55 = v46.Toggle
+t1.value55(v46, {
+	Title = "商店界面",
+	Value = false,
+	Callback = function(p108)
+    local v492 = p108
+
+    if v492 then
+        local RoundTime = t3.value15:GetAttribute("RoundTime")
+
+        v492 = not not (type(RoundTime) == "number" and RoundTime > 0)
+    end
+
+    if v492 then
+        t2.value1:Notify({
+				Title = "无法开启",
+				Content = "商店只能在白天打开",
+				Duration = 2,
+				Icon = "xmark"
+			})
+
+        return
+    end
+
+    t3.value42("Shop", p108)
+end
+})
+v46:Paragraph({
+	Title = "警告",
+	Desc = "黑夜不能买商店物品，否则会被踢出游戏",
+	Color = "Red"
+})
+local _Enum = Enum
+t1.value55 = v46.Keybind
+local V = _Enum.KeyCode.V
+t1.value55(v46, {
+	Title = "商店快捷键",
+	Value = V,
+	Callback = function(p109)
+    local v495 = p109
+
+    if v495 then
+        local RoundTime = t3.value15:GetAttribute("RoundTime")
+
+        v495 = not not (type(RoundTime) == "number" and RoundTime > 0)
+    end
+
+    if v495 then
+        t2.value1:Notify({
+				Title = "无法开启",
+				Content = "商店只能在白天打开",
+				Duration = 2,
+				Icon = "xmark"
+			})
+
+        return
+    end
+
+    t3.value42("Shop", p109)
+end
+})
+t1.value55 = v46.Toggle
+t1.value55(v46, {
+	Title = "分解机界面",
+	Value = false,
+	Callback = function(p110)
+    t3.value42("Deconstructor", p110)
+end
+})
+v46:Paragraph({
+	Title = "警告",
+	Desc = "会吃材料请前往工作间",
+	Color = "Red"
+})
+local KeyCode = Enum.KeyCode
+t1.value55 = v46.Keybind
+local B = KeyCode.B
+t1.value55(v46, {
+	Title = "分解机快捷键",
+	Value = B,
+	Callback = function(p111)
+    t3.value42("Deconstructor", p111)
+end
+})
+t1.value55 = v46.Toggle
+t1.value55(v46, {
+	Title = "工作台界面",
+	Value = false,
+	Callback = function(p112)
+    t3.value42("Workbench", p112)
+end
+})
+v46:Paragraph({
+	Title = "警告",
+	Desc = "会吃材料请前往工作间",
+	Color = "Red"
+})
+local N = Enum.KeyCode.N
+v46:Keybind({
+	Title = "工作台快捷键",
+	Value = N,
+	Callback = function(p113)
+    t3.value42("Workbench", p113)
+end
+})
+v46:Section({
+	Title = "伪无敌快捷键"
+})
+local KeyCode2 = Enum.KeyCode
+t1.value55 = v46.Keybind
+local F4 = KeyCode2.F4
+t1.value55(v46, {
+	Title = "伪无敌快捷键",
+	Value = F4,
+	Callback = function(_)
+    t3.value39.PseudoGod = not t3.value39.PseudoGod
+
+    if t3.value39.PseudoGod then
+        t3.value39.ChainDodge = false
+        t3.value52.Dodge = false
+
+        local Character = t3.value16.Character
+        local v503 = Character and Character:FindFirstChild("HumanoidRootPart")
+
+        if Character then
+            Character = Character:FindFirstChild("Torso") or Character:FindFirstChild("UpperTorso")
+        end
+
+        if v503 and Character then
+            t3.value39.PseudoGodReturnPos = v503.CFrame
+
+            local ScreenGui = Instance.new("ScreenGui")
+
+            ScreenGui.Name = "_BlackScreen"
+            ScreenGui.IgnoreGuiInset = true
+            ScreenGui.DisplayOrder = 999
+            ScreenGui.Parent = t3.value16.PlayerGui
+
+            local Frame = Instance.new("Frame")
+
+            Frame.BackgroundColor3 = Color3.new(0, 0, 0)
+            Frame.Size = UDim2.new(1, 0, 1, 0)
+            Frame.BorderSizePixel = 0
+            Frame.Parent = ScreenGui
+            v503.CFrame = CFrame.new(507.35491943359, -112.24140930176, -89.923637390137)
+            task.wait(0.15)
+
+            local Seat = Instance.new("Seat")
+
+            Seat.Name = ""
+            Seat.Anchored = false
+            Seat.CanCollide = false
+            Seat.Transparency = 1
+            Seat.Position = Vector3.new(95, 84, 37.55)
+            Seat.Parent = workspace
+
+            local Weld = Instance.new("Weld")
+
+            Weld.Part0 = Seat
+            Weld.Part1 = Character
+            Weld.Parent = Seat
+            task.wait()
+            Seat.CFrame = t3.value39.PseudoGodReturnPos
+            t3.value43.Seat = Seat
+            task.wait(0.5)
+            ScreenGui:Destroy()
+            t2.value1:Notify({
+					Title = "伪无敌",
+					Content = "已开启",
+					Duration = 2,
+					Icon = "check"
+				})
+        end
+    else
+        if t3.value43.Seat then
+            local Character = t3.value16.Character
+
+            if Character then
+                local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+                local v510 = HumanoidRootPart
+
+                if HumanoidRootPart then
+                    v510 = t3.value39.PseudoGodReturnPos
+                end
+
+                if v510 then
+                    local ScreenGui = Instance.new("ScreenGui")
+
+                    ScreenGui.Name = "_BlackScreen"
+                    ScreenGui.IgnoreGuiInset = true
+                    ScreenGui.DisplayOrder = 999
+                    ScreenGui.Parent = t3.value16.PlayerGui
+
+                    local Frame = Instance.new("Frame")
+
+                    Frame.BackgroundColor3 = Color3.new(0, 0, 0)
+                    Frame.Size = UDim2.new(1, 0, 1, 0)
+                    Frame.BorderSizePixel = 0
+                    Frame.Parent = ScreenGui
+                    HumanoidRootPart.CFrame = t3.value39.PseudoGodReturnPos
+                    task.wait(0.5)
+                    ScreenGui:Destroy()
+                end
+            end
+
+            t3.value43.Seat:Destroy()
+            t3.value43.Seat = nil
+        end
+
+        t2.value1:Notify({
+				Title = "伪无敌",
+				Content = "已关闭",
+				Duration = 2,
+				Icon = "xmark"
+			})
+    end
+
+    t3.value89:SetValue(t3.value39.PseudoGod)
+end
+})
+v46:Section({
+	Title = "无限子弹快捷键"
+})
+t1.value55 = v46.Keybind
+local F5 = Enum.KeyCode.F5
+t1.value55(v46, {
+	Title = "无限子弹快捷键",
+	Value = F5,
+	Callback = function(_)
+    t3.value39.InfAmmo = not t3.value39.InfAmmo
+    toggleInfAmmo()
+
+    local value1_13 = t2.value1
+    local v515 = not t3.value39.InfAmmo and "已关闭" or "已开启"
+    local v516 = not t3.value39.InfAmmo and "xmark" or "check"
+
+    value1_13:Notify({
+			Title = "无限弹药",
+			Content = v515,
+			Duration = 2,
+			Icon = v516
+		})
+    t3.value88:SetValue(t3.value39.InfAmmo)
+end
+})
+v46:Section({
+	Title = "特殊功能"
+})
+t3.value90 = nil
+t1.value55 = v46.Toggle
+t1.value55(v46, {
+	Title = "绕过AK购买徽章",
+	Value = false,
+	Callback = function(p116)
+    if p116 then
+        task.spawn(function()
+            local BadgeService = game:GetService("BadgeService")
+
+            t3.value90 = BadgeService.UserHasBadgeAsync
+            hookfunction(BadgeService.UserHasBadgeAsync, function(p117, p118, p119)
+                if p119 == 1224768178420300 then
+                    return true
+                end
+
+                return t3.value90(p117, p118, p119)
+            end)
+            t2.value1:Notify({
+					Title = "绕过成功",
+					Content = "AK47购买徽章已绕过",
+					Duration = 3,
+					Icon = "check-circle"
+				})
+        end)
+
+        return
+    end
+
+    if t3.value90 then
+        hookfunction(game:GetService("BadgeService").UserHasBadgeAsync, t3.value90)
+        t2.value1:Notify({
+				Title = "绕过关闭",
+				Content = "AK购买徽章绕过已关闭",
+				Duration = 3,
+				Icon = "xmark"
+			})
+    end
+end
+})
+v46:Toggle({
+	Title = "无限捕兽夹放置",
+	Value = false,
+	Callback = function(p120)
+    pcall(function()
+        _G.BypassBearTrap = p120
+        t3.value39.BypassBearTrap = p120
+
+        if p120 then
+            task.spawn(function()
+                while _G.BypassBearTrap do
+                    pcall(function()
+                        task.wait()
+
+                        local PlayerStats = t3.value16:FindFirstChild("PlayerStats")
+
+                        if PlayerStats then
+                            PlayerStats:SetAttribute("BearTrapPlaced", false)
+                        end
+                    end)
+                end
+            end)
+
+            return
+        end
+
+        local PlayerStats = t3.value16:FindFirstChild("PlayerStats")
+
+        if PlayerStats then
+            PlayerStats:SetAttribute("BearTrapPlaced", true)
+        end
+    end)
+end
+})
+t3.value91 = game:GetService("ReplicatedStorage"):WaitForChild("Assets"):WaitForChild("Client"):WaitForChild("Movement"):WaitForChild("DisableSmoothness")
+v46:Toggle({
+	Title = "取消走路/跑步惯性",
+	Value = false,
+	Callback = function(p121)
+    local u520 = p121
+    pcall(function()
+        t3.value91.Value = u520
+        t3.value39.CancelMomentum = u520
+    end)
+end
+})
+v46:Button({
+	Title = "解锁商店隐藏物品",
+	Desc = "那个礼盒不要买会粘在手上解锁商店被隐藏起来的物品",
+	Callback = function()
+    pcall(function()
+        local BuyFrame = game:GetService("Players").LocalPlayer.PlayerGui.Ingame.Shop.MainFrame.SubSections.BuyFrame
+
+        for _, child in ipairs(BuyFrame:GetChildren()) do
+            if child:IsA("GuiObject") and child.Visible ~= true then
+                child.Visible = true
+            end
+        end
+    end)
+end
+})
+t3.value92 = {
+	"ExampleAdmin1",
+	"ExampleAdmin2",
+	"ExampleAdmin3",
+	"ExampleAdmin4",
+	"ExampleAdmin5",
+	"ExampleReporter1",
+	"ExampleReporter2",
+	"ExampleReporter3",
+	"ExampleReporter4",
+	"ExampleReporter5",
+	"SuspectUser1",
+	"SuspectUser2",
+	"SuspectUser3",
+	"SuspectUser4",
+	"SuspectUser5",
+	"WatchList1",
+	"WatchList2",
+	"WatchList3",
+	"WatchList4",
+	"WatchList5",
+	"KnownMod1",
+	"KnownMod2",
+	"KnownMod3",
+	"KnownMod4",
+	"KnownMod5",
+	"BackupName1",
+	"BackupName2",
+	"BackupName3",
+	"BackupName4",
+	"BackupName5",
+	"TestUser1",
+	"TestUser2",
+	"TestUser3",
+	"TestUser4",
+	"TestUser5",
+	"Placeholder1",
+	"Placeholder2",
+	"Placeholder3",
+	"Placeholder4",
+	"Placeholder5"
+}
+t3.value93 = nil
+v46:Toggle({
+	Title = "检测管理员/经常举报者",
+	Value = false,
+	Callback = function(p122)
+    pcall(function()
+        _G.AdminCheckEnabled = p122
+        t3.value39.AdminCheck = p122
+
+        if p122 then
+            if t3.value93 then
+                t3.value93:Disconnect()
+            end
+
+            t3.value93 = t3.value1.PlayerAdded:Connect(function(player)
+                for _, v in ipairs(t3.value92) do
+                    if v == player.Name or v == player.DisplayName then
+                        local value1_14 = t2.value1
+                        local v980 = "检测到可疑用户: " .. player.Name .. " (" .. player.DisplayName .. ")"
+
+                        value1_14:Notify({
+								Title = "⚠\239\184\143 警告",
+								Content = v980,
+								Duration = 8,
+								Icon = "alert-triangle"
+							})
+
+                        return
+                    end
+                end
+            end)
+
+            for _, player in ipairs(t3.value1:GetPlayers()) do
+                if player ~= t3.value16 then
+                    for _, v in ipairs(t3.value92) do
+                        if v == player.Name or v == player.DisplayName then
+                            local value1_15 = t2.value1
+                            local v846 = "服务器内存在可疑用户: " .. player.Name .. " (" .. player.DisplayName .. ")"
+
+                            value1_15:Notify({
+									Title = "⚠\239\184\143 警告",
+									Content = v846,
+									Duration = 8,
+									Icon = "alert-triangle"
+								})
+
+                            break
+                        end
+                    end
+                end
+            end
+
+            return
+        end
+
+        if t3.value93 then
+            t3.value93:Disconnect()
+        end
+    end)
+end
+})
+t3.value94 = false
+t3.value95 = {}
+t3.value96 = {
+	AK47 = 20,
+	Deagle = 7,
+	DoubleBarrel = 2,
+	M1911 = 7
+}
+t3.value97 = nil
+t3.value97 = nil
+function t1.value33()
+    task.spawn(function()
+        while t3.value94 do
+            pcall(function()
+                local Character = t3.value16.Character
+
+                if Character then
+                    Character = Character:FindFirstChild("Items")
+                end
+
+                if Character then
+                    for k, v in pairs(t3.value96) do
+                        local v987 = k
+                        local v988 = Character:FindFirstChild(v987)
+
+                        if v988 then
+                            v988:SetAttribute("Ammo", v)
+                            v988:SetAttribute("Reserve", 999)
+
+                            if t3.value97 then
+                                pcall(t3.value97, "Sync", v987, {
+									v,
+									999
+								})
+                            end
+                        end
+                    end
+                end
+            end)
+            task.wait(0.1)
+        end
+    end)
+end
+function t3.value98()
+
+    for v524, v525 in ipairs(t3.value95) do
+
+        local v526 = v525
+
+        pcall(function()
+            v526:Disconnect()
+        end)
+    end
+    t3.value95 = {}
+    local Character = t3.value16.Character
+    if not Character then
+        return
+    end
+    local Items = Character:FindFirstChild("Items")
+    if not Items then
+        return
+    end
+    local CharacterHandler = Character:FindFirstChild("CharacterHandler")
+    if not CharacterHandler then
+        return
+    end
+    local Contents = CharacterHandler:FindFirstChild("Contents")
+    if Contents then
+        Contents = CharacterHandler.Contents:FindFirstChild("Remotes")
+    end
+    if not Contents then
+        return
+    end
+    local Interact = Contents:FindFirstChild("Interact")
+    if not Interact then
+        return
+    end
+    local v532 = getconnections(Interact.OnClientEvent)
+    if v532 and #v532 > 0 then
+        local v533 = v532[1]
+
+        t3.value97 = v533.Function
+        v533:Disable()
+
+        local connection = Interact.OnClientEvent:Connect(function(p123, p124, p125)
+            local value94 = t3.value94
+
+            if value94 then
+                value94 = p123 == "Sync" and t3.value96[p124]
+            end
+
+            if value94 then
+                p125 = {
+					t3.value96[p124],
+					999
+				}
+            end
+
+            pcall(t3.value97, p123, p124, p125)
+        end)
+
+        table.insert(t3.value95, connection)
+    end
+    for k, v in pairs(t3.value96) do
+        local v537 = v
+        local k2 = Items:FindFirstChild(k)
+
+        if k2 then
+            local connection = k2:GetAttributeChangedSignal("Ammo"):Connect(function()
+                if not t3.value94 then
+                    return
+                end
+
+                local Ammo = k2:GetAttribute("Ammo")
+
+                if Ammo and Ammo < v537 then
+                    k2:SetAttribute("Ammo", v537)
+                end
+            end)
+            local connection2 = k2:GetAttributeChangedSignal("Reserve"):Connect(function()
+                if not t3.value94 then
+                    return
+                end
+
+                local Reserve = k2:GetAttribute("Reserve")
+
+                if Reserve and Reserve < 999 then
+                    k2:SetAttribute("Reserve", 999)
+                end
+            end)
+
+            table.insert(t3.value95, connection)
+            table.insert(t3.value95, connection2)
+            k2:SetAttribute("Ammo", v537)
+            k2:SetAttribute("Reserve", 999)
+        end
+    end
+    pcall(function()
+        local PlayerGui = t3.value16:FindFirstChild("PlayerGui")
+        local v854 = PlayerGui and PlayerGui:FindFirstChild("Ingame")
+        local v855 = v854 and v854:FindFirstChild("MechanicsFrame")
+        local v856 = v855 and v855:FindFirstChild("GunUI")
+
+        if v856 then
+            local Ammo = v856:FindFirstChild("Ammo")
+            local AmmoInStore = v856:FindFirstChild("AmmoInStore")
+
+            if Ammo then
+                local connection = Ammo:GetPropertyChangedSignal("Text"):Connect(function()
+                    if not t3.value94 then
+                        return
+                    end
+
+                    for k, v in pairs(t3.value96) do
+                        local k3 = Items:FindFirstChild(k)
+
+                        if k3 then
+                            k3 = k3:GetAttribute("Equipped")
+                        end
+
+                        if k3 then
+                            Ammo.Text = tostring(v)
+
+                            return
+                        end
+                    end
+                end)
+
+                table.insert(t3.value95, connection)
+            end
+
+            if AmmoInStore then
+                local connection = AmmoInStore:GetPropertyChangedSignal("Text"):Connect(function()
+                    if not t3.value94 then
+                        return
+                    end
+
+                    AmmoInStore.Text = "999"
+                end)
+
+                table.insert(t3.value95, connection)
+            end
+        end
+    end)
+end
+t3.value99 = t1.value33
+function toggleInfAmmo()
+    t3.value94 = not t3.value94
+
+    if t3.value94 then
+        t3.value98()
+        t3.value99()
+        pcall(function()
+            local Character = t3.value16.Character
+
+            if Character then
+                Character = Character:FindFirstChild("Items")
+            end
+
+            if Character then
+                for k, v in pairs(t3.value96) do
+                    local k4 = Character:FindFirstChild(k)
+
+                    if k4 then
+                        k4:SetAttribute("Ammo", v)
+                        k4:SetAttribute("Reserve", 999)
+                    end
+                end
+            end
+        end)
+
+        return
+    end
+
+    for _, v in ipairs(t3.value95) do
+        local v543 = v
+
+        pcall(function()
+            v543:Disconnect()
+        end)
+    end
+end
+t1.value33 = t3.value16.CharacterAdded
+t1.value33:Connect(function()
+    if t3.value94 then
+        task.wait(1)
+        t3.value98()
+    end
+
+    if t3.value39.NoRecoil then
+        task.wait(1)
+        t3.value46.Hooked = false
+
+        if t3.value46.Hooked then
+            return
+        end
+
+        pcall(function()
+            for _, v in pairs(getgc(true)) do
+                local v867 = type(v) == "table"
+
+                if v867 then
+                    v867 = rawget(v, "AKRecoil")
+                end
+
+                if v867 then
+                    t3.value46.TableRef = v
+
+                    for _, v6 in ipairs({
+						"AKRecoil",
+						"DeagleRecoil",
+						"M1911Recoil",
+						"DBRecoil",
+						"CamShake1",
+						"Shake"
+					}) do
+                        local v870 = rawget(v, v6)
+
+                        if v870 then
+                            v870 = type((rawget(v, v6))) == "function"
+                        end
+
+                        if v870 then
+                            t3.value46.OriginalFunctions[v6] = rawget(v, v6)
+                            rawset(v, v6, function()
+                            end)
+                        end
+                    end
+
+                    t3.value46.Hooked = true
+
+                    return
+                end
+            end
+        end)
+    end
+end)
+task.spawn(function()
+    while task.wait(0.1) do
+        local InfStamina = t3.value39.InfStamina
+
+        if InfStamina then
+            InfStamina = t3.value16.Character
+        end
+
+        if InfStamina then
+            pcall(function()
+                t3.value16.Character:FindFirstChild("Stats").Stamina.Value = 100
+            end)
+        end
+    end
+end)
+task.spawn(function()
+    while task.wait(0.1) do
+        local InfCombatStamina = t3.value39.InfCombatStamina
+
+        if InfCombatStamina then
+            InfCombatStamina = t3.value16.Character
+        end
+
+        if InfCombatStamina then
+            pcall(function()
+                t3.value16.Character:FindFirstChild("Stats").CombatStamina.Value = 100
+            end)
+        end
+    end
+end)
+task.spawn(function()
+    while task.wait(0.1) do
+        local InfGas = t3.value39.InfGas
+
+        if InfGas then
+            InfGas = t3.value16.Character
+        end
+
+        if InfGas then
+            pcall(function()
+                local Items = t3.value16.Character:FindFirstChild("Items")
+
+                if Items then
+                    Items = t3.value16.Character.Items:FindFirstChild("XSaw")
+                end
+
+                if Items then
+                    Items:SetAttribute("Gas", 100)
+                end
+            end)
+        end
+    end
+end)
+task.spawn(function()
+    while task.wait(0.005) do
+        local WinClash = t3.value39.WinClash
+
+        if WinClash then
+            WinClash = t3.value16.Character
+        end
+
+        if WinClash then
+            pcall(function()
+                t3.value16.Character:FindFirstChild("Stats").ClashStrength.Value = 100
+            end)
+        end
+    end
+end)
+task.spawn(function()
+    while task.wait(0.03) do
+        if t3.value39.FaceChain then
+            pcall(function()
+                local v872
+                local n7 = 1e999
+                for v876, v877 in ipairs(t3.value11:GetChildren()) do
+
+                    if v877:IsA("Model") then
+                        local HumanoidRootPart = v877:FindFirstChild("HumanoidRootPart")
+                        local v879 = HumanoidRootPart
+                        local Humanoid = v877:FindFirstChild("Humanoid")
+
+                        if HumanoidRootPart then
+                            v879 = Humanoid and Humanoid.Health > 0
+                        end
+
+                        if v879 then
+                            local Magnitude = (t3.value10.CFrame.Position - HumanoidRootPart.Position).Magnitude
+
+                            if Magnitude < n7 then
+                                n7 = Magnitude
+                                v872 = HumanoidRootPart
+                            end
+                        end
+                    end
+                end
+                if v872 then
+                    t3.value10.CFrame = CFrame.lookAt(t3.value10.CFrame.Position, v872.Position)
+                end
+            end)
+        end
+    end
+end)
+t1.value33 = t3.value2.RenderStepped
+t1.value33:Connect(function()
+    t3.value10 = t3.value5.CurrentCamera
+    local Character = t3.value16.Character
+    if Character then
+        Character = Character:FindFirstChild("HumanoidRootPart")
+    end
+    local t36 = {}
+    for k in pairs(t3.value48) do
+        local v551 = k
+        local Entity = v551.Entity
+
+        if not Entity or not Entity.Parent then
+            table.insert(t36, v551)
+        end
+    end
+    for v555, v556 in ipairs(t36) do
+
+        v556:Remove()
+    end
+    if t3.value39.ChainESP then
+        for _, child in ipairs(t3.value11:GetChildren()) do
+            if child:IsA("Model") and child:FindFirstChild("Humanoid") and not t3.value50.Chains[child] then
+                local HumanoidRootPart = child:FindFirstChild("HumanoidRootPart")
+
+                if HumanoidRootPart then
+                    local Chains = t3.value50.Chains
+                    local value49 = t3.value49
+                    local childName = child.Name
+                    local ChainESP_Color = t3.value39.ChainESP_Color
+                    local Add = value49.Add
+                    local vector3_11 = Vector3.new(0, 3.5, 0)
+                    local uDim2 = UDim2.new(0, 300, 0, 60)
+
+                    Chains[child] = Add(value49, {
+						Entity = child,
+						Part = HumanoidRootPart,
+						Name = childName,
+						Color = ChainESP_Color,
+						Highlight = true,
+						Box = true,
+						Text = true,
+						Distance = true,
+						AlwaysOnTop = true,
+						StudsOffset = vector3_11,
+						BillboardSize = uDim2
+					})
+                end
+            end
+        end
+    end
+    if t3.value39.ScrapESP then
+        for _, child in ipairs(t3.value12:GetChildren()) do
+            local v569 = child:IsA("Model")
+            if v569 then
+                v569 = child:GetAttribute("Scrap")
+            end
+            if not v569 then
+                continue
+            end
+            local v570 = false
+            for v573, v574 in ipairs(child:GetDescendants()) do
+
+                if v574:IsA("BasePart") then
+                    v570 = true
+
+                    break
+                end
+            end
+            if v570 then
+                v570 = not t3.value50.Scraps[child]
+            end
+            if v570 then
+                local Pivot = child:GetPivot()
+                local _, v577 = child:GetBoundingBox()
+                local Part = Instance.new("Part")
+
+                Part.Anchored = true
+                Part.CanCollide = false
+                Part.CanTouch = false
+                Part.CanQuery = false
+                Part.Transparency = 1
+                Part.Size = v577
+                Part.CFrame = Pivot
+                Part.Parent = t3.value5
+
+                local Scraps = t3.value50.Scraps
+                local value49 = t3.value49
+                local ScrapESP_Color = t3.value39.ScrapESP_Color
+                local Add = value49.Add
+                local vector3_12 = Vector3.new(0, 2.5, 0)
+
+                Scraps[child] = {
+					Obj = Add(value49, {
+						Entity = child,
+						Part = Part,
+						Name = "废料",
+						Color = ScrapESP_Color,
+						Highlight = true,
+						Box = true,
+						Text = true,
+						Distance = true,
+						AlwaysOnTop = true,
+						StudsOffset = vector3_12
+					}),
+					Part = Part
+				}
+            end
+        end
+    end
+    if t3.value39.PlayerESP then
+        for _, player in ipairs(t3.value1:GetPlayers()) do
+            local v586 = player
+
+            if v586 ~= t3.value16 and not t3.value50.Players[v586] then
+                pcall(function()
+                    local Character2 = v586.Character
+
+                    if not Character2 then
+                        Character2 = v586.CharacterAdded:Wait()
+                    end
+
+                    local HumanoidRootPart = Character2:WaitForChild("HumanoidRootPart", 5)
+
+                    if HumanoidRootPart then
+                        local Players = t3.value50.Players
+                        local v885 = v586
+                        local value49 = t3.value49
+                        local v887 = v586
+                        local Add = value49.Add
+                        local Name = v586.Name
+                        local PlayerESP_Color = t3.value39.PlayerESP_Color
+
+                        Players[v885] = Add(value49, {
+							Entity = v887,
+							Part = HumanoidRootPart,
+							Name = Name,
+							Color = PlayerESP_Color,
+							Highlight = true,
+							Box = true,
+							Text = true,
+							Distance = true,
+							AlwaysOnTop = false
+						})
+                    end
+                end)
+            end
+        end
+    end
+    if t3.value39.BuildingESP then
+        local POWERSTATION = t3.value14:FindFirstChild("POWERSTATION")
+        local t37 = {
+			Name = "发电站",
+			Model = POWERSTATION
+		}
+        local WAREHOUSE = t3.value14:FindFirstChild("WAREHOUSE")
+        local t38 = {
+			Name = "仓库",
+			Model = WAREHOUSE
+		}
+        local WORKSHOP = t3.value14:FindFirstChild("WORKSHOP")
+        local t39 = {
+			t37,
+			t38,
+			{
+				Name = "工作区",
+				Model = WORKSHOP
+			}
+		}
+
+        for _, v in ipairs(t39) do
+            local Model = v.Model
+
+            if Model then
+                Model = not t3.value50.Buildings[v.Model]
+            end
+
+            if Model then
+                local Pivot = v.Model:GetPivot()
+                local _, v598 = v.Model:GetBoundingBox()
+                local Part = Instance.new("Part")
+
+                Part.Anchored = true
+                Part.CanCollide = false
+                Part.CanTouch = false
+                Part.CanQuery = false
+                Part.Transparency = 1
+                Part.Size = v598
+                Part.CFrame = Pivot
+                Part.Parent = t3.value5
+
+                local Buildings = t3.value50.Buildings
+                local Model4 = v.Model
+                local value49 = t3.value49
+                local Model5 = v.Model
+                local vName = v.Name
+                local BuildingESP_Color = t3.value39.BuildingESP_Color
+                local vector3_13 = Vector3.new(0, 5, 0)
+                local Add = value49.Add
+                local uDim2 = UDim2.new(0, 300, 0, 50)
+
+                Buildings[Model4] = {
+					Obj = Add(value49, {
+						Entity = Model5,
+						Part = Part,
+						Name = vName,
+						Color = BuildingESP_Color,
+						Highlight = true,
+						Box = true,
+						Text = true,
+						Distance = true,
+						AlwaysOnTop = true,
+						StudsOffset = vector3_13,
+						BillboardSize = uDim2
+					}),
+					Part = Part
+				}
+            end
+        end
+    end
+    if t3.value39.AirDropESP then
+        local AirDrops = t3.value14:FindFirstChild("AirDrops")
+
+        if AirDrops then
+            local GetChildren = AirDrops.GetChildren
+
+            for _, v in ipairs(GetChildren(AirDrops)) do
+                if v.Name == "AirDropHeli" then
+                    local v613 = v:FindFirstChildWhichIsA("Model", true) or v
+
+                    if not t3.value50.AirDrops[v613] then
+                        local v614 = v613:FindFirstChild("HumanoidRootPart") or v613.PrimaryPart
+
+                        if v614 then
+                            local AirDrops3 = t3.value50.AirDrops
+                            local value49 = t3.value49
+                            local AirDropESP_Color = t3.value39.AirDropESP_Color
+                            local Add = value49.Add
+                            local vector3_14 = Vector3.new(0, 5, 0)
+
+                            AirDrops3[v613] = Add(value49, {
+								Entity = v613,
+								Part = v614,
+								Name = "空投",
+								Color = AirDropESP_Color,
+								Highlight = true,
+								Box = true,
+								Text = true,
+								Distance = true,
+								AlwaysOnTop = true,
+								StudsOffset = vector3_14
+							})
+                        end
+                    end
+                end
+            end
+        end
+    end
+    for k in pairs(t3.value48) do
+        local Entity = k.Entity
+        local Part = k.Part
+        local Config = k.Config
+
+        if not Part or not Part.Parent then
+            k:SetEnabled(false)
+        else
+            local v624 = true
+
+            if Entity:IsA("Player") then
+                local Character3 = Entity.Character
+
+                if Character3 then
+                    Character3 = Entity.Character:FindFirstChild("Humanoid")
+                end
+
+                v624 = Character3 and Character3.Health > 0
+            elseif Entity:IsA("Model") then
+                local Humanoid = Entity:FindFirstChild("Humanoid")
+
+                if Humanoid then
+                    v624 = Humanoid.Health > 0
+                end
+            end
+
+            if not k.Enabled or not v624 then
+                k:SetEnabled(false)
+            else
+                local Highlight = Config.Highlight
+
+                if Highlight then
+                    Highlight = not k.HL
+                end
+
+                if Highlight then
+                    local u628 = Entity
+
+                    if Entity:IsA("Player") and Entity.Character then
+                        u628 = Entity.Character
+                    end
+
+                    pcall(function()
+                        local Highlight2 = Instance.new("Highlight")
+
+                        Highlight2.FillColor = Config.Color
+                        Highlight2.OutlineColor = Config.Color
+                        Highlight2.FillTransparency = 0.6
+                        Highlight2.OutlineTransparency = 0.1
+
+                        if Config.AlwaysOnTop then
+                            Highlight2.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                        end
+
+                        Highlight2.Parent = u628
+                        k.HL = Highlight2
+                    end)
+                end
+
+                local _, _ = t3.value10:WorldToViewportPoint(Part.Position)
+                local NL = k.NL
+
+                if NL then
+                    NL = k.DL
+                end
+
+                if NL then
+                    k.NL.Text = Config.Name
+                    k.NL.TextColor3 = Config.Color
+                    k.DL.TextColor3 = Config.Color
+
+                    if Config.Distance and Character then
+                        local v632 = math.floor((Character.Position - Part.Position).Magnitude)
+
+                        k.DL.Text = tostring(v632) .. "m"
+                        k.DL.Visible = true
+                    else
+                        k.DL.Visible = false
+                    end
+                end
+
+                if Entity:IsA("Model") and Entity:FindFirstChild("Humanoid") then
+                    local Attributes = Entity:GetAttributes()
+                    local s3 = ""
+
+                    if Attributes.Anger then
+                        s3 ..= "怒气:" .. string.format("%.1f", Attributes.Anger) .. " "
+                    end
+
+                    if Attributes.ChokeMeter then
+                        s3 ..= "窒息:" .. string.format("%.1f", Attributes.ChokeMeter) .. "% "
+                    end
+
+                    if Attributes.Burst then
+                        s3 ..= "重击:" .. string.format("%.1f", Attributes.Burst)
+                    end
+
+                    k:SetInfo(s3)
+                end
+
+                local Box = Config.Box
+
+                if Box then
+                    Box = k.Box
+                end
+
+                if Box then
+                    local vector3_15
+                    local HumanoidRootPartCFrame
+                    local v638 = Entity:IsA("Player") and Entity.Character or Entity
+                    local v639 = Entity:IsA("Model")
+                    if v639 then
+                        v639 = Entity.Name:lower():find("chain")
+                    end
+                    if v639 then
+                        local HumanoidRootPart = Entity:FindFirstChild("HumanoidRootPart")
+
+                        if HumanoidRootPart then
+                            HumanoidRootPartCFrame = HumanoidRootPart.CFrame
+                            vector3_15 = Vector3.new(4, 6, 4)
+                        end
+                    elseif v638 and v638:IsA("Model") then
+                        local ok, result, v643 = pcall(v638.GetBoundingBox, v638)
+
+                        if ok and result then
+                            vector3_15 = v643
+                            HumanoidRootPartCFrame = result
+                        end
+                    end
+                    if not HumanoidRootPartCFrame then
+                        HumanoidRootPartCFrame = Part.CFrame
+                        vector3_15 = Part.Size
+                    end
+                    local t40 = {
+						HumanoidRootPartCFrame * CFrame.new(-vector3_15.X / 2, -vector3_15.Y / 2, -vector3_15.Z / 2),
+						HumanoidRootPartCFrame * CFrame.new(vector3_15.X / 2, -vector3_15.Y / 2, -vector3_15.Z / 2),
+						HumanoidRootPartCFrame * CFrame.new(vector3_15.X / 2, vector3_15.Y / 2, -vector3_15.Z / 2),
+						HumanoidRootPartCFrame * CFrame.new(-vector3_15.X / 2, vector3_15.Y / 2, -vector3_15.Z / 2),
+						HumanoidRootPartCFrame * CFrame.new(-vector3_15.X / 2, -vector3_15.Y / 2, vector3_15.Z / 2),
+						HumanoidRootPartCFrame * CFrame.new(vector3_15.X / 2, -vector3_15.Y / 2, vector3_15.Z / 2),
+						HumanoidRootPartCFrame * CFrame.new(vector3_15.X / 2, vector3_15.Y / 2, vector3_15.Z / 2),
+						HumanoidRootPartCFrame * CFrame.new(-vector3_15.X / 2, vector3_15.Y / 2, vector3_15.Z / 2)
+					}
+                    local n8 = 1e999
+                    local n9 = 1e999
+                    local n10 = -1e999
+                    local n11 = -1e999
+                    local v649, v650, v651 = ipairs(t40)
+                    local v652 = false
+                    while true do
+                        local v653
+                        v651, v653 = v649(v650, v651)
+                        if not v651 then
+                            break
+                        end
+                        local v655, t41Result = t3.value10:WorldToViewportPoint(v653.Position)
+                        if t41Result then
+                            v652 = true
+                            n8 = math.min(n8, v655.X)
+                            n9 = math.min(n9, v655.Y)
+                            n10 = math.max(n10, v655.X)
+                            n11 = math.max(n11, v655.Y)
+                        end
+                    end
+                    if v652 then
+                        k.Box.Position = Vector2.new(n8, n9)
+                        k.Box.Size = Vector2.new(n10 - n8, n11 - n9)
+                        k.Box.Color = Config.Color
+                        k.Box.Visible = true
+                    else
+                        k.Box.Visible = false
+                    end
+                elseif k.Box then
+                    k.Box.Visible = false
+                end
+            end
+        end
+    end
+end)
+t1.value33 = t3.value1.PlayerAdded
+t1.value33:Connect(function(p126)
+    if t3.value39.PlayerESP and p126 ~= t3.value16 then
+        pcall(function()
+            local Character = p126.Character
+
+            if not Character then
+                Character = p126.CharacterAdded:Wait()
+            end
+
+            local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart", 5)
+
+            if HumanoidRootPart then
+                if t3.value50.Players[p126] then
+                    t3.value50.Players[p126]:Remove()
+                end
+
+                local Players = t3.value50.Players
+                local v895 = p126
+                local value49 = t3.value49
+                local v897 = p126
+                local p126Name = p126.Name
+                local PlayerESP_Color = t3.value39.PlayerESP_Color
+
+                Players[v895] = value49:Add({
+					Entity = v897,
+					Part = HumanoidRootPart,
+					Name = p126Name,
+					Color = PlayerESP_Color,
+					Highlight = true,
+					Box = true,
+					Text = true,
+					Distance = true,
+					AlwaysOnTop = false
+				})
+            end
+        end)
+    end
+end)
+t3.value1.PlayerRemoving:Connect(function(player)
+    if t3.value50.Players[player] then
+        t3.value50.Players[player]:Remove()
+        t3.value50.Players[player] = nil
+    end
+end)
+
+local Themes = t2.value1:GetThemes()
+t1.value33 = {}
+for k in pairs(Themes) do
+    table.insert(t1.value33, k)
+end
+local SettingsTab = t3.value38.SettingsTab
+local CurrentTheme = t2.value1:GetCurrentTheme()
+t3.value100 = nil
+t1.value54 = SettingsTab.Dropdown
+function t1.value56(p127)
+    t2.value1:SetTheme(p127)
+end
+t1.value54(SettingsTab, {
+	Title = "选择主题",
+	Multi = false,
+	AllowNone = false,
+	Value = CurrentTheme,
+	Values = t1.value33,
+	Callback = t1.value56
+})
+t1.value54 = t3.value38
+local SettingsTab2 = t1.value54.SettingsTab
+t3.value101 = nil
+local value1_16 = t2.value1
+t1.value54 = SettingsTab2.Toggle
+local Transparency = value1_16:GetTransparency()
+t1.value54(SettingsTab2, {
+	Title = "窗口透明",
+	Value = Transparency,
+	Callback = function(p128)
+    t3.value37:ToggleTransparency(p128)
+end
+})
+t3.value102 = nil
+t3.value103 = nil
+t3.value104 = nil
+t3.value105 = false
+t3.value106 = false
+function t1.value58()
+    pcall(function()
+        local Character = t3.value16.Character
+
+        if not Character then
+            return
+        end
+
+        local CharacterMobility = Character:FindFirstChild("CharacterMobility")
+
+        if CharacterMobility then
+            local CTS = CharacterMobility:FindFirstChild("CTS")
+
+            if CTS then
+                t3.value102 = CTS
+            end
+        end
+    end)
+end
+t3.value107 = "16214202640"
+function t1.value59()
+    pcall(function()
+        local Character = t3.value16.Character
+
+        if not Character then
+            return
+        end
+
+        t3.value100 = Character:WaitForChild("CharacterHandler"):WaitForChild("Contents"):WaitForChild("Remotes"):WaitForChild("Interact")
+    end)
+end
+function t1.value60()
+    pcall(function()
+        t3.value101 = game:GetService("ReplicatedStorage"):WaitForChild("GameStuff"):WaitForChild("Remotes"):WaitForChild("InflictTarget")
+    end)
+end
+t3.value108 = {
+	"14401168075",
+	"15943264089"
+}
+t3.value109 = {}
+t3.value110 = nil
+t3.value111 = nil
+t3.value112 = nil
+t3.value113 = nil
+t3.value114 = false
+t3.value115 = nil
+t3.value101 = nil
+t3.value116 = false
+t3.value100 = nil
+t3.value117 = t1.value58
+t3.value118 = t1.value59
+t3.value119 = t1.value60
+t3.value16.CharacterAdded:Connect(function()
+    pcall(function()
+        task.wait(1)
+        t3.value117()
+        t3.value118()
+        t3.value119()
+        t3.value103 = nil
+        t3.value115 = nil
+    end)
+end)
+t3.value117()
+t3.value118()
+t3.value119()
+t1.value61 = getrawmetatable(game)
+t1.value60 = t1.value61.__namecall
+t3.value120 = t1.value60
+setreadonly(t1.value61, false)
+t1.value60 = "__namecall"
+function t1.value62(p129, ...)
+    local t42 = { ... }
+    local v662 = getnamecallmethod()
+    local v663 = v662 == "FireServer"
+
+    if v663 then
+        v663 = p129 == t3.value102 and not t3.value103
+    end
+
+    if v663 and t42[1] == "Dodge1" then
+        t3.value103 = t42
+    end
+
+    if v662 == "FireServer" and p129 == t3.value100 then
+        if t3.value39.AutoSwing and not t3.value19 then
+            t3.value19 = t42
+        end
+
+        if t3.value39.GodmodeQTE and not t3.value20 then
+            t3.value20 = t42
+        end
+
+        if t3.value114 and not t3.value115 then
+            t3.value115 = t42
+        end
+
+        local value116 = t3.value116
+
+        if value116 then
+            value116 = t42[1] == "SpellBookBegin"
+        end
+
+        if value116 then
+            local v665 = t42[3]
+
+            task.spawn(function()
+                pcall(function()
+                    t3.value100:FireServer("SpellBookSuccess", nil, v665)
+                end)
+            end)
+        end
+    end
+
+    if v662 == "InvokeServer" and p129 == t3.value101 and t3.value114 then
+        t3.value115 = t42
+    end
+
+    return t3.value120(p129, ...)
+end
+t1.value61[t1.value60] = t1.value62
+t1.value60 = setreadonly
+function t1.value64(p130)
+    local value105 = t3.value105
+
+    if value105 then
+        value105 = p130:find(t3.value107)
+    end
+
+    if value105 then
+        return true
+    end
+
+    if t3.value106 then
+        for _, v in ipairs(t3.value108) do
+            if p130:find(v) then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+t1.value60(t1.value61, true)
+
+function t1.value63()
+    local Misc = t3.value5:FindFirstChild("Misc")
+
+    if not Misc then
+        return nil
+    end
+
+    local AI = Misc:FindFirstChild("AI")
+
+    if not AI then
+        return nil
+    end
+
+    return AI:FindFirstChild("CHAIN")
+end
+function t1.value62()
+    pcall(function()
+        if t3.value102 and t3.value103 then
+            t3.value102:FireServer(unpack(t3.value103))
+        end
+    end)
+end
+t3.value121 = t1.value62
+t3.value122 = t1.value63
+t3.value123 = nil
+function t1.value65(p131)
+    local u673 = p131
+    pcall(function()
+        local Humanoid = u673:FindFirstChild("Humanoid")
+
+        if not Humanoid then
+            return
+        end
+
+        Humanoid.AnimationPlayed:Connect(function(animation)
+            pcall(function()
+                if not t3.value103 then
+                    return
+                end
+
+                local Character = t3.value16.Character
+
+                if not Character then
+                    return
+                end
+
+                local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+
+                if not HumanoidRootPart then
+                    return
+                end
+
+                local HumanoidRootPart2 = u673:FindFirstChild("HumanoidRootPart")
+
+                if not HumanoidRootPart2 then
+                    return
+                end
+
+                if (HumanoidRootPart.Position - HumanoidRootPart2.Position).Magnitude > 14 then
+                    return
+                end
+
+                local Animation = animation.Animation
+
+                if not Animation then
+                    return
+                end
+
+                local str = tostring(Animation.AnimationId)
+
+                if t3.value123(str) then
+                    t3.value121()
+                end
+            end)
+        end)
+    end)
+end
+t3.value123 = t1.value64
+t3.value124 = t1.value65
+t3.value2.Heartbeat:Connect(function()
+    pcall(function()
+        local v905 = t3.value122()
+
+        if v905 and v905 ~= t3.value110 then
+            t3.value124(v905)
+        end
+
+        if not t3.value105 and not t3.value106 then
+            return
+        end
+
+        if not t3.value103 then
+            return
+        end
+
+        local Character = t3.value16.Character
+
+        if not Character then
+            return
+        end
+
+        local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+
+        if not HumanoidRootPart then
+            return
+        end
+
+        if not v905 then
+            return
+        end
+
+        local HumanoidRootPart3 = v905:FindFirstChild("HumanoidRootPart")
+        local Humanoid = v905:FindFirstChild("Humanoid")
+
+        if not HumanoidRootPart3 or not Humanoid then
+            return
+        end
+
+        if (HumanoidRootPart.Position - HumanoidRootPart3.Position).Magnitude > 14 then
+            return
+        end
+
+        local PlayingAnimationTracks = Humanoid:GetPlayingAnimationTracks()
+
+        for i = 1, #PlayingAnimationTracks do
+            local Animation = PlayingAnimationTracks[i].Animation
+
+            if Animation then
+                local str = tostring(Animation.AnimationId);
+
+                ({})[str] = true
+
+                if not t3.value109[str] and t3.value123(str) then
+                    t3.value121()
+                end
+            end
+        end
+    end)
+end)
+t1.value65 = t3.value38.FuncTab
+t1.value66 = t1.value65.Toggle
+function t1.value72(p132)
+    local u675 = p132
+    pcall(function()
+        if u675 then
+            t3.value103 = nil
+
+            if t3.value104 then
+                t3.value104:Disconnect()
+            end
+
+            t3.value104 = t3.value2.Heartbeat:Connect(function(dt)
+                pcall(function()
+                    local v999 = not t3.value102
+
+                    if not v999 then
+                        v999 = not t3.value102.Parent
+                    end
+
+                    if v999 then
+                        t3.value117()
+                    end
+
+                    if t3.value102 and t3.value103 and tick() % 0.7 < dt then
+                        t3.value102:FireServer(unpack(t3.value103))
+                    end
+                end)
+            end)
+        elseif t3.value104 then
+            t3.value104:Disconnect()
+        end
+
+        t3.value39.AutoDodge = u675
+    end)
+end
+t1.value66(t1.value65, {
+	Title = "无限闪避",
+	Desc = "开启功能之后需要你手动点一下闪避键(注意:短时间内三次闪避会被踢)",
+	Value = false,
+	Callback = t1.value72
+})
+t3.value125 = 0.7
+t1.value65 = t3.value38.FuncTab
+t1.value67 = t1.value65.Input
+function t1.value73(p133)
+    pcall(function()
+        local num = tonumber(p133)
+
+        if num then
+            if num > 1 then
+                num = 1
+            end
+
+            if num < 0.01 then
+                num = 0.01
+            end
+
+            t3.value125 = num
+        end
+    end)
+end
+t1.value67(t1.value65, {
+	Title = "自动挥刀间隔(最高1最低0.7)",
+	Value = "0.7",
+	Placeholder = "0.7-1",
+	Callback = t1.value73
+})
+t1.value65 = t3.value38.FuncTab
+t1.value67 = t1.value65.Toggle
+function t1.value73(p134)
+    pcall(function()
+        if p134 then
+            t3.value19 = nil
+
+            if t3.value111 then
+                t3.value111:Disconnect()
+            end
+
+            t3.value111 = t3.value2.Heartbeat:Connect(function(_)
+                pcall(function()
+                    local v1000 = not t3.value100
+
+                    if not v1000 then
+                        v1000 = not t3.value100.Parent
+                    end
+
+                    if v1000 then
+                        t3.value118()
+                    end
+
+                    local value100 = t3.value100
+
+                    if value100 then
+                        value100 = t3.value19 and tick() - 0 >= t3.value125
+                    end
+
+                    if value100 then
+                        tick()
+
+                        local value100_2 = t3.value100
+                        local t43 = { unpack(t3.value19) }
+
+                        value100_2:FireServer(v3(t43))
+                    end
+                end)
+            end)
+        elseif t3.value111 then
+            t3.value111:Disconnect()
+        end
+
+        t3.value39.AutoSwing = p134
+    end)
+end
+t1.value67(t1.value65, {
+	Title = "自动挥刀",
+	Desc = "速度调低了也会被踢",
+	Value = false,
+	Callback = t1.value73
+})
+t1.value65 = t3.value38.FuncTab
+t1.value67 = t1.value65.Toggle
+function t1.value73(p136)
+    pcall(function()
+        if p136 then
+            t3.value20 = nil
+
+            if t3.value112 then
+                t3.value112:Disconnect()
+            end
+
+            t3.value112 = t3.value2.Heartbeat:Connect(function(_)
+                pcall(function()
+                    local v1004 = not t3.value100
+
+                    if not v1004 then
+                        v1004 = not t3.value100.Parent
+                    end
+
+                    if v1004 then
+                        t3.value118()
+                    end
+
+                    local value100 = t3.value100
+
+                    if value100 then
+                        value100 = t3.value20 and tick() - 0 >= 1
+                    end
+
+                    if value100 then
+                        tick()
+                        t3.value100:FireServer(unpack(t3.value20))
+                    end
+                end)
+            end)
+        elseif t3.value112 then
+            t3.value112:Disconnect()
+        end
+
+        t3.value39.GodmodeQTE = p136
+    end)
+end
+t1.value67(t1.value65, {
+	Title = "QTE无敌",
+	Desc = "开启功能后需要点一下qte键，比如斧头、电锯的qte按键",
+	Value = false,
+	Callback = t1.value73
+})
+t1.value65 = t3.value38.FuncTab
+t1.value67 = t1.value65.Toggle
+function t1.value71(p138)
+    pcall(function()
+        t3.value39.AutoSeal = p138
+    end)
+end
+t1.value67(t1.value65, {
+	Title = "秒封印",
+	Value = false,
+	Callback = t1.value71
+})
+t1.value65 = {
+	"AK47",
+	"DesertEagle",
+	"DoubleBarrel"
+}
+t3.value126 = t1.value65
+local function v62()
+    local Character = t3.value16.Character
+
+    if not Character then
+        return false
+    end
+
+    local STRG_ = Character:FindFirstChild("STRG_")
+
+    if not STRG_ then
+        STRG_ = Character:FindFirstChild("STRG")
+    end
+
+    if not STRG_ then
+        return false
+    end
+
+    for _, v in ipairs(t3.value126) do
+        if STRG_:FindFirstChild(v) then
+            return true
+        end
+    end
+
+    return false
+end
+t1.value68 = t3.value38.FuncTab
+function t1.value73(p139)
+    local u685 = p139
+    pcall(function()
+        t3.value114 = u685
+        t3.value39.GunAura = u685
+
+        if u685 then
+            t3.value115 = nil
+
+            if t3.value113 then
+                t3.value113:Disconnect()
+            end
+
+            t3.value113 = task.spawn(function()
+                while t3.value114 do
+                    pcall(function()
+                        local v1006 = not t3.value101
+
+                        if not v1006 then
+                            v1006 = not t3.value101.Parent
+                        end
+
+                        if v1006 then
+                            t3.value119()
+                        end
+
+                        local v1007 = v62()
+                        local value101 = t3.value101
+
+                        if value101 then
+                            value101 = t3.value115 and v1007
+                        end
+
+                        if value101 then
+                            task.spawn(function()
+                                pcall(function()
+                                    t3.value101:InvokeServer(unpack(t3.value115))
+                                end)
+                            end)
+                            task.wait(0.1)
+
+                            return
+                        end
+
+                        task.wait()
+                    end)
+                end
+            end)
+
+            return
+        end
+
+        if t3.value113 then
+            pcall(function()
+                t3.value113:Disconnect()
+            end)
+            t3.value113 = nil
+        end
+    end)
+end
+t1.value68:Toggle({
+	Title = "枪械光环",
+	Value = false,
+	Callback = t1.value73
+})
+t3.value38.FuncTab:Section({
+	Title = "给予物品"
+})
+t3.value38.FuncTab:Paragraph({
+	Title = "注意事项",
+	Desc = "你需要拥有一个物品才能给你物品，手机端使用后会被定身一段时间且刷出来的物品需要用虚拟键盘的数字键切换，切换物品时也会被定身建议与躲避配合，刷物品可以去无线电站拿一个收音机",
+	Image = "triangle-alert",
+	Color = "White",
+	ImageSize = 40,
+	ThumbnailSize = 120
+})
+t3.value127 = {}
+t1.value68 = t3.value127
+t1.value69 = "slotIds"
+t1.value68[t1.value69] = {
+	"1",
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+	"7",
+	"8",
+	"9",
+	"0"
+}
+t1.value68 = t3.value127
+t1.value69 = "keyMap"
+t1.value70 = Enum.KeyCode.One
+t1.value72 = Enum.KeyCode.Two
+t1.value74 = Enum.KeyCode.Three
+t1.value75 = Enum.KeyCode.Four
+t1.value76 = Enum.KeyCode.Five
+t1.value77 = Enum.KeyCode.Six
+t1.value78 = Enum.KeyCode.Seven
+t1.value79 = Enum.KeyCode.Eight
+t1.value80 = Enum.KeyCode.Nine
+t1.value81 = Enum.KeyCode.Zero
+t1.value68[t1.value69] = {
+	["1"] = t1.value70,
+	["2"] = t1.value72,
+	["3"] = t1.value74,
+	["4"] = t1.value75,
+	["5"] = t1.value76,
+	["6"] = t1.value77,
+	["7"] = t1.value78,
+	["8"] = t1.value79,
+	["9"] = t1.value80,
+	["0"] = t1.value81
+}
+function t1.value68()
+    local PlayerGui = t3.value16:FindFirstChild("PlayerGui")
+
+    if not PlayerGui then
+        return nil
+    end
+
+    local Ingame = PlayerGui:FindFirstChild("Ingame")
+
+    if not Ingame then
+        return nil
+    end
+
+    return Ingame:FindFirstChild("Inventory")
+end
+t3.value127.getInventory = t1.value68
+function t1.value68(p140)
+    pcall(function()
+        local v915 = t3.value127.keyMap[p140]
+
+        if v915 then
+            t3.value9:SendKeyEvent(true, v915, false, game)
+            task.wait(0.05)
+            t3.value9:SendKeyEvent(false, v915, false, game)
+        end
+    end)
+end
+t3.value127.equipSlot = t1.value68
+function t1.value68(p141)
+    local v690 = not p141
+
+    if not v690 then
+        v690 = not p141:FindFirstChild("Values")
+
+        if not v690 then
+            v690 = not p141.Values:FindFirstChild("ItemName")
+        end
+    end
+
+    if v690 then
+        return false
+    end
+
+    if p141.Values.ItemName.Value == "" then
+        return false
+    end
+
+    return true
+end
+t3.value127.isSlotValid = t1.value68
+function t1.value68(p142, p143)
+    for _, v in ipairs(t3.value127.slotIds) do
+        local v7 = p142:FindFirstChild(v)
+
+        if v7 then
+            local v696 = t3.value127.isSlotValid(v7)
+
+            if v696 then
+                v696 = p143 == v7.Values.ItemName.Value
+            end
+
+            v7 = v696
+        end
+
+        if v7 then
+            return v
+        end
+    end
+
+    return nil
+end
+t3.value127.findItemSlot = t1.value68
+function t1.value68(p144)
+    for _, v in ipairs(t3.value127.slotIds) do
+        local v9 = p144:FindFirstChild(v)
+        local v701 = not v9
+
+        if not v701 then
+            v701 = not t3.value127.isSlotValid(v9)
+        end
+
+        if v701 then
+            return v
+        end
+    end
+
+    return nil
+end
+t3.value127.findEmptySlot = t1.value68
+function t1.value68(p145, p146)
+    pcall(function()
+        local v916 = t3.value127.getInventory()
+        if not v916 then
+            return
+        end
+        local v917 = t3.value127.findItemSlot(v916, p145)
+        if v917 then
+            t3.value127.equipSlot(v917)
+            t2.value1:Notify(p145 .. " 已在背包中!", 3)
+
+            return
+        end
+        local v918 = t3.value127.findEmptySlot(v916)
+        if not v918 then
+            t2.value1:Notify("背包已满!", 3)
+
+            return
+        end
+        local clone
+        local v920, v921, v922 = ipairs(t3.value127.slotIds)
+        local g924
+        local v925
+        repeat
+            local v923
+
+            v922, v923 = v920(v921, v922)
+
+            if not v922 then
+                g924 = true
+            end
+
+            if g924 then
+                break
+            end
+
+            v925 = v916:FindFirstChild(v923)
+
+            local v926 = v925
+
+            if v925 then
+                v926 = t3.value127.isSlotValid(v925)
+            end
+        until v926
+        if not g924 then
+            clone = v925:Clone()
+        end
+        g924 = false
+        if not clone then
+            t2.value1:Notify("物品发放失败!", 3)
+
+            return
+        end
+        local v927 = v916:FindFirstChild(v918)
+        if v927 then
+            v927:Destroy()
+        end
+        clone.Parent = v916
+        clone.Name = v918
+        clone.Values.ItemName.Value = p145
+        clone.Icon.Image = p146
+        clone.Number.Text = v918
+        task.wait(0.1)
+        t3.value127.equipSlot(v918)
+        t2.value1:Notify(p145 .. " 已添加到背包!", 3)
+    end)
+end
+t3.value127.giveItem = t1.value68
+t1.value68 = t3.value38.FuncTab
+t1.value69 = t1.value68.Button
+function t1.value72()
+    t3.value127.giveItem("Crucifix", "rbxassetid://15903361925")
+end
+t1.value69(t1.value68, {
+	Title = "给十字架",
+	Callback = t1.value72
+})
+t1.value68 = t3.value38.FuncTab
+t1.value69 = t1.value68.Toggle
+function t1.value74(p147)
+    t3.value39.AutoCrucifix = p147
+end
+t1.value69(t1.value68, {
+	Title = "自动给与十字架",
+	Default = false,
+	Callback = t1.value74
+})
+task.spawn(function()
+    while true do
+        pcall(function()
+            task.wait(0.5)
+
+            if t3.value39.AutoCrucifix then
+                local v928 = t3.value127.getInventory()
+
+                if v928 and not t3.value127.findItemSlot(v928, "Crucifix") then
+                    t3.value127.giveItem("Crucifix", "rbxassetid://15903361925")
+                end
+            end
+        end)
+    end
+end)
+t1.value68 = t3.value38.FuncTab
+function t1.value72()
+    t3.value127.giveItem("DoubleBarrel", "rbxassetid://16190395023")
+end
+t1.value68:Button({
+	Title = "给双喷",
+	Callback = t1.value72
+})
+t1.value68 = t3.value38.FuncTab
+function t1.value72()
+    t3.value127.giveItem("SpellBook", "rbxassetid://15410543290")
+end
+t1.value68:Button({
+	Title = "给魔法书",
+	Callback = t1.value72
+})
+t1.value68 = t3.value38.FuncTab
+t1.value69 = t1.value68.Button
+function t1.value72()
+    t3.value127.giveItem("AK47", "rbxassetid://17812936812")
+end
+t1.value69(t1.value68, {
+	Title = "给AK47",
+	Callback = t1.value72
+})
+t1.value68 = t3.value38.FuncTab
+t1.value69 = t1.value68.Button
+function t1.value72()
+    t3.value127.giveItem("Deagle", "rbxassetid://15410404828")
+end
+t1.value69(t1.value68, {
+	Title = "给沙鹰",
+	Callback = t1.value72
+})
+t1.value68 = t3.value38.FuncTab
+function t1.value72()
+    t3.value127.giveItem("M1911", "rbxassetid://17812938452")
+end
+t1.value68:Button({
+	Title = "给M1911",
+	Callback = t1.value72
+})
+t2.value1:Notify({
+	Title = "ChainBK已加载",
+	Content = "欢迎使用BK Chain V3.0",
+	Duration = 5,
+	Icon = "check-circle"
+})
