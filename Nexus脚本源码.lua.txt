@@ -1,0 +1,2331 @@
+--Yeskid
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local HttpService = game:GetService("HttpService")
+local TweenService = game:GetService("TweenService")
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local Camera = workspace.CurrentCamera
+
+
+pcall(function()
+	RunService:UnbindFromRenderStep("ZFluentPvpStep")
+end)
+pcall(function()
+	RunService:UnbindFromRenderStep("ZPvpPanelStep")
+end)
+pcall(function()
+	RunService:UnbindFromRenderStep("PvpFlowPanelStep")
+end)
+pcall(function()
+	local old = PlayerGui:FindFirstChild("ZFluentPvpOverlay")
+	if old then old:Destroy() end
+end)
+pcall(function()
+	local old = PlayerGui:FindFirstChild("ZPvpFallbackUI")
+	if old then old:Destroy() end
+end)
+pcall(function()
+	local old = PlayerGui:FindFirstChild("PvpFlowPanel")
+	if old then old:Destroy() end
+end)
+
+
+local state = {
+	selected = nil,
+	aimEnabled = false,
+	holdRight = true,
+	rightDown = false,
+	wallAim = false,
+	wallBang = false,
+	showFov = true,
+	enemyEsp = true,
+	friendEsp = false,
+	nameTags = true,
+	targetMarker = true,
+	enemyOnly = true,
+	teamCheck = true,
+	unknownAsEnemy = true,
+	autoTestFire = false,
+	spinScan = false,
+	spinSpeed = 80,
+	fireCooldown = 0.18,
+	lastFireAt = 0,
+	fovRadius = 150,
+	maxDistance = 300,
+	smooth = 0.18,
+	aimPart = "Head",
+	aimDead = false,
+	detachOnDeath = true,
+	onlySelected = false,
+	currentTarget = nil,
+	playerInput = "",
+	noRecoil = false,
+	noSpread = false,
+	bulletTracer = false,
+	radar = false,
+	radarSize = 160,
+	radarZoom = 60,
+
+	aimDummy = false,
+	dummyEsp = true,
+	dummyAim = false,
+	dummyHoldRight = true,
+	dummyRightDown = false,
+	dummyWallAim = true,
+	dummyFovRadius = 200,
+	dummyMaxDistance = 400,
+	dummySmooth = 0.18,
+	dummyAimPart = "Head",
+	dummyAutoFire = false,
+	dummyCurrentTarget = nil,
+	dummyDetached = {},
+	dummyShowFov = true,
+	customFov = 70,
+	fovEnabled = false,
+	walkSpeed = 16,
+	walkSpeedEnabled = false,
+	bigHead = false,
+	bigHeadScale = 1.5,
+	autoBhop = false,
+	silentAim = false,
+	showHud = true,
+	targetPriority = "distance",
+	bulletTime = false,
+	bulletTimeFov = 20,
+	bulletTimeWalk = 8,
+	tracerThickness = 1.5,
+	originalFov = 70,
+	originalWalk = 16,
+
+	crosshair = {
+		enabled = false,
+		shape = "cross",
+		size = 10,
+		gap = 4,
+		thickness = 2,
+		colorIndex = 1,
+		transparency = 0,
+		centerDot = true,
+		centerDotRadius = 2,
+		outline = false,
+		outlineThickness = 1,
+		dynamicSpread = false,
+		spreadAmount = 8,
+		spreadCurrent = 0,
+		spreadRecovery = 0.15,
+	},
+
+	keybinds = {
+		detach = Enum.KeyCode.Z,
+		toggleAim = nil,
+		toggleAutoFire = nil,
+		toggleWallbang = nil,
+		toggleRadar = nil,
+		toggleBigHead = nil,
+		toggleFov = nil,
+		toggleWalkspeed = nil,
+		bulletTime = Enum.KeyCode.LeftControl,
+	},
+}
+
+local aimParts = { "Head", "UpperTorso", "HumanoidRootPart", "LowerTorso", "Torso" }
+local espStore = {}
+local tagStore = {}
+local uiStore = {}
+local uiRefs = {}
+local detachedTargets = {}
+local lastStatusText = nil
+
+local tracerLines = {}
+local radarGui = nil
+local radarFrame = nil
+local radarDots = {}
+
+local bulletTrack = {} 
+local headSizes = {} 
+local hudLabels = {}
+local dummyCache = {} 
+local dummyEspStore = {} 
+local keybindRefs = {} 
+local bulletTimeHeld = false
+local crosshairElements = {}
+
+local tagNames = {
+	ZPvpNameTag = true,
+	PvpNameTag = true,
+	PvpFlowNameTag = true,
+	PlayerESPNameTag = true,
+}
+
+local highlightNames = {
+	ZPvpTeamHighlight = true,
+	PvpTeamHighlight = true,
+	PlayerESP = true,
+}
+
+local crosshairColors = {
+	{ name = "绿色", value = Color3.fromRGB(0, 255, 0) },
+	{ name = "红色", value = Color3.fromRGB(255, 45, 72) },
+	{ name = "青色", value = Color3.fromRGB(0, 255, 255) },
+	{ name = "蓝色", value = Color3.fromRGB(0, 150, 255) },
+	{ name = "黄色", value = Color3.fromRGB(255, 255, 0) },
+	{ name = "白色", value = Color3.fromRGB(255, 255, 255) },
+	{ name = "紫色", value = Color3.fromRGB(180, 60, 255) },
+	{ name = "橙色", value = Color3.fromRGB(255, 140, 0) },
+}
+local crosshairColorNames = {}
+for _, c in ipairs(crosshairColors) do
+	table.insert(crosshairColorNames, c.name)
+end
+
+
+local function safeDestroy(x)
+	if x then
+		pcall(function()
+			x:Destroy()
+		end)
+	end
+end
+
+local function char(plr)
+	return plr and plr.Character
+end
+
+local function hum(plr)
+	local c = char(plr)
+	return c and c:FindFirstChildOfClass("Humanoid")
+end
+
+local function root(plr)
+	local c = char(plr)
+	return c and c:FindFirstChild("HumanoidRootPart")
+end
+
+local function isAlive(plr)
+	if not plr then return false end
+	if typeof(plr) == "Instance" and plr:IsA("Player") then
+		local h = hum(plr)
+		return h and h.Health > 0
+	end
+	if typeof(plr) == "Instance" and plr:IsA("Model") then
+		local h = plr:FindFirstChildOfClass("Humanoid")
+		return h and h.Health > 0
+	end
+	return false
+end
+
+
+local function isEnemy(plr)
+	if not plr or plr == LocalPlayer then return false end
+	if not state.teamCheck then return true end
+
+	if LocalPlayer.Team ~= nil and plr.Team ~= nil and not LocalPlayer.Neutral and not plr.Neutral then
+		return LocalPlayer.Team ~= plr.Team
+	end
+	if LocalPlayer.TeamColor ~= nil and plr.TeamColor ~= nil and not LocalPlayer.Neutral and not plr.Neutral then
+		return LocalPlayer.TeamColor ~= plr.TeamColor
+	end
+
+	for _, key in ipairs({ "Team", "Faction", "Side", "Camp", "Group", "Squad", "Role" }) do
+		local mine = LocalPlayer:GetAttribute(key)
+		local theirs = plr:GetAttribute(key)
+		if mine ~= nil and theirs ~= nil and tostring(mine) ~= "" and tostring(theirs) ~= "" then
+			return tostring(mine) ~= tostring(theirs)
+		end
+	end
+
+	return state.unknownAsEnemy
+end
+
+
+local function isSnappablePart(part)
+	if not part or not part:IsA("BasePart") then return false end
+	if part.Name == "Handle" then return false end
+	local m = part:FindFirstChild("Motor6D")
+	if not m then return false end
+	return true
+end
+
+local function getPart(plr)
+	local c = char(plr)
+	if not c then return nil end
+	local p = c:FindFirstChild(state.aimPart)
+		or c:FindFirstChild("Head")
+		or c:FindFirstChild("UpperTorso")
+		or c:FindFirstChild("HumanoidRootPart")
+		or c:FindFirstChild("Torso")
+	if isSnappablePart(p) then return p end
+	for _, desc in ipairs(c:GetDescendants()) do
+		if desc:IsA("BasePart") and desc.Name ~= "Handle" then
+			return desc
+		end
+	end
+	return nil
+end
+
+local function getCandidateParts(plr)
+	local c = char(plr)
+	if not c then return {} end
+	local out = {}
+	local seen = {}
+	for _, name in ipairs({ state.aimPart, "Head", "UpperTorso", "HumanoidRootPart", "LowerTorso", "Torso" }) do
+		local part = c:FindFirstChild(name)
+		if isSnappablePart(part) and not seen[part] then
+			seen[part] = true
+			table.insert(out, part)
+		end
+	end
+	if #out == 0 then
+		for _, desc in ipairs(c:GetDescendants()) do
+			if desc:IsA("BasePart") and desc.Name ~= "Handle" and not seen[desc] then
+				seen[desc] = true
+				table.insert(out, desc)
+			end
+		end
+	end
+	return out
+end
+
+local function playerNames()
+	local names = {}
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr ~= LocalPlayer then
+			table.insert(names, plr.Name)
+		end
+	end
+	table.sort(names)
+	if #names == 0 then
+		table.insert(names, "无在线玩家")
+	end
+	return names
+end
+
+local function findPlayerByName(name)
+	name = tostring(name or "")
+	local needle = string.lower(name)
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr.Name == name or plr.DisplayName == name then
+			return plr
+		end
+	end
+	if needle ~= "" then
+		for _, plr in ipairs(Players:GetPlayers()) do
+			local n = string.lower(plr.Name)
+			local d = string.lower(plr.DisplayName)
+			if n:find(needle, 1, true) or d:find(needle, 1, true) then
+				return plr
+			end
+		end
+	end
+	return nil
+end
+
+
+local _bypassWallBang = false
+
+local function lineOfSight(part)
+	local cam = workspace.CurrentCamera
+	if not cam or not part then return false end
+	local origin = cam.CFrame.Position
+	local direction = part.Position - origin
+	local params = RaycastParams.new()
+	params.FilterType = Enum.RaycastFilterType.Exclude
+	local ignores = { cam }
+	if LocalPlayer.Character then
+		table.insert(ignores, LocalPlayer.Character)
+	end
+	params.FilterDescendantsInstances = ignores
+	params.IgnoreWater = true
+	_bypassWallBang = true
+	local hit = workspace:Raycast(origin, direction, params)
+	_bypassWallBang = false
+	if not hit then return true end
+	return hit.Instance:IsDescendantOf(part.Parent)
+end
+
+
+local function makeOverlay()
+	if uiStore.overlay and uiStore.overlay.Parent then
+		return uiStore.overlay
+	end
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "ZFluentPvpOverlay"
+	gui.ResetOnSpawn = false
+	gui.IgnoreGuiInset = true
+	gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	gui.Parent = PlayerGui
+	uiStore.overlay = gui
+	return gui
+end
+
+
+local function destroyPlayerTags(plr)
+	local c = char(plr)
+	if c then
+		for _, obj in ipairs(c:GetDescendants()) do
+			if tagNames[obj.Name] and obj:IsA("BillboardGui") then
+				safeDestroy(obj)
+			end
+		end
+	end
+	safeDestroy(tagStore[plr])
+	tagStore[plr] = nil
+end
+
+local function destroyPlayerHighlights(plr)
+	local c = char(plr)
+	if c then
+		for _, obj in ipairs(c:GetDescendants()) do
+			if highlightNames[obj.Name] and obj:IsA("Highlight") then
+				safeDestroy(obj)
+			end
+		end
+	end
+	safeDestroy(espStore[plr])
+	espStore[plr] = nil
+end
+
+local function clearVisuals()
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr ~= LocalPlayer then
+			destroyPlayerTags(plr)
+			destroyPlayerHighlights(plr)
+		end
+	end
+	for _, obj in ipairs(workspace:GetDescendants()) do
+		if obj:IsA("Highlight") and (obj.Name == "ZPvpDummyHighlight" or obj.Name == "ZPvpHackDummyESP") then
+			safeDestroy(obj)
+		end
+	end
+	safeDestroy(uiStore.marker)
+	uiStore.marker = nil
+	safeDestroy(uiStore.fovCircle)
+	uiStore.fovCircle = nil
+	safeDestroy(uiStore.dummyFovCircle)
+	uiStore.dummyFovCircle = nil
+	safeDestroy(uiStore.dummyMarker)
+	uiStore.dummyMarker = nil
+	table.clear(dummyEspStore)
+	for _, el in ipairs(crosshairElements) do
+		safeDestroy(el)
+	end
+	table.clear(crosshairElements)
+end
+
+
+local function updateStatus(text)
+	if text == lastStatusText then return end
+	lastStatusText = text
+	if uiRefs.statusParagraph and type(uiRefs.statusParagraph.SetDesc) == "function" then
+		pcall(function()
+			uiRefs.statusParagraph:SetDesc(text)
+		end)
+	elseif uiRefs.statusParagraph and type(uiRefs.statusParagraph.Set) == "function" then
+		pcall(function()
+			uiRefs.statusParagraph:Set({ Title = "状态", Content = text })
+		end)
+	end
+end
+
+
+local function updatePlayerParagraph()
+	if not uiRefs.playersParagraph then return end
+	local selected = state.selected and state.selected.Name or "无"
+	local content = "当前选择：" .. selected .. "\n在线玩家：\n" .. table.concat(playerNames(), "\n")
+	if type(uiRefs.playersParagraph.SetDesc) == "function" then
+		pcall(function()
+			uiRefs.playersParagraph:SetDesc(content)
+		end)
+	elseif type(uiRefs.playersParagraph.Set) == "function" then
+		pcall(function()
+			uiRefs.playersParagraph:Set({ Title = "玩家列表", Content = content })
+		end)
+	end
+end
+
+
+local function updateFovCircle()
+	local gui = makeOverlay()
+	if not state.showFov then
+		safeDestroy(uiStore.fovCircle)
+		uiStore.fovCircle = nil
+		return
+	end
+
+	local circle = uiStore.fovCircle
+	if not circle or not circle.Parent then
+		circle = Instance.new("Frame")
+		circle.Name = "ZPvpFovCircle"
+		circle.BackgroundTransparency = 1
+		circle.BorderSizePixel = 0
+		circle.ZIndex = 90
+		circle.Parent = gui
+
+		local corner = Instance.new("UICorner")
+		corner.CornerRadius = UDim.new(1, 0)
+		corner.Parent = circle
+
+		local stroke = Instance.new("UIStroke")
+		stroke.Name = "Stroke"
+		stroke.Color = Color3.fromRGB(255, 45, 72)
+		stroke.Transparency = 0.16
+		stroke.Thickness = 2
+		stroke.Parent = circle
+
+		uiStore.fovCircle = circle
+	end
+
+	local r = state.fovRadius
+	circle.Size = UDim2.fromOffset(r * 2, r * 2)
+	circle.Position = UDim2.new(0.5, -r, 0.5, -r)
+
+	local stroke = circle:FindFirstChild("Stroke")
+	if stroke then
+		stroke.Color = state.aimEnabled and Color3.fromRGB(255, 45, 72) or Color3.fromRGB(235, 235, 235)
+		stroke.Transparency = state.aimEnabled and 0.08 or 0.46
+	end
+end
+
+
+local function updateDummyFovCircle()
+	local gui = makeOverlay()
+	if not state.dummyShowFov then
+		safeDestroy(uiStore.dummyFovCircle)
+		uiStore.dummyFovCircle = nil
+		return
+	end
+
+	local circle = uiStore.dummyFovCircle
+	if not circle or not circle.Parent then
+		circle = Instance.new("Frame")
+		circle.Name = "ZPvpDummyFovCircle"
+		circle.BackgroundTransparency = 1
+		circle.BorderSizePixel = 0
+		circle.ZIndex = 89
+		circle.Parent = gui
+
+		Instance.new("UICorner", circle).CornerRadius = UDim.new(1, 0)
+
+		local stroke = Instance.new("UIStroke")
+		stroke.Name = "Stroke"
+		stroke.Color = Color3.fromRGB(180, 50, 255)
+		stroke.Transparency = 0.12
+		stroke.Thickness = 2
+		stroke.Parent = circle
+
+		uiStore.dummyFovCircle = circle
+	end
+
+	local r = state.dummyFovRadius
+	circle.Size = UDim2.fromOffset(r * 2, r * 2)
+	circle.Position = UDim2.new(0.5, -r, 0.5, -r)
+
+	local stroke = circle:FindFirstChild("Stroke")
+	if stroke then
+		stroke.Color = Color3.fromRGB(180, 50, 255)
+		stroke.Transparency = 0.12
+	end
+end
+
+
+local function updateTargetMarker(part)
+	local gui = makeOverlay()
+	if not state.targetMarker or not part then
+		safeDestroy(uiStore.marker)
+		uiStore.marker = nil
+		return
+	end
+
+	local cam = workspace.CurrentCamera
+	if not cam then return end
+	local pos, visible = cam:WorldToViewportPoint(part.Position)
+	if not visible then
+		safeDestroy(uiStore.marker)
+		uiStore.marker = nil
+		return
+	end
+
+	local marker = uiStore.marker
+	if not marker or not marker.Parent then
+		marker = Instance.new("Frame")
+		marker.Name = "ZPvpTargetMarker"
+		marker.Size = UDim2.fromOffset(10, 10)
+		marker.AnchorPoint = Vector2.new(0.5, 0.5)
+		marker.BackgroundColor3 = Color3.fromRGB(255, 45, 72)
+		marker.BorderSizePixel = 0
+		marker.ZIndex = 95
+		marker.Parent = gui
+
+		local corner = Instance.new("UICorner")
+		corner.CornerRadius = UDim.new(1, 0)
+		corner.Parent = marker
+
+		local stroke = Instance.new("UIStroke")
+		stroke.Color = Color3.fromRGB(255, 255, 255)
+		stroke.Transparency = 0.08
+		stroke.Thickness = 1
+		stroke.Parent = marker
+
+		uiStore.marker = marker
+	end
+
+	marker.Position = UDim2.fromOffset(pos.X, pos.Y)
+end
+
+
+local function updateEspFor(plr)
+	local c = char(plr)
+	local h = hum(plr)
+	local enemy = isEnemy(plr)
+	local headPart = c and c:FindFirstChild("Head")
+	local visiblePart = headPart or getPart(plr) or root(plr)
+	local visible = visiblePart and lineOfSight(visiblePart) or false
+	local espColor = enemy and (visible and Color3.fromRGB(52, 152, 255) or Color3.fromRGB(255, 45, 72)) or Color3.fromRGB(245, 245, 245)
+	local outlineColor = enemy and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(170, 170, 170)
+	local shouldEsp = c and h and h.Health > 0 and ((enemy and state.enemyEsp) or ((not enemy) and state.friendEsp))
+
+	if shouldEsp then
+		if not espStore[plr] or espStore[plr].Parent ~= c then
+			destroyPlayerHighlights(plr)
+			local hi = Instance.new("Highlight")
+			hi.Name = "ZPvpTeamHighlight"
+			hi.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+			hi.FillTransparency = enemy and 0.62 or 0.84
+			hi.OutlineTransparency = 0
+			hi.Parent = c
+			espStore[plr] = hi
+		end
+		espStore[plr].FillColor = espColor
+		espStore[plr].OutlineColor = outlineColor
+		espStore[plr].FillTransparency = enemy and 0.62 or 0.84
+	else
+		destroyPlayerHighlights(plr)
+	end
+
+	if state.nameTags and headPart and h and h.Health > 0 then
+		if not tagStore[plr] or tagStore[plr].Parent ~= headPart then
+			destroyPlayerTags(plr)
+			local bill = Instance.new("BillboardGui")
+			bill.Name = "ZPvpNameTag"
+			bill.Adornee = headPart
+			bill.AlwaysOnTop = true
+			bill.StudsOffset = Vector3.new(0, 3, 0)
+			bill.Size = UDim2.fromOffset(190, 34)
+			bill.Parent = headPart
+
+			local text = Instance.new("TextLabel")
+			text.Name = "Text"
+			text.Size = UDim2.fromScale(1, 1)
+			text.BackgroundColor3 = Color3.fromRGB(5, 5, 6)
+			text.BackgroundTransparency = 0.08
+			text.BorderSizePixel = 0
+			text.Font = Enum.Font.GothamBold
+			text.TextSize = 12
+			text.Parent = bill
+
+			local corner = Instance.new("UICorner")
+			corner.CornerRadius = UDim.new(0, 7)
+			corner.Parent = text
+
+			local stroke = Instance.new("UIStroke")
+			stroke.Name = "Stroke"
+			stroke.Transparency = 0.38
+			stroke.Thickness = 1
+			stroke.Parent = text
+
+			tagStore[plr] = bill
+		end
+		local text = tagStore[plr] and tagStore[plr]:FindFirstChild("Text")
+		if text then
+			text.TextColor3 = espColor
+			text.Text = (enemy and (visible and "可见  " or "遮挡  ") or "队友  ") .. plr.Name .. "  HP " .. tostring(math.floor(h.Health))
+			local stroke = text:FindFirstChild("Stroke")
+			if stroke then
+				stroke.Color = espColor
+			end
+		end
+	else
+		destroyPlayerTags(plr)
+	end
+end
+
+
+local function getPartForModel(m)
+	local p = m:FindFirstChild(state.aimPart)
+		or m:FindFirstChild("Head")
+		or m:FindFirstChild("UpperTorso")
+		or m:FindFirstChild("HumanoidRootPart")
+		or m:FindFirstChild("Torso")
+	if p then return p end
+	for _, desc in ipairs(m:GetDescendants()) do
+		if desc:IsA("BasePart") and desc.Name ~= "Handle" and desc.Name ~= "HumanoidRootPart" then
+			return desc
+		end
+	end
+	local root = m:FindFirstChild("HumanoidRootPart")
+	if root then return root end
+	return nil
+end
+
+local function isPlayerName(name)
+	for _, p in ipairs(Players:GetPlayers()) do
+		if p.Name == name or p.DisplayName == name then return true end
+	end
+	return false
+end
+
+local function isPlayerCharModel(obj)
+	for _, p in ipairs(Players:GetPlayers()) do
+		if p.Character == obj then return true end
+	end
+	return false
+end
+
+local excludedPaths = { "Workspace.Lobby", "Workspace.Highlight", "Workspace.Effects", "Workspace.Camera", "Workspace._Temp" }
+
+local function isExcludedPath(obj)
+	for _, prefix in ipairs(excludedPaths) do
+		local full = obj:GetFullName()
+		if full:find(prefix, 1, true) == 1 then return true end
+	end
+	return false
+end
+
+local dummyCacheList = {}
+local lastDummyScan = 0
+local function cacheValid()
+	for _, m in ipairs(dummyCacheList) do
+		if not m or not m.Parent then
+			return false
+		end
+		local h = pcall(function() return m:FindFirstChildOfClass("Humanoid") end) and m:FindFirstChildOfClass("Humanoid") or nil
+		if not h or h.Health <= 0 then
+			return false
+		end
+	end
+	return true
+end
+local function getDummyModels()
+	local now = os.clock()
+	if now - lastDummyScan < 0.5 and #dummyCacheList > 0 and cacheValid() then
+		return dummyCacheList
+	end
+	lastDummyScan = now
+	local out = {}
+	local seen = {}
+	for _, obj in ipairs(workspace:GetDescendants()) do
+		if obj:IsA("Model") and obj:FindFirstChildOfClass("Humanoid") and not seen[obj] then
+			seen[obj] = true
+			local h = obj:FindFirstChildOfClass("Humanoid")
+			if not h or h.Health <= 0 then continue end
+			if not isPlayerCharModel(obj) and not isPlayerName(obj.Name) and not isExcludedPath(obj) then
+				table.insert(out, obj)
+			end
+		end
+	end
+	dummyCacheList = out
+	return out
+end
+
+
+local function findDummyHead(m)
+	local h = m:FindFirstChild("Head")
+	if h then return h end
+	for _, d in ipairs(m:GetDescendants()) do
+		if d:IsA("BasePart") and d.Name == "Head" then
+			return d
+		end
+	end
+	return nil
+end
+
+local function getDummyAimPart(m)
+	if state.dummyAimPart == "Root" then
+		return m:FindFirstChild("HumanoidRootPart") or findDummyHead(m)
+	end
+	return findDummyHead(m) or m:FindFirstChild("HumanoidRootPart")
+end
+
+local function isAliveDummy(m)
+	local h = m:FindFirstChildOfClass("Humanoid")
+	return h and h.Health > 0
+end
+
+local function getBestDummyTarget()
+	local cam = workspace.CurrentCamera
+	if not cam then return nil, nil, { dummies = 0 } end
+	local vp = cam.ViewportSize
+	local center = Vector2.new(vp.X / 2, vp.Y / 2)
+	local myRoot = root(LocalPlayer)
+	local best = nil
+	local fov = state.dummyFovRadius or 200
+	local wallAim = state.dummyWallAim
+	local diag = { dummies = 0, alive = 0, inFov = 0, inRange = 0, noPart = 0 }
+
+	local function better(a, b)
+		if not b then return true end
+		if a.visible ~= b.visible then
+			return a.visible
+		end
+		if math.abs(a.wd - b.wd) > 0.5 then
+			return a.wd < b.wd
+		end
+		return a.sd < b.sd
+	end
+
+	local models = getDummyModels()
+	diag.dummies = #models
+	for _, m in ipairs(models) do
+		if state.dummyDetached[m] then continue end
+		if not isAliveDummy(m) then continue end
+		diag.alive += 1
+
+		
+		local fovPart, fovScreenDist = nil, math.huge
+		for _, part in ipairs(m:GetDescendants()) do
+			if not part:IsA("BasePart") then continue end
+			if part.Name == "Handle" then continue end
+			local pos, on = cam:WorldToViewportPoint(part.Position)
+			if on and pos.Z > 0 then
+				local sd = (Vector2.new(pos.X, pos.Y) - center).Magnitude
+				if sd <= fov and sd < fovScreenDist then
+					fovPart = part
+					fovScreenDist = sd
+				end
+			end
+		end
+		if not fovPart then diag.noPart += 1 continue end
+		diag.inFov += 1
+
+		local aimTarget = getDummyAimPart(m) or fovPart
+		local visible = lineOfSight(aimTarget) or lineOfSight(fovPart)
+		if visible or wallAim then
+			local wd = myRoot and (aimTarget.Position - myRoot.Position).Magnitude
+				or (aimTarget.Position - cam.CFrame.Position).Magnitude
+			if wd <= state.dummyMaxDistance then
+				diag.inRange += 1
+				local cand = { m = m, p = aimTarget, sd = fovScreenDist, wd = wd, visible = visible }
+				if better(cand, best) then
+					best = cand
+				end
+			end
+		end
+	end
+	return best and best.m or nil, best and best.p or nil, diag
+end
+
+local function updateDummyTargetMarker(part)
+	local gui = makeOverlay()
+	if not part then
+		safeDestroy(uiStore.dummyMarker)
+		uiStore.dummyMarker = nil
+		return
+	end
+	local cam = workspace.CurrentCamera
+	if not cam then return end
+	local pos, visible = cam:WorldToViewportPoint(part.Position)
+	if not visible then
+		safeDestroy(uiStore.dummyMarker)
+		uiStore.dummyMarker = nil
+		return
+	end
+	local marker = uiStore.dummyMarker
+	if not marker or not marker.Parent then
+		marker = Instance.new("Frame")
+		marker.Name = "ZPvpDummyMarker"
+		marker.Size = UDim2.fromOffset(10, 10)
+		marker.AnchorPoint = Vector2.new(0.5, 0.5)
+		marker.BackgroundColor3 = Color3.fromRGB(180, 50, 255)
+		marker.BorderSizePixel = 0
+		marker.ZIndex = 96
+		marker.Parent = gui
+		Instance.new("UICorner", marker).CornerRadius = UDim.new(1, 0)
+		local stroke = Instance.new("UIStroke")
+		stroke.Color = Color3.fromRGB(255, 255, 255)
+		stroke.Transparency = 0.08
+		stroke.Thickness = 1
+		stroke.Parent = marker
+		uiStore.dummyMarker = marker
+	end
+	marker.Position = UDim2.fromOffset(pos.X, pos.Y)
+end
+
+local function applyDummyAutoFire()
+	if not state.dummyAutoFire then return end
+	local now = os.clock()
+	if now - state.lastFireAt < state.fireCooldown then return end
+	state.lastFireAt = now
+	pcall(function()
+		local v = VirtualInputManager
+		v:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+		v:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+	end)
+end
+
+
+local function getBestTarget()
+	local cam = workspace.CurrentCamera
+	if not cam then return nil, nil, { checked = 0, inFov = 0 } end
+
+	local viewport = cam.ViewportSize
+	local center = Vector2.new(viewport.X / 2, viewport.Y / 2)
+	local myRoot = root(LocalPlayer)
+	local best = nil
+	local stats = { checked = 0, inFov = 0, visible = 0, blocked = 0, tooFar = 0, selectedOnly = false, detached = 0 }
+	local priority = state.targetPriority
+
+	local function better(a, b)
+		if not b then return true end
+		if priority == "lowestHp" then
+			local aHp = a.hp or 100
+			local bHp = b.hp or 100
+			if aHp ~= bHp then return aHp < bHp end
+		end
+		if a.visible ~= b.visible then
+			return a.visible
+		end
+		if math.abs(a.worldDist - b.worldDist) > 0.5 then
+			return a.worldDist < b.worldDist
+		end
+		return a.screenDist < b.screenDist
+	end
+
+	local function scanEntity(entity, playerRef, getHp, fovRadius, wallAim)
+		local c = entity
+		local h = c:FindFirstChildOfClass("Humanoid")
+		if not h or not (state.aimDead or h.Health > 0) then return end
+		if detachedTargets[playerRef] then return end
+
+		stats.checked += 1
+		local fovPart, fovScreenDist = nil, math.huge
+		local fov = fovRadius or state.fovRadius
+
+		local parts = getCandidateParts({ Character = entity })
+		if #parts == 0 then
+			for _, desc in ipairs(c:GetDescendants()) do
+				if desc:IsA("BasePart") and desc.Name ~= "Handle" then
+					table.insert(parts, desc)
+				end
+			end
+		end
+
+		for _, part in ipairs(parts) do
+			local pos, onScreen = cam:WorldToViewportPoint(part.Position)
+			if onScreen and pos.Z > 0 then
+				local screenDist = (Vector2.new(pos.X, pos.Y) - center).Magnitude
+				if screenDist <= fov and screenDist < fovScreenDist then
+					fovPart = part
+					fovScreenDist = screenDist
+				end
+			end
+		end
+
+		if fovPart then
+			stats.inFov += 1
+			local aimTarget = getPartForModel(c) or fovPart
+			local visible = lineOfSight(aimTarget) or lineOfSight(fovPart)
+			if visible then stats.visible += 1 else stats.blocked += 1 end
+
+			if visible or wallAim then
+				local targetRoot = c:FindFirstChild("HumanoidRootPart") or aimTarget
+				local worldDist
+				if myRoot and targetRoot then
+					worldDist = (targetRoot.Position - myRoot.Position).Magnitude
+				else
+					worldDist = (aimTarget.Position - cam.CFrame.Position).Magnitude
+				end
+				if worldDist <= state.maxDistance then
+					local candidate = {
+						player = playerRef,
+						part = aimTarget,
+						screenDist = fovScreenDist,
+						worldDist = worldDist,
+						visible = visible,
+						hp = h.Health,
+					}
+					if better(candidate, best) then
+						best = candidate
+					end
+				else
+					stats.tooFar += 1
+				end
+			end
+		end
+	end
+
+	if state.aimDummy and not state.aimEnabled then
+		
+	else
+		for _, plr in ipairs(Players:GetPlayers()) do
+			if plr ~= LocalPlayer and (state.aimDead or isAlive(plr)) then
+				if detachedTargets[plr] then
+					stats.detached += 1
+					continue
+				end
+				if state.onlySelected and state.selected and plr ~= state.selected then
+					continue
+				elseif state.onlySelected and not state.selected then
+					stats.selectedOnly = true
+					continue
+				end
+				if state.onlySelected or (not state.enemyOnly) or isEnemy(plr) then
+					scanEntity(char(plr), plr, true, state.fovRadius, state.wallAim)
+				end
+			end
+		end
+	end
+
+	if best then
+		return best.player, best.part, best
+	end
+	return nil, nil, stats
+end
+
+
+local function spectateSelected()
+	local h = hum(state.selected)
+	if h then
+		workspace.CurrentCamera.CameraSubject = h
+	end
+end
+
+local function stopSpectate()
+	local h = hum(LocalPlayer)
+	if h then
+		workspace.CurrentCamera.CameraSubject = h
+	end
+end
+
+
+local function requestAutoFire()
+	if not state.autoTestFire then return end
+	local now = os.clock()
+	if now - state.lastFireAt < state.fireCooldown then return end
+	state.lastFireAt = now
+
+	pcall(function()
+		VirtualInputManager:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+		VirtualInputManager:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+	end)
+end
+
+
+local function applyNoRecoilSpread()
+	if not state.noRecoil and not state.noSpread then return end
+	local c = LocalPlayer.Character
+	if not c then return end
+	local tool = c:FindFirstChildOfClass("Tool")
+	if not tool then return end
+	for _, child in ipairs(tool:GetDescendants()) do
+		if child:IsA("NumberValue") or child:IsA("IntValue") then
+			local name = child.Name:lower()
+			if state.noRecoil and (name:find("recoil") or name:find("kick") or name:find("sway") or name:find("bounce")) then
+				pcall(function() child.Value = 0 end)
+			end
+			if state.noSpread and (name:find("spread") or name:find("inaccuracy") or name:find("random") or name:find("deviation") or name:find("scatter")) then
+				pcall(function() child.Value = 0 end)
+			end
+		end
+		if state.noRecoil and child:IsA("StringValue") and (child.Name:lower():find("recoil") or child.Name:lower():find("kick")) then
+			pcall(function() child.Value = "0" end)
+		end
+		if state.noRecoil and child:IsA("CFrameValue") and (child.Name:lower():find("recoil") or child.Name:lower():find("kick")) then
+			pcall(function() child.Value = CFrame.new() end)
+		end
+		if state.noRecoil and child:IsA("Vector3Value") and (child.Name:lower():find("recoil") or child.Name:lower():find("kick")) then
+			pcall(function() child.Value = Vector3.new() end)
+		end
+	end
+end
+
+
+local function updateRadar()
+	if not state.radar then
+		safeDestroy(radarGui)
+		radarGui = nil
+		radarFrame = nil
+		return
+	end
+	if not radarGui or not radarGui.Parent then
+		radarGui = Instance.new("ScreenGui")
+		radarGui.Name = "ZPvpRadar"
+		radarGui.ResetOnSpawn = false
+		radarGui.IgnoreGuiInset = true
+		radarGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+		radarGui.Parent = PlayerGui
+		radarFrame = Instance.new("Frame")
+		radarFrame.Name = "RadarFrame"
+		radarFrame.BackgroundColor3 = Color3.fromRGB(5, 5, 10)
+		radarFrame.BackgroundTransparency = 0.15
+		radarFrame.BorderSizePixel = 0
+		radarFrame.Parent = radarGui
+		Instance.new("UICorner", radarFrame).CornerRadius = UDim.new(0, 8)
+		local stroke = Instance.new("UIStroke", radarFrame)
+		stroke.Color = Color3.fromRGB(50, 150, 255)
+		stroke.Transparency = 0.4
+		stroke.Thickness = 1.5
+		
+		local title = Instance.new("TextLabel")
+		title.Name = "Title"
+		title.Size = UDim2.new(1, 0, 0, 18)
+		title.Position = UDim2.fromOffset(0, 2)
+		title.BackgroundTransparency = 1
+		title.Text = "雷达"
+		title.TextColor3 = Color3.fromRGB(200, 200, 255)
+		title.TextSize = 11
+		title.Font = Enum.Font.GothamBold
+		title.TextXAlignment = Enum.TextXAlignment.Center
+		title.Parent = radarFrame
+		
+		local surface = Instance.new("Frame")
+		surface.Name = "Surface"
+		surface.BackgroundColor3 = Color3.fromRGB(10, 15, 30)
+		surface.BackgroundTransparency = 0.3
+		surface.BorderSizePixel = 0
+		surface.Parent = radarFrame
+		Instance.new("UICorner", surface).CornerRadius = UDim.new(1, 0)
+		
+		local center = Instance.new("Frame")
+		center.Name = "Center"
+		center.Size = UDim2.fromOffset(4, 4)
+		center.Position = UDim2.new(0.5, -2, 0.5, -2)
+		center.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		center.BorderSizePixel = 0
+		center.Parent = surface
+		Instance.new("UICorner", center).CornerRadius = UDim.new(1, 0)
+	end
+	
+	local size = state.radarSize
+	local zoom = state.radarZoom
+	radarFrame.Size = UDim2.fromOffset(size, size + 20)
+	radarFrame.Position = UDim2.new(1, -size - 10, 1, -size - 30)
+	
+	local surface = radarFrame:FindFirstChild("Surface")
+	if surface then
+		local s = size - 12
+		surface.Size = UDim2.fromOffset(s, s)
+		surface.Position = UDim2.fromOffset(6, 22)
+		
+		
+		for _, dot in ipairs(radarDots) do
+			safeDestroy(dot)
+		end
+		table.clear(radarDots)
+		
+		
+		local myRoot = root(LocalPlayer)
+		if not myRoot then return end
+		local cam = workspace.CurrentCamera
+		local lookVector = cam and cam.CFrame.LookVector or Vector3.new(0, 0, -1)
+		local lookAngle = math.atan2(-lookVector.X, -lookVector.Z)
+		
+		for _, plr in ipairs(Players:GetPlayers()) do
+			if plr ~= LocalPlayer and isAlive(plr) then
+				local targetRoot = root(plr)
+				if targetRoot then
+					local relative = targetRoot.Position - myRoot.Position
+					local dist = relative.Magnitude
+					if dist <= zoom * 3 then
+						local angle = math.atan2(-relative.X, -relative.Z) - lookAngle
+						local r = math.min(dist / zoom, 1) * (s / 2 - 6)
+						local x = math.cos(angle) * r + s / 2
+						local y = math.sin(angle) * r + s / 2
+						
+						local dot = Instance.new("Frame")
+						dot.Size = UDim2.fromOffset(5, 5)
+						dot.Position = UDim2.fromOffset(x - 2.5, y - 2.5)
+						dot.BackgroundColor3 = isEnemy(plr) and Color3.fromRGB(255, 45, 72) or Color3.fromRGB(100, 200, 100)
+						dot.BorderSizePixel = 0
+						dot.Parent = surface
+						Instance.new("UICorner", dot).CornerRadius = UDim.new(1, 0)
+						table.insert(radarDots, dot)
+					end
+				end
+			end
+		end
+	end
+end
+
+
+local keybindKeyPrefix = "ZKeybind_"
+
+local function keyCodeName(kc)
+	if type(kc) == "userdata" then
+		local ok, name = pcall(function() return tostring(kc) end)
+		if ok then
+			name = name:gsub("Enum.KeyCode.", ""):gsub("Enum.%w+%.", "")
+			return name
+		end
+	end
+	return "无"
+end
+
+local keybindsList = {
+	{ key = "detach", label = "脱离当前目标" },
+	{ key = "toggleAim", label = "开关 FOV 吸附" },
+	{ key = "toggleAutoFire", label = "开关自动开火" },
+	{ key = "toggleWallbang", label = "开关穿墙子弹" },
+	{ key = "toggleRadar", label = "开关雷达" },
+	{ key = "toggleBigHead", label = "开关敌人大头" },
+	{ key = "toggleFov", label = "开关视野修改" },
+	{ key = "toggleWalkspeed", label = "开关移速修改" },
+	{ key = "bulletTime", label = "按住子弹时间" },
+}
+
+local waitingForKeybind = nil
+
+local addKeybindPicker = function(sec, bindKey, label)
+	local cur = keyCodeName(state.keybinds[bindKey])
+	local p = sec:AddParagraph({
+		Title = label,
+		Content = "当前按键: " .. cur,
+	})
+	sec:AddButton({
+		Title = "点击设置按键",
+		Description = "点击后按任意键设定",
+		Callback = function()
+			waitingForKeybind = bindKey
+			pcall(function() p:SetDesc("等待按键输入...") end)
+		end,
+	})
+	keybindRefs[bindKey] = p
+end
+
+local function applyFovAdjust()
+	local cam = workspace.CurrentCamera
+	if not cam then return end
+	if state.bulletTime and bulletTimeHeld then
+		cam.FieldOfView = state.bulletTimeFov or 20
+	elseif state.fovEnabled then
+		cam.FieldOfView = state.customFov or 70
+	else
+		cam.FieldOfView = state.originalFov or 70
+	end
+end
+
+local function applyWalkAdjust()
+	local h = hum(LocalPlayer)
+	if not h then return end
+	if state.bulletTime and bulletTimeHeld then
+		h.WalkSpeed = state.bulletTimeWalk or 8
+	elseif state.walkSpeedEnabled then
+		h.WalkSpeed = state.walkSpeed or 16
+	else
+		h.WalkSpeed = state.originalWalk or 16
+	end
+end
+
+local function applyBigHead()
+	if not state.bigHead then
+		for head, orig in pairs(headSizes) do
+			pcall(function() head.Size = orig end)
+		end
+		table.clear(headSizes)
+		return
+	end
+
+	local function scaleHead(mdl)
+		if not mdl then return end
+		local head = mdl:FindFirstChild("Head")
+		if not head then
+			for _, d in ipairs(mdl:GetDescendants()) do
+				if d:IsA("BasePart") and d.Name == "Head" then
+					head = d
+					break
+				end
+			end
+		end
+		if not head then return end
+		if not headSizes[head] then
+			headSizes[head] = head.Size
+		end
+		head.Size = headSizes[head] * state.bigHeadScale
+	end
+
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr == LocalPlayer then continue end
+		local c = char(plr)
+		if c then scaleHead(c) end
+	end
+	for _, mdl in ipairs(getDummyModels()) do
+		scaleHead(mdl)
+	end
+end
+
+local function applyAutoBhop()
+	if not state.autoBhop then return end
+	local h = hum(LocalPlayer)
+	if not h then return end
+	if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
+		pcall(function()
+			h:ChangeState(Enum.HumanoidStateType.Jumping)
+		end)
+	end
+end
+
+
+local silentAimHooked = false
+local silentCast = nil
+
+local function getSilentAimTarget()
+	local cam = workspace.CurrentCamera
+	if not cam then return nil end
+	local vp = cam.ViewportSize
+	local center = Vector2.new(vp.X / 2, vp.Y / 2)
+	local myRoot = root(LocalPlayer)
+	local best = nil
+
+	local function consider(part, enemy)
+		if not part then return end
+		local pos, on = cam:WorldToViewportPoint(part.Position)
+		if not on or pos.Z <= 0 then return end
+		local sd = (Vector2.new(pos.X, pos.Y) - center).Magnitude
+		local wd = myRoot and (part.Position - myRoot.Position).Magnitude or math.huge
+		local visible = lineOfSight(part)
+		local cand = { part = part, sd = sd, wd = wd, visible = visible, enemy = enemy }
+		if not best then
+			best = cand
+			return
+		end
+		
+		if cand.wd < best.wd - 0.5 then
+			best = cand
+		elseif math.abs(cand.wd - best.wd) <= 0.5 then
+			if cand.sd < best.sd - 0.5 then
+				best = cand
+			elseif math.abs(cand.sd - best.sd) <= 0.5 and cand.visible and not best.visible then
+				best = cand
+			end
+		end
+	end
+
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr == LocalPlayer then continue end
+		local c = char(plr)
+		local h = c and c:FindFirstChildOfClass("Humanoid")
+		if not c or not h or h.Health <= 0 then continue end
+		if state.enemyOnly and not isEnemy(plr) then continue end
+		consider(c:FindFirstChild("Head") or c:FindFirstChild("HumanoidRootPart"), true)
+	end
+
+	return best and best.part or nil
+end
+
+local function setupSilentAim()
+	if silentAimHooked then return end
+	local rs = game:GetService("ReplicatedStorage")
+	local common = rs:FindFirstChild("Common")
+	local managers = common and common:FindFirstChild("Managers")
+	local weaponManager = managers and managers:FindFirstChild("WeaponManager")
+	if not weaponManager then return end
+	local ok, mgr = pcall(require, weaponManager)
+	if not ok or type(mgr) ~= "table" or type(mgr.cast) ~= "function" then
+		return
+	end
+	silentAimHooked = true
+	silentCast = mgr.cast
+	mgr.cast = function(origin, direction, speed, maxDist, ...)
+		if state.silentAim then
+			local target = getSilentAimTarget()
+			if target then
+				local ok2, newDir = pcall(function()
+					return (target.Position - origin).Unit
+				end)
+				if ok2 and newDir then
+					direction = newDir
+				end
+			end
+		end
+		return silentCast(origin, direction, speed, maxDist, ...)
+	end
+end
+
+local function updateHud()
+	if not state.showHud then
+		for _, lbl in ipairs(hudLabels) do
+			safeDestroy(lbl)
+		end
+		table.clear(hudLabels)
+		return
+	end
+
+	local gui = makeOverlay()
+	for i = #hudLabels, 1, -1 do
+		if not hudLabels[i].Parent then
+			table.remove(hudLabels, i)
+		end
+	end
+
+	local active = {}
+	local add = function(text, on)
+		if on then table.insert(active, text) end
+	end
+	add("吸附", state.aimEnabled or state.spinScan)
+	add("自动开火", state.autoTestFire)
+	add("穿墙", state.wallBang)
+	add("子弹追踪", state.bulletTracer)
+	add("移速", state.walkSpeedEnabled)
+	add("视野", state.fovEnabled)
+	add("大头", state.bigHead)
+	add("连跳", state.autoBhop)
+	add("雷达", state.radar)
+	add("子弹时间", state.bulletTime)
+
+	local need = #active
+	while #hudLabels < need do
+		local lbl = Instance.new("TextLabel")
+		lbl.Name = "ZPvpHud"
+		lbl.BackgroundTransparency = 1
+		lbl.TextColor3 = Color3.fromRGB(120, 255, 120)
+		lbl.TextSize = 13
+		lbl.Font = Enum.Font.GothamBold
+		lbl.TextXAlignment = Enum.TextXAlignment.Left
+		lbl.Size = UDim2.fromOffset(180, 18)
+		lbl.Parent = gui
+		table.insert(hudLabels, lbl)
+	end
+	for i = #hudLabels, need + 1, -1 do
+		safeDestroy(hudLabels[i])
+		table.remove(hudLabels, i)
+	end
+	for i, text in ipairs(active) do
+		local lbl = hudLabels[i]
+		if lbl then
+			lbl.Text = text
+			lbl.Position = UDim2.fromOffset(8, 8 + (i - 1) * 19)
+			lbl.Visible = true
+		end
+	end
+end
+
+local function updateDummyEsp()
+	if not state.dummyEsp then
+		for mdl, hi in pairs(dummyEspStore) do
+			safeDestroy(hi)
+		end
+		table.clear(dummyEspStore)
+		return
+	end
+	for _, mdl in ipairs(getDummyModels()) do
+		local h = mdl:FindFirstChildOfClass("Humanoid")
+		if not h or h.Health <= 0 then
+			if dummyEspStore[mdl] then safeDestroy(dummyEspStore[mdl]) dummyEspStore[mdl] = nil end
+			continue
+		end
+		if not dummyEspStore[mdl] or dummyEspStore[mdl].Parent ~= mdl then
+			local hi = Instance.new("Highlight")
+			hi.Name = "ZPvpDummyHighlight"
+			hi.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+			hi.FillTransparency = 0.4
+			hi.OutlineTransparency = 0
+			hi.FillColor = Color3.fromRGB(255, 140, 0)
+			hi.OutlineColor = Color3.fromRGB(255, 220, 150)
+			hi.Parent = mdl
+			dummyEspStore[mdl] = hi
+		end
+	end
+end
+
+
+local function updateCrosshair()
+	if not state.crosshair.enabled then
+		for _, el in ipairs(crosshairElements) do
+			safeDestroy(el)
+		end
+		table.clear(crosshairElements)
+		return
+	end
+
+	local gui = makeOverlay()
+	local cam = workspace.CurrentCamera
+	if not cam then return end
+	local vp = cam.ViewportSize
+	local cx, cy = vp.X / 2, vp.Y / 2
+	local ch = state.crosshair
+
+	if ch.dynamicSpread and ch.spreadCurrent > 0 then
+		ch.spreadCurrent = math.max(0, ch.spreadCurrent - (ch.spreadRecovery or 0.15))
+	end
+
+	local totalGap = (ch.gap or 4) + ch.spreadCurrent
+	local size = ch.size or 10
+	local thick = ch.thickness or 2
+	local color = crosshairColors[ch.colorIndex] and crosshairColors[ch.colorIndex].value or Color3.fromRGB(0, 255, 0)
+	local alpha = 1 - (ch.transparency or 0)
+	local shape = ch.shape or "cross"
+
+	local function ensureFrame(idx, name, props)
+		local el = crosshairElements[idx]
+		if not el or not el.Parent then
+			safeDestroy(el)
+			el = Instance.new("Frame")
+			el.Name = "ZCh" .. name
+			el.BackgroundColor3 = color
+			el.BorderSizePixel = 0
+			el.ZIndex = 100
+			el.Parent = gui
+			crosshairElements[idx] = el
+		end
+		el.BackgroundColor3 = color
+		el.BackgroundTransparency = 1 - alpha
+		for k, v in pairs(props) do
+			el[k] = v
+		end
+		if ch.outline then
+			local stroke = el:FindFirstChild("ChStroke")
+			if not stroke then
+				stroke = Instance.new("UIStroke")
+				stroke.Name = "ChStroke"
+				stroke.Parent = el
+			end
+			stroke.Color = Color3.fromRGB(0, 0, 0)
+			stroke.Thickness = ch.outlineThickness or 1
+			stroke.Transparency = 1 - alpha
+		else
+			local stroke = el:FindFirstChild("ChStroke")
+			if stroke then safeDestroy(stroke) end
+		end
+		return el
+	end
+
+	local idx = 1
+
+	if shape == "cross" then
+		ensureFrame(idx, "Top", { Size = UDim2.fromOffset(thick, size), Position = UDim2.fromOffset(cx - thick / 2, cy - totalGap - size) }); idx += 1
+		ensureFrame(idx, "Bot", { Size = UDim2.fromOffset(thick, size), Position = UDim2.fromOffset(cx - thick / 2, cy + totalGap) }); idx += 1
+		ensureFrame(idx, "Left", { Size = UDim2.fromOffset(size, thick), Position = UDim2.fromOffset(cx - totalGap - size, cy - thick / 2) }); idx += 1
+		ensureFrame(idx, "Right", { Size = UDim2.fromOffset(size, thick), Position = UDim2.fromOffset(cx + totalGap, cy - thick / 2) }); idx += 1
+	end
+
+	if ch.centerDot then
+		local ds = (ch.centerDotRadius or 2) * 2
+		ensureFrame(idx, "Dot", { Size = UDim2.fromOffset(ds, ds), Position = UDim2.fromOffset(cx - ds / 2, cy - ds / 2) }); idx += 1
+		local el = crosshairElements[idx - 1]
+		if el then
+			local corner = el:FindFirstChildOfClass("UICorner")
+			if not corner then
+				corner = Instance.new("UICorner")
+				corner.CornerRadius = UDim.new(1, 0)
+				corner.Parent = el
+			end
+		end
+	end
+
+	for i = idx, #crosshairElements do
+		safeDestroy(crosshairElements[i])
+	end
+	for i = #crosshairElements, idx, -1 do
+		table.remove(crosshairElements)
+	end
+end
+
+
+local function handleCustomKeybind(kc)
+	if not kc then return end
+	local kb = state.keybinds
+	if kc == kb.toggleAim then
+		state.aimEnabled = not state.aimEnabled
+	elseif kc == kb.toggleAutoFire then
+		state.autoTestFire = not state.autoTestFire
+	elseif kc == kb.toggleWallbang then
+		state.wallBang = not state.wallBang
+	elseif kc == kb.toggleRadar then
+		state.radar = not state.radar
+	elseif kc == kb.toggleBigHead then
+		state.bigHead = not state.bigHead
+	elseif kc == kb.toggleFov then
+		state.fovEnabled = not state.fovEnabled
+	elseif kc == kb.toggleWalkspeed then
+		state.walkSpeedEnabled = not state.walkSpeedEnabled
+	elseif kc == kb.detach then
+		if state.currentTarget then
+			detachedTargets[state.currentTarget] = true
+			state.currentTarget = nil
+			updateTargetMarker(nil)
+		end
+	end
+end
+
+local function updateBulletTracking(deltaTime)
+	if not state.bulletTracer then
+		table.clear(bulletTrack)
+		for _, line in ipairs(tracerLines) do
+			pcall(function() line:Remove() end)
+		end
+		table.clear(tracerLines)
+		return
+	end
+
+	for part in pairs(bulletTrack) do
+		if not part or not part.Parent then
+			bulletTrack[part] = nil
+		end
+	end
+
+	local cam = workspace.CurrentCamera
+	local origin = cam and cam.CFrame.Position or Vector3.new(0, 0, 0)
+
+	for part, isNew in pairs(bulletTrack) do
+		if isNew and part.Parent then
+			local ok, line = pcall(Drawing.new, "Line")
+			if ok and line then
+				line.From = part.Position
+				line.To = part.Position + (part.Position - origin).Unit * 6
+				line.Color = Color3.fromRGB(0, 255, 255)
+				line.Thickness = state.tracerThickness or 1.5
+				line.Transparency = 0.25
+				line.Visible = true
+				table.insert(tracerLines, line)
+			end
+			bulletTrack[part] = false
+		end
+	end
+
+	for i = #tracerLines, 1, -1 do
+		if not tracerLines[i].Visible then
+			pcall(function() tracerLines[i]:Remove() end)
+			table.remove(tracerLines, i)
+		end
+	end
+end
+
+local function isBulletPartName(name)
+	local keywords = { "Bullet", "Projectile", "Hitbox", "Pellet", "Round", "Shot", "Ray", "Beam", "Trail", "弹道", "子弹", "Fire", "Shell", "Bolt", "Arrow", "Rocket", "Laser", "Tracer" }
+	for _, kw in ipairs(keywords) do
+		if name:find(kw, 1, true) then return true end
+	end
+	return false
+end
+
+
+local function buildFluentModdedUI()
+	local Fluent = loadstring(game:HttpGet("https://github.com/StyearX/Fluent-Modded/releases/download/Fluent/FluentPro"))()
+	uiRefs.Fluent = Fluent
+
+	local Window = Fluent:CreateWindow({
+		Title = "Nexus Pro",
+		SubTitle = "作者：xxx | Fluent-modded",
+		TabWidth = 156,
+		Size = UDim2.fromOffset(620, 500),
+		Acrylic = true,
+		Theme = "AMOLED",
+		MinimizeKey = Enum.KeyCode.RightShift,
+		Search = true,
+	})
+
+	local Tabs = {
+		Combat = Window:AddTab({ Title = "战斗", Icon = "solar/target-bold" }),
+		Render = Window:AddTab({ Title = "绘制", Icon = "solar/eye-bold" }),
+		Players = Window:AddTab({ Title = "玩家", Icon = "solar/users-group-rounded-bold" }),
+		Extras = Window:AddTab({ Title = "扩展", Icon = "solar/bolt-bold" }),
+		Settings = Window:AddTab({ Title = "设置", Icon = "solar/settings-bold" }),
+	}
+
+	uiRefs.statusParagraph = Tabs.Combat:AddParagraph({
+		Title = "状态",
+		Content = "等待开启 FOV 吸附",
+	})
+
+	
+	local aimSec = Tabs.Combat:AddCollapsibleSection({ Title = "瞄准", Icon = "solar/target-bold", Open = true })
+	aimSec:AddToggle("ZAimEnabled", {
+		Title = "开启 FOV 吸附",
+		Description = "只锁定 FOV 圈内最近目标",
+		Default = state.aimEnabled,
+		Callback = function(v) state.aimEnabled = v end,
+	})
+	aimSec:AddToggle("ZHoldRight", {
+		Title = "按住右键才吸附",
+		Default = state.holdRight,
+		Callback = function(v) state.holdRight = v end,
+	})
+	aimSec:AddToggle("ZWallAim", {
+		Title = "穿墙也允许吸附",
+		Default = state.wallAim,
+		Callback = function(v) state.wallAim = v end,
+	})
+	aimSec:AddToggle("ZAimDead", {
+		Title = "死亡目标也允许吸附",
+		Default = state.aimDead,
+		Callback = function(v) state.aimDead = v end,
+	})
+	aimSec:AddToggle("ZOnlySelected", {
+		Title = "只吸附所选玩家",
+		Default = state.onlySelected,
+		Callback = function(v) state.onlySelected = v end,
+	})
+	aimSec:AddToggle("ZEnemyOnly", {
+		Title = "只锁敌人",
+		Default = state.enemyOnly,
+		Callback = function(v) state.enemyOnly = v end,
+	})
+	aimSec:AddSlider("ZFovRadius", {
+		Title = "FOV 半径",
+		Description = "目标进入屏幕中心圆圈后才会被吸附",
+		Min = 50, Max = 460, Default = state.fovRadius, Rounding = 0,
+		Callback = function(v) state.fovRadius = v end,
+	})
+	aimSec:AddSlider("ZMaxDistance", {
+		Title = "最大吸附距离", Min = 20, Max = 2000, Default = state.maxDistance, Rounding = 0,
+		Callback = function(v) state.maxDistance = v end,
+	})
+	aimSec:AddSlider("ZSmooth", {
+		Title = "平滑度", Description = "越小越稳，越大越快",
+		Min = 3, Max = 75, Default = math.floor(state.smooth * 100), Rounding = 0,
+		Callback = function(v) state.smooth = math.clamp(v / 100, 0.03, 0.75) end,
+	})
+	aimSec:AddDropdown("ZAimPart", {
+		Title = "吸附部位", Values = aimParts, Multi = false, Default = state.aimPart,
+		Callback = function(v)
+			if type(v) == "table" then v = v[1] end
+			state.aimPart = v or state.aimPart
+		end,
+	})
+	aimSec:AddButton({
+		Title = "脱离当前目标", Description = "也可以直接按 Z",
+		Callback = function()
+			if state.currentTarget then
+				detachedTargets[state.currentTarget] = true
+				state.currentTarget = nil
+				updateTargetMarker(nil)
+			end
+		end,
+	})
+
+	
+	local fireSec = Tabs.Combat:AddCollapsibleSection({ Title = "开火", Icon = "solar/flame-bold", Open = true })
+	fireSec:AddToggle("ZAutoTestFire", {
+		Title = "吸附后自动开火", Description = "模拟鼠标左键点击，直接触发武器开火",
+		Default = state.autoTestFire,
+		Callback = function(v) state.autoTestFire = v end,
+	})
+	fireSec:AddToggle("ZSpinScan", {
+		Title = "旋转扫描吸附", Description = "打开后自动转视角搜索 FOV 内目标",
+		Default = state.spinScan,
+		Callback = function(v)
+			state.spinScan = v
+			if v then state.aimEnabled = true end
+		end,
+	})
+	fireSec:AddToggle("ZWallBang", {
+		Title = "穿墙子弹", Description = "子弹无视墙壁，直接穿透障碍物造成伤害",
+		Default = state.wallBang,
+		Callback = function(v) state.wallBang = v end,
+	})
+	fireSec:AddToggle("ZNoRecoil", {
+		Title = "无后坐力", Description = "消除武器后坐力",
+		Default = state.noRecoil,
+		Callback = function(v) state.noRecoil = v end,
+	})
+	fireSec:AddToggle("ZNoSpread", {
+		Title = "无扩散", Description = "消除武器子弹散布",
+		Default = state.noSpread,
+		Callback = function(v) state.noSpread = v end,
+	})
+	fireSec:AddToggle("ZBulletTracer", {
+		Title = "子弹追踪", Description = "显示子弹弹道轨迹线",
+		Default = state.bulletTracer,
+		Callback = function(v) state.bulletTracer = v end,
+	})
+	fireSec:AddSlider("ZSpinSpeed", {
+		Title = "旋转扫描速度", Min = 20, Max = 240, Default = state.spinSpeed, Rounding = 0,
+		Callback = function(v) state.spinSpeed = v end,
+	})
+	fireSec:AddSlider("ZFireCooldown", {
+		Title = "自动开火间隔", Description = "单位毫秒",
+		Min = 80, Max = 1000, Default = math.floor(state.fireCooldown * 1000), Rounding = 0,
+		Callback = function(v) state.fireCooldown = math.clamp(v / 1000, 0.08, 1) end,
+	})
+	fireSec:AddToggle("ZDetachDeath", {
+		Title = "命中死亡后自动脱离",
+		Default = state.detachOnDeath,
+		Callback = function(v) state.detachOnDeath = v end,
+	})
+
+	Tabs.Render:AddParagraph({
+		Title = "绘制说明",
+		Content = "敌人红色，队友白色。身份牌关闭后会强制清理所有旧 BillboardGui。",
+	})
+
+	
+	local espSec = Tabs.Render:AddCollapsibleSection({ Title = "玩家绘制", Icon = "solar/eye-bold", Open = true })
+	espSec:AddToggle("ZEnemyEsp", {
+		Title = "敌人 ESP", Default = state.enemyEsp,
+		Callback = function(v) state.enemyEsp = v end,
+	})
+	espSec:AddToggle("ZFriendEsp", {
+		Title = "队友 ESP", Default = state.friendEsp,
+		Callback = function(v) state.friendEsp = v end,
+	})
+	espSec:AddToggle("ZTeamCheck", {
+		Title = "启用阵营检测", Description = "检查 Team、TeamColor 和常见阵营 Attribute",
+		Default = state.teamCheck,
+		Callback = function(v) state.teamCheck = v end,
+	})
+	espSec:AddToggle("ZUnknownAsEnemy", {
+		Title = "未知阵营算敌人", Description = "没有 Team/Attribute 时按敌人处理",
+		Default = state.unknownAsEnemy,
+		Callback = function(v) state.unknownAsEnemy = v end,
+	})
+	espSec:AddToggle("ZNameTags", {
+		Title = "身份牌", Description = "关闭会立刻删除旧身份牌",
+		Default = state.nameTags,
+		Callback = function(v)
+			state.nameTags = v
+			if not v then
+				for _, plr in ipairs(Players:GetPlayers()) do
+					if plr ~= LocalPlayer then destroyPlayerTags(plr) end
+				end
+			end
+		end,
+	})
+
+	
+	local uiSec = Tabs.Render:AddCollapsibleSection({ Title = "界面", Icon = "solar/display-bold", Open = false })
+	uiSec:AddToggle("ZShowFov", {
+		Title = "显示 FOV 圆圈", Default = state.showFov,
+		Callback = function(v) state.showFov = v end,
+	})
+	uiSec:AddToggle("ZTargetMarker", {
+		Title = "显示目标点", Default = state.targetMarker,
+		Callback = function(v) state.targetMarker = v end,
+	})
+	uiSec:AddButton({
+		Title = "清理全部绘制",
+		Description = "清理 Highlight、身份牌、FOV 圆圈和目标点",
+		Callback = clearVisuals,
+	})
+	uiSec:AddToggle("ZRadar", {
+		Title = "雷达", Description = "屏幕角落显示敌我位置小地图",
+		Default = state.radar,
+		Callback = function(v) state.radar = v end,
+	})
+	uiSec:AddSlider("ZRadarSize", {
+		Title = "雷达大小", Min = 100, Max = 260, Default = state.radarSize, Rounding = 0,
+		Callback = function(v) state.radarSize = v end,
+	})
+	uiSec:AddSlider("ZRadarZoom", {
+		Title = "雷达范围", Description = "单位：格",
+		Min = 20, Max = 150, Default = state.radarZoom, Rounding = 0,
+		Callback = function(v) state.radarZoom = v end,
+	})
+
+	local chSec = Tabs.Render:AddCollapsibleSection({ Title = "准星", Icon = "solar/target-bold", Open = false })
+	chSec:AddToggle("ZChEnabled", {
+		Title = "启用自定义准星", Description = "替换游戏默认准星",
+		Default = state.crosshair.enabled,
+		Callback = function(v) state.crosshair.enabled = v end,
+	})
+	chSec:AddDropdown("ZChShape", {
+		Title = "准星形状", Values = { "cross", "dot" }, Multi = false, Default = "cross",
+		Callback = function(v)
+			if type(v) == "table" then v = v[1] end
+			state.crosshair.shape = v or "cross"
+		end,
+	})
+	chSec:AddSlider("ZChSize", {
+		Title = "准星大小", Min = 4, Max = 30, Default = state.crosshair.size, Rounding = 0,
+		Callback = function(v) state.crosshair.size = v end,
+	})
+	chSec:AddSlider("ZChGap", {
+		Title = "中心间隙", Min = 0, Max = 20, Default = state.crosshair.gap, Rounding = 0,
+		Callback = function(v) state.crosshair.gap = v end,
+	})
+	chSec:AddSlider("ZChThick", {
+		Title = "准星粗细", Min = 1, Max = 6, Default = state.crosshair.thickness, Rounding = 0,
+		Callback = function(v) state.crosshair.thickness = v end,
+	})
+	chSec:AddDropdown("ZChColor", {
+		Title = "准星颜色", Values = crosshairColorNames, Multi = false, Default = crosshairColorNames[1],
+		Callback = function(v)
+			if type(v) == "table" then v = v[1] end
+			for i, c in ipairs(crosshairColors) do
+				if c.name == v then state.crosshair.colorIndex = i break end
+			end
+		end,
+	})
+	chSec:AddSlider("ZChAlpha", {
+		Title = "透明度", Min = 0, Max = 100, Default = 0, Rounding = 0, Suffix = "%",
+		Callback = function(v) state.crosshair.transparency = v / 100 end,
+	})
+	chSec:AddToggle("ZChDot", {
+		Title = "中心点", Default = state.crosshair.centerDot,
+		Callback = function(v) state.crosshair.centerDot = v end,
+	})
+	chSec:AddSlider("ZChDotSize", {
+		Title = "中心点大小", Min = 1, Max = 8, Default = state.crosshair.centerDotRadius, Rounding = 0,
+		Callback = function(v) state.crosshair.centerDotRadius = v end,
+	})
+	chSec:AddToggle("ZChOutline", {
+		Title = "黑色描边", Default = state.crosshair.outline,
+		Callback = function(v) state.crosshair.outline = v end,
+	})
+	chSec:AddSlider("ZChOutlineThick", {
+		Title = "描边粗细", Min = 1, Max = 3, Default = state.crosshair.outlineThickness, Rounding = 0,
+		Callback = function(v) state.crosshair.outlineThickness = v end,
+	})
+	chSec:AddToggle("ZChSpread", {
+		Title = "动态扩散", Description = "开枪时准星向外扩散",
+		Default = state.crosshair.dynamicSpread,
+		Callback = function(v) state.crosshair.dynamicSpread = v end,
+	})
+	chSec:AddSlider("ZChSpreadAmt", {
+		Title = "扩散幅度", Min = 2, Max = 30, Default = state.crosshair.spreadAmount, Rounding = 0,
+		Callback = function(v) state.crosshair.spreadAmount = v end,
+	})
+
+	local charSec = Tabs.Extras:AddCollapsibleSection({ Title = "角色修改", Icon = "solar/body-bold", Open = true })
+	charSec:AddToggle("ZBigHead", {
+		Title = "敌人大头", Description = "放大敌人头部命中区域",
+		Default = state.bigHead,
+		Callback = function(v) state.bigHead = v end,
+	})
+	charSec:AddSlider("ZBigHeadScale", {
+		Title = "大头倍数", Min = 1.1, Max = 3, Default = state.bigHeadScale, Rounding = 1,
+		Callback = function(v) state.bigHeadScale = v end,
+	})
+	charSec:AddToggle("ZWalkSpeedEnabled", {
+		Title = "移速修改", Description = "自定义移动速度",
+		Default = state.walkSpeedEnabled,
+		Callback = function(v) state.walkSpeedEnabled = v end,
+	})
+	charSec:AddSlider("ZWalkSpeed", {
+		Title = "移动速度", Min = 8, Max = 120, Default = state.walkSpeed, Rounding = 0,
+		Callback = function(v) state.walkSpeed = v end,
+	})
+	charSec:AddToggle("ZSilentAim", {
+		Title = "静默自瞄", Description = "子弹自动拐向最近敌人(可见>准星近>距离近)",
+		Default = state.silentAim,
+		Callback = function(v)
+			state.silentAim = v
+pcall(setupSilentAim)
+		end,
+	})
+
+	local moveSec = Tabs.Extras:AddCollapsibleSection({ Title = "移动", Icon = "solar/running-bold", Open = false })
+	moveSec:AddToggle("ZAutoBhop", {
+		Title = "自动连跳", Description = "按住空格连续跳跃",
+		Default = state.autoBhop,
+		Callback = function(v) state.autoBhop = v end,
+	})
+
+	local dummySec = Tabs.Extras:AddCollapsibleSection({ Title = "假人自瞄", Icon = "solar/robot-bold", Open = false })
+	dummySec:AddToggle("ZDummyAim", {
+		Title = "开启假人自瞄", Description = "锁定场景中的假人/NPC",
+		Default = state.dummyAim,
+		Callback = function(v) state.dummyAim = v end,
+	})
+	dummySec:AddToggle("ZDummyHoldRight", {
+		Title = "按住右键才吸附",
+		Default = state.dummyHoldRight,
+		Callback = function(v) state.dummyHoldRight = v end,
+	})
+	dummySec:AddToggle("ZDummyWallAim", {
+		Title = "穿墙也允许吸附", Description = "假人被墙挡住也能吸附",
+		Default = state.dummyWallAim,
+		Callback = function(v) state.dummyWallAim = v end,
+	})
+	dummySec:AddToggle("ZDummyAutoFire", {
+		Title = "自动开火",
+		Default = state.dummyAutoFire,
+		Callback = function(v) state.dummyAutoFire = v end,
+	})
+	dummySec:AddSlider("ZDummyFovRadius", {
+		Title = "假人FOV半径", Min = 50, Max = 460, Default = state.dummyFovRadius, Rounding = 0,
+		Callback = function(v) state.dummyFovRadius = v end,
+	})
+	dummySec:AddSlider("ZDummyMaxDistance", {
+		Title = "假人最大距离", Min = 50, Max = 2000, Default = state.dummyMaxDistance, Rounding = 0,
+		Callback = function(v) state.dummyMaxDistance = v end,
+	})
+	dummySec:AddSlider("ZDummySmooth", {
+		Title = "假人平滑度", Min = 3, Max = 75, Default = math.floor(state.dummySmooth * 100), Rounding = 0,
+		Callback = function(v) state.dummySmooth = math.clamp(v / 100, 0.03, 0.75) end,
+	})
+	dummySec:AddDropdown("ZDummyAimPart", {
+		Title = "吸附部位", Values = { "Head", "Root" }, Multi = false, Default = state.dummyAimPart,
+		Callback = function(v)
+			if type(v) == "table" then v = v[1] end
+			state.dummyAimPart = v or state.dummyAimPart
+		end,
+	})
+	dummySec:AddButton({
+		Title = "脱离当前假人", Description = "也可以直接按 X",
+		Callback = function()
+			if state.dummyCurrentTarget then
+				state.dummyDetached[state.dummyCurrentTarget] = true
+				state.dummyCurrentTarget = nil
+			end
+		end,
+	})
+	dummySec:AddToggle("ZDummyEsp", {
+		Title = "假人透视", Description = "橙色高亮显示假人位置",
+		Default = state.dummyEsp,
+		Callback = function(v) state.dummyEsp = v end,
+	})
+	dummySec:AddToggle("ZDummyShowFov", {
+		Title = "显示假人FOV圈", Description = "紫色圆圈显示假人吸附范围",
+		Default = state.dummyShowFov,
+		Callback = function(v) state.dummyShowFov = v end,
+	})
+
+	uiRefs.playersParagraph = Tabs.Players:AddParagraph({
+		Title = "玩家列表",
+		Content = "当前选择：无\n在线玩家：\n" .. table.concat(playerNames(), "\n"),
+	})
+	Tabs.Players:AddInput("ZPlayerInput", {
+		Title = "输入玩家名",
+		Default = "",
+		Placeholder = "支持部分名字",
+		Numeric = false,
+		Finished = false,
+		Callback = function(v)
+			state.playerInput = tostring(v or "")
+		end,
+	})
+	Tabs.Players:AddButton({
+		Title = "选择输入玩家",
+		Description = "支持 Name / DisplayName 模糊匹配",
+		Callback = function()
+			state.selected = findPlayerByName(state.playerInput)
+			updatePlayerParagraph()
+		end,
+	})
+	Tabs.Players:AddButton({
+		Title = "观战所选玩家",
+		Callback = spectateSelected,
+	})
+	Tabs.Players:AddButton({
+		Title = "停止观战",
+		Callback = stopSpectate,
+	})
+	Tabs.Players:AddButton({
+		Title = "刷新玩家列表",
+		Callback = updatePlayerParagraph,
+	})
+
+	local kbSec = Tabs.Settings:AddCollapsibleSection({ Title = "自定义键位", Icon = "solar/keyboard-bold", Open = false })
+	for _, item in ipairs(keybindsList) do
+		addKeybindPicker(kbSec, item.key, item.label)
+	end
+
+	Tabs.Settings:AddParagraph({
+		Title = "关于",
+		Content = "作者：xxx\nUI：Fluent-modded\n隐藏键：RightShift\n脱离锁定：Z\nPlaceId: " .. tostring(game.PlaceId) .. "\nJobId: " .. tostring(game.JobId),
+	})
+	Tabs.Settings:AddButton({
+		Title = "卸载本脚本绘制",
+		Description = "停止本脚本循环并清理绘制",
+		Callback = function()
+			clearVisuals()
+			safeDestroy(uiStore.overlay)
+			uiStore.overlay = nil
+			pcall(function()
+				RunService:UnbindFromRenderStep("ZFluentPvpStep")
+			end)
+		end,
+	})
+
+	pcall(function()
+		Window:SelectTab(1)
+	end)
+	pcall(function()
+		Fluent:Notify({
+			Title = "Nexus Pro",
+			Content = "Nexus Pro 已加载",
+			Duration = 5,
+		})
+	end)
+end
+
+
+clearVisuals()
+makeOverlay()
+buildFluentModdedUI()
+updatePlayerParagraph()
+
+state.originalFov = workspace.CurrentCamera and workspace.CurrentCamera.FieldOfView or 70
+local origH = hum(LocalPlayer)
+if origH then state.originalWalk = origH.WalkSpeed end
+
+pcall(setupSilentAim)
+
+LocalPlayer.CharacterAdded:Connect(function()
+	lastDummyScan = 0
+	table.clear(dummyCacheList)
+end)
+
+
+UserInputService.InputBegan:Connect(function(input, gp)
+	if input.UserInputType == Enum.UserInputType.MouseButton2 then
+		state.rightDown = true
+		state.dummyRightDown = true
+		table.clear(detachedTargets)
+	end
+	if gp then return end
+
+	local kc = input.KeyCode
+	if waitingForKeybind and kc ~= Enum.KeyCode.Unknown then
+		state.keybinds[waitingForKeybind] = kc
+		local p = keybindRefs[waitingForKeybind]
+		if p then
+			pcall(function() p:SetDesc("当前按键: " .. keyCodeName(kc)) end)
+		end
+		waitingForKeybind = nil
+		return
+	end
+
+	if kc == Enum.KeyCode.X then
+		if state.dummyCurrentTarget then
+			state.dummyDetached[state.dummyCurrentTarget] = true
+			state.dummyCurrentTarget = nil
+		end
+	end
+
+	if kc == state.keybinds.bulletTime then
+		bulletTimeHeld = true
+	end
+	handleCustomKeybind(kc)
+end)
+
+UserInputService.InputEnded:Connect(function(input, gp)
+	if input.UserInputType == Enum.UserInputType.MouseButton2 then
+		state.rightDown = false
+		state.dummyRightDown = false
+		state.currentTarget = nil
+		state.dummyCurrentTarget = nil
+		table.clear(detachedTargets)
+	end
+	if gp then return end
+	if input.KeyCode == state.keybinds.bulletTime then
+		bulletTimeHeld = false
+	end
+end)
+
+
+UserInputService.InputBegan:Connect(function(input, gp)
+	if not gp and input.UserInputType == Enum.UserInputType.MouseButton1 then
+		if state.crosshair.dynamicSpread then
+			state.crosshair.spreadCurrent = state.crosshair.spreadAmount
+		end
+	end
+end)
+
+
+Players.PlayerAdded:Connect(function()
+	task.defer(updatePlayerParagraph)
+end)
+
+Players.PlayerRemoving:Connect(function(plr)
+	if state.selected == plr then
+		state.selected = nil
+	end
+	if state.currentTarget == plr then
+		state.currentTarget = nil
+	end
+	destroyPlayerTags(plr)
+	destroyPlayerHighlights(plr)
+	task.defer(updatePlayerParagraph)
+end)
+
+
+workspace.DescendantAdded:Connect(function(desc)
+	if desc:IsA("BasePart") and isBulletPartName(desc.Name) then
+		bulletTrack[desc] = true
+	end
+end)
+
+workspace.DescendantRemoving:Connect(function(desc)
+	bulletTrack[desc] = nil
+end)
+
+
+local function buildCharWhitelist()
+	local filter = {}
+	for _, plr in ipairs(Players:GetPlayers()) do
+		local c = char(plr)
+		if c then
+			for _, part in ipairs(c:GetDescendants()) do
+				if part:IsA("BasePart") then
+					table.insert(filter, part)
+				end
+			end
+		end
+	end
+	return filter
+end
+
+local oldNamecall
+pcall(function()
+	oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+		local method = getnamecallmethod()
+		if self == workspace and not _bypassWallBang and state.wallBang then
+			local args = {...}
+
+			if method == "Raycast" then
+				local newParams = RaycastParams.new()
+				newParams.FilterType = Enum.RaycastFilterType.Whitelist
+				newParams.FilterDescendantsInstances = buildCharWhitelist()
+				local params = args[3]
+				if params then newParams.IgnoreWater = params.IgnoreWater end
+				args[3] = newParams
+				return oldNamecall(self, unpack(args))
+			end
+
+			if method == "FindPartOnRayWithIgnoreList" or method == "FindPartOnRayWithWhitelist" then
+				local ray = args[1]
+				args[2] = buildCharWhitelist()
+				return oldNamecall(self, unpack(args))
+			end
+
+			if method == "FindPartOnRay" then
+				local ray = args[1]
+				args[2] = nil
+				args[3] = true
+				return oldNamecall(self, unpack(args))
+			end
+		end
+
+		return oldNamecall(self, ...)
+	end)
+end)
+
+
+RunService:BindToRenderStep("ZFluentPvpStep", Enum.RenderPriority.Camera.Value + 1, function(deltaTime)
+	Camera = workspace.CurrentCamera or Camera
+	updateFovCircle()
+	updateDummyFovCircle()
+
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr ~= LocalPlayer then
+			updateEspFor(plr)
+		end
+	end
+
+	local active = (state.aimEnabled or state.spinScan) and (state.spinScan or not state.holdRight or state.rightDown)
+	local plr, part, meta = nil, nil, nil
+
+	if active then
+		if state.currentTarget and state.detachOnDeath and not isAlive(state.currentTarget) then
+			detachedTargets[state.currentTarget] = true
+			state.currentTarget = nil
+		end
+		plr, part, meta = getBestTarget()
+		if plr then
+			state.currentTarget = plr
+			state.selected = plr
+		end
+	else
+		state.currentTarget = nil
+	end
+
+	if active and state.spinScan and not part and Camera then
+		local yaw = math.rad((state.spinSpeed or 80) * (deltaTime or 1 / 60))
+		Camera.CFrame = Camera.CFrame * CFrame.Angles(0, yaw, 0)
+	end
+
+	if state.noRecoil or state.noSpread then
+		applyNoRecoilSpread()
+	end
+
+	if state.radar then
+		updateRadar()
+	end
+
+	updateCrosshair()
+
+	if not state.nameTags then
+		for _, other in ipairs(Players:GetPlayers()) do
+			if other ~= LocalPlayer then
+				destroyPlayerTags(other)
+			end
+		end
+	end
+
+	applyBigHead()
+	applyAutoBhop()
+	applyWalkAdjust()
+	updateDummyEsp()
+
+	local dummyActive = state.dummyAim and (not state.dummyHoldRight or state.dummyRightDown)
+	local dm, dp, ddiag = nil, nil, nil
+	if dummyActive then
+		dm, dp, ddiag = getBestDummyTarget()
+		if dm then state.dummyCurrentTarget = dm end
+	else
+		state.dummyCurrentTarget = nil
+	end
+	pcall(function()
+		getgenv().ZDummyLive = { dummyAim = state.dummyAim, dummyActive = dummyActive, got = dm ~= nil, target = dm and tostring(dm.Name) or nil, diag = ddiag }
+	end)
+
+	if dummyActive and dp and Camera then
+		local dcur = Camera.CFrame
+		Camera.CFrame = dcur:Lerp(CFrame.lookAt(dcur.Position, dp.Position), math.clamp(state.dummySmooth, 0.03, 0.75))
+		applyDummyAutoFire()
+	end
+
+	updateDummyTargetMarker(dp)
+
+	if not (state.aimEnabled or state.spinScan) then
+		updateStatus("吸附未开启")
+	elseif (not state.spinScan) and state.holdRight and not state.rightDown then
+		updateStatus("等待按住右键" .. (state.aimDummy and " | 假人吸附已开" or ""))
+	elseif plr then
+		local name = (type(plr) == "userdata" and pcall(function() return plr.Name end) and plr.Name) or "假人"
+		updateStatus(string.format("锁定：%s | %.0fm | %s%s", name, meta and meta.worldDist or 0, (meta and meta.visible) and "可见" or "穿墙", state.wallBang and " | 子弹穿墙" or ""))
+	elseif meta and meta.selectedOnly then
+		updateStatus("只吸附所选玩家：请先在玩家页选择目标")
+	elseif meta and meta.tooFar and meta.tooFar > 0 then
+		updateStatus("圈内目标超过最大距离")
+	elseif meta and meta.inFov and meta.inFov > 0 and not state.wallAim then
+		updateStatus("圈内目标被遮挡，开启穿墙吸附可忽略遮挡")
+	else
+		updateStatus("圈内无可锁目标")
+	end
+
+	updateTargetMarker(part)
+
+	if active and part and Camera then
+		local current = Camera.CFrame
+		local targetPos = part.Position
+		local goal = CFrame.lookAt(current.Position, targetPos)
+		Camera.CFrame = current:Lerp(goal, math.clamp(state.smooth, 0.03, 0.75))
+		requestAutoFire()
+	end
+end)
+
+
+
+
+
+
+task.spawn(function()
+	while task.wait(2) do
+		local dummies = getDummyModels()
+		local aimOn = state.dummyAim
+		local cur = state.dummyCurrentTarget
+		local hold = state.dummyHoldRight
+		local rd = state.dummyRightDown
+		local active = aimOn and (not hold or rd)
+		local tpart = cur and getDummyAimPart(cur) or nil
+		pcall(function()
+		getgenv().ZDummyDebug = {
+			aimOn = aimOn, holdRight = hold, rightDown = rd, active = active,
+			dummies = #dummies, current = cur and tostring(cur.Name) or nil,
+			targetPart = tpart and tostring(tpart.Name) or nil,
+			dummyNames = {},
+		}
+		for _, m in ipairs(dummies) do
+			if #getgenv().ZDummyDebug.dummyNames < 6 then
+				table.insert(getgenv().ZDummyDebug.dummyNames, tostring(m.Name))
+			end
+		end
+	end)
+	end
+end)
